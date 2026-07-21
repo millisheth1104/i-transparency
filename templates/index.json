@@ -245,6 +245,7 @@
     "corporate_cta": {
       "type": "corporate-cta",
       "settings": {
+        "image": "shopify://shop_images/req_a_quote.png",
         "eyebrow": "Corporate & Bulk Orders",
         "text": "Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply.",
         "button_label_1": "Request a quote",
