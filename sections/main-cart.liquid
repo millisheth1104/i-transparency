@@ -25,7 +25,7 @@
                 <div class="cart-item__top">
                   <a href="{{ item.url }}"><h3 class="cart-item__title">{{ item.product.title }}</h3></a>
                   <a href="{{ item.url_to_remove }}" class="cart-item__remove" aria-label="Remove {{ item.product.title | escape }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="20" height="20"><path d="M4 7h16"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9 3a1 1 0 0 0-1 1v1H4v2h16V5h-4V4a1 1 0 0 0-1-1H9Zm-3 6 1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12H6Zm4 3h1.5v7H10v-7Zm3.5 0H15v7h-1.5v-7Z"/></svg>
                   </a>
                 </div>
                 {%- unless item.product.has_only_default_variant -%}
@@ -103,10 +103,10 @@
   .cart-item__remove:hover { color: var(--brown); }
   .cart-item__meta { color: var(--muted); margin: 10px 0 0; }
   .cart-item__price { font-weight: 500; letter-spacing: .06em; color: var(--brown); margin: 14px 0 18px; }
-  .qty { display: inline-flex; align-items: center; gap: 4px; }
-  .qty__btn { width: 34px; height: 34px; border: 1px solid var(--line); background: transparent; border-radius: 8px; color: var(--brown); font-size: 16px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; transition: border-color .2s; }
-  .qty__btn:hover { border-color: var(--taupe); }
-  .qty__input { width: 46px; text-align: center; padding: 8px 4px; border-color: transparent; background: transparent; }
+  .qty { display: inline-flex; align-items: center; gap: 18px; }
+  .qty__btn { width: auto; height: auto; border: none; background: transparent; padding: 0; color: var(--brown); font-size: 18px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; transition: color .2s; }
+  .qty__btn:hover { color: var(--taupe-dark); }
+  .qty__input { width: 24px; text-align: center; padding: 0; border: none; background: transparent; color: var(--taupe); }
   .cart-add-more { margin-top: 30px; letter-spacing: .18em; }
 
   .cart-summary { background: var(--cream-2); border-radius: var(--radius-lg); padding: 40px; }
@@ -160,9 +160,9 @@
     { "type": "header", "content": "Order summary" },
     { "type": "text", "id": "summary_title", "label": "Summary title", "default": "Order Summary" },
     { "type": "text", "id": "delivery_label", "label": "Delivery label", "default": "Delivery" },
-    { "type": "text", "id": "delivery_value", "label": "Delivery value", "default": "Calculated at checkout" },
-    { "type": "text", "id": "tax_label", "label": "Tax label", "default": "Inclusive of taxes" },
-    { "type": "text", "id": "tax_value", "label": "Tax value", "default": "Calculated at checkout" },
+    { "type": "text", "id": "delivery_value", "label": "Delivery value", "default": "₹150" },
+    { "type": "text", "id": "tax_label", "label": "Tax label", "default": "GST (18%)" },
+    { "type": "text", "id": "tax_value", "label": "Tax value", "default": "₹89" },
     { "type": "textarea", "id": "address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
     { "type": "url", "id": "address_link", "label": "Change address link" },
     { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Proceed to checkout" }
