@@ -9,14 +9,10 @@
     </a>
 
     <nav class="site-nav" aria-label="Primary">
-      {%- for link in linklists.main-menu.links -%}
-        <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-      {%- else -%}
-        <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">Shop</a>
-        <a href="{{ routes.collections_url }}" class="site-nav__link">Collections</a>
-        <a href="/pages/corporate" class="site-nav__link">Corporate</a>
-        <a href="/pages/contact" class="site-nav__link">Contact</a>
-      {%- endfor -%}
+      <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">Shop</a>
+      <a href="{{ routes.collections_url }}" class="site-nav__link">Collections</a>
+      <a href="/pages/corporate" class="site-nav__link">Corporate</a>
+      <a href="/pages/contact" class="site-nav__link">Contact</a>
     </nav>
 
     <div class="site-header__actions">
