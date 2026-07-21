@@ -123,7 +123,8 @@
           "conscious_text": "Our packaging is plastic-free and recyclable. Because every thoughtful gift should be kind to the planet.",
           "trust_eyebrow": "Trusted by leading brands",
           "form_heading": "Enquire about corporate gifting",
-          "form_sub": "Share your requirements and our team will get in touch with you to create a solution that fits your needs."
+          "form_sub": "Share your requirements and our team will get in touch with you to create a solution that fits your needs.",
+          "form_image": "shopify://shop_images/contact_us_img.png"
         }
       }
     },
