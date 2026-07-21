@@ -3,54 +3,69 @@
     <h2 class="section-heading">{{ section.settings.heading }}</h2>
     {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
 
-    <div class="cat-row" data-scroll>
+    <div class="cat-fan">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="cat-card" {{ block.shopify_attributes }}>
-          <div class="cat-card__media">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}" width="900" height="1100" loading="lazy">
-            {%- else -%}
-              {{ 'collection-1' | placeholder_svg_tag }}
-            {%- endif -%}
+        {%- if forloop.first -%}
+          <div class="cat-card cat-card--main" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link }}" class="cat-card__media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" width="1200" height="900" loading="lazy">
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </a>
+            <span class="cat-card__num">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <a href="{{ block.settings.link }}" class="cat-card__title">{{ block.settings.title }}</a>
+            <a class="btn cat-card__view" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+            <a class="round-btn cat-card__next" href="{{ section.settings.button_link }}" aria-label="{{ section.settings.button_label }}">{% render 'icon', icon: 'arrow-right' %}</a>
           </div>
-          <span class="cat-card__num">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-          <span class="cat-card__title">{{ block.settings.title }}</span>
-        </a>
+        {%- else -%}
+          <a href="{{ block.settings.link }}" class="cat-card cat-card--side" {{ block.shopify_attributes }}>
+            <div class="cat-card__media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.title | escape }}" width="500" height="700" loading="lazy">
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+            <span class="cat-card__num cat-card__num--side">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          </a>
+        {%- endif -%}
       {%- endfor -%}
-    </div>
-
-    <div class="cat-foot">
-      <a class="btn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
-      <div class="cat-nav">
-        <button class="round-btn" data-scroll-prev aria-label="Previous">{% render 'icon', icon: 'arrow-left' %}</button>
-        <button class="round-btn" data-scroll-next aria-label="Next">{% render 'icon', icon: 'arrow-right' %}</button>
-      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .cat-row { display: flex; gap: 22px; overflow-x: auto; scroll-behavior: smooth; padding: 40px 0 10px; scrollbar-width: none; }
-  .cat-row::-webkit-scrollbar { display: none; }
-  .cat-card { position: relative; flex: 0 0 clamp(280px, 42vw, 620px); border-radius: var(--radius); overflow: hidden; }
-  .cat-card:first-child { flex-basis: clamp(320px, 55vw, 760px); }
-  .cat-card__media { aspect-ratio: 4/3; }
-  .cat-card__media img, .cat-card__media svg { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
-  .cat-card:hover .cat-card__media img { transform: scale(1.04); }
-  .cat-card__num { position: absolute; top: 26px; left: 30px; color: rgba(255,255,255,.85); font-size: 13px; letter-spacing: .08em; }
-  .cat-card__title { position: absolute; top: 44px; left: 30px; color: #fff; font-family: var(--font-serif); font-size: 34px; }
-  .cat-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
-  .cat-nav { display: flex; gap: 12px; }
-</style>
+  .cat-fan { position: relative; display: flex; align-items: center; margin-top: 40px; overflow: hidden; }
+  .cat-card--main { position: relative; flex: 0 0 58%; aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden; z-index: 5; background: var(--cream-2); }
+  .cat-card--main::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,12,0) 45%, rgba(20,16,12,.4) 100%); pointer-events: none; }
+  .cat-card__media { position: absolute; inset: 0; display: block; }
+  .cat-card__media img, .cat-card__media svg { width: 100%; height: 100%; object-fit: cover; }
+  .cat-card__num { position: absolute; top: 26px; left: 30px; color: rgba(255,255,255,.85); font-size: 13px; letter-spacing: .08em; z-index: 2; }
+  .cat-card__title { position: absolute; top: 44px; left: 30px; color: #fff; font-family: var(--font-serif); font-size: 34px; z-index: 2; }
+  .cat-card__view { position: absolute; left: 30px; bottom: 30px; z-index: 2; }
+  .cat-card__next { position: absolute; right: 30px; bottom: 30px; z-index: 2; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.6); color: #fff; }
+  .cat-card__next:hover { background: #fff; color: var(--brown); }
 
-<script>
-  document.querySelectorAll('.category-showcase').forEach(function(sec){
-    var row = sec.querySelector('[data-scroll]');
-    var amt = function(){ return Math.min(row.clientWidth * 0.7, 640); };
-    sec.querySelector('[data-scroll-next]')?.addEventListener('click', function(){ row.scrollBy({left: amt(), behavior:'smooth'}); });
-    sec.querySelector('[data-scroll-prev]')?.addEventListener('click', function(){ row.scrollBy({left: -amt(), behavior:'smooth'}); });
-  });
-</script>
+  .cat-card--side { position: relative; flex: 0 0 190px; aspect-ratio: 3/4; border-radius: var(--radius); overflow: hidden; margin-left: -60px; box-shadow: -10px 0 24px rgba(40,32,24,.15); transition: transform .3s; }
+  .cat-card--side:nth-child(2) { z-index: 4; }
+  .cat-card--side:nth-child(3) { z-index: 3; transform: translateY(14px); }
+  .cat-card--side:nth-child(4) { z-index: 2; transform: translateY(26px); }
+  .cat-card--side:nth-child(5) { z-index: 1; transform: translateY(38px); }
+  .cat-card--side:hover { transform: translateY(-6px); }
+  .cat-card--side:nth-child(3):hover { transform: translateY(8px); }
+  .cat-card--side:nth-child(4):hover { transform: translateY(20px); }
+  .cat-card--side:nth-child(5):hover { transform: translateY(32px); }
+  .cat-card--side .cat-card__media { position: static; width: 100%; height: 100%; }
+  .cat-card__num--side { position: absolute; top: 16px; left: 16px; color: rgba(255,255,255,.9); font-size: 11px; letter-spacing: .08em; z-index: 2; }
+
+  @media (max-width: 860px) {
+    .cat-card--main { flex-basis: 78%; }
+    .cat-card--side { flex-basis: 110px; margin-left: -40px; }
+    .cat-card__title { font-size: 24px; }
+  }
+</style>
 
 {% schema %}
 {

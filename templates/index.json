@@ -72,11 +72,13 @@
       "type": "testimonials",
       "settings": { "eyebrow": "Ratings & Reviews" },
       "blocks": {
+        "t0": { "type": "review", "settings": { "quote": "Exactly the kind of voice we needed. Clean, unusually strong, and easy enough to reuse across different pages.", "name": "Jordan Bennett" } },
         "t1": { "type": "review", "settings": { "quote": "It helped us create a more editorial experience on the page. The content feels more curated, more dynamic, and much easier to browse.", "name": "Adrian Cole" } },
         "t2": { "type": "review", "settings": { "quote": "Everything felt clear from the first interaction. The layout, motion, and structure helped us present our content in a way that felt polished without becoming complicated.", "name": "Mara Ellison", "highlight": true } },
-        "t3": { "type": "review", "settings": { "quote": "The carousel gave our page a much stronger rhythm. It turned a simple content section into something people actually wanted to explore.", "name": "Theo Grant" } }
+        "t3": { "type": "review", "settings": { "quote": "The carousel gave our page a much stronger rhythm. It turned a simple content section into something people actually wanted to explore.", "name": "Theo Grant" } },
+        "t4": { "type": "review", "settings": { "quote": "We needed something flexible, and easy to adapt. It gave us a refined system without locking us into a specific style.", "name": "Lena Voss" } }
       },
-      "block_order": ["t1", "t2", "t3"]
+      "block_order": ["t0", "t1", "t2", "t3", "t4"]
     },
     "corporate_cta": {
       "type": "corporate-cta",
