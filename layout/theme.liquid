@@ -38,7 +38,9 @@
 
     {% section 'footer' %}
 
-    {% render 'whatsapp-float' %}
+    {%- if request.page_type == 'index' -%}
+      {% render 'whatsapp-float' %}
+    {%- endif -%}
     {% render 'popup' %}
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
