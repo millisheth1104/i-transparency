@@ -121,6 +121,7 @@
         "c1": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed covers",
             "link": ""
           }
@@ -128,6 +129,7 @@
         "c2": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/02.png",
             "title": "Comforters",
             "link": ""
           }
@@ -135,6 +137,7 @@
         "c3": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bare_earth.png",
             "title": "Throws",
             "link": ""
           }
@@ -142,6 +145,7 @@
         "c4": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/04.jpg",
             "title": "Pillow covers",
             "link": ""
           }
@@ -149,6 +153,7 @@
         "c5": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/05.png",
             "title": "Cushions",
             "link": ""
           }
