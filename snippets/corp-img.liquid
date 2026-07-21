@@ -1,0 +1,6 @@
+{%- comment -%} params: img (image), ph (placeholder name) {%- endcomment -%}
+{%- if img != blank -%}
+  <img src="{{ img | image_url: width: 1200 }}" alt="" width="800" height="600" loading="lazy">
+{%- else -%}
+  {{ ph | default: 'image' | placeholder_svg_tag }}
+{%- endif -%}

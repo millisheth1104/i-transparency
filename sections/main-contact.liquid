@@ -1,0 +1,145 @@
+{%- assign s = section.settings -%}
+<div class="contactp">
+  <div class="container">
+    <p class="eyebrow contactp__crumb">Contact</p>
+
+    {%- comment -%} Map + info {%- endcomment -%}
+    <div class="contactp__top">
+      <div class="contactp__map">
+        {%- if s.map_embed != blank -%}
+          {{ s.map_embed }}
+        {%- elsif s.map_image != blank -%}
+          <img src="{{ s.map_image | image_url: width: 1400 }}" alt="Map to our office" width="1200" height="640" loading="lazy">
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="contactp__info">
+        <div class="contactp__info-row">
+          <span class="contactp__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <div>
+            <p class="contactp__label">{{ s.office_label }}</p>
+            <p class="contactp__val">{{ s.office_address }}</p>
+          </div>
+        </div>
+        <div class="contactp__info-row">
+          <span class="contactp__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div>
+            <p class="contactp__label">{{ s.hours_label }}</p>
+            <p class="contactp__val">{{ s.hours_value }}</p>
+          </div>
+        </div>
+        <div class="contactp__info-row">
+          <span class="contactp__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <div>
+            <p class="contactp__label">Email ID</p>
+            <p class="contactp__val"><a href="mailto:{{ s.email }}">{{ s.email }}</a></p>
+          </div>
+        </div>
+        <div class="contactp__info-row">
+          <span class="contactp__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L20 13l1 4v2a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z"/></svg></span>
+          <div>
+            <p class="contactp__label">Contact Number</p>
+            <p class="contactp__val"><a href="tel:{{ s.phone | remove: ' ' }}">{{ s.phone }}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Question + form {%- endcomment -%}
+    <div class="contactp__bottom">
+      <div class="contactp__intro">
+        <h1 class="contactp__q">{{ s.form_heading }}</h1>
+        {%- if s.form_sub != blank -%}<p class="contactp__q-sub">{{ s.form_sub }}</p>{%- endif -%}
+        <div class="contactp__intro-media">
+          {%- if s.form_image != blank -%}
+            <img src="{{ s.form_image | image_url: width: 900 }}" alt="" width="700" height="520" loading="lazy">
+          {%- else -%}
+            {{ 'product-2' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="contactp__form">
+        {%- form 'contact' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="contactp__ok">Thank you — your enquiry has been sent. We'll get back to you soon.</p>
+          {%- endif -%}
+          {{ form.errors | default_errors }}
+          <div class="field field--line">
+            <label for="c-name">Full Name</label>
+            <input type="text" id="c-name" name="contact[name]" placeholder="First and last name" required>
+          </div>
+          <div class="field field--line">
+            <label for="c-email">Email Address</label>
+            <input type="email" id="c-email" name="contact[email]" placeholder="joe@gmail.com" value="{{ customer.email }}" required>
+          </div>
+          <div class="field field--line">
+            <label for="c-phone">Phone Number</label>
+            <input type="tel" id="c-phone" name="contact[phone]" placeholder="+91">
+          </div>
+          <div class="field field--line">
+            <label for="c-msg">Message</label>
+            <textarea id="c-msg" name="contact[body]" rows="3" placeholder="Tell us more about your enquiry"></textarea>
+          </div>
+          <button type="submit" class="btn btn--block">Submit Enquiry</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .contactp { padding: 40px 0 90px; }
+  .contactp__crumb { color: var(--brown); margin-bottom: 28px; }
+  .contactp__top { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: start; }
+  .contactp__map { border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
+  .contactp__map img, .contactp__map svg { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
+  .contactp__map iframe { width: 100%; height: 100%; min-height: 440px; border: 0; display: block; }
+  .contactp__info { display: flex; flex-direction: column; gap: 30px; padding-top: 10px; }
+  .contactp__info-row { display: flex; gap: 18px; }
+  .contactp__ico { color: var(--brown); flex: none; margin-top: 2px; }
+  .contactp__label { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); margin: 0 0 6px; font-weight: 400; }
+  .contactp__val { color: var(--muted); margin: 0; }
+  .contactp__val a { text-decoration: underline; text-underline-offset: 3px; }
+
+  .contactp__bottom { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; margin-top: 80px; align-items: start; }
+  .contactp__q { font-size: clamp(34px, 4.4vw, 52px); }
+  .contactp__q-sub { color: var(--muted); margin: 16px 0 0; max-width: 40ch; }
+  .contactp__intro-media { margin-top: 40px; border-radius: var(--radius); overflow: hidden; }
+  .contactp__intro-media img, .contactp__intro-media svg { width: 100%; object-fit: contain; }
+  .contactp__ok { background: var(--cream-2); border-radius: 8px; padding: 14px 18px; color: var(--brown); margin: 0 0 20px; }
+
+  /* underlined line inputs to match tile */
+  .field--line label { color: var(--brown); }
+  .field--line input, .field--line textarea { border: none; border-bottom: 1px solid var(--line); border-radius: 0; padding: 10px 0; background: transparent; }
+  .field--line input:focus, .field--line textarea:focus { border-bottom-color: var(--taupe); }
+  .contactp__form .btn { margin-top: 14px; }
+
+  @media (max-width: 860px) {
+    .contactp__top, .contactp__bottom { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": [
+    { "type": "header", "content": "Map" },
+    { "type": "html", "id": "map_embed", "label": "Map embed (iframe)", "info": "Paste a Google Maps embed iframe. Falls back to the image below." },
+    { "type": "image_picker", "id": "map_image", "label": "Map image (fallback)" },
+    { "type": "header", "content": "Contact details" },
+    { "type": "text", "id": "office_label", "label": "Office label", "default": "Corporate Office" },
+    { "type": "textarea", "id": "office_address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
+    { "type": "text", "id": "hours_label", "label": "Hours label", "default": "Business Hours" },
+    { "type": "text", "id": "hours_value", "label": "Hours value", "default": "Monday to Friday, 10AM to 7PM" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@sarom.com" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "088289 11111" },
+    { "type": "header", "content": "Form" },
+    { "type": "text", "id": "form_heading", "label": "Heading", "default": "Have a question?" },
+    { "type": "text", "id": "form_sub", "label": "Sub text", "default": "Write to us and we'll get back to you as soon as possible." },
+    { "type": "image_picker", "id": "form_image", "label": "Form image" }
+  ],
+  "presets": [{ "name": "Contact page" }]
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+<section class="hero">
+  <div class="hero__media">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="{{ section.settings.heading | escape }}" width="2400" height="1200" loading="eager">
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
+    {%- endif -%}
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="container hero__content">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 class="hero__title">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero__actions">
+      {%- if section.settings.button_label_1 != blank -%}
+        <a class="btn" href="{{ section.settings.button_link_1 }}">{{ section.settings.button_label_1 }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_label_2 != blank -%}
+        <a class="btn btn--outline" href="{{ section.settings.button_link_2 }}">{{ section.settings.button_label_2 }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.show_trust -%}
+<div class="container">
+  <div class="trust-bar">
+    {%- assign items = section.settings.trust_items | split: '|' -%}
+    {%- for item in items -%}
+      <span class="trust-bar__item">{{ item | strip }}</span>
+      {%- unless forloop.last -%}<span class="trust-bar__sep">•</span>{%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+<style>
+  .hero { position: relative; }
+  .hero__media { position: relative; height: 82vh; min-height: 560px; max-height: 820px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); overflow: hidden; margin: 0 var(--gutter); }
+  .hero__media img, .hero__placeholder { width: 100%; height: 100%; object-fit: cover; }
+  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(60,52,44,.55) 0%, rgba(60,52,44,.15) 55%, transparent 100%); }
+  .hero__content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; max-width: var(--container); }
+  .hero__eyebrow { color: rgba(255,255,255,.85); }
+  .hero__title { font-size: clamp(48px, 8vw, 104px); color: #fff; line-height: .98; max-width: 12ch; }
+  .hero__title em { font-style: italic; color: #efe6d5; }
+  .hero__text { color: rgba(255,255,255,.9); max-width: 42ch; margin: 22px 0 0; font-size: 17px; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
+  .hero__actions .btn--outline { border-color: rgba(255,255,255,.7); color: #fff; }
+  .hero__actions .btn--outline:hover { background: #fff; color: var(--brown); }
+  .trust-bar { margin: -34px auto 0; position: relative; z-index: 2; max-width: 1000px; }
+  @media (max-width: 700px){ .hero__media { margin: 0; border-radius: 0; } .trust-bar { margin-top: 24px; } }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The art of <em>sleep.</em>" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Designed to transform your bedroom into a quiet sanctuary of restful serenity." },
+    { "type": "text", "id": "button_label_1", "label": "Button 1 label", "default": "Shop by category" },
+    { "type": "url", "id": "button_link_1", "label": "Button 1 link" },
+    { "type": "text", "id": "button_label_2", "label": "Button 2 label", "default": "Featured collections" },
+    { "type": "url", "id": "button_link_2", "label": "Button 2 link" },
+    { "type": "header", "content": "Trust bar" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust bar", "default": true },
+    { "type": "text", "id": "trust_items", "label": "Items (separate with |)", "default": "Free delivery | 7 day returns | Cash on delivery available | Delivered in 48 hours" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

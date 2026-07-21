@@ -1,0 +1,172 @@
+{%- comment -%} Cart — line items + order summary. Matches cart tiles. {%- endcomment -%}
+<section class="section--tight cart-sec">
+  <div class="container">
+    <p class="eyebrow cart-sec__label">{{ section.settings.label }}</p>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty">
+        <h2 class="cart-empty__title">Your cart is <em>empty</em></h2>
+        <p class="cart-empty__sub">Discover our knitted-cotton bedcovers, throws and cushions.</p>
+        <a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      </div>
+    {%- else -%}
+      {%- form 'cart', cart, class: 'cart-grid' -%}
+        <div class="cart-items">
+          {%- for item in cart.items -%}
+            <div class="cart-item" data-line="{{ forloop.index }}">
+              <a href="{{ item.url }}" class="cart-item__media">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 320 }}" alt="{{ item.title | escape }}" width="160" height="160" loading="lazy">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+              </a>
+              <div class="cart-item__body">
+                <div class="cart-item__top">
+                  <a href="{{ item.url }}"><h3 class="cart-item__title">{{ item.product.title }}</h3></a>
+                  <a href="{{ item.url_to_remove }}" class="cart-item__remove" aria-label="Remove {{ item.product.title | escape }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="20" height="20"><path d="M4 7h16"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg>
+                  </a>
+                </div>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="cart-item__meta">{{ item.variant.title }}</p>
+                {%- else -%}
+                  {%- if item.product.metafields.custom.shade != blank -%}<p class="cart-item__meta">{{ item.product.metafields.custom.shade }}</p>{%- endif -%}
+                {%- endunless -%}
+                <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+                <div class="qty" data-qty>
+                  <button type="button" class="qty__btn" data-qty-minus aria-label="Decrease quantity">&minus;</button>
+                  <input class="qty__input" type="text" inputmode="numeric" name="updates[]" value="{{ item.quantity }}" aria-label="Quantity" data-qty-input>
+                  <button type="button" class="qty__btn" data-qty-plus aria-label="Increase quantity">+</button>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline btn--block cart-add-more">+ {{ section.settings.add_more_label }}</a>
+          <button type="submit" name="update" class="visually-hidden" data-cart-update>Update</button>
+        </div>
+
+        <aside class="cart-summary">
+          <h2 class="cart-summary__title">{{ section.settings.summary_title }}</h2>
+          <div class="cart-summary__row">
+            <span>Subtotal ({{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }})</span>
+            <span>{{ cart.items_subtotal_price | money }}</span>
+          </div>
+          {%- if section.settings.delivery_label != blank -%}
+            <div class="cart-summary__row">
+              <span>{{ section.settings.delivery_label }}</span>
+              <span>{{ section.settings.delivery_value }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.tax_label != blank -%}
+            <div class="cart-summary__row">
+              <span>{{ section.settings.tax_label }}</span>
+              <span>{{ section.settings.tax_value }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.address != blank -%}
+            <div class="cart-summary__addr">
+              <div class="cart-summary__addr-head">
+                <span>Address</span>
+                <a href="{{ section.settings.address_link }}">Change</a>
+              </div>
+              <p>{{ section.settings.address }}</p>
+            </div>
+          {%- endif -%}
+          <div class="cart-summary__total">
+            <div>
+              <strong>Total</strong>
+              <span class="cart-summary__note">(Inclusive of taxes)</span>
+            </div>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <button type="submit" name="checkout" class="btn btn--block cart-summary__checkout">{{ section.settings.checkout_label }}</button>
+        </aside>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .cart-sec { padding-top: 40px; }
+  .cart-sec__label { margin-bottom: 30px; }
+  .cart-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 60px; align-items: start; }
+  .cart-items { display: flex; flex-direction: column; }
+  .cart-item { display: grid; grid-template-columns: 160px 1fr; gap: 30px; padding: 30px 0; border-bottom: 1px solid var(--line); }
+  .cart-item:first-child { padding-top: 0; }
+  .cart-item__media { border-radius: var(--radius); overflow: hidden; background: var(--cream-2); aspect-ratio: 1/1; }
+  .cart-item__media img, .cart-item__media svg { width: 100%; height: 100%; object-fit: cover; }
+  .cart-item__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .cart-item__title { font-family: var(--font-sans); font-weight: 400; font-size: 18px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); }
+  .cart-item__remove { color: var(--muted); transition: color .2s; }
+  .cart-item__remove:hover { color: var(--brown); }
+  .cart-item__meta { color: var(--muted); margin: 10px 0 0; }
+  .cart-item__price { font-weight: 500; letter-spacing: .06em; color: var(--brown); margin: 14px 0 18px; }
+  .qty { display: inline-flex; align-items: center; gap: 4px; }
+  .qty__btn { width: 34px; height: 34px; border: 1px solid var(--line); background: transparent; border-radius: 8px; color: var(--brown); font-size: 16px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; transition: border-color .2s; }
+  .qty__btn:hover { border-color: var(--taupe); }
+  .qty__input { width: 46px; text-align: center; padding: 8px 4px; border-color: transparent; background: transparent; }
+  .cart-add-more { margin-top: 30px; letter-spacing: .18em; }
+
+  .cart-summary { background: var(--cream-2); border-radius: var(--radius-lg); padding: 40px; }
+  .cart-summary__title { font-family: var(--font-sans); font-weight: 400; font-size: 15px; letter-spacing: .2em; text-transform: uppercase; color: var(--brown); margin-bottom: 26px; }
+  .cart-summary__row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; color: var(--brown-2); font-size: 15px; }
+  .cart-summary__addr { padding: 18px 0; border-top: 1px solid var(--line); margin-top: 8px; }
+  .cart-summary__addr-head { display: flex; justify-content: space-between; align-items: center; }
+  .cart-summary__addr-head span { font-size: 15px; color: var(--brown-2); }
+  .cart-summary__addr-head a { font-size: 14px; color: var(--brown); text-decoration: underline; }
+  .cart-summary__addr p { color: var(--muted); font-size: 14px; margin: 8px 0 0; line-height: 1.5; }
+  .cart-summary__total { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 0 26px; border-top: 1px solid var(--line); }
+  .cart-summary__total strong { font-family: var(--font-sans); font-weight: 500; font-size: 16px; letter-spacing: .12em; text-transform: uppercase; color: var(--brown); }
+  .cart-summary__note { display: block; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 300; margin-top: 4px; }
+  .cart-summary__checkout { letter-spacing: .18em; }
+
+  .cart-empty { text-align: center; padding: 60px 0 80px; }
+  .cart-empty__title { font-size: clamp(28px, 4vw, 44px); }
+  .cart-empty__title em { font-style: italic; }
+  .cart-empty__sub { color: var(--muted); margin: 14px 0 30px; }
+
+  @media (max-width: 990px) {
+    .cart-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 600px) {
+    .cart-item { grid-template-columns: 110px 1fr; gap: 18px; }
+    .cart-summary { padding: 28px; }
+  }
+</style>
+
+<script>
+  (function(){
+    document.querySelectorAll('.cart-sec').forEach(function(sec){
+      if (sec.dataset.cartInit) return; sec.dataset.cartInit = '1';
+      var updateBtn = sec.querySelector('[data-cart-update]');
+      sec.querySelectorAll('[data-qty]').forEach(function(q){
+        var input = q.querySelector('[data-qty-input]');
+        function commit(v){ input.value = Math.max(0, v); if (updateBtn) updateBtn.click(); }
+        q.querySelector('[data-qty-plus]').addEventListener('click', function(){ commit((parseInt(input.value,10)||0)+1); });
+        q.querySelector('[data-qty-minus]').addEventListener('click', function(){ commit((parseInt(input.value,10)||0)-1); });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Page label", "default": "Cart" },
+    { "type": "text", "id": "add_more_label", "label": "Add more button", "default": "Add more items" },
+    { "type": "header", "content": "Order summary" },
+    { "type": "text", "id": "summary_title", "label": "Summary title", "default": "Order Summary" },
+    { "type": "text", "id": "delivery_label", "label": "Delivery label", "default": "Delivery" },
+    { "type": "text", "id": "delivery_value", "label": "Delivery value", "default": "Calculated at checkout" },
+    { "type": "text", "id": "tax_label", "label": "Tax label", "default": "Inclusive of taxes" },
+    { "type": "text", "id": "tax_value", "label": "Tax value", "default": "Calculated at checkout" },
+    { "type": "textarea", "id": "address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
+    { "type": "url", "id": "address_link", "label": "Change address link" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Proceed to checkout" }
+  ],
+  "presets": [{ "name": "Cart" }]
+}
+{% endschema %}

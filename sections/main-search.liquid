@@ -1,0 +1,140 @@
+{%- comment -%} Search results — bar, count, grid of product cards, pagination, empty state. {%- endcomment -%}
+<section class="section--tight search-sec">
+  <div class="container">
+    <p class="eyebrow search-sec__label">{{ section.settings.label }}</p>
+
+    <div class="search-head">
+      <div class="search-head__intro">
+        {%- if search.performed -%}
+          <h1 class="search-head__title">Search results for <em>&ldquo;{{ search.terms | escape }}&rdquo;</em></h1>
+          <p class="search-head__count">{{ search.results_count }} {{ search.results_count | pluralize: 'result', 'results' }} found</p>
+        {%- else -%}
+          <h1 class="search-head__title">Search the <em>collection</em></h1>
+          <p class="search-head__count">Find bedcovers, throws, cushions and more</p>
+        {%- endif -%}
+      </div>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
+        <span class="search-bar__icon">{% render 'icon', icon: 'search' %}</span>
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder }}" aria-label="Search">
+        <input type="hidden" name="type" value="product">
+        {%- if search.terms != blank -%}
+          <a href="{{ routes.search_url }}" class="search-bar__clear" aria-label="Clear search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </a>
+        {%- endif -%}
+        <button type="submit" class="visually-hidden">Search</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      <div class="search-filters">
+        <span class="search-filters__label">Filter by</span>
+        <div class="search-filters__group">
+          <select aria-label="Category" disabled><option>Category</option></select>
+          <select aria-label="Collections" disabled><option>Collections</option></select>
+          <select aria-label="Size" disabled><option>Size</option></select>
+          <select aria-label="Color" disabled><option>Color</option></select>
+        </div>
+        <div class="search-filters__sort">
+          <span class="search-filters__label">Sort by</span>
+          <select aria-label="Sort by" data-sort>
+            <option value="relevance"{% if search.sort_by == 'relevance' %} selected{% endif %}>Relevance</option>
+            <option value="price-ascending"{% if search.sort_by == 'price-ascending' %} selected{% endif %}>Price low to high</option>
+            <option value="price-descending"{% if search.sort_by == 'price-descending' %} selected{% endif %}>Price high to low</option>
+          </select>
+        </div>
+      </div>
+
+      {%- if search.results_count > 0 -%}
+        {%- paginate search.results by section.settings.per_page -%}
+          <div class="grid grid--4 search-grid">
+            {%- for product in search.results -%}
+              {%- if product.object_type == 'product' -%}
+                {% render 'product-card', product: product %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            <nav class="search-pager" aria-label="Pagination">
+              {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="search-pager__arrow" aria-label="Previous">{% render 'icon', icon: 'arrow-left' %}</a>{%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="search-pager__num">{{ part.title }}</a>
+                {%- else -%}
+                  <span class="search-pager__num{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="search-pager__arrow" aria-label="Next">{% render 'icon', icon: 'arrow-right' %}</a>{%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <div class="search-empty">
+          <h2 class="search-empty__title">No results for <em>&ldquo;{{ search.terms | escape }}&rdquo;</em></h2>
+          <p class="search-empty__sub">Try a different term or browse the full collection.</p>
+          <a class="btn" href="{{ routes.all_products_collection_url }}">Shop all</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .search-sec { padding-top: 40px; }
+  .search-sec__label { margin-bottom: 22px; }
+  .search-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .search-head__title { font-size: clamp(28px, 3.4vw, 40px); color: var(--brown); }
+  .search-head__title em { font-style: italic; }
+  .search-head__count { font-family: var(--font-sans); font-weight: 400; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin: 14px 0 0; }
+  .search-bar { position: relative; display: flex; align-items: center; }
+  .search-bar__icon { position: absolute; left: 18px; color: var(--taupe); display: flex; }
+  .search-bar input[type="search"] { padding: 16px 46px; border-radius: 999px; }
+  .search-bar__clear { position: absolute; right: 18px; color: var(--muted); display: flex; }
+  .search-bar__clear:hover { color: var(--brown); }
+
+  .search-filters { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin: 40px 0 34px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .search-filters__label { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  .search-filters__group { display: flex; gap: 14px; flex-wrap: wrap; }
+  .search-filters select { width: auto; min-width: 150px; border-color: var(--line); border-radius: 8px; background: transparent; }
+  .search-filters__sort { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+  .search-grid { margin-top: 6px; }
+
+  .search-pager { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 60px; }
+  .search-pager__num { min-width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); font-size: 15px; }
+  .search-pager__num.is-current { color: var(--brown); border-bottom: 1px solid var(--brown); }
+  .search-pager__arrow { color: var(--brown); display: inline-flex; }
+
+  .search-empty { text-align: center; padding: 70px 0 40px; }
+  .search-empty__title { font-size: clamp(26px, 3.4vw, 38px); }
+  .search-empty__title em { font-style: italic; }
+  .search-empty__sub { color: var(--muted); margin: 14px 0 28px; }
+
+  @media (max-width: 990px) {
+    .search-head { grid-template-columns: 1fr; gap: 26px; }
+    .search-filters__sort { margin-left: 0; width: 100%; }
+  }
+</style>
+
+<script>
+  (function(){
+    document.querySelectorAll('.search-sec [data-sort]').forEach(function(sel){
+      sel.addEventListener('change', function(){
+        var url = new URL(window.location.href);
+        url.searchParams.set('sort_by', sel.value);
+        window.location.href = url.toString();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Page label", "default": "Search" },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Search" },
+    { "type": "range", "id": "per_page", "label": "Results per page", "min": 4, "max": 24, "step": 4, "default": 8 }
+  ],
+  "presets": [{ "name": "Search results" }]
+}
+{% endschema %}

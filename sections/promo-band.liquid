@@ -1,0 +1,49 @@
+<section class="section--tight pb" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="pb__inner">
+      <div class="pb__text">
+        {%- if section.settings.heading != blank -%}<h2 class="pb__title">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p class="pb__sub">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a class="btn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+      </div>
+      <div class="pb__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.heading | escape }}" width="2000" height="900" loading="lazy">
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .pb__inner { background: var(--cream-2); border-radius: var(--radius-lg); padding: 54px 54px 0; overflow: hidden; }
+  #shopify-section-{{ section.id }} .pb__title { font-family: var(--font-serif); font-size: clamp(30px, 3.4vw, 42px); color: var(--brown); }
+  #shopify-section-{{ section.id }} .pb__sub { color: var(--muted); max-width: 480px; margin: 16px 0 0; }
+  #shopify-section-{{ section.id }} .pb__inner .btn { margin-top: 26px; }
+  #shopify-section-{{ section.id }} .pb__media { margin-top: 40px; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; aspect-ratio: 21/9; }
+  #shopify-section-{{ section.id }} .pb__media img, #shopify-section-{{ section.id }} .pb__media svg { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 700px) {
+    #shopify-section-{{ section.id }} .pb__inner { padding: 34px 28px 0; }
+    #shopify-section-{{ section.id }} .pb__media { aspect-ratio: 4/3; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Promo band",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Printed" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [
+    { "name": "Promo band" }
+  ]
+}
+{% endschema %}

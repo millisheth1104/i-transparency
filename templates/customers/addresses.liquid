@@ -1,0 +1,9 @@
+<div class="container" style="padding:40px 0;">
+  <h1>Your addresses</h1>
+  <p><a href="{{ routes.account_url }}">Back to account</a></p>
+  {% for address in customer.addresses %}
+    <div style="margin-bottom:16px;">
+      {{ address | format_address }}
+    </div>
+  {% endfor %}
+</div>

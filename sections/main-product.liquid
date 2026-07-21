@@ -1,0 +1,382 @@
+{%- comment -%} Product details — Beds & More by Sarom {%- endcomment -%}
+{%- assign color_names = section.settings.color_option_name | downcase -%}
+
+<section class="mp" data-section-id="{{ section.id }}">
+  <div class="container">
+
+    {%- if section.settings.show_breadcrumb -%}
+      <nav class="mp__crumb" aria-label="Breadcrumb">
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <span>/</span>
+        <span>{{ product.title | default: 'Product' }}</span>
+      </nav>
+    {%- endif -%}
+
+    <div class="mp__grid">
+
+      {%- comment -%} ---------- GALLERY ---------- {%- endcomment -%}
+      <div class="mp__gallery">
+        <div class="mp__main" data-main>
+          {%- if product.featured_image -%}
+            <img data-main-img
+                 src="{{ product.featured_image | image_url: width: 1200 }}"
+                 alt="{{ product.featured_image.alt | escape | default: product.title }}"
+                 width="1000" height="1100">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'mp__ph' }}
+          {%- endif -%}
+
+          {%- if section.settings.show_wishlist -%}
+            <button class="mp__wish" type="button" aria-label="Add to wishlist" data-wishlist="{{ product.id }}">
+              {% render 'icon', icon: 'heart' %}
+            </button>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="mp__thumbs-wrap">
+            <button class="mp__thumb-nav mp__thumb-nav--prev" type="button" aria-label="Previous" data-thumb-prev>
+              {% render 'icon', icon: 'arrow-left' %}
+            </button>
+            <div class="mp__thumbs" data-thumbs>
+              {%- for media in product.media -%}
+                <button class="mp__thumb {% if forloop.first %}is-active{% endif %}" type="button"
+                        data-thumb
+                        data-full="{{ media | image_url: width: 1200 }}"
+                        aria-label="View image {{ forloop.index }}">
+                  <img src="{{ media | image_url: width: 200 }}" alt="{{ product.title | escape }}" width="120" height="130" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+            <button class="mp__thumb-nav mp__thumb-nav--next" type="button" aria-label="Next" data-thumb-next>
+              {% render 'icon', icon: 'arrow-right' %}
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- INFO ---------- {%- endcomment -%}
+      <div class="mp__info">
+
+        <div class="mp__head">
+          <h1 class="mp__title">{{ product.title | default: 'Product title' }}</h1>
+          <div class="mp__qty" data-qty>
+            <button type="button" class="mp__qty-btn" data-qty-minus aria-label="Decrease quantity">&minus;</button>
+            <input class="mp__qty-input" type="text" name="quantity" value="1" inputmode="numeric" aria-label="Quantity" form="product-form-{{ section.id }}">
+            <button type="button" class="mp__qty-btn" data-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <p class="mp__price" data-price>{{ product.price | default: 0 | money }}</p>
+
+        {%- if product.selected_or_first_available_variant.title != 'Default Title' -%}
+          <p class="mp__variant-label" data-variant-label>{{ product.selected_or_first_available_variant.title }}</p>
+        {%- endif -%}
+
+        {%- comment -%} ---------- VARIANT PICKER ---------- {%- endcomment -%}
+        {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'mp__form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              {%- assign opt_name = option.name | downcase -%}
+              {%- assign is_color = false -%}
+              {%- if opt_name contains color_names or opt_name contains 'color' or opt_name contains 'colour' or opt_name contains 'shade' -%}
+                {%- assign is_color = true -%}
+              {%- endif -%}
+
+              <div class="mp__opt" data-option-index="{{ forloop.index }}">
+                <span class="mp__opt-name">{% if is_color %}Colors{% else %}{{ option.name }}{% endif %}</span>
+
+                {%- if is_color -%}
+                  <div class="mp__swatches">
+                    {%- for value in option.values -%}
+                      {%- assign v = value | downcase | strip -%}
+                      {%- case v -%}
+                        {%- when 'ivory' -%}{%- assign hex = '#f3ecdd' -%}
+                        {%- when 'natural' -%}{%- assign hex = '#e7dcc6' -%}
+                        {%- when 'oatmeal' -%}{%- assign hex = '#e0d3ba' -%}
+                        {%- when 'beige','lt. beige mel','lt beige mel' -%}{%- assign hex = '#d8c8a9' -%}
+                        {%- when 'tea' -%}{%- assign hex = '#c9b48f' -%}
+                        {%- when 'green mel','green' -%}{%- assign hex = '#6f7a4c' -%}
+                        {%- when 'olive' -%}{%- assign hex = '#4b4b3b' -%}
+                        {%- when 'midlife brown','mahogany','brown' -%}{%- assign hex = '#7a5c46' -%}
+                        {%- when 'pumice stone','lt. grey mel','lt grey mel','grey','gray' -%}{%- assign hex = '#b9b2a6' -%}
+                        {%- when 'lt. blue daisy','lt blue daisy','blue' -%}{%- assign hex = '#a9c2d6' -%}
+                        {%- when 'sand' -%}{%- assign hex = '#ddd0b9' -%}
+                        {%- when 'taupe' -%}{%- assign hex = '#a8967a' -%}
+                        {%- else -%}{%- assign hex = '#ddd0b9' -%}
+                      {%- endcase -%}
+                      <label class="mp__swatch {% if option.selected_value == value %}is-active{% endif %}" title="{{ value | escape }}">
+                        <input type="radio" name="option{{ option.position }}" value="{{ value | escape }}"
+                               data-option-input data-option-position="{{ option.position }}"
+                               {% if option.selected_value == value %}checked{% endif %}>
+                        <span class="mp__swatch-dot" style="background:{{ hex }};"></span>
+                        <span class="visually-hidden">{{ value }}</span>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <div class="mp__pills">
+                    {%- for value in option.values -%}
+                      <label class="mp__pill {% if option.selected_value == value %}is-active{% endif %}">
+                        <input type="radio" name="option{{ option.position }}" value="{{ value | escape }}"
+                               data-option-input data-option-position="{{ option.position }}"
+                               {% if option.selected_value == value %}checked{% endif %}>
+                        <span>{{ value }}</span>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {%- comment -%} ---------- ACCORDIONS ---------- {%- endcomment -%}
+          {%- if section.blocks.size > 0 -%}
+            <div class="mp__acc">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'accordion' -%}
+                  <details class="mp__acc-item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                    <summary class="mp__acc-head">
+                      <span>{{ block.settings.heading }}</span>
+                      <svg class="mp__acc-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 9 6 6 6-6"/></svg>
+                    </summary>
+                    <div class="mp__acc-body">
+                      {%- if block.settings.use_product_description and product.description != blank -%}
+                        {{ product.description }}
+                      {%- else -%}
+                        {{ block.settings.content }}
+                      {%- endif -%}
+                    </div>
+                  </details>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} ---------- BUY BUTTON ---------- {%- endcomment -%}
+          {%- if product.available -%}
+            <button type="submit" class="btn btn--outline btn--block mp__buy" data-add>
+              {{ section.settings.buy_button_label | default: 'Buy now' }}
+            </button>
+          {%- else -%}
+            <button type="button" class="btn btn--outline btn--block mp__buy" disabled data-sold>Sold out</button>
+          {%- endif -%}
+        {%- endform -%}
+
+        {%- if section.settings.trust_text != blank -%}
+          <p class="mp__trust">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+            {{ section.settings.trust_text }}
+          </p>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-variants>
+    [
+      {%- for v in product.variants -%}
+        {"id": {{ v.id }}, "options": {{ v.options | json }}, "price": {{ v.price | money | json }}, "available": {{ v.available }}, "title": {{ v.title | json }}, "image": {{ v.featured_image | image_url: width: 1200 | json }}}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+</section>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .mp { padding: 40px 0 90px; }
+  .mp__crumb { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 30px; display: flex; gap: 10px; }
+  .mp__crumb a:hover { color: var(--brown); }
+  .mp__grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: start; }
+
+  /* Gallery */
+  .mp__main { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--cream-2); aspect-ratio: 5/5.4; }
+  .mp__main img, .mp__main .mp__ph { width: 100%; height: 100%; object-fit: cover; }
+  .mp__wish { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.85); border: none; color: var(--brown); display: flex; align-items: center; justify-content: center; transition: background .25s; }
+  .mp__wish:hover { background: #fff; }
+  .mp__wish.is-active { background: var(--brown); color: #fff; }
+  .mp__thumbs-wrap { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+  .mp__thumbs { display: flex; gap: 14px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; flex: 1; }
+  .mp__thumbs::-webkit-scrollbar { display: none; }
+  .mp__thumb { flex: 0 0 84px; height: 92px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--cream-2); padding: 0; transition: border-color .2s; }
+  .mp__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .mp__thumb.is-active { border-color: var(--taupe); box-shadow: 0 0 0 1px var(--taupe); }
+  .mp__thumb-nav { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--brown); display: inline-flex; align-items: center; justify-content: center; }
+  .mp__thumb-nav:hover { background: var(--brown); color: #fff; border-color: var(--brown); }
+
+  /* Info */
+  .mp__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  .mp__title { font-size: clamp(26px, 3vw, 38px); letter-spacing: .04em; text-transform: uppercase; }
+  .mp__qty { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+  .mp__qty-btn { width: 30px; height: 30px; border: none; background: transparent; color: var(--brown); font-size: 18px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
+  .mp__qty-input { width: 42px; text-align: center; border: none; background: transparent; padding: 6px 0; font-size: 16px; }
+  .mp__qty-input:focus { border: none; }
+  .mp__price { font-family: var(--font-serif); font-size: 26px; color: var(--brown); margin: 14px 0 6px; letter-spacing: .02em; }
+  .mp__variant-label { font-family: var(--font-serif); font-size: 20px; color: var(--brown); margin: 0 0 28px; }
+
+  .mp__opt { margin: 0 0 28px; }
+  .mp__opt-name { display: block; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .mp__swatches { display: flex; gap: 16px; flex-wrap: wrap; }
+  .mp__swatch { position: relative; cursor: pointer; display: inline-flex; }
+  .mp__swatch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .mp__swatch-dot { width: 40px; height: 40px; border-radius: 50%; display: block; border: 1px solid var(--line); box-shadow: inset 0 0 0 3px #fff; transition: box-shadow .2s, outline .2s; }
+  .mp__swatch.is-active .mp__swatch-dot { outline: 1px solid var(--taupe); outline-offset: 3px; }
+  .mp__pills { display: flex; gap: 12px; flex-wrap: wrap; }
+  .mp__pill { position: relative; cursor: pointer; }
+  .mp__pill input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .mp__pill span { display: inline-block; padding: 10px 20px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--brown); transition: background .2s, color .2s, border-color .2s; }
+  .mp__pill.is-active span { background: var(--brown); color: #fff; border-color: var(--brown); }
+
+  .mp__acc { border-top: 1px solid var(--line); margin: 8px 0 30px; }
+  .mp__acc-item { border-bottom: 1px solid var(--line); }
+  .mp__acc-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; font-family: var(--font-sans); font-weight: 400; font-size: 15px; letter-spacing: .04em; color: var(--brown); }
+  .mp__acc-head::-webkit-details-marker { display: none; }
+  .mp__acc-ico { transition: transform .25s; color: var(--taupe); flex: 0 0 auto; }
+  .mp__acc-item[open] .mp__acc-ico { transform: rotate(180deg); }
+  .mp__acc-body { padding: 0 0 22px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .mp__acc-body p { margin: 0 0 10px; }
+
+  .mp__buy { margin-top: 6px; padding: 18px 30px; }
+  .mp__trust { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0 0; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  @media (max-width: 990px) {
+    .mp__grid { grid-template-columns: 1fr; gap: 36px; }
+    #shopify-section-{{ section.id }} .mp { padding: 24px 0 60px; }
+  }
+  @media (max-width: 600px) {
+    .mp__head { flex-wrap: wrap; }
+    .mp__swatch-dot { width: 34px; height: 34px; }
+  }
+{%- endstyle -%}
+
+<script>
+(function(){
+  var root = document.querySelector('#shopify-section-{{ section.id }} .mp');
+  if (!root || root.dataset.mpInit) return;
+  root.dataset.mpInit = '1';
+
+  var dataEl = root.querySelector('[data-variants]');
+  var variants = [];
+  try { variants = JSON.parse(dataEl.textContent); } catch(e){}
+
+  var idInput = root.querySelector('[data-variant-id]');
+  var priceEl = root.querySelector('[data-price]');
+  var labelEl = root.querySelector('[data-variant-label]');
+  var mainImg = root.querySelector('[data-main-img]');
+  var buyBtn  = root.querySelector('[data-add]');
+  var optionInputs = root.querySelectorAll('[data-option-input]');
+
+  function selectedOptions(){
+    var picks = {};
+    optionInputs.forEach(function(inp){
+      if (inp.checked) picks[inp.dataset.optionPosition] = inp.value;
+    });
+    var arr = [];
+    Object.keys(picks).sort().forEach(function(k){ arr.push(picks[k]); });
+    return arr;
+  }
+
+  function findVariant(){
+    var sel = selectedOptions();
+    if (!sel.length) return variants[0];
+    return variants.find(function(v){
+      return v.options.length === sel.length && v.options.every(function(o,i){ return o === sel[i]; });
+    });
+  }
+
+  function syncActive(){
+    root.querySelectorAll('.mp__swatch, .mp__pill').forEach(function(el){
+      var input = el.querySelector('input');
+      el.classList.toggle('is-active', input && input.checked);
+    });
+  }
+
+  function update(){
+    var v = findVariant();
+    syncActive();
+    if (!v){
+      if (buyBtn){ buyBtn.disabled = true; buyBtn.textContent = 'Unavailable'; }
+      return;
+    }
+    if (idInput) idInput.value = v.id;
+    if (priceEl) priceEl.innerHTML = v.price;
+    if (labelEl) labelEl.textContent = v.title;
+    if (mainImg && v.image) mainImg.src = v.image;
+    if (buyBtn){
+      buyBtn.disabled = !v.available;
+      buyBtn.textContent = v.available ? '{{ section.settings.buy_button_label | default: "Buy now" | escape }}' : 'Sold out';
+    }
+  }
+
+  optionInputs.forEach(function(inp){ inp.addEventListener('change', update); });
+
+  /* Quantity */
+  var qtyInput = root.querySelector('.mp__qty-input');
+  root.querySelector('[data-qty-minus]') && root.querySelector('[data-qty-minus]').addEventListener('click', function(){
+    var n = parseInt(qtyInput.value, 10) || 1; if (n > 1) qtyInput.value = n - 1;
+  });
+  root.querySelector('[data-qty-plus]') && root.querySelector('[data-qty-plus]').addEventListener('click', function(){
+    var n = parseInt(qtyInput.value, 10) || 1; qtyInput.value = n + 1;
+  });
+  qtyInput && qtyInput.addEventListener('input', function(){
+    this.value = this.value.replace(/[^0-9]/g,'') || '1';
+  });
+
+  /* Gallery thumbs */
+  root.querySelectorAll('[data-thumb]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (mainImg) mainImg.src = btn.dataset.full;
+      root.querySelectorAll('[data-thumb]').forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+    });
+  });
+  var strip = root.querySelector('[data-thumbs]');
+  root.querySelector('[data-thumb-prev]') && root.querySelector('[data-thumb-prev]').addEventListener('click', function(){ strip.scrollBy({left:-200,behavior:'smooth'}); });
+  root.querySelector('[data-thumb-next]') && root.querySelector('[data-thumb-next]').addEventListener('click', function(){ strip.scrollBy({left:200,behavior:'smooth'}); });
+
+  /* Wishlist toggle (visual) */
+  var wish = root.querySelector('.mp__wish');
+  wish && wish.addEventListener('click', function(){ wish.classList.toggle('is-active'); });
+
+  syncActive();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product details",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist button", "default": true },
+    { "type": "text", "id": "color_option_name", "label": "Colour option name", "default": "Color", "info": "Options matching this name (or containing color/shade) render as swatches." },
+    { "type": "text", "id": "buy_button_label", "label": "Buy button label", "default": "Buy now" },
+    { "type": "text", "id": "trust_text", "label": "Trust signal text", "default": "Delivered in 48 hours" }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Details" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Add product details here.</p>" },
+        { "type": "checkbox", "id": "use_product_description", "label": "Use product description as content", "default": false },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product details",
+      "blocks": [
+        { "type": "accordion", "settings": { "heading": "Product specifications", "use_product_description": true, "open": true } },
+        { "type": "accordion", "settings": { "heading": "Material care", "content": "<p>Machine washable at 30°C. Do not bleach. Tumble dry low. Warm iron if needed.</p>" } },
+        { "type": "accordion", "settings": { "heading": "Terms & conditions", "content": "<p>Free shipping and Cash on Delivery across India. Easy returns within 7 days.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

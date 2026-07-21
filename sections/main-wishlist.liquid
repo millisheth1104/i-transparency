@@ -1,0 +1,70 @@
+{%- comment -%} Wishlist — client-side via localStorage. All products rendered hidden;
+  wishlist.js reveals only saved cards. Matches wishlist tiles. {%- endcomment -%}
+<section class="section--tight wishlist-sec" data-wishlist-page>
+  <div class="container">
+    <div class="wishlist-top">
+      <p class="eyebrow wishlist-sec__label">{{ section.settings.label }}</p>
+      <div class="wishlist-toolbar" data-wishlist-toolbar hidden>
+        <button type="button" class="wishlist-share" data-wishlist-share>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="6" cy="12" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M8.3 10.8l6.4-3.6M8.3 13.2l6.4 3.6"/></svg>
+          <span>{{ section.settings.share_label }}</span>
+        </button>
+        <button type="button" class="btn wishlist-moveall" data-wishlist-moveall>{{ section.settings.move_all_label }}</button>
+      </div>
+    </div>
+
+    <div class="grid grid--4 wishlist-grid" data-wishlist-grid hidden>
+      {%- assign coll = collections[section.settings.collection] -%}
+      {%- if coll != empty and coll.products.size > 0 -%}
+        {%- assign products_list = coll.products -%}
+      {%- else -%}
+        {%- assign products_list = collections.all.products -%}
+      {%- endif -%}
+      {%- for product in products_list limit: section.settings.max_products -%}
+        <div data-wishlist-card="{{ product.id }}" hidden>
+          {% render 'product-card', product: product %}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="wishlist-empty" data-wishlist-empty>
+      <h2 class="wishlist-empty__title">Your wishlist is <em>empty</em></h2>
+      <p class="wishlist-empty__sub">Tap the heart on any product to save it here.</p>
+      <a class="btn" href="{{ routes.all_products_collection_url }}">Explore the collection</a>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'wishlist.js' | asset_url }}" defer></script>
+
+<style>
+  .wishlist-sec { padding-top: 40px; }
+  .wishlist-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 34px; flex-wrap: wrap; }
+  .wishlist-sec__label { margin: 0; }
+  .wishlist-toolbar { display: flex; align-items: center; gap: 26px; }
+  .wishlist-share { background: transparent; border: none; display: inline-flex; align-items: center; gap: 10px; color: var(--brown); font-family: var(--font-sans); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+  .wishlist-share:hover { color: var(--taupe-dark); }
+  .wishlist-share.is-copied span::after { content: ' — copied'; color: var(--taupe); }
+  .wishlist-moveall { letter-spacing: .18em; }
+  .wishlist-empty { text-align: center; padding: 70px 0 50px; }
+  .wishlist-empty__title { font-size: clamp(28px, 4vw, 44px); }
+  .wishlist-empty__title em { font-style: italic; }
+  .wishlist-empty__sub { color: var(--muted); margin: 14px 0 28px; }
+  @media (max-width: 600px) {
+    .wishlist-top { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Page label", "default": "Wishlist" },
+    { "type": "text", "id": "share_label", "label": "Share button", "default": "Share wishlist" },
+    { "type": "text", "id": "move_all_label", "label": "Move all button", "default": "Move all to cart" },
+    { "type": "collection", "id": "collection", "label": "Source collection (defaults to all products)" },
+    { "type": "range", "id": "max_products", "label": "Max products to index", "min": 12, "max": 100, "step": 4, "default": 60 }
+  ],
+  "presets": [{ "name": "Wishlist" }]
+}
+{% endschema %}

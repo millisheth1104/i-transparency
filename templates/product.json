@@ -1,0 +1,47 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "specs": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Product specifications",
+            "use_product_description": true,
+            "open": true
+          }
+        },
+        "care": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Material care",
+            "content": "<p>Machine washable at 30°C. Do not bleach. Tumble dry low. Warm iron if needed.</p>"
+          }
+        },
+        "terms": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Terms & conditions",
+            "content": "<p>Free shipping and Cash on Delivery across India. Easy returns within 7 days of delivery.</p>"
+          }
+        }
+      },
+      "block_order": ["specs", "care", "terms"],
+      "settings": {
+        "show_breadcrumb": true,
+        "show_wishlist": true,
+        "color_option_name": "Color",
+        "buy_button_label": "Buy now",
+        "trust_text": "Delivered in 48 hours"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "products_limit": 6
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

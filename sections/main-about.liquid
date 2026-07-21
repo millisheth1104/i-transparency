@@ -1,0 +1,115 @@
+{%- assign s = section.settings -%}
+<div class="about">
+
+  {%- comment -%} Our story {%- endcomment -%}
+  <section class="section about-story">
+    <div class="container">
+      <div class="about-story__head">
+        <h1 class="section-heading">{{ s.story_heading }}</h1>
+        {%- if s.story_intro != blank -%}<p class="about-story__intro">{{ s.story_intro }}</p>{%- endif -%}
+        {%- if s.story_belief != blank -%}<p class="about-story__belief">{{ s.story_belief }}</p>{%- endif -%}
+      </div>
+      <div class="about-story__grid">
+        <div class="about-story__media">
+          {%- if s.story_image != blank -%}
+            <img src="{{ s.story_image | image_url: width: 1200 }}" alt="{{ s.story_heading | escape }}" width="1000" height="700" loading="lazy">
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        <div class="about-story__body">{{ s.story_body }}</div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Sarom legacy band {%- endcomment -%}
+  <section class="about-legacy">
+    <div class="container">
+      <p class="eyebrow text-center">{{ s.legacy_eyebrow }}</p>
+      <p class="about-legacy__text">{{ s.legacy_text }}</p>
+    </div>
+  </section>
+
+  {%- comment -%} What we believe {%- endcomment -%}
+  <section class="section about-believe">
+    <div class="container">
+      <h2 class="section-heading about-believe__title">{{ s.believe_heading }}</h2>
+      <div class="about-believe__grid">
+        <div class="about-believe__body">{{ s.believe_body }}</div>
+        <div class="about-believe__media">
+          {%- if s.believe_image != blank -%}
+            <img src="{{ s.believe_image | image_url: width: 1000 }}" alt="{{ s.believe_heading | escape }}" width="900" height="620" loading="lazy">
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Our promise band {%- endcomment -%}
+  <section class="about-promise">
+    <div class="container">
+      <span class="about-promise__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21c-4-1.5-7-5-7-9 3 0 5.5 1.7 7 4.2C13.5 13.7 16 12 19 12c0 4-3 7.5-7 9Z"/><path d="M12 21V13c0-3 1.5-5.5 4-7-.5 3-2 5.5-4 7"/><path d="M12 13C10 11 8.5 8.5 8 5.5c2.5 1.5 4 4 4 7Z"/></svg>
+      </span>
+      <p class="eyebrow text-center">{{ s.promise_eyebrow }}</p>
+      <p class="about-promise__text">{{ s.promise_text }}</p>
+    </div>
+  </section>
+
+</div>
+
+<style>
+  .about-story__head { max-width: 720px; margin: 0 auto 54px; text-align: center; }
+  .about-story__intro { color: var(--muted); margin: 18px 0 4px; }
+  .about-story__belief { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 20px; color: var(--brown-2); margin: 0; }
+  .about-story__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 60px; align-items: center; }
+  .about-story__media img, .about-story__media svg { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); aspect-ratio: 3/2; }
+  .about-story__body { color: var(--brown-2); }
+  .about-story__body p { margin: 0 0 18px; }
+
+  .about-legacy { background: var(--cream-2); padding: 70px 0; }
+  .about-legacy__text { max-width: 1000px; margin: 16px auto 0; text-align: center; color: var(--brown-2); }
+
+  .about-believe__title { text-align: center; margin-bottom: 40px; }
+  .about-believe__grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
+  .about-believe__body { color: var(--brown-2); }
+  .about-believe__body p { margin: 0 0 18px; }
+  .about-believe__media img, .about-believe__media svg { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); aspect-ratio: 3/2; }
+
+  .about-promise { background: var(--taupe-dark); color: var(--cream); padding: 80px var(--gutter); text-align: center; }
+  .about-promise__icon { color: var(--cream); display: inline-flex; margin-bottom: 22px; }
+  .about-promise .eyebrow { color: rgba(244,238,228,.85); }
+  .about-promise__text { max-width: 1080px; margin: 8px auto 0; color: rgba(244,238,228,.9); font-size: 18px; }
+
+  @media (max-width: 860px) {
+    .about-story__grid, .about-believe__grid { grid-template-columns: 1fr; gap: 34px; }
+    .about-believe__media { order: -1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About page",
+  "settings": [
+    { "type": "header", "content": "Our story" },
+    { "type": "inline_richtext", "id": "story_heading", "label": "Heading", "default": "Our <em>story</em>" },
+    { "type": "text", "id": "story_intro", "label": "Intro line", "default": "Beds & More was created with a simple belief:" },
+    { "type": "text", "id": "story_belief", "label": "Belief line", "default": "The products you use every day should be the ones you love the most." },
+    { "type": "image_picker", "id": "story_image", "label": "Story image" },
+    { "type": "richtext", "id": "story_body", "label": "Story text", "default": "<p>As part of the Sarom family, we spent years helping people create beautiful homes through thoughtfully crafted fabrics and home furnishings. Along the way, we realized that one of the most personal spaces in every home deserved the same attention, the bedroom.</p><p>That's how Beds & More began.</p><p>Today, we bring together quality materials, timeless designs, and everyday comfort to create bedding that's made to be lived in, loved, and enjoyed for years to come.</p><p>Thoughtfully crafted for the moments you come home to.</p>" },
+    { "type": "header", "content": "Sarom legacy" },
+    { "type": "text", "id": "legacy_eyebrow", "label": "Eyebrow", "default": "The Sarom Legacy" },
+    { "type": "richtext", "id": "legacy_text", "label": "Text", "default": "<p>Beds & More is built on the foundation of Sarom, a trusted name in home furnishings since 2005. For over two decades, Sarom has worked with retailers, designers, architects, and homeowners across India, creating products that combine quality craftsmanship with thoughtful design. That experience has shaped everything we do at Beds & More. When you choose Beds & More, you're choosing bedding backed by years of expertise, a commitment to quality, and a family business that believes trust is earned through every product we create.</p>" },
+    { "type": "header", "content": "What we believe" },
+    { "type": "inline_richtext", "id": "believe_heading", "label": "Heading", "default": "What we <em>believe</em>" },
+    { "type": "image_picker", "id": "believe_image", "label": "Image" },
+    { "type": "richtext", "id": "believe_body", "label": "Text", "default": "<p>We believe comfort isn't just about how something feels, it's about how it becomes part of your everyday life.</p><p>It's the feeling of slipping into fresh sheets after a long day. It's slow Sunday mornings, quiet evenings, and the simple comfort of being home.</p><p>That's why we focus on thoughtful design, quality materials, and craftsmanship that stand the test of time, creating bedding you'll love today and for years to come.</p>" },
+    { "type": "header", "content": "Our promise" },
+    { "type": "text", "id": "promise_eyebrow", "label": "Eyebrow", "default": "Our Promise" },
+    { "type": "richtext", "id": "promise_text", "label": "Text", "default": "<p>We promise to make bedding we'd proudly use in our own homes. That means choosing quality over shortcuts, creating designs that last beyond trends, and paying attention to the details that make a difference. Every collection is made with care, so you can enjoy comfort that lasts, quality you can trust, and a bedroom you'll always look forward to coming home to.</p>" }
+  ],
+  "presets": [{ "name": "About page" }]
+}
+{% endschema %}

@@ -1,0 +1,93 @@
+{%- comment -%}
+  Newsletter / promo popup. Shown once per session (sessionStorage).
+  Wire into the site by adding {% render 'popup' %} before </body> in layout/theme.liquid.
+  Optional params (all have defaults):
+    eyebrow, heading, body, placeholder, button, footnote, image (image object), delay (ms)
+{%- endcomment -%}
+{%- assign pop_eyebrow  = eyebrow  | default: 'First Order' -%}
+{%- assign pop_heading  = heading  | default: 'Get ₹500 off' -%}
+{%- assign pop_body     = body     | default: 'Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.' -%}
+{%- assign pop_ph       = placeholder | default: 'Your email address' -%}
+{%- assign pop_btn      = button   | default: 'Claim coupon' -%}
+{%- assign pop_note     = footnote | default: 'No spam — just good stuff. Unsubscribe anytime.' -%}
+{%- assign pop_delay    = delay    | default: 900 -%}
+
+<div class="bm-popup" data-popup hidden aria-hidden="true">
+  <div class="bm-popup__overlay" data-popup-close></div>
+  <div class="bm-popup__dialog" role="dialog" aria-modal="true" aria-label="{{ pop_heading | escape }}">
+    <button type="button" class="bm-popup__close" data-popup-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="bm-popup__media">
+      {%- if image != blank -%}
+        <img src="{{ image | image_url: width: 760 }}" alt="" width="380" height="440" loading="lazy">
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+    <div class="bm-popup__body">
+      <p class="eyebrow bm-popup__eyebrow">{{ pop_eyebrow }}</p>
+      <h2 class="bm-popup__heading">{{ pop_heading }}</h2>
+      <p class="bm-popup__text">{{ pop_body }}</p>
+      {%- form 'customer', class: 'bm-popup__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter, popup">
+        <input type="email" name="contact[email]" placeholder="{{ pop_ph | escape }}" aria-label="Email address" required>
+        <button type="submit" class="btn btn--gold btn--block bm-popup__submit">{{ pop_btn }}</button>
+      {%- endform -%}
+      <p class="bm-popup__note">{{ pop_note }}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bm-popup { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .bm-popup[hidden] { display: none; }
+  .bm-popup__overlay { position: absolute; inset: 0; background: rgba(74,65,57,.55); backdrop-filter: blur(1px); opacity: 0; transition: opacity .3s ease; }
+  .bm-popup.is-open .bm-popup__overlay { opacity: 1; }
+  .bm-popup__dialog { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 940px; width: 100%; background: var(--cream); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 30px 80px rgba(74,65,57,.28); transform: translateY(14px) scale(.98); opacity: 0; transition: transform .35s ease, opacity .35s ease; }
+  .bm-popup.is-open .bm-popup__dialog { transform: none; opacity: 1; }
+  .bm-popup__close { position: absolute; top: 16px; right: 16px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(255,255,255,.7); color: var(--brown); display: inline-flex; align-items: center; justify-content: center; transition: background .2s; }
+  .bm-popup__close:hover { background: #fff; }
+  .bm-popup__media { background: var(--cream-2); }
+  .bm-popup__media img, .bm-popup__media svg { width: 100%; height: 100%; object-fit: cover; }
+  .bm-popup__body { padding: 48px 46px; display: flex; flex-direction: column; justify-content: center; }
+  .bm-popup__eyebrow { margin-bottom: 12px; }
+  .bm-popup__heading { font-family: var(--font-serif); font-size: clamp(30px, 3.4vw, 40px); color: var(--brown); }
+  .bm-popup__text { color: var(--muted); margin: 16px 0 26px; line-height: 1.6; }
+  .bm-popup__form input[type="email"] { margin-bottom: 14px; }
+  .bm-popup__submit { letter-spacing: .18em; }
+  .bm-popup__note { font-size: 12px; color: var(--muted); text-align: center; margin: 14px 0 0; }
+  @media (max-width: 749px) {
+    .bm-popup__dialog { grid-template-columns: 1fr; max-width: 440px; }
+    .bm-popup__media { display: none; }
+    .bm-popup__body { padding: 44px 30px 34px; }
+  }
+</style>
+
+<script>
+  (function(){
+    var root = document.querySelector('[data-popup]');
+    if (!root || root.dataset.popupInit) return;
+    root.dataset.popupInit = '1';
+    var KEY = 'bm_popup_seen';
+    if (sessionStorage.getItem(KEY)) return;
+
+    function open(){
+      root.hidden = false;
+      root.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(function(){ root.classList.add('is-open'); });
+      document.addEventListener('keydown', onKey);
+    }
+    function close(){
+      root.classList.remove('is-open');
+      root.setAttribute('aria-hidden', 'true');
+      sessionStorage.setItem(KEY, '1');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function(){ root.hidden = true; }, 350);
+    }
+    function onKey(e){ if (e.key === 'Escape') close(); }
+
+    root.querySelectorAll('[data-popup-close]').forEach(function(el){ el.addEventListener('click', close); });
+    setTimeout(open, {{ pop_delay }});
+  })();
+</script>

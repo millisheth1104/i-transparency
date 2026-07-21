@@ -1,0 +1,121 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" height="42">
+        {%- else -%}
+          <span class="logo-mark">beds<em>&amp;</em>more<small>by sarom</small></span>
+        {%- endif -%}
+        {%- if section.settings.address != blank -%}
+          <p class="footer-label">Corporate Office</p>
+          <p class="footer-text">{{ section.settings.address }}</p>
+        {%- endif -%}
+        {%- if section.settings.email != blank -%}
+          <p class="footer-label">Email ID</p>
+          <p class="footer-text">{{ section.settings.email }}</p>
+        {%- endif -%}
+        {%- if section.settings.phone != blank -%}
+          <p class="footer-label">Contact No.</p>
+          <p class="footer-text"><a href="tel:{{ section.settings.phone | remove: ' ' }}"><u>{{ section.settings.phone }}</u></a></p>
+        {%- endif -%}
+      </div>
+
+      <div class="footer-cols">
+        {%- for block in section.blocks -%}
+          <div class="footer-col" {{ block.shopify_attributes }}>
+            <p class="footer-col__title">{{ block.settings.title }}</p>
+            {%- assign links = block.settings.menu -%}
+            {%- if links != blank and linklists[links] -%}
+              {%- for link in linklists[links].links -%}
+                <a href="{{ link.url }}" class="footer-col__link">{{ link.title }}</a>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+              {%- for item in items -%}
+                {%- assign parts = item | strip | split: '|' -%}
+                {%- if parts[0] != blank -%}
+                  <a href="{{ parts[1] | default: '#' | strip }}" class="footer-col__link">{{ parts[0] | strip }}</a>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="footer-social">
+        {%- if section.settings.linkedin != blank -%}<a href="{{ section.settings.linkedin }}" aria-label="LinkedIn">{% render 'icon', icon: 'linkedin' %}</a>{%- endif -%}
+        {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" aria-label="Facebook">{% render 'icon', icon: 'facebook' %}</a>{%- endif -%}
+        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>{%- endif -%}
+        {%- if settings.whatsapp_number != blank -%}<a href="https://wa.me/{{ settings.whatsapp_number }}" aria-label="WhatsApp">{% render 'icon', icon: 'whatsapp' %}</a>{%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.seo_text != blank -%}
+      <div class="footer-seo"><p>{{ section.settings.seo_text }}</p></div>
+    {%- endif -%}
+
+    <p class="footer-copy">© {{ 'now' | date: '%Y' }} {{ section.settings.copyright | default: shop.name }}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--cream); padding: 70px 0 40px; margin-top: 20px; }
+  .footer-top { display: grid; grid-template-columns: 1.3fr 3fr auto; gap: 40px; }
+  .footer-brand .logo-mark { font-family: var(--font-serif); font-size: 26px; color: var(--brown); }
+  .footer-brand .logo-mark em { font-style: italic; }
+  .footer-brand .logo-mark small { display: block; font-family: var(--font-sans); font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--taupe); }
+  .footer-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
+  .footer-text { font-size: 14px; color: var(--brown-2); margin: 0; max-width: 260px; line-height: 1.6; }
+  .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .footer-col__title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); margin: 0 0 18px; }
+  .footer-col__link { display: block; font-size: 14px; color: var(--muted); margin-bottom: 12px; transition: color .2s; }
+  .footer-col__link:hover { color: var(--brown); }
+  .footer-social { display: flex; gap: 16px; color: var(--brown); height: fit-content; }
+  .footer-social a { transition: color .2s; }
+  .footer-social a:hover { color: var(--taupe); }
+  .footer-seo { border-top: 1px solid var(--line); margin-top: 50px; padding-top: 30px; }
+  .footer-seo p { font-size: 13px; color: var(--muted); line-height: 1.8; margin: 0; }
+  .footer-copy { text-align: center; font-size: 13px; color: var(--muted); margin: 40px 0 0; letter-spacing: .04em; }
+
+  @media (max-width: 990px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-cols { grid-template-columns: repeat(2, 1fr); }
+    .footer-social { margin-top: 10px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@sarom.com" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "088289 11111" },
+    { "type": "url", "id": "linkedin", "label": "LinkedIn" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "textarea", "id": "seo_text", "label": "SEO paragraph", "default": "Beds & More is a premium bedding brand from Sarom Fab offering 100% cotton, OEKO-TEX® Standard 100 certified knitted bedcover sets, cosy throws and textured cushion covers in India. The EARTHEN Knitscape collection comes in nine natural shades — in King size (96 × 108 in) with matching pillow covers. Soft, fluffy, breathable, machine washable, with no colour bleeding and free shipping & Cash on Delivery across India." },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "Beds & More by Sarom Fab · Made in India" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "link_list", "id": "menu", "label": "Menu (optional)" },
+        { "type": "textarea", "id": "items", "label": "Manual links (Label|/url per line)" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "column", "settings": { "title": "Shop", "items": "Bedsheets|/collections/bedsheets\nBed Covers|/collections/bed-covers\nPillow Covers|/collections/pillow-covers\nComforters|/collections/comforters\nThrows|/collections/throws\nPillows|/collections/pillows" } },
+      { "type": "column", "settings": { "title": "Collections", "items": "Bare Earth|/collections/bare-earth\nPlush|/collections/plush\nTerraweave|/collections/terraweave\nSoft Haven|/collections/soft-haven\nKnitscapes|/collections/knitscapes" } },
+      { "type": "column", "settings": { "title": "Corporate", "items": "Corporate|/pages/corporate\nHotels & Resorts|/pages/corporate\nDesigners & Architects|/pages/corporate\nDevelopers|/pages/corporate\nRetail Partners|/pages/corporate" } },
+      { "type": "column", "settings": { "title": "Company", "items": "About us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,154 @@
+<div class="account container" data-account>
+  <p class="account__crumb" data-crumb>Profile / My Details</p>
+
+  <div class="account__layout">
+    <nav class="account__nav" aria-label="Account">
+      <button type="button" class="account__nav-item is-active" data-tab="details">My Details</button>
+      <button type="button" class="account__nav-item" data-tab="orders">Orders</button>
+    </nav>
+
+    <div class="account__main">
+
+      {%- comment -%} ---- My Details ---- {%- endcomment -%}
+      <section class="account__panel is-active" data-panel="details">
+        <div class="account__field">
+          <p class="account__label">Full Name</p>
+          <p class="account__value">{{ customer.name | default: customer.first_name }}</p>
+        </div>
+        <div class="account__field">
+          <p class="account__label">Email ID</p>
+          <p class="account__value">{{ customer.email }}</p>
+        </div>
+        <div class="account__field">
+          <p class="account__label">Phone Number</p>
+          <p class="account__value">{{ customer.phone | default: customer.default_address.phone | default: '—' }}</p>
+        </div>
+        <div class="account__field">
+          <div class="account__row">
+            <p class="account__label">Password</p>
+            <a class="account__link" href="{{ routes.account_login_url }}#recover">Change</a>
+          </div>
+          <p class="account__value">*******</p>
+        </div>
+
+        <div class="account__field">
+          <div class="account__row">
+            <p class="account__label">Addresses</p>
+            <a class="account__link" href="{{ routes.account_addresses_url }}">Add Address</a>
+          </div>
+          {%- if customer.addresses.size > 0 -%}
+            {%- for address in customer.addresses -%}
+              <div class="account__address">
+                <p class="account__value">{{ address | format_address }}</p>
+                <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}" onsubmit="return confirm('Delete this address?');">
+                  <input type="hidden" name="_method" value="delete">
+                  <button type="submit" class="account__del" aria-label="Delete address">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg>
+                  </button>
+                </form>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <p class="account__value">No saved addresses yet.</p>
+          {%- endif -%}
+        </div>
+
+        <form method="post" action="{{ routes.account_logout_url }}" class="account__logout-form">
+          <button type="submit" class="btn btn--outline btn--block">Log out</button>
+        </form>
+        <p class="account__delete"><a href="mailto:{{ shop.email }}?subject=Delete%20my%20account">Delete account</a></p>
+      </section>
+
+      {%- comment -%} ---- Orders ---- {%- endcomment -%}
+      <section class="account__panel" data-panel="orders">
+        {%- paginate customer.orders by 12 -%}
+          {%- if customer.orders.size > 0 -%}
+            {%- for order in customer.orders -%}
+              <article class="order-row">
+                <div class="order-row__head">
+                  <h2 class="order-row__num">Order Number <a href="{{ order.customer_url }}">#{{ order.name | remove: '#' }}</a></h2>
+                  {%- if order.fulfillment_status == 'fulfilled' -%}
+                    <div class="order-row__links">
+                      <a href="{{ order.order_status_url | default: order.customer_url }}">Download Invoice</a>
+                      <a href="{{ order.order_status_url | default: order.customer_url }}">Download Receipt</a>
+                    </div>
+                  {%- else -%}
+                    <span class="order-row__status">{{ order.fulfillment_status_label | default: 'In progress' }}</span>
+                  {%- endif -%}
+                </div>
+                <p class="order-row__line">{{ order.item_count }} item(s)</p>
+                <p class="order-row__line">{{ order.total_price | money }}</p>
+                <p class="order-row__line">{{ order.created_at | date: '%d/%m/%Y' }}</p>
+                <p class="order-row__line">{{ order.financial_status_label }}</p>
+              </article>
+            {%- endfor -%}
+            {{ paginate | default_pagination }}
+          {%- else -%}
+            <p class="account__value">You haven't placed any orders yet.</p>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .account { padding: 40px 0 90px; }
+  .account__crumb { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); margin: 0 0 40px; }
+  .account__layout { display: grid; grid-template-columns: 230px 1fr; gap: 60px; align-items: start; }
+  .account__nav { display: flex; flex-direction: column; gap: 6px; }
+  .account__nav-item { text-align: left; background: transparent; border: none; border-left: 2px solid transparent; padding: 14px 20px; font-family: var(--font-serif); font-size: 20px; color: var(--muted); border-radius: 8px; }
+  .account__nav-item.is-active { background: var(--cream-2); color: var(--brown); border-left-color: var(--taupe); }
+
+  .account__main { max-width: 720px; }
+  .account__panel { display: none; }
+  .account__panel.is-active { display: block; }
+  .account__field { margin-bottom: 36px; }
+  .account__row { display: flex; align-items: center; justify-content: space-between; }
+  .account__label { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); margin: 0 0 12px; }
+  .account__value { color: var(--muted); margin: 0; }
+  .account__link { font-size: 14px; color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+  .account__address { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 6px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+  .account__address:last-child { border-bottom: none; }
+  .account__del { background: transparent; border: none; color: var(--brown); padding: 4px; }
+  .account__logout-form { margin-top: 20px; }
+  .account__delete { text-align: center; margin: 22px 0 0; }
+  .account__delete a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
+
+  /* Orders */
+  .order-row { padding: 4px 0 34px; border-bottom: 1px solid var(--line); margin-bottom: 34px; }
+  .order-row:last-of-type { border-bottom: none; }
+  .order-row__head { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+  .order-row__num { font-family: var(--font-sans); font-weight: 400; font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--brown); margin: 0; }
+  .order-row__num a { text-decoration: underline; text-underline-offset: 4px; }
+  .order-row__links { display: flex; gap: 24px; }
+  .order-row__links a, .order-row__status { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; font-size: 15px; }
+  .order-row__status { text-decoration: none; }
+  .order-row__line { color: var(--muted); margin: 0 0 6px; }
+
+  @media (max-width: 860px) {
+    .account__layout { grid-template-columns: 1fr; gap: 30px; }
+    .account__nav { flex-direction: row; }
+    .order-row__head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-account]');
+    if (!root || root.dataset.accountInit) return;
+    root.dataset.accountInit = '1';
+    var tabs = root.querySelectorAll('[data-tab]');
+    var panels = root.querySelectorAll('[data-panel]');
+    var crumb = root.querySelector('[data-crumb]');
+    function activate(name) {
+      tabs.forEach(function (t) { t.classList.toggle('is-active', t.dataset.tab === name); });
+      panels.forEach(function (p) { p.classList.toggle('is-active', p.dataset.panel === name); });
+      if (crumb) crumb.textContent = name === 'orders' ? 'Profile / Orders' : 'Profile / My Details';
+      if (history.replaceState) history.replaceState(null, '', name === 'orders' ? '#orders' : '#details');
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { activate(t.dataset.tab); }); });
+    if (location.hash === '#orders') activate('orders');
+  })();
+</script>

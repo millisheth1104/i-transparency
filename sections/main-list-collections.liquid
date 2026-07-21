@@ -1,0 +1,107 @@
+{%- liquid
+  assign cols = section.settings.columns
+  assign list = section.settings.collection_list
+  if list == blank or list.size == 0
+    assign list = collections
+  endif
+-%}
+
+<section class="section--tight lc" data-section-id="{{ section.id }}">
+  <div class="container">
+
+    <p class="lc-crumb">{{ section.settings.breadcrumb_root }} <span>/</span> All</p>
+
+    <div class="lc-intro">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h1 class="section-heading">{{ section.settings.heading }}</h1>{%- endif -%}
+      {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
+    </div>
+
+    {%- if list.size > 0 -%}
+      <div class="lc-grid lc-grid--{{ cols }}">
+        {%- for collection in list -%}
+          <a href="{{ collection.url }}" class="lc-card">
+            <span class="lc-card__media">
+              {%- if collection.featured_image != blank -%}
+                <img src="{{ collection.featured_image | image_url: width: 900 }}" alt="{{ collection.title | escape }}" width="900" height="1100" loading="lazy">
+              {%- elsif collection.products.first.featured_image != blank -%}
+                <img src="{{ collection.products.first.featured_image | image_url: width: 900 }}" alt="{{ collection.title | escape }}" width="900" height="1100" loading="lazy">
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag }}
+              {%- endif -%}
+              <span class="lc-card__overlay">
+                <span class="lc-card__num">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="lc-card__title">{{ collection.title }}</span>
+                {%- if section.settings.show_count -%}
+                  <span class="lc-card__count">{{ collection.all_products_count }} products</span>
+                {%- endif -%}
+              </span>
+            </span>
+            <span class="lc-card__cta">View collection {% render 'icon', icon: 'arrow-right' %}</span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="lc-empty">
+        <p class="eyebrow">Coming soon</p>
+        <h2 class="section-heading">No collections <em>yet</em></h2>
+        <p class="section-sub">Create collections in your Shopify admin to see them here.</p>
+        <a class="btn" href="{{ routes.all_products_collection_url }}">Shop all</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .lc-crumb { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--brown); margin: 0 0 40px; }
+  #shopify-section-{{ section.id }} .lc-crumb span { color: var(--taupe); margin: 0 6px; }
+  #shopify-section-{{ section.id }} .lc-intro { text-align: center; margin-bottom: 48px; }
+  #shopify-section-{{ section.id }} .lc-intro .section-heading { margin-top: 6px; }
+
+  #shopify-section-{{ section.id }} .lc-grid { display: grid; gap: 30px; }
+  #shopify-section-{{ section.id }} .lc-grid--2 { grid-template-columns: repeat(2, 1fr); }
+  #shopify-section-{{ section.id }} .lc-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  #shopify-section-{{ section.id }} .lc-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  #shopify-section-{{ section.id }} .lc-card { display: flex; flex-direction: column; }
+  #shopify-section-{{ section.id }} .lc-card__media { position: relative; display: block; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; background: var(--cream-2); }
+  #shopify-section-{{ section.id }} .lc-card__media img, #shopify-section-{{ section.id }} .lc-card__media svg { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  #shopify-section-{{ section.id }} .lc-card:hover .lc-card__media img { transform: scale(1.05); }
+  #shopify-section-{{ section.id }} .lc-card__overlay { position: absolute; inset: auto 0 0 0; padding: 26px 28px; display: flex; flex-direction: column; gap: 4px; background: linear-gradient(to top, rgba(41,35,30,.62), rgba(41,35,30,0)); }
+  #shopify-section-{{ section.id }} .lc-card__num { color: rgba(255,255,255,.8); font-size: 12px; letter-spacing: .1em; }
+  #shopify-section-{{ section.id }} .lc-card__title { color: #fff; font-family: var(--font-serif); font-size: 28px; line-height: 1.1; }
+  #shopify-section-{{ section.id }} .lc-card__count { color: rgba(255,255,255,.82); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin-top: 4px; }
+  #shopify-section-{{ section.id }} .lc-card__cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); }
+  #shopify-section-{{ section.id }} .lc-card:hover .lc-card__cta { color: var(--taupe); }
+  #shopify-section-{{ section.id }} .lc-card__cta svg { width: 16px; height: 16px; transition: transform .25s; }
+  #shopify-section-{{ section.id }} .lc-card:hover .lc-card__cta svg { transform: translateX(5px); }
+
+  #shopify-section-{{ section.id }} .lc-empty { text-align: center; padding: 70px 0; }
+  #shopify-section-{{ section.id }} .lc-empty .btn { margin-top: 26px; }
+
+  @media (max-width: 990px) {
+    #shopify-section-{{ section.id }} .lc-grid--3, #shopify-section-{{ section.id }} .lc-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} .lc-grid--2, #shopify-section-{{ section.id }} .lc-grid--3, #shopify-section-{{ section.id }} .lc-grid--4 { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main list collections",
+  "settings": [
+    { "type": "text", "id": "breadcrumb_root", "label": "Breadcrumb root", "default": "Collections" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collections" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Our <em>collections</em>" },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "One knitted-cotton family across nine natural shades — explore each edit and find the layers for your bed." },
+    { "type": "collection_list", "id": "collection_list", "label": "Collections", "info": "Leave empty to show all collections" },
+    { "type": "select", "id": "columns", "label": "Columns", "default": "3", "options": [ { "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true }
+  ],
+  "presets": [
+    { "name": "Main list collections" }
+  ]
+}
+{% endschema %}

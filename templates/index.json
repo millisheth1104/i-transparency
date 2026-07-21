@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship",
+        "heading": "The art of <em>sleep.</em>",
+        "text": "Designed to transform your bedroom into a quiet sanctuary of restful serenity.",
+        "button_label_1": "Shop by category",
+        "button_label_2": "Featured collections",
+        "show_trust": true,
+        "trust_items": "Free delivery | 7 day returns | Cash on delivery available | Delivered in 48 hours"
+      }
+    },
+    "feature_split": {
+      "type": "feature-split",
+      "settings": {
+        "eyebrow": "Breathable build · Zero bleed",
+        "heading": "<em>Woven,</em> not knitted.",
+        "intro": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <strong>Ours is woven.</strong></p>",
+        "text": "<p>Woven gives cotton a different life — a soft, slightly elastic, three-dimensional hand that breathes in summer and holds warmth in winter. It drapes instead of lying stiff, and softens further with every wash rather than wearing thin. It is, simply, the most touchable bed you will own.</p>"
+      }
+    },
+    "featured_collections": {
+      "type": "featured-collections",
+      "settings": { "eyebrow": "Featured Collections" },
+      "blocks": {
+        "b1": { "type": "slide", "settings": { "title": "Bare Earth" } },
+        "b2": { "type": "slide", "settings": { "title": "Plush" } },
+        "b3": { "type": "slide", "settings": { "title": "Terraweave" } },
+        "b4": { "type": "slide", "settings": { "title": "Soft Haven" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "sleepscape": {
+      "type": "sleepscape",
+      "settings": {
+        "heading": "Build your <em>sleepscape</em>",
+        "subtext": "Tap a piece to add it — build the layered look in one go."
+      },
+      "blocks": {
+        "h1": { "type": "hotspot", "settings": { "x": 35, "y": 55, "subtitle": "Ivory · 2N Pillow Covers" } },
+        "h2": { "type": "hotspot", "settings": { "x": 62, "y": 42, "subtitle": "Woven Harmony" } }
+      },
+      "block_order": ["h1", "h2"]
+    },
+    "category_showcase": {
+      "type": "category-showcase",
+      "settings": {
+        "heading": "Shop by <em>category</em>",
+        "subtext": "One knitted-cotton family, three ways to layer your bed — across nine shades drawn from the earth.",
+        "button_label": "View all"
+      },
+      "blocks": {
+        "c1": { "type": "category", "settings": { "title": "Bed covers" } },
+        "c2": { "type": "category", "settings": { "title": "Comforters" } },
+        "c3": { "type": "category", "settings": { "title": "Throws" } },
+        "c4": { "type": "category", "settings": { "title": "Pillow covers" } },
+        "c5": { "type": "category", "settings": { "title": "Cushions" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"]
+    },
+    "bestsellers": {
+      "type": "bestsellers",
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "subheading": "Loved by 1,200+ homes",
+        "limit": 8
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": { "eyebrow": "Ratings & Reviews" },
+      "blocks": {
+        "t1": { "type": "review", "settings": { "quote": "It helped us create a more editorial experience on the page. The content feels more curated, more dynamic, and much easier to browse.", "name": "Adrian Cole" } },
+        "t2": { "type": "review", "settings": { "quote": "Everything felt clear from the first interaction. The layout, motion, and structure helped us present our content in a way that felt polished without becoming complicated.", "name": "Mara Ellison", "highlight": true } },
+        "t3": { "type": "review", "settings": { "quote": "The carousel gave our page a much stronger rhythm. It turned a simple content section into something people actually wanted to explore.", "name": "Theo Grant" } }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "corporate_cta": {
+      "type": "corporate-cta",
+      "settings": {
+        "eyebrow": "Corporate & Bulk Orders",
+        "text": "Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply.",
+        "button_label_1": "Request a quote",
+        "button_label_2": "Enquire now"
+      }
+    }
+  },
+  "order": ["hero", "feature_split", "featured_collections", "sleepscape", "category_showcase", "bestsellers", "testimonials", "corporate_cta"]
+}

@@ -1,0 +1,64 @@
+<div class="auth container">
+
+  {%- comment -%} Recover password (shown via #recover) {%- endcomment -%}
+  <div class="auth__card" id="recover">
+    <p class="eyebrow text-center">Beds &amp; More</p>
+    <h1 class="auth__title">Reset your <em>password</em></h1>
+    <p class="auth__sub">Enter your email and we'll send you a link to reset your password.</p>
+    {%- form 'recover_customer_password' -%}
+      {{ form.errors | default_errors }}
+      {%- if form.posted_successfully? -%}
+        <p class="auth__note">We've sent you an email with a link to reset your password.</p>
+      {%- endif -%}
+      <div class="field">
+        <label for="recover-email">Email</label>
+        <input type="email" id="recover-email" name="email" placeholder="you@email.com" required>
+      </div>
+      <button type="submit" class="btn btn--block">Send reset link</button>
+    {%- endform -%}
+    <p class="auth__alt"><a href="#login">Back to sign in</a></p>
+  </div>
+
+  {%- comment -%} Login {%- endcomment -%}
+  <div class="auth__card" id="login">
+    <p class="eyebrow text-center">Beds &amp; More</p>
+    <h1 class="auth__title">Welcome <em>back</em></h1>
+    <p class="auth__sub">Sign in to view your orders, addresses and details.</p>
+    {%- form 'customer_login' -%}
+      {{ form.errors | default_errors }}
+      <div class="field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="customer[email]" placeholder="you@email.com" required>
+      </div>
+      <div class="field">
+        <div class="auth__row">
+          <label for="login-password">Password</label>
+          <a class="auth__link" href="#recover">Forgot?</a>
+        </div>
+        <input type="password" id="login-password" name="customer[password]" placeholder="Your password">
+      </div>
+      <button type="submit" class="btn btn--block">Sign in</button>
+    {%- endform -%}
+    <p class="auth__alt">New here? <a href="{{ routes.account_register_url }}">Create an account</a></p>
+  </div>
+
+</div>
+
+<style>
+  .auth { padding: 70px 0 100px; display: flex; justify-content: center; }
+  .auth__card { width: 100%; max-width: 460px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 48px 44px; }
+  .auth__card .eyebrow { margin-bottom: 14px; }
+  .auth__title { text-align: center; font-size: clamp(28px, 4vw, 38px); }
+  .auth__title em { font-style: italic; }
+  .auth__sub { text-align: center; color: var(--muted); margin: 12px 0 30px; }
+  .auth__row { display: flex; align-items: center; justify-content: space-between; }
+  .auth__link { font-size: 12px; color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+  .auth__alt { text-align: center; color: var(--muted); margin: 24px 0 0; }
+  .auth__alt a { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+  .auth__note { background: var(--cream-2); border-radius: 8px; padding: 12px 16px; color: var(--brown); margin: 0 0 18px; }
+
+  /* toggle: recover hidden by default, shown when targeted */
+  #recover { display: none; }
+  #recover:target { display: block; }
+  #recover:target ~ #login { display: none; }
+</style>

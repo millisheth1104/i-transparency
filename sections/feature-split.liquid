@@ -1,0 +1,51 @@
+<section class="section feature-split">
+  <div class="container feature-split__inner {% if section.settings.image_right %}feature-split--reverse{% endif %}">
+    <div class="feature-split__media">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" width="1200" height="1400" loading="lazy">
+      {%- else -%}
+        {{ 'detailed-apparel-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+    <div class="feature-split__body">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="feature-split__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}<div class="feature-split__intro">{{ section.settings.intro }}</div>{%- endif -%}
+      {%- if section.settings.text != blank -%}<div class="feature-split__text">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="btn btn--outline feature-split__btn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-split__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .feature-split--reverse .feature-split__media { order: 2; }
+  .feature-split__media { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; }
+  .feature-split__media img, .feature-split__media svg { width: 100%; height: 100%; object-fit: cover; }
+  .feature-split__heading { font-size: clamp(34px, 4.5vw, 56px); }
+  .feature-split__heading em { font-style: italic; }
+  .feature-split__intro { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--taupe-dark); margin: 22px 0; }
+  .feature-split__intro strong { font-weight: 500; color: var(--brown); }
+  .feature-split__text { color: var(--brown-2); font-size: 16px; line-height: 1.8; max-width: 46ch; }
+  .feature-split__btn { margin-top: 30px; }
+  @media (max-width: 860px){ .feature-split__inner { grid-template-columns: 1fr; gap: 34px; } .feature-split--reverse .feature-split__media { order: 0; } }
+</style>
+
+{% schema %}
+{
+  "name": "Feature split",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "image_right", "label": "Image on right", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Breathable build · Zero bleed" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "<em>Woven,</em> not knitted." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <strong>Ours is woven.</strong></p>" },
+    { "type": "richtext", "id": "text", "label": "Body", "default": "<p>Woven gives cotton a different life — a soft, slightly elastic, three-dimensional hand that breathes in summer and holds warmth in winter. It drapes instead of lying stiff, and softens further with every wash rather than wearing thin. It is, simply, the most touchable bed you will own.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Feature split" }]
+}
+{% endschema %}

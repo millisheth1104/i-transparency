@@ -1,0 +1,60 @@
+<section class="section testimonials">
+  <div class="container">
+    <p class="eyebrow text-center">{{ section.settings.eyebrow }}</p>
+    <div class="tm-row">
+      {%- for block in section.blocks -%}
+        <figure class="tm-card {% if block.settings.highlight %}tm-card--hl{% endif %}" {{ block.shopify_attributes }}>
+          <div class="tm-stars">
+            {%- assign r = block.settings.rating | default: 5 -%}
+            {%- for i in (1..r) -%}{% render 'icon', icon: 'star' %}{%- endfor -%}
+          </div>
+          <blockquote>{{ block.settings.quote }}</blockquote>
+          <figcaption>{{ block.settings.name }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-row { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; padding: 40px 4px 10px; align-items: center; }
+  .tm-row::-webkit-scrollbar { display: none; }
+  .tm-card { flex: 0 0 300px; background: var(--taupe-dark); color: #f4ede0; border-radius: var(--radius-lg); padding: 40px 30px; text-align: center; margin: 0; }
+  .tm-card--hl { background: var(--brown); flex-basis: 360px; padding: 56px 38px; }
+  .tm-stars { display: flex; justify-content: center; gap: 4px; color: #e7d9bf; margin-bottom: 22px; }
+  .tm-card blockquote { font-family: var(--font-serif); font-size: 18px; line-height: 1.5; margin: 0 0 26px; }
+  .tm-card--hl blockquote { font-size: 21px; }
+  .tm-card figcaption { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(244,237,224,.8); }
+  @media (max-width: 700px){ .tm-card { flex-basis: 82%; } }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ratings & Reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "checkbox", "id": "highlight", "label": "Highlight (dark, larger)", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "It helped us create a more editorial experience on the page. The content feels more curated, more dynamic, and much easier to browse.", "name": "Adrian Cole" } },
+        { "type": "review", "settings": { "quote": "Everything felt clear from the first interaction. The layout, motion, and structure helped us present our content in a way that felt polished without becoming complicated.", "name": "Mara Ellison", "highlight": true } },
+        { "type": "review", "settings": { "quote": "The carousel gave our page a much stronger rhythm. It turned a simple content section into something people actually wanted to explore.", "name": "Theo Grant" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

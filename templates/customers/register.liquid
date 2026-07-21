@@ -1,0 +1,43 @@
+<div class="auth container">
+  <div class="auth__card">
+    <p class="eyebrow text-center">Beds &amp; More</p>
+    <h1 class="auth__title">Create your <em>account</em></h1>
+    <p class="auth__sub">Save your details, track orders and check out faster.</p>
+    {%- form 'create_customer' -%}
+      {{ form.errors | default_errors }}
+      <div class="auth__grid">
+        <div class="field">
+          <label for="reg-first">First name</label>
+          <input type="text" id="reg-first" name="customer[first_name]">
+        </div>
+        <div class="field">
+          <label for="reg-last">Last name</label>
+          <input type="text" id="reg-last" name="customer[last_name]">
+        </div>
+      </div>
+      <div class="field">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" name="customer[email]" placeholder="you@email.com" required>
+      </div>
+      <div class="field">
+        <label for="reg-password">Password</label>
+        <input type="password" id="reg-password" name="customer[password]" placeholder="Create a password" required>
+      </div>
+      <button type="submit" class="btn btn--block">Create account</button>
+    {%- endform -%}
+    <p class="auth__alt">Already have an account? <a href="{{ routes.account_login_url }}">Sign in</a></p>
+  </div>
+</div>
+
+<style>
+  .auth { padding: 70px 0 100px; display: flex; justify-content: center; }
+  .auth__card { width: 100%; max-width: 460px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 48px 44px; }
+  .auth__card .eyebrow { margin-bottom: 14px; }
+  .auth__title { text-align: center; font-size: clamp(28px, 4vw, 38px); }
+  .auth__title em { font-style: italic; }
+  .auth__sub { text-align: center; color: var(--muted); margin: 12px 0 30px; }
+  .auth__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .auth__alt { text-align: center; color: var(--muted); margin: 24px 0 0; }
+  .auth__alt a { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 480px) { .auth__grid { grid-template-columns: 1fr; } .auth__card { padding: 36px 26px; } }
+</style>

@@ -1,0 +1,73 @@
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 220 }}" alt="{{ shop.name }}" width="150" height="44">
+      {%- else -%}
+        <span class="logo-mark">beds<em>&amp;</em>more<small>by sarom</small></span>
+      {%- endif -%}
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      {%- for link in linklists.main-menu.links -%}
+        <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">Shop</a>
+        <a href="{{ routes.collections_url }}" class="site-nav__link">Collections</a>
+        <a href="/pages/corporate" class="site-nav__link">Corporate</a>
+        <a href="/pages/contact" class="site-nav__link">Contact</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="{{ routes.search_url }}" aria-label="Search">{% render 'icon', icon: 'search' %}</a>
+      <a href="/pages/wishlist" aria-label="Wishlist">{% render 'icon', icon: 'heart' %}</a>
+      <a href="{{ routes.cart_url }}" class="site-header__cart" aria-label="Cart">
+        {% render 'icon', icon: 'bag' %}
+        {%- if cart.item_count > 0 -%}<span class="cart-count">{{ cart.item_count }}</span>{%- endif -%}
+      </a>
+      <a href="{{ routes.account_url }}" aria-label="Account">{% render 'icon', icon: 'user' %}</a>
+      <button class="site-header__burger" aria-label="Menu" data-nav-toggle>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid rgba(216,204,182,.5); }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .logo-mark { font-family: var(--font-serif); font-size: 26px; line-height: .9; color: var(--brown); display: inline-block; position: relative; }
+  .logo-mark em { font-style: italic; }
+  .logo-mark small { display: block; font-family: var(--font-sans); font-weight: 300; font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--taupe); text-align: right; }
+  .site-nav { display: flex; gap: 44px; position: absolute; left: 50%; transform: translateX(-50%); }
+  .site-nav__link { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); transition: color .2s; }
+  .site-nav__link:hover { color: var(--taupe); }
+  .site-header__actions { display: flex; align-items: center; gap: 22px; color: var(--brown); }
+  .site-header__cart { position: relative; }
+  .cart-count { position: absolute; top: -8px; right: -10px; background: var(--brown); color: #fff; font-size: 10px; min-width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+  .site-header__burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
+  .site-header__burger span { width: 22px; height: 1.5px; background: var(--brown); display: block; }
+
+  @media (max-width: 990px) {
+    .site-nav { position: fixed; inset: 72px 0 auto 0; flex-direction: column; gap: 0; background: var(--cream); transform: none; padding: 10px 24px 24px; border-bottom: 1px solid var(--line); display: none; }
+    .site-nav.is-open { display: flex; }
+    .site-nav__link { padding: 14px 0; border-bottom: 1px solid rgba(216,204,182,.4); }
+    .site-header__burger { display: flex; }
+  }
+</style>
+
+<script>
+  document.querySelector('[data-nav-toggle]')?.addEventListener('click', function () {
+    document.querySelector('.site-nav')?.classList.toggle('is-open');
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "paragraph", "content": "Menu is set in Navigation > main-menu. Logo in Theme settings." }
+  ]
+}
+{% endschema %}

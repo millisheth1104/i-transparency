@@ -1,0 +1,147 @@
+/* ============================================================
+   Beds & More by Sarom — Design System
+   ============================================================ */
+:root {
+  /* Palette */
+  --cream: #f4eee4;
+  --cream-2: #ebe2d3;
+  --sand: #ddd0b9;
+  --taupe: #a8967a;
+  --taupe-dark: #8a7862;
+  --brown: #4a4139;
+  --brown-2: #5b5048;
+  --olive: #4b4b3b;
+  --gold: #b7a386;
+  --line: #d8ccb6;
+  --white: #ffffff;
+  --text: #4a4139;
+  --muted: #8f8371;
+
+  /* Type */
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --container: 1360px;
+  --gutter: 40px;
+  --radius: 14px;
+  --radius-lg: 24px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--text);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; color: var(--brown); margin: 0; line-height: 1.1; }
+
+/* Layout helpers */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+.section { padding: 90px 0; }
+.section--tight { padding: 60px 0; }
+
+/* Eyebrow / labels */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--taupe);
+  margin: 0 0 18px;
+}
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(30px, 4vw, 46px);
+  color: var(--brown);
+  text-align: center;
+}
+.section-heading em { font-style: italic; }
+.section-sub { text-align: center; color: var(--muted); max-width: 560px; margin: 14px auto 0; }
+
+/* Serif italic accent */
+.italic { font-style: italic; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 15px 30px;
+  font-family: var(--font-sans); font-weight: 400; font-size: 12px;
+  letter-spacing: .18em; text-transform: uppercase;
+  border: 1px solid transparent; background: var(--brown); color: #fff;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.btn:hover { background: var(--brown-2); }
+.btn--outline { background: transparent; border-color: var(--brown); color: var(--brown); }
+.btn--outline:hover { background: var(--brown); color: #fff; }
+.btn--light { background: transparent; border-color: rgba(255,255,255,.6); color: #fff; }
+.btn--light:hover { background: #fff; color: var(--brown); }
+.btn--gold { background: var(--gold); color: var(--brown); }
+.btn--gold:hover { background: #c7b596; }
+.btn--block { width: 100%; }
+
+/* Round icon button (carousel arrows) */
+.round-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid var(--line); background: transparent; color: var(--brown);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .25s, color .25s;
+}
+.round-btn:hover { background: var(--brown); color: #fff; border-color: var(--brown); }
+
+/* Product card */
+.product-card { display: flex; flex-direction: column; }
+.product-card__media { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--cream-2); aspect-ratio: 3/4; }
+.product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.product-card:hover .product-card__media img { transform: scale(1.04); }
+.product-card__wish { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.85); border: none; display: flex; align-items: center; justify-content: center; }
+.product-card__title { margin: 16px 0 4px; font-family: var(--font-sans); font-weight: 400; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--brown); }
+.product-card__meta { font-size: 13px; color: var(--muted); margin: 0; }
+.product-card__price { margin: 12px 0 14px; font-weight: 500; letter-spacing: .06em; color: var(--brown); }
+
+/* Grid */
+.grid { display: grid; gap: 30px; }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Trust bar */
+.trust-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 34px; background: rgba(255,255,255,.9); border-radius: 999px; padding: 16px 34px; box-shadow: 0 10px 40px rgba(74,65,57,.08); }
+.trust-bar__item { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brown-2); }
+.trust-bar__sep { color: var(--taupe); }
+
+/* Forms */
+input, select, textarea {
+  font-family: var(--font-sans); font-weight: 300; font-size: 15px; color: var(--brown);
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 13px 16px; width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--taupe); }
+label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.field { margin-bottom: 18px; }
+
+/* Utility */
+.text-center { text-align: center; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* Responsive */
+@media (max-width: 990px) {
+  :root { --gutter: 24px; }
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .grid--3 { grid-template-columns: 1fr; }
+  .section { padding: 60px 0; }
+}
+@media (max-width: 600px) {
+  .grid--4 { grid-template-columns: 1fr; }
+}

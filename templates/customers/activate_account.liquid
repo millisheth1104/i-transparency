@@ -1,0 +1,12 @@
+<div class="container" style="padding:40px 0;max-width:480px;">
+  <h1>Activate account</h1>
+  {% form 'activate_customer_password' %}
+    {{ form.errors | default_errors }}
+    <label>Password</label>
+    <input type="password" name="customer[password]" required>
+    <label>Confirm password</label>
+    <input type="password" name="customer[password_confirmation]" required>
+    <button type="submit" class="btn">Activate</button>
+    <button type="submit" name="decline" class="btn">Decline</button>
+  {% endform %}
+</div>
