@@ -3,9 +3,9 @@
     <div class="footer-top">
       <div class="footer-brand">
         {%- if settings.logo != blank -%}
-          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" height="42">
+          <img src="{{ settings.logo | image_url: width: 260 }}" alt="{{ shop.name }}" class="footer-brand__logo-img" width="300" height="200">
         {%- else -%}
-          <span class="logo-mark">beds<em>&amp;</em>more<small>by sarom</small></span>
+          <img src="{{ 'logo.png.jpeg' | asset_url }}" alt="{{ shop.name }}" class="footer-brand__logo-img" width="300" height="200">
         {%- endif -%}
         {%- if section.settings.address != blank -%}
           <p class="footer-label">Corporate Office</p>
@@ -62,6 +62,7 @@
 <style>
   .site-footer { background: var(--cream); padding: 70px 0 40px; margin-top: 20px; }
   .footer-top { display: grid; grid-template-columns: 1.3fr 3fr auto; gap: 40px; }
+  .footer-brand__logo-img { height: 54px; width: auto; display: block; }
   .footer-brand .logo-mark { font-family: var(--font-serif); font-size: 26px; color: var(--brown); }
   .footer-brand .logo-mark em { font-style: italic; }
   .footer-brand .logo-mark small { display: block; font-family: var(--font-sans); font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--taupe); }

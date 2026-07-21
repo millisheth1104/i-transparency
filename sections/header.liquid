@@ -2,9 +2,9 @@
   <div class="container site-header__inner">
     <a href="{{ routes.root_url }}" class="site-header__logo">
       {%- if settings.logo != blank -%}
-        <img src="{{ settings.logo | image_url: width: 220 }}" alt="{{ shop.name }}" width="150" height="44">
+        <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" class="site-header__logo-img" width="300" height="200">
       {%- else -%}
-        <span class="logo-mark">beds<em>&amp;</em>more<small>by sarom</small></span>
+        <img src="{{ 'logo.png.jpeg' | asset_url }}" alt="{{ shop.name }}" class="site-header__logo-img" width="300" height="200">
       {%- endif -%}
     </a>
 
@@ -33,6 +33,7 @@
 <style>
   .site-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid rgba(216,204,182,.5); }
   .site-header__inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .site-header__logo-img { height: 46px; width: auto; display: block; }
   .logo-mark { font-family: var(--font-serif); font-size: 26px; line-height: .9; color: var(--brown); display: inline-block; position: relative; }
   .logo-mark em { font-style: italic; }
   .logo-mark small { display: block; font-family: var(--font-sans); font-weight: 300; font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--taupe); text-align: right; }
