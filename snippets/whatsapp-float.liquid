@@ -1,11 +1,12 @@
 {%- if settings.whatsapp_number != blank -%}
 <a class="wa-float" href="https://wa.me/{{ settings.whatsapp_number }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  {% render 'icon', icon: 'whatsapp' %}
-  <span>Chat on WhatsApp</span>
+  <span class="wa-float__badge">{% render 'icon', icon: 'whatsapp' %}</span>
+  <span class="wa-float__label">Chat on WhatsApp</span>
 </a>
 <style>
-  .wa-float { position: fixed; right: 22px; bottom: 22px; z-index: 60; display: inline-flex; align-items: center; gap: 10px; background: #25d366; color: #fff; padding: 12px 18px; border-radius: 999px; font-size: 13px; letter-spacing: .04em; box-shadow: 0 12px 30px rgba(37,211,102,.35); }
-  .wa-float svg { fill: #fff; }
-  @media (max-width: 600px){ .wa-float span { display: none; } .wa-float { padding: 14px; } }
+  .wa-float { position: fixed; right: 22px; bottom: 22px; z-index: 60; display: inline-flex; align-items: center; gap: 10px; background: var(--cream); color: var(--brown); padding: 8px 20px 8px 8px; border-radius: 999px; font-size: 13px; letter-spacing: .04em; box-shadow: 0 12px 30px rgba(74,65,57,.18); }
+  .wa-float__badge { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #25d366; flex-shrink: 0; }
+  .wa-float__badge svg { fill: #fff; }
+  @media (max-width: 600px){ .wa-float__label { display: none; } .wa-float { padding: 6px; } }
 </style>
 {%- endif -%}
