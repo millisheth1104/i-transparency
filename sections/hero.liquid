@@ -6,6 +6,7 @@
       {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
     {%- endif -%}
     <div class="hero__scrim"></div>
+    <button class="round-btn hero__next" aria-label="Explore" data-hero-next>{% render 'icon', icon: 'arrow-right' %}</button>
   </div>
 
   <div class="container hero__content">
@@ -48,9 +49,22 @@
   .hero__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
   .hero__actions .btn--outline { border-color: rgba(255,255,255,.7); color: #fff; }
   .hero__actions .btn--outline:hover { background: #fff; color: var(--brown); }
+  .hero__next { position: absolute; top: 50%; right: 60px; transform: translateY(-50%); z-index: 2; background: transparent; border-color: rgba(255,255,255,.7); color: #fff; }
+  .hero__next:hover { background: #fff; color: var(--brown); border-color: #fff; }
+  @media (max-width: 700px){ .hero__next { display: none; } }
   .trust-bar { margin: -34px auto 0; position: relative; z-index: 2; max-width: 1000px; }
   @media (max-width: 700px){ .hero__media { margin: 0; border-radius: 0; } .trust-bar { margin-top: 24px; } }
 </style>
+
+<script>
+  document.querySelectorAll('[data-hero-next]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.shopify-section');
+      var next = wrap ? wrap.nextElementSibling : null;
+      if (next) next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
 
 {% schema %}
 {
