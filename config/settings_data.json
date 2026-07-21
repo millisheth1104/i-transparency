@@ -88,6 +88,41 @@
           "promise_eyebrow": "Our Promise",
           "promise_text": "<p>We promise to make bedding we'd proudly use in our own homes. That means choosing quality over shortcuts, creating designs that last beyond trends, and paying attention to the details that make a difference. Every collection is made with care, so you can enjoy comfort that lasts, quality you can trust, and a bedroom you'll always look forward to coming home to.</p>"
         }
+      },
+      "main-corporate": {
+        "type": "main-corporate",
+        "settings": {
+          "hero_image": "shopify://shop_images/corparate_hero_page.png",
+          "hero_eyebrow": "Crafted with care · Wrapped in elegance",
+          "hero_heading": "Thoughtful gifts that leave a <em>lasting impression</em>",
+          "hero_button": "Enquire now",
+          "hero_link": "",
+          "f1_title": "Bulk Orders",
+          "f1_text": "Flexible solutions for every business and occasion.",
+          "f2_title": "Customisation",
+          "f2_text": "Personalised messages that reflect your identity.",
+          "f3_title": "Pan India Delivery",
+          "f3_text": "Reliable delivery with careful handling and on-time assurance.",
+          "g1": "shopify://shop_images/Screenshot_2026-07-21_182055.png",
+          "g2": "shopify://shop_images/Screenshot_2026-07-21_182231.png",
+          "g3": "shopify://shop_images/Screenshot_2026-07-21_182301.png",
+          "gallery_quote": "Thoughtfully crafted for spaces that inspire.",
+          "exp_heading": "Create <em>meaningful experiences</em> for every occasion",
+          "e1_title": "Client Relations",
+          "e1_text": "Thoughtful curations that strengthen bonds.",
+          "e2_title": "Events",
+          "e2_text": "Welcome kits that make an impact.",
+          "e3_title": "Celebrations",
+          "e3_text": "Elegant gifting for special moments.",
+          "process_eyebrow": "Our Gifting Process",
+          "process_heading": "Seamless from start to thoughtful delivery.",
+          "step_texts": "Share your requirements and occasion with us.\nWe create a customised proposal and options.\nAdd your branding, messages and packaging.\nWe deliver with care, on time, every time.",
+          "conscious_heading": "Conscious gifting for a better tomorrow.",
+          "conscious_text": "Our packaging is plastic-free and recyclable. Because every thoughtful gift should be kind to the planet.",
+          "trust_eyebrow": "Trusted by leading brands",
+          "form_heading": "Enquire about corporate gifting",
+          "form_sub": "Share your requirements and our team will get in touch with you to create a solution that fits your needs."
+        }
       }
     },
     "content_for_index": []
