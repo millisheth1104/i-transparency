@@ -108,11 +108,37 @@
     {%- endif -%}
 
     {%- comment -%} Product grid {%- endcomment -%}
+    {%- liquid
+      assign promo_blocks = section.blocks | where: 'type', 'promo_band'
+    -%}
     {%- paginate collection.products by section.settings.per_page -%}
       {%- if collection.products.size > 0 -%}
         <div class="grid grid--4 mc-grid">
           {%- for product in collection.products -%}
             {% render 'product-card', product: product %}
+            {%- if paginate.current_page == 1 -%}
+              {%- for promo in promo_blocks -%}
+                {%- if promo.settings.position == forloop.parentloop.index -%}
+        </div>
+        <div class="mc-promo" {{ promo.shopify_attributes }}>
+          <div class="mc-promo__text">
+            <h2 class="mc-promo__title">{{ promo.settings.heading }}</h2>
+            {%- if promo.settings.text != blank -%}
+              <p class="mc-promo__sub">{{ promo.settings.text }}</p>
+            {%- endif -%}
+          </div>
+          <div class="mc-promo__media">
+            {%- if promo.settings.image != blank -%}
+              <img src="{{ promo.settings.image | image_url: width: 1400 }}" alt="{{ promo.settings.heading | escape }}" width="1400" height="500" loading="lazy">
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="grid grid--4 mc-grid">
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
           {%- endfor -%}
         </div>
 
@@ -192,6 +218,12 @@
 
   #shopify-section-{{ section.id }} .mc-grid { margin-top: 10px; }
 
+  #shopify-section-{{ section.id }} .mc-promo { background: var(--cream-2); border-radius: var(--radius-lg); overflow: hidden; margin: 50px 0; }
+  #shopify-section-{{ section.id }} .mc-promo__text { padding: 56px 60px 36px; }
+  #shopify-section-{{ section.id }} .mc-promo__title { font-family: var(--font-serif); font-size: clamp(30px, 3.6vw, 42px); color: var(--brown); }
+  #shopify-section-{{ section.id }} .mc-promo__sub { color: var(--muted); max-width: 460px; margin: 14px 0 0; }
+  #shopify-section-{{ section.id }} .mc-promo__media img, #shopify-section-{{ section.id }} .mc-promo__media svg { display: block; width: 100%; height: auto; object-fit: cover; }
+
   #shopify-section-{{ section.id }} .mc-pager { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 60px; }
   #shopify-section-{{ section.id }} .mc-pager__num { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 34px; font-size: 14px; letter-spacing: .06em; color: var(--muted); }
   #shopify-section-{{ section.id }} .mc-pager__num:hover { color: var(--brown); }
@@ -236,9 +268,19 @@
         { "type": "text", "id": "title", "label": "Title", "default": "Bedsheets" },
         { "type": "url", "id": "link", "label": "Link" }
       ]
+    },
+    {
+      "type": "promo_band",
+      "name": "Promo band (in grid)",
+      "settings": [
+        { "type": "range", "id": "position", "label": "Insert after product #", "min": 2, "max": 24, "step": 1, "default": 8 },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Printed" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order." },
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
     }
   ],
-  "max_blocks": 6,
+  "max_blocks": 8,
   "presets": [
     {
       "name": "Main collection",
@@ -246,7 +288,8 @@
         { "type": "category", "settings": { "title": "Bedsheets" } },
         { "type": "category", "settings": { "title": "Bed Covers" } },
         { "type": "category", "settings": { "title": "Pillows" } },
-        { "type": "category", "settings": { "title": "Comforters" } }
+        { "type": "category", "settings": { "title": "Comforters" } },
+        { "type": "promo_band", "settings": { "position": 8 } }
       ]
     }
   ]
