@@ -71,6 +71,23 @@
           "seo_text": "Beds & More is a premium bedding brand from Sarom Fab offering 100% cotton, OEKO-TEX® Standard 100 certified knitted bedcover sets, cosy throws and textured cushion covers in India. The EARTHEN Knitscape collection comes in nine natural shades — in King size (96 × 108 in) with matching pillow covers. Soft, fluffy, breathable, machine washable, with no colour bleeding and free shipping & Cash on Delivery across India.",
           "copyright": "Beds & More by Sarom Fab · Made in India"
         }
+      },
+      "main-about": {
+        "type": "main-about",
+        "settings": {
+          "story_heading": "Our <em>story</em>",
+          "story_intro": "Beds & More was created with a simple belief:",
+          "story_belief": "The products you use every day should be the ones you love the most.",
+          "story_image": "shopify://shop_images/bare_earth.png",
+          "story_body": "<p>As part of the Sarom family, we spent years helping people create beautiful homes through thoughtfully crafted fabrics and home furnishings. Along the way, we realized that one of the most personal spaces in every home deserved the same attention, the bedroom.</p><p>That's how Beds & More began.</p><p>Today, we bring together quality materials, timeless designs, and everyday comfort to create bedding that's made to be lived in, loved, and enjoyed for years to come.</p><p>Thoughtfully crafted for the moments you come home to.</p>",
+          "legacy_eyebrow": "The Sarom Legacy",
+          "legacy_text": "<p>Beds & More is built on the foundation of Sarom, a trusted name in home furnishings since 2005. For over two decades, Sarom has worked with retailers, designers, architects, and homeowners across India, creating products that combine quality craftsmanship with thoughtful design. That experience has shaped everything we do at Beds & More. When you choose Beds & More, you're choosing bedding backed by years of expertise, a commitment to quality, and a family business that believes trust is earned through every product we create.</p>",
+          "believe_heading": "What we <em>believe</em>",
+          "believe_image": "shopify://shop_images/bed_covers.png",
+          "believe_body": "<p>We believe comfort isn't just about how something feels, it's about how it becomes part of your everyday life.</p><p>It's the feeling of slipping into fresh sheets after a long day. It's slow Sunday mornings, quiet evenings, and the simple comfort of being home.</p><p>That's why we focus on thoughtful design, quality materials, and craftsmanship that stand the test of time, creating bedding you'll love today and for years to come.</p>",
+          "promise_eyebrow": "Our Promise",
+          "promise_text": "<p>We promise to make bedding we'd proudly use in our own homes. That means choosing quality over shortcuts, creating designs that last beyond trends, and paying attention to the details that make a difference. Every collection is made with care, so you can enjoy comfort that lasts, quality you can trust, and a bedroom you'll always look forward to coming home to.</p>"
+        }
       }
     },
     "content_for_index": []
