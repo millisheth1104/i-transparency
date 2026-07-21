@@ -86,13 +86,13 @@
     "sleepscape": {
       "type": "sleepscape",
       "blocks": {
-        "h1": {
+        "hotspot_9tG7kD": {
           "type": "hotspot",
           "settings": {
             "product": "",
             "subtitle": "Ivory · 2N Pillow Covers",
-            "x": 35,
-            "y": 55
+            "x": 40,
+            "y": 50
           }
         },
         "h2": {
@@ -106,12 +106,13 @@
         }
       },
       "block_order": [
-        "h1",
+        "hotspot_9tG7kD",
         "h2"
       ],
       "settings": {
         "heading": "Build your <em>sleepscape</em>",
-        "subtext": "Tap a piece to add it — build the layered look in one go."
+        "subtext": "Tap a piece to add it — build the layered look in one go.",
+        "image": "shopify://shop_images/sleepscape_room_img.jpg"
       }
     },
     "category_showcase": {
