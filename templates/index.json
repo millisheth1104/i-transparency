@@ -27,6 +27,7 @@
     "feature_split": {
       "type": "feature-split",
       "settings": {
+        "image": "shopify://shop_images/woven_not_knitted.png",
         "image_right": false,
         "eyebrow": "Breathable build · Zero bleed",
         "heading": "<em>Woven,</em> not knitted.",
@@ -42,6 +43,7 @@
         "b1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/bare_earth.png",
             "title": "Bare Earth",
             "link": ""
           }
@@ -49,6 +51,7 @@
         "b2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/bare_earth.png",
             "title": "Plush",
             "link": ""
           }
@@ -56,6 +59,7 @@
         "b3": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/bare_earth.png",
             "title": "Terraweave",
             "link": ""
           }
@@ -63,6 +67,7 @@
         "b4": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/bare_earth.png",
             "title": "Soft Haven",
             "link": ""
           }

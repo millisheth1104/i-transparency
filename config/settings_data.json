@@ -1,9 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
+    "logo": "shopify://shop_images/WhatsApp_Image_2026-07-21_at_12.26.33_PM.jpg",
     "whatsapp_number": "918828911111",
     "color_primary": "#4a4139",
     "color_background": "#f4eee4",
-    "color_text": "#4a4139"
+    "color_text": "#4a4139",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "column",
+            "settings": {
+              "title": "Shop",
+              "menu": "",
+              "items": "Bedsheets|/collections/bedsheets\nBed Covers|/collections/bed-covers\nPillow Covers|/collections/pillow-covers\nComforters|/collections/comforters\nThrows|/collections/throws\nPillows|/collections/pillows"
+            }
+          },
+          "footer-1": {
+            "type": "column",
+            "settings": {
+              "title": "Collections",
+              "menu": "",
+              "items": "Bare Earth|/collections/bare-earth\nPlush|/collections/plush\nTerraweave|/collections/terraweave\nSoft Haven|/collections/soft-haven\nKnitscapes|/collections/knitscapes"
+            }
+          },
+          "footer-2": {
+            "type": "column",
+            "settings": {
+              "title": "Corporate",
+              "menu": "",
+              "items": "Corporate|/pages/corporate\nHotels & Resorts|/pages/corporate\nDesigners & Architects|/pages/corporate\nDevelopers|/pages/corporate\nRetail Partners|/pages/corporate"
+            }
+          },
+          "footer-3": {
+            "type": "column",
+            "settings": {
+              "title": "Company",
+              "menu": "",
+              "items": "About us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2",
+          "footer-3"
+        ],
+        "settings": {
+          "address": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086",
+          "email": "info@sarom.com",
+          "phone": "088289 11111",
+          "linkedin": "",
+          "facebook": "",
+          "instagram": "",
+          "seo_text": "Beds & More is a premium bedding brand from Sarom Fab offering 100% cotton, OEKO-TEX® Standard 100 certified knitted bedcover sets, cosy throws and textured cushion covers in India. The EARTHEN Knitscape collection comes in nine natural shades — in King size (96 × 108 in) with matching pillow covers. Soft, fluffy, breathable, machine washable, with no colour bleeding and free shipping & Cash on Delivery across India.",
+          "copyright": "Beds & More by Sarom Fab · Made in India"
+        }
+      }
+    },
+    "content_for_index": []
   },
   "presets": {
     "Default": {}
