@@ -45,8 +45,9 @@
   .fc__slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; pointer-events: none; }
   .fc__slide.is-active { opacity: 1; pointer-events: auto; }
   .fc__slide img, .fc__slide svg { width: 100%; height: 100%; object-fit: cover; }
-  .fc__slide-num { position: absolute; top: 30px; left: 34px; color: rgba(255,255,255,.85); font-size: 13px; letter-spacing: .1em; }
-  .fc__slide-title { position: absolute; top: 48px; left: 34px; color: #fff; font-size: 26px; letter-spacing: .18em; text-transform: uppercase; }
+  .fc__slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(20,16,12,.55) 0%, rgba(20,16,12,.22) 30%, rgba(20,16,12,0) 55%); pointer-events: none; }
+  .fc__slide-num { position: absolute; top: 30px; left: 34px; color: rgba(255,255,255,.85); font-size: 13px; letter-spacing: .1em; z-index: 1; }
+  .fc__slide-title { position: absolute; top: 48px; left: 34px; color: #fff; font-size: 26px; letter-spacing: .18em; text-transform: uppercase; z-index: 1; }
   .fc__list { display: flex; flex-direction: column; gap: 26px; }
   .fc__item { background: none; border: none; text-align: left; padding: 0; display: flex; flex-direction: column; gap: 4px; opacity: .45; transition: opacity .25s; }
   .fc__item.is-active { opacity: 1; }
