@@ -9,10 +9,9 @@
     </a>
 
     <nav class="site-nav" aria-label="Primary">
-      <a href="{{ routes.all_products_collection_url }}" class="site-nav__link">Shop</a>
-      <a href="{{ routes.collections_url }}" class="site-nav__link">Collections</a>
-      <a href="/pages/corporate" class="site-nav__link">Corporate</a>
-      <a href="/pages/contact" class="site-nav__link">Contact</a>
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="site-nav__link" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endfor -%}
     </nav>
 
     <div class="site-header__actions">
@@ -64,7 +63,26 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "paragraph", "content": "Menu is set in Navigation > main-menu. Logo in Theme settings." }
-  ]
+    { "type": "paragraph", "content": "Nav links are edited below as blocks. Logo is set in Theme settings." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Nav link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "default": {
+    "blocks": [
+      { "type": "link", "settings": { "label": "Shop", "link": "/collections/all" } },
+      { "type": "link", "settings": { "label": "Collections", "link": "/collections" } },
+      { "type": "link", "settings": { "label": "Corporate", "link": "/pages/corporate" } },
+      { "type": "link", "settings": { "label": "Contact", "link": "/pages/contact" } }
+    ]
+  }
 }
 {% endschema %}

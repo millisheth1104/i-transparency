@@ -17,6 +17,13 @@
     "sections": {
       "header": {
         "type": "header",
+        "blocks": {
+          "nav-0": { "type": "link", "settings": { "label": "Shop", "link": "/collections/all" } },
+          "nav-1": { "type": "link", "settings": { "label": "Collections", "link": "/collections" } },
+          "nav-2": { "type": "link", "settings": { "label": "Corporate", "link": "/pages/corporate" } },
+          "nav-3": { "type": "link", "settings": { "label": "Contact", "link": "/pages/contact" } }
+        },
+        "block_order": ["nav-0", "nav-1", "nav-2", "nav-3"],
         "settings": {}
       },
       "footer": {
