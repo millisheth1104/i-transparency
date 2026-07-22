@@ -63,9 +63,9 @@
             "heading_margin_bottom": 15,
             "content_font_size": 16,
             "content_line_height": 1.8,
-            "content_color": "#7B7B7B",
+            "content_color": "#7b7b7b",
             "link_hover_color": "#333333",
-            "background_color": "#F7F2EA"
+            "background_color": "#f7f2ea"
           },
           "blocks": {}
         }
@@ -97,12 +97,12 @@
             "heading_font": "serif",
             "heading_size": 58,
             "description_size": 20,
-            "background_color": "#F7F2EA",
-            "heading_color": "#5E534A",
-            "text_color": "#8A8178",
-            "button_color": "#65594F",
-            "button_text_color": "#FFFFFF",
-            "button_hover_color": "#4A4139",
+            "background_color": "#f7f2ea",
+            "heading_color": "#5e534a",
+            "text_color": "#8a8178",
+            "button_color": "#65594f",
+            "button_text_color": "#ffffff",
+            "button_hover_color": "#4a4139",
             "container_max_width": 1400,
             "column_gap": 80,
             "form_max_width": 600,
@@ -118,11 +118,23 @@
         "ai_gen_block_84af8c8_a6Arw9"
       ],
       "settings": {}
+    },
+    "custom_liquid_rHRVFN": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div class=\"contact-section\">\n  <div class=\"contact-top\">\n    <p class=\"contact-label\">CONTACT</p>\n    <div class=\"contact-map-info\">\n      <div class=\"map-embed\">\n        <iframe src=\"https://www.google.com/maps?q=Thakor+Industrial+Estate,+Premier+Road,+Khalaj+Village,+Vidyavihar+West,+Mumbai,+Maharashtra+400086&output=embed\" width=\"100%\" height=\"260\" style=\"border:0;\" loading=\"lazy\"></iframe>\n      </div>\n      <div class=\"office-info\">\n        <div class=\"info-block\">\n          <strong>CORPORATE OFFICE</strong>\n          <p>Thakor Industrial Estate, Premier Road, Khalaj Village, Vidyavihar West, Mumbai, Maharashtra 400086</p>\n        </div>\n        <div class=\"info-block\">\n          <strong>BUSINESS HOURS</strong>\n          <p>Monday to Friday, 10AM to 7PM</p>\n        </div>\n        <div class=\"info-block\">\n          <strong>EMAIL ID</strong>\n          <p><a href=\"mailto:info@sarom.com\">info@sarom.com</a></p>\n        </div>\n        <div class=\"info-block\">\n          <strong>CONTACT NUMBER</strong>\n          <p><a href=\"tel:0828911111\">08289 11111</a></p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"contact-bottom\">\n    <div class=\"contact-left\">\n      <h2>Have a question?</h2>\n      <p>Write to us and we'll get back to you as soon as possible.</p>\n      {{ 'contact-product-image.jpg' | asset_img_url: '400x' | image_tag }}\n    </div>\n    <div class=\"contact-right\">\n      {% form 'contact', id: 'ContactForm' %}\n        {% if form.posted_successfully? %}\n          <p class=\"form-success\">Thanks! We'll be in touch soon.</p>\n        {% endif %}\n        <label>FULL NAME</label>\n        <input type=\"text\" name=\"contact[name]\" placeholder=\"First and last name\" required>\n\n        <label>EMAIL ADDRESS</label>\n        <input type=\"email\" name=\"contact[email]\" placeholder=\"joe@gmail.com\" required>\n\n        <label>PHONE NUMBER</label>\n        <input type=\"tel\" name=\"contact[phone]\" placeholder=\"+91\">\n\n        <label>MESSAGE</label>\n        <textarea name=\"contact[body]\" placeholder=\"Tell us more about your enquiry\" rows=\"4\"></textarea>\n\n        <button type=\"submit\">SUBMIT ENQUIRY</button>\n      {% endform %}\n    </div>\n  </div>\n</div>\n\n<style>\n.contact-section{max-width:1100px;margin:0 auto;padding:40px 20px;font-family:sans-serif;color:#3a3a3a;}\n.contact-label{letter-spacing:1px;font-size:12px;color:#777;margin-bottom:20px;}\n.contact-map-info{display:flex;gap:40px;flex-wrap:wrap;}\n.map-embed{flex:1;min-width:280px;}\n.office-info{flex:1;min-width:260px;}\n.info-block{margin-bottom:18px;}\n.info-block strong{display:block;font-size:12px;letter-spacing:.5px;margin-bottom:6px;}\n.info-block p,.info-block a{margin:0;color:#555;text-decoration:none;font-size:14px;}\n.contact-bottom{display:flex;gap:50px;margin-top:60px;flex-wrap:wrap;}\n.contact-left,.contact-right{flex:1;min-width:280px;}\n.contact-left h2{font-family:serif;font-size:34px;margin-bottom:10px;}\n.contact-left img{margin-top:30px;width:100%;max-width:320px;}\n.contact-right label{display:block;font-size:12px;letter-spacing:.5px;margin:18px 0 6px;}\n.contact-right input,.contact-right textarea{width:100%;border:none;border-bottom:1px solid #ccc;padding:8px 0;font-size:14px;background:transparent;}\n.contact-right button{margin-top:30px;width:100%;padding:14px;background:#3a3a3a;color:#fff;border:none;letter-spacing:1px;font-size:12px;cursor:pointer;}\n</style>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
     "17847008679aeb0bee",
-    "178470199955b79d37"
+    "178470199955b79d37",
+    "custom_liquid_rHRVFN"
   ]
 }
