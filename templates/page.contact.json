@@ -22,7 +22,6 @@
       "blocks": {
         "ai_gen_block_12bb201_VkdC79": {
           "type": "ai_gen_block_12bb201",
-          "disabled": true,
           "settings": {
             "section_label": "CONTACT",
             "label_font_size": 14,
@@ -81,7 +80,6 @@
       "blocks": {
         "ai_gen_block_84af8c8_a6Arw9": {
           "type": "ai_gen_block_84af8c8",
-          "disabled": true,
           "settings": {
             "heading": "Have a question?",
             "description": "Write to us and we'll get back to you as soon as possible.",
@@ -124,6 +122,7 @@
     },
     "custom_liquid_rHRVFN": {
       "type": "custom-liquid",
+      "disabled": true,
       "custom_css": [],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
