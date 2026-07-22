@@ -12,8 +12,8 @@
 
       {%- for block in section.blocks -%}
         {%- assign prod = all_products[block.settings.product] -%}
-        <div class="hotspot" style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;" {{ block.shopify_attributes }}>
-          <button class="hotspot__dot" aria-label="View product">+</button>
+        <div class="hotspot" data-hotspot style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;" {{ block.shopify_attributes }}>
+          <button class="hotspot__dot" aria-label="View product" data-hotspot-toggle>+</button>
           {%- if prod != empty -%}
             <div class="hotspot__card">
               <button class="product-card__wish" aria-label="Wishlist">{% render 'icon', icon: 'heart' %}</button>
@@ -40,7 +40,9 @@
   .hotspot { position: absolute; transform: translate(-50%, -50%); }
   .hotspot__dot { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; color: var(--brown); font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
   .hotspot__card { position: absolute; top: 44px; left: 50%; transform: translateX(-50%) translateY(8px); width: 230px; background: rgba(255,255,255,.96); border-radius: var(--radius); padding: 14px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 18px 50px rgba(74,65,57,.2); z-index: 3; }
-  .hotspot:hover .hotspot__card, .hotspot:focus-within .hotspot__card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .hotspot:hover .hotspot__card, .hotspot:focus-within .hotspot__card, .hotspot.is-open .hotspot__card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .hotspot__dot { position: relative; z-index: 2; transition: background .2s, color .2s; }
+  .hotspot.is-open .hotspot__dot { background: var(--brown); color: #fff; }
   .hotspot__card-media { aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; background: var(--cream-2); margin-bottom: 10px; }
   .hotspot__card-media img { width: 100%; height: 100%; object-fit: cover; }
   .hotspot__card-title { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); margin: 0 0 2px; }
@@ -49,6 +51,22 @@
   .hotspot__card .product-card__price { margin: 0; }
   .hotspot__card .product-card__wish { top: 20px; right: 20px; z-index: 4; }
 </style>
+
+<script>
+  document.querySelectorAll('.sleepscape [data-hotspot]').forEach(function (hotspot) {
+    var toggle = hotspot.querySelector('[data-hotspot-toggle]');
+    if (!toggle) return;
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var wasOpen = hotspot.classList.contains('is-open');
+      document.querySelectorAll('.sleepscape .hotspot.is-open').forEach(function (h) { h.classList.remove('is-open'); });
+      if (!wasOpen) hotspot.classList.add('is-open');
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.sleepscape .hotspot.is-open').forEach(function (h) { h.classList.remove('is-open'); });
+  });
+</script>
 
 {% schema %}
 {
