@@ -50,7 +50,7 @@
             "right_column_width": 35,
             "column_gap": 70,
             "padding_top": 80,
-            "padding_bottom": 80,
+            "padding_bottom": 40,
             "padding_horizontal": 40,
             "icon_size": 28,
             "icon_color": "#222222",
