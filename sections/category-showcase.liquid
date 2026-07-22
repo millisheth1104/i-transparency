@@ -36,7 +36,8 @@
     width: 77%; height: 100%;
     border-radius: var(--radius); overflow: hidden;
     background: var(--cream-2);
-    transform-origin: left center;
+    box-shadow: 0 14px 30px rgba(40,32,24,.14);
+    transform-origin: left top;
     transition: transform 1050ms cubic-bezier(.22,1,.36,1),
                 opacity 1050ms cubic-bezier(.22,1,.36,1);
     will-change: transform, opacity;
@@ -76,12 +77,16 @@
     /* xFrac/yFrac are fractions of the stage's own rendered width, so the
        stack always fills the stage edge-to-edge and stays centered at any
        screen size or stage width. */
+    /* With transform-origin: left top, a card's rendered bottom edge sits at
+       y + height*s. To keep it inside the stage (so overflow:hidden doesn't
+       slice off the rounded bottom corner), y must stay under height*(1-s)
+       for its scale — these values leave a safe margin under that cap. */
     var POS = [
       { x: 0,     y: 0,    s: 1,   o: 1,   z: 5 },
-      { x: .1085, y: .062, s: .95, o: 1,   z: 4 },
-      { x: .207,  y: .119, s: .90, o: .97, z: 3 },
-      { x: .296,  y: .167, s: .85, o: .93, z: 2 },
-      { x: .374,  y: .205, s: .80, o: .88, z: 1 }
+      { x: .1085, y: .045, s: .95, o: 1,   z: 4 },
+      { x: .207,  y: .085, s: .90, o: .97, z: 3 },
+      { x: .296,  y: .13,  s: .85, o: .93, z: 2 },
+      { x: .374,  y: .18,  s: .80, o: .88, z: 1 }
     ];
     var HIDDEN = { x: .48, y: .24, s: .75, o: 0, z: 0 };
 
