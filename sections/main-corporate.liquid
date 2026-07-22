@@ -76,7 +76,8 @@
         <h2 class="corp-process__title">{{ s.process_heading }}</h2>
         <div class="corp-process__steps">
           {%- assign steps = 'CONSULT|CURATE|PERSONALISE|DELIVER' | split: '|' -%}
-          {%- assign stexts = s.step_texts | newline_to_br | split: '<br />' -%}
+          {%- assign stexts = s.step_texts | split: "
+" -%}
           {%- for step in steps -%}
             <div class="corp-step">
               <span class="corp-step__ico" aria-hidden="true">
