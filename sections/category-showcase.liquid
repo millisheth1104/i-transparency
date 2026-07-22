@@ -2,7 +2,9 @@
   <div class="container">
     <h2 class="section-heading">{{ section.settings.heading }}</h2>
     {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
+  </div>
 
+  <div class="ccs-wrap">
     <div class="ccs-stage" data-ccs>
       {%- for block in section.blocks -%}
         <div class="ccs-card" data-ccs-card {{ block.shopify_attributes }}>
@@ -27,7 +29,8 @@
 </section>
 
 <style>
-  .ccs-stage { position: relative; height: 460px; width: 100%; margin: 40px auto 0; overflow: hidden; border-radius: var(--radius); }
+  .ccs-wrap { width: 100vw; margin-left: calc(50% - 50vw); padding: 0 40px; box-sizing: border-box; }
+  .ccs-stage { position: relative; height: 460px; max-width: 1600px; margin: 40px auto 0; overflow: hidden; border-radius: var(--radius); }
   .ccs-card {
     position: absolute; left: 0; top: 0;
     width: 62%; height: 100%;
