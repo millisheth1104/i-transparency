@@ -27,13 +27,10 @@
 </section>
 
 <style>
-  /* Responsive stage: no fixed px, aspect-ratio scales with container width.
-     ~1190x540 reference -> 1190/540 ≈ 2.2/1. Active card at 77% width with
-     100% height then works out to ~1.7/1, matching the reference card. */
-  .ccs-stage { position: relative; width: 100%; aspect-ratio: 2.2 / 1; margin: 40px 0; overflow: hidden; border-radius: var(--radius); }
+  .ccs-stage { position: relative; height: 460px; width: 100%; margin: 40px 0; overflow: hidden; border-radius: var(--radius); }
   .ccs-card {
     position: absolute; left: 0; top: 0;
-    width: 77%; height: 100%;
+    width: 58%; height: 100%;
     border-radius: var(--radius); overflow: hidden;
     background: var(--cream-2);
     transform-origin: left center;
@@ -57,7 +54,7 @@
   .ccs-card__next:hover { background: #fff; color: var(--brown); }
 
   @media (max-width: 860px) {
-    .ccs-stage { aspect-ratio: 1.4 / 1; }
+    .ccs-stage { height: 340px; }
     .ccs-card__title { font-size: 24px; }
   }
 </style>
@@ -73,24 +70,17 @@
     var order = cards.map(function (_, i) { return i; });
     var timer = null;
 
-    /* Each stacked position has its OWN (narrower) effective width, not a
-       scaled-down copy sharing the front card's box — that's what makes
-       every card clearly visible at once instead of hiding behind a
-       same-width neighbor. The narrowing itself is done with scaleX
-       (relative to BASE_W, the card's fixed CSS width) instead of
-       animating the `width` property — width changes force a layout
-       recalculation every frame (the cause of the stutter); scaleX is
-       purely a compositor transform, so it stays smooth at 60fps.
-       x/w are fractions of the stage's own rendered width. */
-    var BASE_W = .77;
+    /* xFrac/yFrac are fractions of the stage's own rendered width, so the
+       stack always fills the stage edge-to-edge and stays centered at any
+       screen size or stage width. */
     var POS = [
-      { x: 0,    w: .77,  o: 1,   z: 5 },
-      { x: .75,  w: .11,  o: 1,   z: 4 },
-      { x: .83,  w: .095, o: .97, z: 3 },
-      { x: .895, w: .085, o: .93, z: 2 },
-      { x: .95,  w: .075, o: .88, z: 1 }
+      { x: 0,     y: 0,     s: 1,   o: 1,   z: 5 },
+      { x: .140,  y: .028,  s: .95, o: 1,   z: 4 },
+      { x: .257,  y: .054,  s: .90, o: .97, z: 3 },
+      { x: .350,  y: .076,  s: .85, o: .93, z: 2 },
+      { x: .420,  y: .093,  s: .80, o: .88, z: 1 }
     ];
-    var HIDDEN = { x: 1.05, w: .07, o: 0, z: 0 };
+    var HIDDEN = { x: .48, y: .108, s: .75, o: 0, z: 0 };
 
     function apply() {
       var stageWidth = stage.clientWidth;
@@ -98,8 +88,8 @@
         var card = cards[cardIndex];
         var p = POS[pos] || HIDDEN;
         var x = p.x * stageWidth;
-        var scaleX = p.w / BASE_W;
-        card.style.transform = 'translateX(' + x + 'px) scaleX(' + scaleX + ')';
+        var y = p.y * stageWidth;
+        card.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + p.s + ')';
         card.style.opacity = p.o;
         card.style.zIndex = p.z;
         card.style.pointerEvents = p.o === 0 ? 'none' : 'auto';
