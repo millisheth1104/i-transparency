@@ -6,7 +6,6 @@
       {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
     {%- endif -%}
     <div class="hero__scrim"></div>
-    <svg class="hero__sparkle" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0c.6 6 1 10 2.5 11.5C16 13 20 13.5 24 12c-4 1.5-8 2-9.5 3.5C13 17 12.6 21 12 24c-.6-3-1-7-2.5-8.5C8 14 4 13.5 0 12c4-1.5 8-2 9.5-3.5C11 7 11.4 3 12 0Z"/></svg>
     <button class="round-btn hero__next" aria-label="Explore" data-hero-next>{% render 'icon', icon: 'arrow-right' %}</button>
   </div>
 
@@ -41,20 +40,18 @@
   .hero { position: relative; }
   .hero__media { position: relative; height: 82vh; min-height: 560px; max-height: 820px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); overflow: hidden; margin: 0 var(--gutter); }
   .hero__media img, .hero__placeholder { width: 100%; height: 100%; object-fit: cover; }
-  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(60,52,44,.55) 0%, rgba(60,52,44,.15) 55%, transparent 100%); }
+  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(244,238,228,.82) 0%, rgba(244,238,228,.5) 45%, rgba(244,238,228,.1) 100%); }
   .hero__content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; max-width: var(--container); }
-  .hero__eyebrow { color: rgba(255,255,255,.85); }
-  .hero__title { font-size: clamp(44px, 7vw, 92px); color: #f2ead9; line-height: 1; max-width: 12ch; }
-  .hero__title em { font-style: italic; color: #cbb488; }
-  .hero__text { color: rgba(255,255,255,.85); max-width: 42ch; margin: 20px 0 0; font-size: 16px; }
+  .hero__eyebrow { color: var(--taupe-dark); }
+  .hero__title { font-size: clamp(44px, 7vw, 92px); color: var(--brown-2); line-height: 1; max-width: 12ch; }
+  .hero__title em { font-style: italic; color: var(--taupe); }
+  .hero__text { color: var(--brown-2); max-width: 42ch; margin: 20px 0 0; font-size: 16px; }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
-  .hero__actions .btn--outline { border-color: rgba(255,255,255,.7); color: #fff; }
-  .hero__actions .btn--outline:hover { background: #fff; color: var(--brown); }
-  .hero__next { position: absolute; top: 50%; right: 60px; transform: translateY(-50%); z-index: 2; background: transparent; border-color: rgba(255,255,255,.7); color: #fff; }
-  .hero__next:hover { background: #fff; color: var(--brown); border-color: #fff; }
+  .hero__actions .btn--outline { border-color: var(--brown); color: var(--brown); }
+  .hero__actions .btn--outline:hover { background: var(--brown); color: #fff; }
+  .hero__next { position: absolute; top: 50%; right: 60px; transform: translateY(-50%); z-index: 2; background: transparent; border-color: var(--brown); color: var(--brown); }
+  .hero__next:hover { background: var(--brown); color: #fff; border-color: var(--brown); }
   @media (max-width: 700px){ .hero__next { display: none; } }
-  .hero__sparkle { position: absolute; left: 40px; bottom: 40px; width: 46px; height: 46px; color: rgba(255,255,255,.55); z-index: 1; pointer-events: none; }
-  @media (max-width: 700px){ .hero__sparkle { width: 32px; height: 32px; left: 20px; bottom: 20px; } }
   .trust-bar { margin: -34px auto 0; position: relative; z-index: 2; max-width: 1000px; }
   @media (max-width: 700px){ .hero__media { margin: 0; border-radius: 0; } .trust-bar { margin-top: 24px; } }
 </style>
