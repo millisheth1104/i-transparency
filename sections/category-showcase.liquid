@@ -27,10 +27,13 @@
 </section>
 
 <style>
-  .ccs-stage { position: relative; height: 460px; width: 100%; margin: 40px 0; overflow: hidden; border-radius: var(--radius); }
+  /* ~1190x540 reference (2.2:1 stage) with a 77%-wide, 100%-tall active
+     card working out to ~1.7:1 — matches the reference card exactly.
+     aspect-ratio keeps this fully responsive with no fixed px. */
+  .ccs-stage { position: relative; width: 100%; aspect-ratio: 2.2 / 1; margin: 40px 0; overflow: hidden; border-radius: var(--radius); }
   .ccs-card {
     position: absolute; left: 0; top: 0;
-    width: 58%; height: 100%;
+    width: 77%; height: 100%;
     border-radius: var(--radius); overflow: hidden;
     background: var(--cream-2);
     transform-origin: left center;
@@ -54,7 +57,7 @@
   .ccs-card__next:hover { background: #fff; color: var(--brown); }
 
   @media (max-width: 860px) {
-    .ccs-stage { height: 340px; }
+    .ccs-stage { aspect-ratio: 1.4 / 1; }
     .ccs-card__title { font-size: 24px; }
   }
 </style>
@@ -75,10 +78,10 @@
        screen size or stage width. */
     var POS = [
       { x: 0,     y: 0,     s: 1,   o: 1,   z: 5 },
-      { x: .140,  y: .028,  s: .95, o: 1,   z: 4 },
-      { x: .257,  y: .054,  s: .90, o: .97, z: 3 },
-      { x: .350,  y: .076,  s: .85, o: .93, z: 2 },
-      { x: .420,  y: .093,  s: .80, o: .88, z: 1 }
+      { x: .1085, y: .028,  s: .95, o: 1,   z: 4 },
+      { x: .207,  y: .054,  s: .90, o: .97, z: 3 },
+      { x: .296,  y: .076,  s: .85, o: .93, z: 2 },
+      { x: .374,  y: .093,  s: .80, o: .88, z: 1 }
     ];
     var HIDDEN = { x: .48, y: .108, s: .75, o: 0, z: 0 };
 
