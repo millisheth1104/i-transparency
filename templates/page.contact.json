@@ -74,10 +74,55 @@
         "ai_gen_block_12bb201_VkdC79"
       ],
       "settings": {}
+    },
+    "178470199955b79d37": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_84af8c8_a6Arw9": {
+          "type": "ai_gen_block_84af8c8",
+          "settings": {
+            "heading": "Have a question?",
+            "description": "Write to us and we'll get back to you as soon as possible.",
+            "decorative_image": "shopify://shop_images/contact_us_img.png",
+            "name_label": "FULL NAME",
+            "name_placeholder": "First and last name",
+            "email_label": "EMAIL ADDRESS",
+            "email_placeholder": "joe@gmail.com",
+            "phone_label": "PHONE NUMBER",
+            "phone_placeholder": "+91",
+            "message_label": "MESSAGE",
+            "message_placeholder": "Tell us more about your enquiry",
+            "button_text": "SUBMIT ENQUIRY",
+            "success_message": "Thank you for contacting us. We'll get back to you as soon as possible.",
+            "heading_font": "serif",
+            "heading_size": 58,
+            "description_size": 20,
+            "background_color": "#F7F2EA",
+            "heading_color": "#5E534A",
+            "text_color": "#8A8178",
+            "button_color": "#65594F",
+            "button_text_color": "#FFFFFF",
+            "button_hover_color": "#4A4139",
+            "container_max_width": 1400,
+            "column_gap": 80,
+            "form_max_width": 600,
+            "image_max_width": 420,
+            "padding_top": 90,
+            "padding_bottom": 90,
+            "padding_horizontal": 40
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_84af8c8_a6Arw9"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "17847008679aeb0bee"
+    "17847008679aeb0bee",
+    "178470199955b79d37"
   ]
 }
