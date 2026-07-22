@@ -77,21 +77,22 @@
        stack always fills the stage edge-to-edge and stays centered at any
        screen size or stage width. */
     var POS = [
-      { x: 0,     y: 0,     s: 1,   o: 1,   z: 5 },
-      { x: .1085, y: .028,  s: .95, o: 1,   z: 4 },
-      { x: .207,  y: .054,  s: .90, o: .97, z: 3 },
-      { x: .296,  y: .076,  s: .85, o: .93, z: 2 },
-      { x: .374,  y: .093,  s: .80, o: .88, z: 1 }
+      { x: 0,     y: 0,    s: 1,   o: 1,   z: 5 },
+      { x: .1085, y: .062, s: .95, o: 1,   z: 4 },
+      { x: .207,  y: .119, s: .90, o: .97, z: 3 },
+      { x: .296,  y: .167, s: .85, o: .93, z: 2 },
+      { x: .374,  y: .205, s: .80, o: .88, z: 1 }
     ];
-    var HIDDEN = { x: .48, y: .108, s: .75, o: 0, z: 0 };
+    var HIDDEN = { x: .48, y: .24, s: .75, o: 0, z: 0 };
 
     function apply() {
       var stageWidth = stage.clientWidth;
+      var stageHeight = stage.clientHeight;
       order.forEach(function (cardIndex, pos) {
         var card = cards[cardIndex];
         var p = POS[pos] || HIDDEN;
         var x = p.x * stageWidth;
-        var y = p.y * stageWidth;
+        var y = p.y * stageHeight;
         card.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + p.s + ')';
         card.style.opacity = p.o;
         card.style.zIndex = p.z;
