@@ -30,7 +30,7 @@
   .ccs-stage { position: relative; height: 460px; width: 100%; margin: 40px 0; overflow: hidden; border-radius: var(--radius); }
   .ccs-card {
     position: absolute; left: 0; top: 0;
-    width: 58%; height: 100%;
+    width: 78%; height: 100%;
     border-radius: var(--radius); overflow: hidden;
     background: var(--cream-2);
     transform-origin: left center;
@@ -74,14 +74,17 @@
     /* xFrac/yFrac are fractions of the stage's own rendered width, so the
        stack always fills the stage edge-to-edge and stays centered at any
        screen size or stage width. */
+    /* z increases with position (instead of decreasing) so each later card
+       renders above the one before it — required for same-width cards to
+       peek through sequentially instead of hiding fully behind each other. */
     var POS = [
-      { x: 0,     y: 0,     s: 1,   o: 1,    z: 5, r: 0,    blur: 0 },
-      { x: .140,  y: .028,  s: .95, o: 1,    z: 4, r: -1.2,  blur: 0 },
-      { x: .257,  y: .054,  s: .90, o: .97,  z: 3, r: -2.1,  blur: 0 },
-      { x: .350,  y: .076,  s: .85, o: .93,  z: 2, r: -2.8,  blur: 0 },
-      { x: .420,  y: .093,  s: .80, o: .88,  z: 1, r: -3.4,  blur: .5 }
+      { x: 0,    y: 0, s: 1,   o: 1,   z: 10, r: 0,    blur: 0 },
+      { x: .82,  y: 0, s: .95, o: 1,   z: 2,  r: -1.2, blur: 0 },
+      { x: .88,  y: 0, s: .90, o: .97, z: 3,  r: -2.1, blur: 0 },
+      { x: .94,  y: 0, s: .85, o: .93, z: 4,  r: -2.8, blur: 0 },
+      { x: .98,  y: 0, s: .80, o: .88, z: 5,  r: -3.4, blur: .5 }
     ];
-    var HIDDEN = { x: .48, y: .108, s: .75, o: 0, z: 0, r: -4, blur: 4 };
+    var HIDDEN = { x: 1.08, y: 0, s: .75, o: 0, z: 0, r: -4, blur: 4 };
 
     function apply() {
       var stageWidth = stage.clientWidth;
