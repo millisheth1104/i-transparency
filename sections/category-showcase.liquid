@@ -27,7 +27,7 @@
 </section>
 
 <style>
-  .ccs-stage { position: relative; height: 460px; max-width: 1200px; margin: 40px auto 0; overflow: hidden; border-radius: var(--radius); }
+  .ccs-stage { position: relative; height: 460px; width: 100%; margin: 40px auto 0; overflow: hidden; border-radius: var(--radius); }
   .ccs-card {
     position: absolute; left: 0; top: 0;
     width: 62%; height: 100%;
@@ -56,7 +56,6 @@
 
   @media (max-width: 860px) {
     .ccs-stage { height: 340px; }
-    .ccs-card { width: 80%; }
     .ccs-card__title { font-size: 24px; }
   }
 </style>
@@ -72,24 +71,25 @@
     var order = cards.map(function (_, i) { return i; });
     var timer = null;
 
+    /* xFrac/yFrac are fractions of the stage's own rendered width, so the
+       stack always fills the stage edge-to-edge and stays centered at any
+       screen size or stage width. */
     var POS = [
-      { x: 0,   y: 0,  s: 1,   o: 1,   z: 5, blur: 0 },
-      { x: 152, y: 13, s: .95, o: .9,  z: 4, blur: 0 },
-      { x: 278, y: 25, s: .90, o: .8,  z: 3, blur: 0 },
-      { x: 379, y: 35, s: .85, o: .7,  z: 2, blur: .5 },
-      { x: 455, y: 43, s: .80, o: .6,  z: 1, blur: 2 }
+      { x: 0,     y: 0,     s: 1,   o: 1,   z: 5, blur: 0 },
+      { x: .127,  y: .028,  s: .95, o: .9,  z: 4, blur: 0 },
+      { x: .232,  y: .054,  s: .90, o: .8,  z: 3, blur: 0 },
+      { x: .316,  y: .076,  s: .85, o: .7,  z: 2, blur: .5 },
+      { x: .379,  y: .093,  s: .80, o: .6,  z: 1, blur: 2 }
     ];
-    var HIDDEN = { x: 530, y: 50, s: .75, o: 0, z: 0, blur: 4 };
-
-    function isMobile() { return window.innerWidth <= 860; }
+    var HIDDEN = { x: .44, y: .108, s: .75, o: 0, z: 0, blur: 4 };
 
     function apply() {
+      var stageWidth = stage.clientWidth;
       order.forEach(function (cardIndex, pos) {
         var card = cards[cardIndex];
         var p = POS[pos] || HIDDEN;
-        var scaleFactor = isMobile() ? 0.55 : 1;
-        var x = p.x * scaleFactor;
-        var y = p.y * scaleFactor;
+        var x = p.x * stageWidth;
+        var y = p.y * stageWidth;
         card.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + p.s + ')';
         card.style.opacity = p.o;
         card.style.zIndex = p.z;
@@ -126,6 +126,12 @@
 
     stage.addEventListener('mouseenter', function () { if (timer) clearInterval(timer); });
     stage.addEventListener('mouseleave', restartAutoplay);
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(apply, 100);
+    });
 
     apply();
     restartAutoplay();
