@@ -31,7 +31,8 @@
                 <a href="{{ link.url }}" class="footer-col__link">{{ link.title }}</a>
               {%- endfor -%}
             {%- else -%}
-              {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+              {%- assign items = block.settings.items | split: "
+" -%}
               {%- for item in items -%}
                 {%- assign parts = item | strip | split: '|' -%}
                 {%- if parts[0] != blank -%}
