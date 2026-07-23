@@ -51,7 +51,7 @@
         "b2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/bare_earth.png",
+            "image": "shopify://shop_images/02.png",
             "title": "Plush",
             "link": ""
           }
@@ -59,7 +59,7 @@
         "b3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/bare_earth.png",
+            "image": "shopify://shop_images/shop_hero_-_Edited.jpg",
             "title": "Terraweave",
             "link": ""
           }
