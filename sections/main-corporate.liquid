@@ -1,19 +1,18 @@
 {%- assign s = section.settings -%}
 <div class="corp">
+  {%- comment -%} Hero: full-bleed like the home page hero, not capped to .container {%- endcomment -%}
+  <section class="corp-hero">
+    {%- if s.hero_image != blank -%}
+      <img class="corp-hero__bg" src="{{ s.hero_image | image_url: width: 2000 }}" alt="{{ s.hero_heading | strip_html | escape }}" width="1800" height="820" loading="lazy">
+    {%- endif -%}
+    <div class="corp-hero__inner">
+      <p class="eyebrow corp-hero__eyebrow">{{ s.hero_eyebrow }}</p>
+      <h1 class="corp-hero__title">{{ s.hero_heading }}</h1>
+      {%- if s.hero_button != blank -%}<a class="btn btn--light" href="{{ s.hero_link | default: '#corp-form' }}">{{ s.hero_button }}</a>{%- endif -%}
+    </div>
+  </section>
+
   <div class="container">
-
-    {%- comment -%} Hero {%- endcomment -%}
-    <section class="corp-hero">
-      {%- if s.hero_image != blank -%}
-        <img class="corp-hero__bg" src="{{ s.hero_image | image_url: width: 2000 }}" alt="{{ s.hero_heading | strip_html | escape }}" width="1800" height="820" loading="lazy">
-      {%- endif -%}
-      <div class="corp-hero__inner">
-        <p class="eyebrow corp-hero__eyebrow">{{ s.hero_eyebrow }}</p>
-        <h1 class="corp-hero__title">{{ s.hero_heading }}</h1>
-        {%- if s.hero_button != blank -%}<a class="btn btn--light" href="{{ s.hero_link | default: '#corp-form' }}">{{ s.hero_button }}</a>{%- endif -%}
-      </div>
-    </section>
-
     {%- comment -%} Feature strip {%- endcomment -%}
     <section class="corp-strip">
       <div class="corp-strip__item">
@@ -168,7 +167,7 @@
   .corp section { margin-bottom: 90px; }
 
   /* Hero */
-  .corp-hero { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--olive); min-height: 560px; display: flex; }
+  .corp-hero { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--olive); min-height: 560px; display: flex; margin: 0 var(--gutter); }
   .corp-hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .corp-hero__bg::after { content: ""; }
   .corp-hero__inner { position: relative; z-index: 1; padding: 70px; max-width: 620px; align-self: center; background: linear-gradient(90deg, rgba(60,60,45,.72) 0%, rgba(60,60,45,.45) 70%, transparent 100%); }

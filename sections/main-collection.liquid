@@ -71,42 +71,44 @@
         <a class="mc-applied__clear" href="{{ collection.url }}">Clear all</a>
       </div>
     {%- endif -%}
+  </div>
 
-    {%- comment -%} Hero / promo band {%- endcomment -%}
-    {%- if section.settings.show_hero -%}
-      <div class="mc-hero">
-        <div class="mc-hero__text">
-          <h1 class="mc-hero__title">{{ hero_heading }}</h1>
-          {%- if section.settings.hero_text != blank -%}
-            <p class="mc-hero__sub">{{ section.settings.hero_text }}</p>
-          {%- endif -%}
-          {%- if section.blocks.size > 0 -%}
-            <div class="mc-hero__cats">
-              {%- for block in section.blocks -%}
-                <a href="{{ block.settings.link }}" class="mc-cat" {{ block.shopify_attributes }}>
-                  <span class="mc-cat__img">
-                    {%- if block.settings.image != blank -%}
-                      <img src="{{ block.settings.image | image_url: width: 320 }}" alt="{{ block.settings.title | escape }}" width="160" height="160" loading="lazy">
-                    {%- else -%}
-                      {{ 'collection-1' | placeholder_svg_tag }}
-                    {%- endif -%}
-                  </span>
-                  <span class="mc-cat__label">{{ block.settings.title }}</span>
-                </a>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-        </div>
-        <div class="mc-hero__media">
-          {%- if section.settings.hero_image != blank -%}
-            <img src="{{ section.settings.hero_image | image_url: width: 1200 }}" alt="{{ hero_heading | escape }}" width="1200" height="900" loading="lazy">
-          {%- else -%}
-            {{ 'lifestyle-1' | placeholder_svg_tag }}
-          {%- endif -%}
-        </div>
+  {%- comment -%} Hero / promo band: full-bleed like the home page hero, not capped to .container {%- endcomment -%}
+  {%- if section.settings.show_hero -%}
+    <div class="mc-hero">
+      <div class="mc-hero__text">
+        <h1 class="mc-hero__title">{{ hero_heading }}</h1>
+        {%- if section.settings.hero_text != blank -%}
+          <p class="mc-hero__sub">{{ section.settings.hero_text }}</p>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="mc-hero__cats">
+            {%- for block in section.blocks -%}
+              <a href="{{ block.settings.link }}" class="mc-cat" {{ block.shopify_attributes }}>
+                <span class="mc-cat__img">
+                  {%- if block.settings.image != blank -%}
+                    <img src="{{ block.settings.image | image_url: width: 320 }}" alt="{{ block.settings.title | escape }}" width="160" height="160" loading="lazy">
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </span>
+                <span class="mc-cat__label">{{ block.settings.title }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
-    {%- endif -%}
+      <div class="mc-hero__media">
+        {%- if section.settings.hero_image != blank -%}
+          <img src="{{ section.settings.hero_image | image_url: width: 1200 }}" alt="{{ hero_heading | escape }}" width="1200" height="900" loading="lazy">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
 
+  <div class="container">
     {%- comment -%} Product grid {%- endcomment -%}
     {%- liquid
       assign promo_blocks = section.blocks | where: 'type', 'promo_band'
@@ -234,7 +236,7 @@
   /* Editorial split: flex row, vertically centered; the image uses
      align-self: stretch to fill the row's full height (set by the taller
      of the two columns) instead of leaving empty space below it. */
-  #shopify-section-{{ section.id }} .mc-hero { display: flex; justify-content: space-between; align-items: center; gap: 40px; background: var(--cream-2); border-radius: 12px; padding: 50px; margin: 40px 0 60px; }
+  #shopify-section-{{ section.id }} .mc-hero { display: flex; justify-content: space-between; align-items: center; gap: 40px; background: var(--cream-2); border-radius: 12px; padding: 50px; margin: 40px var(--gutter) 60px; }
   #shopify-section-{{ section.id }} .mc-hero__text { flex: 1 1 46%; }
   #shopify-section-{{ section.id }} .mc-hero__title { font-family: var(--font-serif); font-size: clamp(34px, 4vw, 48px); color: var(--brown); }
   #shopify-section-{{ section.id }} .mc-hero__sub { color: var(--muted); max-width: 420px; margin: 18px 0 0; }
