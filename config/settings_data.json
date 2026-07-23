@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/WhatsApp_Image_2026-07-21_at_12.26.33_PM.jpg",
+    "logo": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_01_02_03_PM.png",
     "whatsapp_number": "918828911111",
     "color_primary": "#4a4139",
     "color_background": "#f4eee4",
@@ -45,13 +45,21 @@
               "label": "Contact",
               "link": "/pages/contact"
             }
+          },
+          "link_CkxeKg": {
+            "type": "link",
+            "settings": {
+              "label": "Link",
+              "link": ""
+            }
           }
         },
         "block_order": [
           "nav-0",
           "nav-1",
           "nav-2",
-          "nav-3"
+          "nav-3",
+          "link_CkxeKg"
         ],
         "settings": {}
       },
