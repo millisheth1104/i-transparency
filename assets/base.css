@@ -147,3 +147,29 @@ label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: 
 @media (max-width: 600px) {
   .grid--4 { grid-template-columns: 1fr; }
 }
+
+/* Site-wide scroll reveal (see assets/scroll-reveal.js) */
+.sr-text {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .6s ease-out, transform .6s ease-out;
+}
+.sr-text.is-revealed { opacity: 1; transform: translateY(0); }
+
+.sr-image {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.sr-image.is-revealed { opacity: 1; transform: translateX(0); }
+
+.sr-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+}
+.sr-stagger.is-revealed > * { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-text, .sr-image, .sr-stagger > * { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
