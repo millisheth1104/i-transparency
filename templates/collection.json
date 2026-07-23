@@ -16,7 +16,8 @@
         "per_page": 12,
         "show_hero": true,
         "hero_heading": "Bedding",
-        "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order."
+        "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "hero_image": "shopify://shop_images/shop_hero.jpg"
       }
     }
   },
