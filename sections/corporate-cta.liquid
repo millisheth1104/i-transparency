@@ -21,14 +21,14 @@
 </section>
 
 <style>
-  .cta-band { display: grid; grid-template-columns: 1fr 1.1fr; background: var(--olive); border-radius: var(--radius-lg); overflow: hidden; align-items: center; }
-  .cta-band__media { padding: 34px; }
-  .cta-band__media img, .cta-band__media svg { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); aspect-ratio: 3/2; }
+  .cta-band { display: grid; grid-template-columns: 637px 1fr; background: var(--olive); border-radius: 0; overflow: hidden; align-items: center; width: 1152px; max-width: 100%; height: 284px; margin: 0 auto; }
+  .cta-band__media { padding: 22px; }
+  .cta-band__media img, .cta-band__media svg { width: 593px; height: 240px; max-width: 100%; object-fit: cover; border-radius: 0; }
   .cta-band__body { padding: 50px 60px; text-align: center; display: flex; flex-direction: column; align-items: center; }
   .cta-band__eyebrow { color: var(--gold); letter-spacing: .2em; }
   .cta-band__text { color: rgba(244,238,228,.75); max-width: 46ch; margin: 0 0 30px; }
   .cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-  @media (max-width: 860px){ .cta-band { grid-template-columns: 1fr; } .cta-band__body { padding: 10px 34px 44px; } }
+  @media (max-width: 860px){ .cta-band { grid-template-columns: 1fr; width: 100%; height: auto; } .cta-band__media img, .cta-band__media svg { width: 100%; height: auto; aspect-ratio: 593/240; } .cta-band__body { padding: 10px 34px 44px; } }
 </style>
 
 {% schema %}
