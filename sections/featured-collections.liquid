@@ -1,6 +1,6 @@
 <section class="section featured-band">
   <div class="container">
-    <p class="eyebrow text-center">{{ section.settings.eyebrow }}</p>
+    <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
 
     <div class="fc" data-fc>
       <div class="fc__dots">
@@ -53,6 +53,38 @@
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
   @media (max-width: 860px){ .featured-band { margin: 0; border-radius: 0; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
+
+  /* Scroll-triggered reveal (Intersection Observer adds .is-revealed once, no repeat). */
+  .fc__eyebrow { opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .fc.is-revealed .fc__eyebrow { opacity: 1; transform: translateY(0); }
+
+  .fc__stage { opacity: 0; transform: scale(.96) translateY(40px); box-shadow: 0 0 0 rgba(40,32,24,0); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1), box-shadow .6s cubic-bezier(.22,1,.36,1); }
+  .fc.is-revealed .fc__stage { opacity: 1; transform: scale(1) translateY(0); box-shadow: 0 20px 46px rgba(40,32,24,.16); }
+
+  /* Dots slide in from the right with a slight stagger, same as the list. */
+  .fc__dots { opacity: 0; transform: translateX(20px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); transition-delay: .1s; }
+  .fc.is-revealed .fc__dots { opacity: 1; transform: translateX(0); }
+
+  .fc:not(.is-revealed) .fc__item { opacity: 0 !important; }
+  .fc__item { transform: translateX(30px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .fc.is-revealed .fc__item { transform: translateX(0); }
+  .fc__num, .fc__name { display: inline-block; transform: translateY(10px); opacity: 0; transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); }
+  .fc.is-revealed .fc__num, .fc.is-revealed .fc__name { opacity: 1; transform: translateY(0); }
+
+  /* Per-item stagger (0.12s apart), plus a small extra offset on the title
+     relative to its own number, per block position (up to 8 blocks). */
+  .fc__item:nth-child(1) { transition-delay: .15s; } .fc__item:nth-child(1) .fc__num { transition-delay: .15s; } .fc__item:nth-child(1) .fc__name { transition-delay: .23s; }
+  .fc__item:nth-child(2) { transition-delay: .27s; } .fc__item:nth-child(2) .fc__num { transition-delay: .27s; } .fc__item:nth-child(2) .fc__name { transition-delay: .35s; }
+  .fc__item:nth-child(3) { transition-delay: .39s; } .fc__item:nth-child(3) .fc__num { transition-delay: .39s; } .fc__item:nth-child(3) .fc__name { transition-delay: .47s; }
+  .fc__item:nth-child(4) { transition-delay: .51s; } .fc__item:nth-child(4) .fc__num { transition-delay: .51s; } .fc__item:nth-child(4) .fc__name { transition-delay: .59s; }
+  .fc__item:nth-child(5) { transition-delay: .63s; } .fc__item:nth-child(5) .fc__num { transition-delay: .63s; } .fc__item:nth-child(5) .fc__name { transition-delay: .71s; }
+  .fc__item:nth-child(6) { transition-delay: .75s; } .fc__item:nth-child(6) .fc__num { transition-delay: .75s; } .fc__item:nth-child(6) .fc__name { transition-delay: .83s; }
+  .fc__item:nth-child(7) { transition-delay: .87s; } .fc__item:nth-child(7) .fc__num { transition-delay: .87s; } .fc__item:nth-child(7) .fc__name { transition-delay: .95s; }
+  .fc__item:nth-child(8) { transition-delay: .99s; } .fc__item:nth-child(8) .fc__num { transition-delay: .99s; } .fc__item:nth-child(8) .fc__name { transition-delay: 1.07s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc__eyebrow, .fc__stage, .fc__dots, .fc__item, .fc__num, .fc__name { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
 </style>
 
 <script>
@@ -67,6 +99,23 @@
     root.querySelectorAll('[data-fc-item],[data-fc-dot]').forEach(function(el){
       el.addEventListener('click', function(){ go(el.dataset.fcItem || el.dataset.fcDot); });
     });
+
+    /* Scroll-triggered entrance: fires once when ~75% of the section is
+       visible, then stops observing (no repeat on scroll up). Uses
+       IntersectionObserver instead of a scroll listener for performance. */
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            root.classList.add('is-revealed');
+            observer.unobserve(root);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -25% 0px' });
+      revealObserver.observe(root);
+    } else {
+      root.classList.add('is-revealed');
+    }
   });
 </script>
 
