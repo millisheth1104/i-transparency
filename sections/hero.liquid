@@ -28,8 +28,13 @@
 <div class="container">
   <div class="trust-bar">
     {%- assign items = section.settings.trust_items | split: '|' -%}
+    {%- assign trust_icons = 'box|refresh|cash|truck' | split: '|' -%}
     {%- for item in items -%}
-      <span class="trust-bar__item">{{ item | strip }}</span>
+      <span class="trust-bar__item">
+        {%- assign icon_index = forloop.index0 | modulo: trust_icons.size -%}
+        {% render 'icon', icon: trust_icons[icon_index] %}
+        {{ item | strip }}
+      </span>
       {%- unless forloop.last -%}<span class="trust-bar__sep">•</span>{%- endunless -%}
     {%- endfor -%}
   </div>
