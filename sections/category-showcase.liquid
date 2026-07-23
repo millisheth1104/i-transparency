@@ -81,13 +81,13 @@
        slice off the rounded bottom corner), y must stay under height*(1-s)
        for its scale — these values leave a safe margin under that cap. */
     var POS = [
-      { x: 0,     y: 0,    s: 1,   o: 1,   z: 5 },
-      { x: .1085, y: .045, s: .95, o: 1,   z: 4 },
-      { x: .207,  y: .085, s: .90, o: .97, z: 3 },
-      { x: .296,  y: .13,  s: .85, o: .93, z: 2 },
-      { x: .374,  y: .18,  s: .80, o: .88, z: 1 }
+      { x: 0,     y: 0, s: 1,   o: 1,   z: 5 },
+      { x: .1085, y: 0, s: .95, o: 1,   z: 4 },
+      { x: .207,  y: 0, s: .90, o: .97, z: 3 },
+      { x: .296,  y: 0, s: .85, o: .93, z: 2 },
+      { x: .374,  y: 0, s: .80, o: .88, z: 1 }
     ];
-    var HIDDEN = { x: .48, y: .24, s: .75, o: 0, z: 0 };
+    var HIDDEN = { x: .48, y: 0, s: .75, o: 0, z: 0 };
 
     function apply() {
       var stageWidth = stage.clientWidth;
