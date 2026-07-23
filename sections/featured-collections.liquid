@@ -3,7 +3,7 @@
     <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
 
     <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 90 }}vh;">
-      <div class="fc__sticky">
+      <div class="fc__pin" data-fc-pin>
         <div class="fc" data-fc>
           <div class="fc__dots">
             {%- for block in section.blocks -%}
@@ -42,7 +42,9 @@
 <style>
   .featured-band { background: var(--cream-2); border-radius: var(--radius-lg); margin: 0 var(--gutter); }
   .fc__track { position: relative; }
-  .fc__sticky { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; }
+  .fc__pin { width: 100%; min-height: 100vh; display: flex; align-items: center; position: absolute; top: 0; left: 0; }
+  .fc__pin.is-fixed { position: fixed; top: 0; left: 0; }
+  .fc__pin.is-bottom { position: absolute; top: auto; bottom: 0; }
   .fc { display: grid; grid-template-columns: 40px 812px 300px; gap: 24px; align-items: center; margin-top: 30px; width: 1200px; max-width: 100%; margin-left: auto; margin-right: auto; }
   .fc__dots { display: flex; flex-direction: column; gap: 16px; }
   .fc__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; padding: 0; }
@@ -60,10 +62,10 @@
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
   @media (max-width: 860px){ .featured-band { margin: 0; border-radius: 0; } .fc { grid-template-columns: 1fr; width: 100%; } .fc__stage { height: auto; aspect-ratio: 812 / 516; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
 
-  /* Scroll-scrub relies on a tall track + sticky pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
+  /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
     .fc__track { height: auto !important; }
-    .fc__sticky { position: static; min-height: 0; }
+    .fc__pin { position: static !important; min-height: 0; }
   }
 
   /* Scroll-triggered reveal (Intersection Observer adds .is-revealed once, no repeat). */
@@ -112,18 +114,31 @@
       el.addEventListener('click', function(){ go(el.dataset.fcItem || el.dataset.fcDot); });
     });
 
-    /* Scroll-scrub: the track above is N slides tall (100vh each) with the
-       stage pinned via position:sticky. As the user scrolls through that
-       tall track, map how far they've scrolled into it to a slide index. */
+    /* Scroll-scrub: the track above is N slides tall (100vh each). Rather
+       than relying on position:sticky (which silently stops working if any
+       ancestor -- e.g. Shopify's own .shopify-section wrapper -- sets
+       overflow/contain/transform), the pin is managed directly here: fixed
+       to the viewport while inside the track, absolute at the top/bottom
+       edges before/after it. Scroll depth into the track maps to a slide. */
     var track = root.closest('.fc__track');
+    var pin = track ? track.querySelector('[data-fc-pin]') : null;
     var slideCount = root.querySelectorAll('[data-fc-slide]').length;
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (track && slideCount > 1 && !reduceMotion) {
+    if (track && pin && slideCount > 1 && !reduceMotion) {
       var ticking = false;
       function updateFromScroll(){
         ticking = false;
         var rect = track.getBoundingClientRect();
-        var scrollable = rect.height - window.innerHeight;
+        var vh = window.innerHeight;
+
+        pin.classList.remove('is-fixed', 'is-bottom');
+        if (rect.top <= 0 && rect.bottom >= vh) {
+          pin.classList.add('is-fixed');
+        } else if (rect.bottom < vh) {
+          pin.classList.add('is-bottom');
+        }
+
+        var scrollable = rect.height - vh;
         if (scrollable <= 0) return;
         var progress = Math.min(1, Math.max(0, -rect.top / scrollable));
         var index = Math.min(slideCount - 1, Math.floor(progress * slideCount));
@@ -132,6 +147,7 @@
       window.addEventListener('scroll', function(){
         if (!ticking) { ticking = true; requestAnimationFrame(updateFromScroll); }
       }, { passive: true });
+      window.addEventListener('resize', updateFromScroll);
       updateFromScroll();
     }
 
