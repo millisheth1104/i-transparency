@@ -11,6 +11,13 @@
   "sections": {
     "main": {
       "type": "main-collection",
+      "blocks": {
+        "cat-0": { "type": "category", "settings": { "title": "Bedsheets" } },
+        "cat-1": { "type": "category", "settings": { "title": "Bed Covers" } },
+        "cat-2": { "type": "category", "settings": { "title": "Pillows" } },
+        "cat-3": { "type": "category", "settings": { "title": "Comforters" } }
+      },
+      "block_order": ["cat-0", "cat-1", "cat-2", "cat-3"],
       "settings": {
         "breadcrumb_root": "Shop",
         "per_page": 12,
