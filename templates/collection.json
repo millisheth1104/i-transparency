@@ -12,12 +12,42 @@
     "main": {
       "type": "main-collection",
       "blocks": {
-        "cat-0": { "type": "category", "settings": { "title": "Bedsheets" } },
-        "cat-1": { "type": "category", "settings": { "title": "Bed Covers" } },
-        "cat-2": { "type": "category", "settings": { "title": "Pillows" } },
-        "cat-3": { "type": "category", "settings": { "title": "Comforters" } }
+        "cat-0": {
+          "type": "category",
+          "settings": {
+            "title": "Bedsheets",
+            "link": ""
+          }
+        },
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "Bed Covers",
+            "link": ""
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Pillows",
+            "link": ""
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Comforters",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["cat-0", "cat-1", "cat-2", "cat-3"],
+      "block_order": [
+        "cat-0",
+        "cat-1",
+        "cat-2",
+        "cat-3"
+      ],
+      "disabled": true,
       "settings": {
         "breadcrumb_root": "Shop",
         "per_page": 12,
@@ -27,6 +57,55 @@
         "hero_image": "shopify://shop_images/Untitled_design_3.png",
         "show_feature_media": true,
         "feature_media_image": "shopify://shop_images/sleepscape_room_img.jpg"
+      }
+    },
+    "main_collection_BpJadB": {
+      "type": "main-collection",
+      "blocks": {
+        "category_J9qF7r": {
+          "type": "category",
+          "settings": {
+            "title": "Bedsheets",
+            "link": ""
+          }
+        },
+        "category_xRcjji": {
+          "type": "category",
+          "settings": {
+            "title": "Bed Covers",
+            "link": ""
+          }
+        },
+        "category_pCWmQL": {
+          "type": "category",
+          "settings": {
+            "title": "Pillows",
+            "link": ""
+          }
+        },
+        "category_UPnJjK": {
+          "type": "category",
+          "settings": {
+            "title": "Comforters",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_J9qF7r",
+        "category_xRcjji",
+        "category_pCWmQL",
+        "category_UPnJjK"
+      ],
+      "name": "Main collection",
+      "settings": {
+        "breadcrumb_root": "Shop",
+        "per_page": 12,
+        "show_hero": true,
+        "hero_heading": "Bedding",
+        "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "hero_image": "shopify://shop_images/shop_hero_-_Edited.jpg",
+        "show_feature_media": true
       }
     },
     "promo_band_XitcdV": {
@@ -43,6 +122,7 @@
   },
   "order": [
     "main",
+    "main_collection_BpJadB",
     "promo_band_XitcdV"
   ]
 }
