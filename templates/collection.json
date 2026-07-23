@@ -19,9 +19,21 @@
         "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
         "hero_image": "shopify://shop_images/Untitled_design_3.png"
       }
+    },
+    "promo_band_XitcdV": {
+      "type": "promo-band",
+      "name": "Promo band",
+      "settings": {
+        "heading": "Printed",
+        "text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "image": "shopify://shop_images/02_-_Edited.png",
+        "button_label": "",
+        "button_link": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "promo_band_XitcdV"
   ]
 }
