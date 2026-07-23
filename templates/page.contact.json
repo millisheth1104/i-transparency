@@ -102,7 +102,7 @@
             "text_color": "#8a8178",
             "button_color": "#65594f",
             "button_text_color": "#ffffff",
-            "button_hover_color": "#4a4139",
+            "button_hover_color": "#5a5148",
             "container_max_width": 1360,
             "column_gap": 80,
             "form_max_width": 600,

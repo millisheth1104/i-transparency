@@ -3,19 +3,19 @@
    ============================================================ */
 :root {
   /* Palette */
-  --cream: #f4eee4;
-  --cream-2: #ebe2d3;
+  --cream: #f7f2ea;
+  --cream-2: #e8dfd5;
   --sand: #ddd0b9;
-  --taupe: #a8967a;
-  --taupe-dark: #8a7862;
-  --brown: #4a4139;
-  --brown-2: #5b5048;
+  --taupe: #8c8275;
+  --taupe-dark: #8d7c67;
+  --brown: #5a5148;
+  --brown-2: #57534a;
   --olive: #4b4b3b;
   --gold: #b7a386;
   --line: #d8ccb6;
   --white: #ffffff;
-  --text: #4a4139;
-  --muted: #8f8371;
+  --text: #5a5148;
+  --muted: #8c8275;
 
   /* Type */
   --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
