@@ -231,17 +231,21 @@
   #shopify-section-{{ section.id }} .mc-applied__clear { font-family: var(--font-serif); font-style: italic; color: var(--brown); font-size: 15px; }
   #shopify-section-{{ section.id }} .mc-applied__clear:hover { color: var(--taupe); }
 
-  #shopify-section-{{ section.id }} .mc-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: stretch; background: var(--cream-2); border-radius: var(--radius-lg); padding: 60px; margin: 40px 0 60px; }
+  /* Editorial split: flex row, vertically centered; the image uses
+     align-self: stretch to fill the row's full height (set by the taller
+     of the two columns) instead of leaving empty space below it. */
+  #shopify-section-{{ section.id }} .mc-hero { display: flex; justify-content: space-between; align-items: center; gap: 40px; background: var(--cream-2); border-radius: 12px; padding: 50px; margin: 40px 0 60px; }
+  #shopify-section-{{ section.id }} .mc-hero__text { flex: 1 1 46%; }
   #shopify-section-{{ section.id }} .mc-hero__title { font-family: var(--font-serif); font-size: clamp(34px, 4vw, 48px); color: var(--brown); }
   #shopify-section-{{ section.id }} .mc-hero__sub { color: var(--muted); max-width: 420px; margin: 18px 0 0; }
-  #shopify-section-{{ section.id }} .mc-hero__cats { display: flex; flex-wrap: wrap; gap: 34px; margin-top: 40px; }
-  #shopify-section-{{ section.id }} .mc-cat { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 96px; text-align: center; }
+  #shopify-section-{{ section.id }} .mc-hero__cats { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 30px; margin-top: 36px; -webkit-overflow-scrolling: touch; }
+  #shopify-section-{{ section.id }} .mc-cat { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 84px; flex-shrink: 0; text-align: center; }
   #shopify-section-{{ section.id }} .mc-cat__img { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; background: var(--sand); display: block; }
   #shopify-section-{{ section.id }} .mc-cat__img img, #shopify-section-{{ section.id }} .mc-cat__img svg { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
   #shopify-section-{{ section.id }} .mc-cat:hover .mc-cat__img img { transform: scale(1.06); }
   #shopify-section-{{ section.id }} .mc-cat__label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  #shopify-section-{{ section.id }} .mc-hero__media { border-radius: var(--radius); overflow: hidden; min-height: 320px; }
-  #shopify-section-{{ section.id }} .mc-hero__media img, #shopify-section-{{ section.id }} .mc-hero__media svg { width: 100%; height: 100%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .mc-hero__media { flex: 1 1 46%; align-self: stretch; border-radius: 10px; overflow: hidden; }
+  #shopify-section-{{ section.id }} .mc-hero__media img, #shopify-section-{{ section.id }} .mc-hero__media svg { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   #shopify-section-{{ section.id }} .mc-feature { display: grid; grid-template-columns: repeat(2, 1fr) 1.3fr; grid-auto-rows: 1fr; gap: 30px; margin: 40px 0; }
   #shopify-section-{{ section.id }} .mc-feature__grid { display: contents; }
@@ -268,8 +272,9 @@
   #shopify-section-{{ section.id }} .mc-empty .btn { margin-top: 26px; }
 
   @media (max-width: 990px) {
-    #shopify-section-{{ section.id }} .mc-hero { grid-template-columns: 1fr; padding: 36px; gap: 34px; }
-    #shopify-section-{{ section.id }} .mc-hero__media { min-height: 260px; }
+    #shopify-section-{{ section.id }} .mc-hero { flex-direction: column; align-items: stretch; padding: 36px; gap: 30px; }
+    #shopify-section-{{ section.id }} .mc-hero__text, #shopify-section-{{ section.id }} .mc-hero__media { flex: 1 1 auto; }
+    #shopify-section-{{ section.id }} .mc-hero__media { aspect-ratio: 4/3; min-height: 0; }
     #shopify-section-{{ section.id }} .mc-feature { grid-template-columns: 1fr 1fr; }
     #shopify-section-{{ section.id }} .mc-feature__media { grid-column: 1 / 3; grid-row: auto; aspect-ratio: 16/9; }
   }
