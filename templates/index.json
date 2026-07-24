@@ -178,7 +178,7 @@
       "settings": {
         "eyebrow": "Bestsellers",
         "subheading": "Loved by 1,200+ homes",
-        "collection": "",
+        "collection": "frontpage",
         "limit": 8
       }
     },
