@@ -35,7 +35,7 @@
         {% render 'icon', icon: trust_icons[icon_index] %}
         {{ item | strip }}
       </span>
-      {%- unless forloop.last -%}<span class="trust-bar__sep">•</span>{%- endunless -%}
+      {%- unless forloop.last -%}<span class="trust-bar__sep"></span>{%- endunless -%}
     {%- endfor -%}
   </div>
 </div>
