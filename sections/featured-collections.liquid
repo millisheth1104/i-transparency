@@ -134,8 +134,17 @@
         pin.classList.remove('is-fixed', 'is-bottom');
         if (rect.top <= 0 && rect.bottom >= vh) {
           pin.classList.add('is-fixed');
-        } else if (rect.bottom < vh) {
-          pin.classList.add('is-bottom');
+          /* position:fixed's containing block is the viewport, not the
+             track -- CSS alone can't know the track's real horizontal
+             offset once that switch happens, so lock it here from the
+             live rect or the pin drifts outside the track's actual
+             left edge/width (the bug being fixed). */
+          pin.style.left = rect.left + 'px';
+          pin.style.width = rect.width + 'px';
+        } else {
+          pin.style.left = '';
+          pin.style.width = '';
+          if (rect.bottom < vh) pin.classList.add('is-bottom');
         }
 
         var scrollable = rect.height - vh;
