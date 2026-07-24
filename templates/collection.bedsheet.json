@@ -1,0 +1,129 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "cat-0": {
+          "type": "category",
+          "settings": {
+            "title": "Bedsheets",
+            "link": ""
+          }
+        },
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "Bed Covers",
+            "link": ""
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Pillows",
+            "link": ""
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Comforters",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "cat-0",
+        "cat-1",
+        "cat-2",
+        "cat-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "breadcrumb_root": "Shop",
+        "per_page": 12,
+        "show_hero": true,
+        "hero_heading": "Bedding",
+        "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "hero_image": "shopify://shop_images/Untitled_design_3.png",
+        "show_feature_media": true,
+        "feature_media_image": "shopify://shop_images/sleepscape_room_img.jpg"
+      }
+    },
+    "main_collection_BpJadB": {
+      "type": "main-collection",
+      "blocks": {
+        "category_J9qF7r": {
+          "type": "category",
+          "settings": {
+            "title": "Bedsheets",
+            "link": ""
+          }
+        },
+        "category_xRcjji": {
+          "type": "category",
+          "settings": {
+            "title": "Bed Covers",
+            "link": ""
+          }
+        },
+        "category_pCWmQL": {
+          "type": "category",
+          "settings": {
+            "title": "Pillows",
+            "link": ""
+          }
+        },
+        "category_UPnJjK": {
+          "type": "category",
+          "settings": {
+            "title": "Comforters",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_J9qF7r",
+        "category_xRcjji",
+        "category_pCWmQL",
+        "category_UPnJjK"
+      ],
+      "name": "Main collection",
+      "settings": {
+        "breadcrumb_root": "Shop",
+        "per_page": 12,
+        "show_hero": true,
+        "hero_heading": "Bedding",
+        "hero_text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "hero_image": "shopify://shop_images/Untitled_design_4.png",
+        "show_feature_media": true,
+        "feature_media_image": "shopify://shop_images/sleepscape_room_img.jpg"
+      }
+    },
+    "promo_band_XitcdV": {
+      "type": "promo-band",
+      "name": "Promo band",
+      "settings": {
+        "heading": "Printed",
+        "text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+        "image": "shopify://shop_images/02_-_Edited.png",
+        "button_label": "",
+        "button_link": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "main_collection_BpJadB",
+    "promo_band_XitcdV"
+  ]
+}
