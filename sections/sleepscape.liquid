@@ -39,18 +39,18 @@
   .sleepscape__stage > img, .sleepscape__stage > svg { width: 100%; height: 100%; object-fit: cover; }
   .hotspot { position: absolute; transform: translate(-50%, -50%); }
   .hotspot__dot { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; color: var(--brown); font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
-  .hotspot__card { position: absolute; top: 44px; left: 50%; transform: translateX(-50%) translateY(8px); width: 260px; background: var(--white); border: 1px solid var(--line); border-radius: 0; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 20px 45px rgba(45,38,32,.18); z-index: 3; }
+  .hotspot__card { position: absolute; top: 44px; left: 50%; transform: translateX(-50%) translateY(8px); width: 169.07px; background: var(--white); border: 1px solid var(--taupe-dark); border-radius: 0; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 20px 45px rgba(45,38,32,.18); z-index: 3; }
   .hotspot:hover .hotspot__card, .hotspot:focus-within .hotspot__card, .hotspot.is-open .hotspot__card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
   .hotspot__dot { position: relative; z-index: 2; transition: background .2s, color .2s; }
   .hotspot.is-open .hotspot__dot { background: var(--brown); color: #fff; }
-  .hotspot__card-media { position: relative; aspect-ratio: 5/4; background: var(--cream-2); display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .hotspot__card-media { position: relative; width: 153.07px; height: 108px; margin: 8px; background: var(--cream-2); display: flex; align-items: center; justify-content: center; }
   .hotspot__card-media img { width: 100%; height: 100%; object-fit: contain; }
-  .hotspot__card-body { padding: 16px; }
-  .hotspot__card-title { font-family: var(--font-sans); font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); margin: 0 0 8px; }
-  .hotspot__card .product-card__meta { margin: 0 0 6px; }
-  .hotspot__card .product-card__price { display: block; margin: 6px 0 14px; }
-  .hotspot__card .product-card__add { height: 44px; font-size: 11px; }
-  .hotspot__card .product-card__wish { top: 10px; right: 10px; z-index: 4; }
+  .hotspot__card-body { padding: 8px 10px 10px; }
+  .hotspot__card-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--brown); margin: 0 0 6px; }
+  .hotspot__card .product-card__meta { margin: 0 0 4px; font-size: 11px; }
+  .hotspot__card .product-card__price { display: block; margin: 4px 0 10px; font-size: 15px; }
+  .hotspot__card .product-card__add { height: 38px; font-size: 9px; letter-spacing: .12em; }
+  .hotspot__card .product-card__wish { top: 8px; right: 8px; z-index: 4; }
 </style>
 
 <script>
