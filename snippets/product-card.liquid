@@ -1,5 +1,13 @@
 {%- comment -%} params: product, show_add (default true) {%- endcomment -%}
 {%- assign p = product -%}
+{%- assign size_value = p.metafields.custom.size -%}
+{%- if size_value == blank -%}
+  {%- for option in p.options_with_values -%}
+    {%- if option.name == 'Size' -%}
+      {%- assign size_value = p.selected_or_first_available_variant.options[option.position | minus: 1] -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 <div class="product-card">
   <a href="{{ p.url }}" class="product-card__media">
     {%- if p.featured_image -%}
@@ -9,22 +17,25 @@
     {%- endif -%}
     <button class="product-card__wish" aria-label="Add to wishlist" type="button" data-wishlist="{{ p.id }}">{% render 'icon', icon: 'heart' %}</button>
   </a>
-  <a href="{{ p.url }}">
-    <h3 class="product-card__title">{{ p.title }}</h3>
-  </a>
-  {%- if p.metafields.custom.shade != blank -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
-  {%- if p.type != blank -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
-  <span class="product-card__price">{{ p.price | money }}</span>
-  {%- unless show_add == false -%}
-    {%- if p.available -%}
-      <product-form>
-        {%- form 'product', p, class: 'product-card__form' -%}
-          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
-          <button type="submit" class="btn btn--outline btn--block">Add to cart</button>
-        {%- endform -%}
-      </product-form>
-    {%- else -%}
-      <button class="btn btn--outline btn--block" disabled>Sold out</button>
-    {%- endif -%}
-  {%- endunless -%}
+  <div class="product-card__body">
+    <a href="{{ p.url }}">
+      <h3 class="product-card__title">{{ p.title }}</h3>
+    </a>
+    {%- if p.metafields.custom.shade != blank -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
+    {%- if p.type != blank -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
+    {%- if size_value != blank -%}<p class="product-card__meta">{{ size_value }}</p>{%- endif -%}
+    <span class="product-card__price">{{ p.price | money_without_trailing_zeros }}</span>
+    {%- unless show_add == false -%}
+      {%- if p.available -%}
+        <product-form>
+          {%- form 'product', p, class: 'product-card__form' -%}
+            <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+            <button type="submit" class="product-card__add">Add to cart</button>
+          {%- endform -%}
+        </product-form>
+      {%- else -%}
+        <button class="product-card__add" disabled>Sold out</button>
+      {%- endif -%}
+    {%- endunless -%}
+  </div>
 </div>

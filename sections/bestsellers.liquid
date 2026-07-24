@@ -17,10 +17,12 @@
             <div class="bs-item">
               <div class="product-card">
                 <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag }}</div>
-                <h3 class="product-card__title">Product title</h3>
-                <p class="product-card__meta">Variant · Size</p>
-                <span class="product-card__price">₹0</span>
-                <button class="btn btn--outline btn--block">Add to cart</button>
+                <div class="product-card__body">
+                  <h3 class="product-card__title">Product title</h3>
+                  <p class="product-card__meta">Variant · Size</p>
+                  <span class="product-card__price">₹0</span>
+                  <button class="product-card__add">Add to cart</button>
+                </div>
               </div>
             </div>
           {%- endfor -%}
