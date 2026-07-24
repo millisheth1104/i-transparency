@@ -4,7 +4,8 @@
 {%- if size_value == blank -%}
   {%- for option in p.options_with_values -%}
     {%- if option.name == 'Size' -%}
-      {%- assign size_value = p.selected_or_first_available_variant.options[option.position | minus: 1] -%}
+      {%- assign size_index = option.position | minus: 1 -%}
+      {%- assign size_value = p.selected_or_first_available_variant.options[size_index] -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
