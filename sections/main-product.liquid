@@ -21,7 +21,7 @@
             <img data-main-img
                  src="{{ product.featured_image | image_url: width: 1200 }}"
                  alt="{{ product.featured_image.alt | escape | default: product.title }}"
-                 width="1000" height="1100">
+                 width="615" height="531">
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'mp__ph' }}
           {%- endif -%}
@@ -190,10 +190,11 @@
   #shopify-section-{{ section.id }} .mp { padding: 40px 0 90px; }
   .mp__crumb { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 30px; display: flex; gap: 10px; }
   .mp__crumb a:hover { color: var(--brown); }
-  .mp__grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: start; }
+  .mp__grid { display: grid; grid-template-columns: 615px 1fr; gap: 64px; align-items: start; }
 
   /* Gallery */
-  .mp__main { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--cream-2); aspect-ratio: 5/5.4; }
+  .mp__gallery { width: 615px; max-width: 100%; }
+  .mp__main { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--cream-2); width: 615px; max-width: 100%; aspect-ratio: 615/531; }
   .mp__main img, .mp__main .mp__ph { width: 100%; height: 100%; object-fit: cover; }
   .mp__wish { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.85); border: none; color: var(--brown); display: flex; align-items: center; justify-content: center; transition: background .25s; }
   .mp__wish:hover { background: #fff; }
