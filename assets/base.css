@@ -31,20 +31,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; overflow-x: hidden; scroll-snap-type: y proximity; }
-
-/* One section per screen: each top-level section inside <main> gets at
-   least a full viewport of height and a snap point at its top edge.
-   Uses proximity (not mandatory) and min-height (not a fixed/capped
-   height) so scrolling never fights the user and content taller than
-   one screen (long pages, accordions, forms) is never cropped -- it
-   simply grows past 100vh instead of being clipped. Header/footer are
-   siblings of <main>, not inside it, so they keep their natural
-   compact size instead of being stretched to a full screen. */
-main#MainContent > .shopify-section {
-  min-height: 100vh;
-  scroll-snap-align: start;
-}
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   margin: 0;
