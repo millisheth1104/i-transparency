@@ -1,5 +1,5 @@
 <section class="section sleepscape">
-  <div class="container">
+  <div class="sleepscape__inner">
     <h2 class="section-heading">{{ section.settings.heading }}</h2>
     {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
 
@@ -35,7 +35,8 @@
 </section>
 
 <style>
-  .sleepscape__stage { position: relative; margin-top: 40px; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16/9; }
+  .sleepscape__inner { width: 1155px; max-width: calc(100% - 48px); margin: 0 auto; }
+  .sleepscape__stage { position: relative; margin-top: 36px; border-radius: var(--radius); overflow: hidden; width: 100%; aspect-ratio: 1155 / 720; }
   .sleepscape__stage > img, .sleepscape__stage > svg { width: 100%; height: 100%; object-fit: cover; }
   .hotspot { position: absolute; transform: translate(-50%, -50%); }
   .hotspot__dot { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; color: var(--brown); font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
