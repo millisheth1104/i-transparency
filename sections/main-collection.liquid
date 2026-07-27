@@ -257,6 +257,11 @@
 
   #shopify-section-{{ section.id }} .mc-grid { margin-top: 10px; }
 
+  /* Shop grid product cards: square corners, fixed-height image, no border (per design spec) */
+  #shopify-section-{{ section.id }} .product-card { border: none; }
+  #shopify-section-{{ section.id }} .product-card__media { border-radius: 0; aspect-ratio: unset; height: 345px; }
+  #shopify-section-{{ section.id }} .product-card__body { padding-top: 20px; }
+
   #shopify-section-{{ section.id }} .mc-promo { background: var(--cream-2); border-radius: var(--radius-lg); overflow: hidden; margin: 50px 0; }
   #shopify-section-{{ section.id }} .mc-promo__text { padding: 56px 60px 36px; }
   #shopify-section-{{ section.id }} .mc-promo__title { font-family: var(--font-serif); font-size: clamp(30px, 3.6vw, 42px); color: var(--brown); }
