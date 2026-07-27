@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -7,6 +16,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Product specifications",
+            "content": "<p>Add product details here.</p>",
             "use_product_description": true,
             "open": true
           }
@@ -15,18 +25,26 @@
           "type": "accordion",
           "settings": {
             "heading": "Material care",
-            "content": "<p>Machine washable at 30°C. Do not bleach. Tumble dry low. Warm iron if needed.</p>"
+            "content": "<p>Machine washable at 30°C. Do not bleach. Tumble dry low. Warm iron if needed.</p>",
+            "use_product_description": false,
+            "open": false
           }
         },
         "terms": {
           "type": "accordion",
           "settings": {
             "heading": "Terms & conditions",
-            "content": "<p>Free shipping and Cash on Delivery across India. Easy returns within 7 days of delivery.</p>"
+            "content": "<p>Free shipping and Cash on Delivery across India. Easy returns within 7 days of delivery.</p>",
+            "use_product_description": false,
+            "open": false
           }
         }
       },
-      "block_order": ["specs", "care", "terms"],
+      "block_order": [
+        "specs",
+        "care",
+        "terms"
+      ],
       "settings": {
         "show_breadcrumb": true,
         "show_wishlist": true,
@@ -39,9 +57,13 @@
       "type": "related-products",
       "settings": {
         "heading": "You may also like",
+        "collection": "",
         "products_limit": 6
       }
     }
   },
-  "order": ["main", "related"]
+  "order": [
+    "main",
+    "related"
+  ]
 }
