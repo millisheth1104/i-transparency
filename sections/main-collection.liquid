@@ -255,10 +255,12 @@
   #shopify-section-{{ section.id }} .mc-feature__media { grid-column: 3; grid-row: 1 / 3; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
 
-  #shopify-section-{{ section.id }} .mc-grid { margin-top: 10px; }
+  /* Fixed 260px tracks so cards sit flush side by side instead of centered
+     with dead space inside a wider fluid column. */
+  #shopify-section-{{ section.id }} .mc-grid { margin-top: 10px; grid-template-columns: repeat(auto-fill, 260px); }
 
   /* Shop grid product cards: fixed 260px container that hugs its content height, square image corners, no border (per design spec) */
-  #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0 auto; }
+  #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
   #shopify-section-{{ section.id }} .product-card__media { border-radius: 0; aspect-ratio: unset; width: 260px; height: 345px; max-width: 100%; }
   #shopify-section-{{ section.id }} .product-card__body { padding-top: 20px; flex: 0 0 auto; }
 
