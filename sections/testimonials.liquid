@@ -20,13 +20,13 @@
 <style>
   .tm-wrap { width: 100%; overflow: hidden; }
   .tm-row { display: flex; align-items: center; justify-content: center; padding: 60px 100px 30px; width: 100%; }
-  .tm-card { flex: 1 1 218.25px; width: 218.25px; height: 261.9px; background: var(--taupe-dark); color: #f4ede0; border-radius: var(--radius-lg); padding: 30px 22px; text-align: center; margin: 0 -20px; position: relative; display: flex; flex-direction: column; justify-content: center; overflow: hidden; transition: transform .3s; }
+  .tm-card { flex: 1 1 218.25px; width: 218.25px; min-height: 261.9px; background: var(--taupe-dark); color: #f4ede0; border-radius: var(--radius-lg); padding: 30px 22px; text-align: center; margin: 0 -20px; position: relative; display: flex; flex-direction: column; justify-content: center; transition: transform .3s; }
   .tm-card:nth-child(1) { transform: translateY(20px) rotate(-5deg); z-index: 1; }
-  .tm-card:nth-child(2) { flex-basis: 307.54px; width: 307.54px; height: 369.05px; padding: 36px 28px; transform: translateY(-6px) rotate(-3deg); z-index: 2; }
-  .tm-card:nth-child(4) { flex-basis: 307.54px; width: 307.54px; height: 369.05px; padding: 36px 28px; transform: translateY(-6px) rotate(3deg); z-index: 2; }
+  .tm-card:nth-child(2) { flex-basis: 307.54px; width: 307.54px; min-height: 369.05px; padding: 36px 28px; transform: translateY(-6px) rotate(-3deg); z-index: 2; }
+  .tm-card:nth-child(4) { flex-basis: 307.54px; width: 307.54px; min-height: 369.05px; padding: 36px 28px; transform: translateY(-6px) rotate(3deg); z-index: 2; }
   .tm-card:nth-child(5) { transform: translateY(20px) rotate(5deg); z-index: 1; }
   .tm-card:hover { transform: translateY(-4px) rotate(0deg) scale(1.03); z-index: 4; }
-  .tm-card--hl { background: var(--brown); flex-basis: 396.83px; width: 396.83px; height: 476.19px; padding: 48px 36px; transform: translateY(-10px) rotate(0deg) scale(1.06); z-index: 3; }
+  .tm-card--hl { background: var(--brown); flex-basis: 396.83px; width: 396.83px; min-height: 476.19px; padding: 48px 36px; transform: translateY(-10px) rotate(0deg) scale(1.06); z-index: 3; }
   .tm-card--hl:hover { transform: translateY(-16px) rotate(0deg) scale(1.09); z-index: 5; }
   .tm-stars { display: flex; justify-content: center; gap: 4px; color: #e7d9bf; margin-bottom: 22px; }
   .tm-card blockquote { font-family: var(--font-serif); font-size: 16px; line-height: 1.5; margin: 0 0 20px; }
