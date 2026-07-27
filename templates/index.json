@@ -26,6 +26,11 @@
     },
     "feature_split": {
       "type": "feature-split",
+      "custom_css": [
+        ".feature-split__inner {/* Adjust these values */ --left-width: 40%; --right-width: 60%; display: grid; grid-template-columns: var(--left-width) var(--right-width); gap: 70px; align-items: stretch; width: 100%; max-width: 1062px; min-height: 540px; margin: 0 auto; padding: 0;}",
+        "/* Tablet */@media (max-width: 992px) {.feature-split__inner {--left-width: 45%; --right-width: 55%; gap: 40px; }}",
+        "/* Mobile */@media (max-width: 768px) {.feature-split__inner {grid-template-columns: 1fr; gap: 30px; min-height: auto; }}"
+      ],
       "settings": {
         "image": "shopify://shop_images/woven_not_knitted.png",
         "image_right": false,
