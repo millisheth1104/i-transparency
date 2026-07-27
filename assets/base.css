@@ -33,16 +33,13 @@
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
-/* Every section fits exactly within one screen (viewport minus the live-
-   measured sticky header height, from theme.liquid) -- never larger,
-   never "zoomed in" past the visible area. Content taller than one
-   screen scrolls internally instead of stretching the page or getting
-   truncated outright. Featured Collections opts out (see its own
-   #shopify-section-{{ id }} override) because its multi-screen pinned
-   scroll-scrub effect needs to be part of normal page scroll. */
+/* Each homepage/template section gets at least one full screen below the
+   sticky header, but never a capped height -- min-height (not height) lets
+   content taller than that grow past it instead of being cropped.
+   --header-height is measured live in theme.liquid (header height +
+   announcement bar if present) since the header is position:sticky. */
 main#MainContent > .shopify-section {
-  height: calc(100vh - var(--header-height, 0px));
-  overflow: hidden auto;
+  min-height: calc(100vh - var(--header-height, 0px));
 }
 
 body {

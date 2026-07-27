@@ -40,10 +40,6 @@
 </section>
 
 <style>
-  /* Opt out of the sitewide one-screen section cap: this section's pinned
-     scroll-scrub effect needs its tall track to be part of normal page
-     scroll, not clipped/scrolled inside a fixed-height box. */
-  main#MainContent > #shopify-section-{{ section.id }} { height: auto; overflow: visible; }
   .featured-band { background: var(--cream-2); border-radius: var(--radius-lg); margin: 0 var(--gutter); }
   .fc__track { position: relative; }
   .fc__pin { width: 100%; min-height: 100vh; display: flex; align-items: center; position: absolute; top: 0; left: 0; }
