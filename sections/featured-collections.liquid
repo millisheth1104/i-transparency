@@ -1,38 +1,36 @@
 <section class="section featured-band">
-  <div class="container">
-    <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
+  <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
 
-    <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 90 }}vh;">
-      <div class="fc__pin" data-fc-pin>
-        <div class="fc" data-fc>
-          <div class="fc__dots">
-            {%- for block in section.blocks -%}
-              <button class="fc__dot {% if forloop.first %}is-active{% endif %}" data-fc-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-            {%- endfor -%}
-          </div>
+  <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 90 }}vh;">
+    <div class="fc__pin" data-fc-pin>
+      <div class="fc" data-fc>
+        <div class="fc__dots">
+          {%- for block in section.blocks -%}
+            <button class="fc__dot {% if forloop.first %}is-active{% endif %}" data-fc-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
 
-          <div class="fc__stage">
-            {%- for block in section.blocks -%}
-              <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.image != blank -%}
-                  <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
-                {%- else -%}
-                  {{ 'lifestyle-2' | placeholder_svg_tag }}
-                {%- endif -%}
-                <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-                <span class="fc__slide-title">{{ block.settings.title }}</span>
-              </a>
-            {%- endfor -%}
-          </div>
+        <div class="fc__stage">
+          {%- for block in section.blocks -%}
+            <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag }}
+              {%- endif -%}
+              <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+              <span class="fc__slide-title">{{ block.settings.title }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
 
-          <div class="fc__list">
-            {%- for block in section.blocks -%}
-              <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
-                <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-                <span class="fc__name">{{ block.settings.title }}</span>
-              </button>
-            {%- endfor -%}
-          </div>
+        <div class="fc__list">
+          {%- for block in section.blocks -%}
+            <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
+              <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+              <span class="fc__name">{{ block.settings.title }}</span>
+            </button>
+          {%- endfor -%}
         </div>
       </div>
     </div>
@@ -40,12 +38,12 @@
 </section>
 
 <style>
-  .featured-band { background: var(--cream-2); border-radius: var(--radius-lg); margin: 0 var(--gutter); }
+  .featured-band { background: var(--cream-2); border-radius: var(--radius-lg); width: 1200px; max-width: calc(100% - 80px); margin: 0 auto; padding: 36px 24px; display: flex; flex-direction: column; gap: 36px; box-sizing: border-box; }
   .fc__track { position: relative; }
   .fc__pin { width: 100%; min-height: 100vh; display: flex; align-items: center; position: absolute; top: 0; left: 0; }
   .fc__pin.is-fixed { position: fixed; top: 0; left: 0; }
   .fc__pin.is-bottom { position: absolute; top: auto; bottom: 0; }
-  .fc { display: grid; grid-template-columns: 40px 1fr 300px; gap: 36px; align-items: center; margin-top: 30px; width: 100%; padding: 36px 24px; box-sizing: border-box; }
+  .fc { display: grid; grid-template-columns: 40px 1fr 300px; gap: 36px; align-items: center; width: 100%; }
   .fc__dots { display: flex; flex-direction: column; gap: 16px; }
   .fc__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; padding: 0; }
   .fc__dot.is-active { background: var(--brown); border-color: var(--brown); }
@@ -60,7 +58,7 @@
   .fc__item.is-active { opacity: 1; }
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  @media (max-width: 860px){ .featured-band { margin: 0; border-radius: 0; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
+  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
@@ -69,7 +67,7 @@
   }
 
   /* Scroll-triggered reveal (Intersection Observer adds .is-revealed once, no repeat). */
-  .fc__eyebrow { opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .fc__eyebrow { margin-bottom: 0; opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
   .fc.is-revealed .fc__eyebrow { opacity: 1; transform: translateY(0); }
 
   .fc__stage { opacity: 0; transform: scale(.96) translateY(40px); box-shadow: 0 0 0 rgba(40,32,24,0); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1), box-shadow .6s cubic-bezier(.22,1,.36,1); }
