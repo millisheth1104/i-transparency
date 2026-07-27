@@ -1,40 +1,48 @@
 <section class="section featured-band">
   <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
 
-  <div class="fc" data-fc>
-    <div class="fc__dots">
-      {%- for block in section.blocks -%}
-        <button class="fc__dot {% if forloop.first %}is-active{% endif %}" data-fc-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-      {%- endfor -%}
-    </div>
+  <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 30 | at_least: 150 }}vh;">
+    <div class="fc__pin" data-fc-pin>
+      <div class="fc" data-fc>
+        <div class="fc__dots">
+          {%- for block in section.blocks -%}
+            <button class="fc__dot {% if forloop.first %}is-active{% endif %}" data-fc-dot="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
 
-    <div class="fc__stage">
-      {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
-          {%- else -%}
-            {{ 'lifestyle-2' | placeholder_svg_tag }}
-          {%- endif -%}
-          <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-          <span class="fc__slide-title">{{ block.settings.title }}</span>
-        </a>
-      {%- endfor -%}
-    </div>
+        <div class="fc__stage">
+          {%- for block in section.blocks -%}
+            <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag }}
+              {%- endif -%}
+              <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+              <span class="fc__slide-title">{{ block.settings.title }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
 
-    <div class="fc__list">
-      {%- for block in section.blocks -%}
-        <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
-          <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-          <span class="fc__name">{{ block.settings.title }}</span>
-        </button>
-      {%- endfor -%}
+        <div class="fc__list">
+          {%- for block in section.blocks -%}
+            <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
+              <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+              <span class="fc__name">{{ block.settings.title }}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .featured-band { background: var(--cream-2); border-radius: var(--radius-lg); width: 1200px; max-width: calc(100% - 80px); margin: 0 auto; padding: 36px 24px; display: flex; flex-direction: column; gap: 36px; box-sizing: border-box; }
+  .fc__track { position: relative; }
+  .fc__pin { width: 100%; min-height: 100vh; display: flex; align-items: center; position: absolute; top: 0; left: 0; }
+  .fc__pin.is-fixed { position: fixed; top: 0; left: 0; }
+  .fc__pin.is-bottom { position: absolute; top: auto; bottom: 0; }
   .fc { display: grid; grid-template-columns: 40px 1fr 300px; gap: 36px; align-items: center; width: 100%; }
   .fc__dots { display: flex; flex-direction: column; gap: 16px; }
   .fc__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; padding: 0; }
@@ -51,6 +59,12 @@
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
   @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
+
+  /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
+  @media (prefers-reduced-motion: reduce) {
+    .fc__track { height: auto !important; }
+    .fc__pin { position: static !important; min-height: 0; }
+  }
 
   /* Scroll-triggered reveal (Intersection Observer adds .is-revealed once, no repeat). */
   .fc__eyebrow { margin-bottom: 0; opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
@@ -97,6 +111,54 @@
     root.querySelectorAll('[data-fc-item],[data-fc-dot]').forEach(function(el){
       el.addEventListener('click', function(){ go(el.dataset.fcItem || el.dataset.fcDot); });
     });
+
+    /* Scroll-scrub: the track above is deliberately kept as short as
+       possible (blocks x 30vh, floored at 150vh) while still exceeding
+       100vh so the pin can engage. Rather than relying on position:sticky
+       (which silently stops working if any ancestor -- e.g. Shopify's own
+       .shopify-section wrapper -- sets overflow/contain/transform), the
+       pin is managed directly here: fixed to the viewport while inside the
+       track, absolute at the top/bottom edges before/after it. Scroll
+       depth into the track maps to a slide. */
+    var track = root.closest('.fc__track');
+    var pin = track ? track.querySelector('[data-fc-pin]') : null;
+    var slideCount = root.querySelectorAll('[data-fc-slide]').length;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (track && pin && slideCount > 1 && !reduceMotion) {
+      var ticking = false;
+      function updateFromScroll(){
+        ticking = false;
+        var rect = track.getBoundingClientRect();
+        var vh = window.innerHeight;
+
+        pin.classList.remove('is-fixed', 'is-bottom');
+        if (rect.top <= 0 && rect.bottom >= vh) {
+          pin.classList.add('is-fixed');
+          /* position:fixed's containing block is the viewport, not the
+             track -- CSS alone can't know the track's real horizontal
+             offset once that switch happens, so lock it here from the
+             live rect or the pin drifts outside the track's actual
+             left edge/width. */
+          pin.style.left = rect.left + 'px';
+          pin.style.width = rect.width + 'px';
+        } else {
+          pin.style.left = '';
+          pin.style.width = '';
+          if (rect.bottom < vh) pin.classList.add('is-bottom');
+        }
+
+        var scrollable = rect.height - vh;
+        if (scrollable <= 0) return;
+        var progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+        var index = Math.min(slideCount - 1, Math.floor(progress * slideCount));
+        go(index);
+      }
+      window.addEventListener('scroll', function(){
+        if (!ticking) { ticking = true; requestAnimationFrame(updateFromScroll); }
+      }, { passive: true });
+      window.addEventListener('resize', updateFromScroll);
+      updateFromScroll();
+    }
 
     /* Scroll-triggered entrance: fires once when ~75% of the section is
        visible, then stops observing (no repeat on scroll up). Uses
