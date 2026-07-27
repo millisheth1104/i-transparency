@@ -28,7 +28,7 @@
       "type": "feature-split",
       "settings": {
         "image": "shopify://shop_images/woven_not_knitted.png",
-        "image_right": true,
+        "image_right": false,
         "eyebrow": "Breathable build · Zero bleed",
         "heading": "<em>Woven,</em> not knitted.",
         "intro": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <br/><strong>Ours is woven.</strong></p>",
