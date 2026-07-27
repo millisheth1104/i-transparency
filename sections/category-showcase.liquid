@@ -3,7 +3,7 @@
     <h2 class="section-heading">{{ section.settings.heading }}</h2>
     {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
 
-    <div class="ccs-stage" data-ccs>
+    <div class="ccs-stage" data-ccs data-fit-media>
       {%- for block in section.blocks -%}
         <div class="ccs-card" data-ccs-card {{ block.shopify_attributes }}>
           <button class="ccs-card__hit" data-ccs-select aria-label="Show {{ block.settings.title | escape }}"></button>

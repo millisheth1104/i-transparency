@@ -3,7 +3,7 @@
     <h2 class="section-heading">{{ section.settings.heading }}</h2>
     {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
 
-    <div class="sleepscape__stage">
+    <div class="sleepscape__stage" data-fit-media>
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.heading | escape }}" width="2000" height="1200" loading="lazy">
       {%- else -%}
