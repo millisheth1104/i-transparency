@@ -46,6 +46,10 @@
   .wishlist-share:hover { color: var(--taupe-dark); }
   .wishlist-share.is-copied span::after { content: ' — copied'; color: var(--taupe); }
   .wishlist-moveall { letter-spacing: .18em; }
+  .wishlist-grid { grid-template-columns: repeat(auto-fill, 260px); }
+  .wishlist-grid .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
+  .wishlist-grid .product-card__media { border-radius: 0; aspect-ratio: unset; width: 260px; height: 345px; max-width: 100%; }
+  .wishlist-grid .product-card__body { padding-top: 20px; flex: 0 0 auto; }
   .wishlist-empty { text-align: center; padding: 70px 0 50px; }
   .wishlist-empty__title { font-size: clamp(28px, 4vw, 44px); }
   .wishlist-empty__title em { font-style: italic; }

@@ -22,10 +22,10 @@
     <a href="{{ p.url }}">
       <h3 class="product-card__title">{{ p.title }}</h3>
     </a>
-    {%- if p.metafields.custom.shade != blank -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
-    {%- if p.type != blank -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
-    {%- if size_value != blank -%}<p class="product-card__meta">{{ size_value }}</p>{%- endif -%}
-    <span class="product-card__price">{{ p.price | money_without_trailing_zeros }}</span>
+    {%- if p.metafields.custom.shade != blank and p.metafields.custom.shade != 0 and p.metafields.custom.shade != '0' -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
+    {%- if p.type != blank and p.type != 0 and p.type != '0' -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
+    {%- if size_value != blank and size_value != 0 and size_value != '0' -%}<p class="product-card__meta">{{ size_value }}</p>{%- endif -%}
+    <span class="product-card__price">&#8377;{{ p.price | money_without_currency | remove: '.00' }}</span>
     {%- unless show_add == false -%}
       {%- if p.available -%}
         <product-form>
