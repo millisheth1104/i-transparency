@@ -33,15 +33,13 @@
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
-/* Every section must fit within exactly one screen (viewport minus the
-   sticky header's live-measured height, from theme.liquid). Sections
-   shorter than that just have empty space below; sections whose content
-   is taller scroll internally (mouse wheel/touch) instead of being
-   truncated outright, so nothing is actually lost -- but the section
-   itself never grows past one screen. */
+/* Each homepage/template section gets at least one full screen below the
+   sticky header, but never a capped height -- min-height (not height) lets
+   content taller than that grow past it instead of being cropped.
+   --header-height is measured live in theme.liquid (header height +
+   announcement bar if present) since the header is position:sticky. */
 main#MainContent > .shopify-section {
-  height: calc(100vh - var(--header-height, 0px));
-  overflow: hidden auto;
+  min-height: calc(100vh - var(--header-height, 0px));
 }
 
 body {
