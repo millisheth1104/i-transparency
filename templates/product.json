@@ -16,7 +16,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Product specifications",
-            "content": "<p>Add product details here.</p>",
+            "content": "<p>Dimensions: 50 x 60 in<br/>Material: Cable-Knit Cushion</p>",
             "use_product_description": true,
             "open": true
           }
