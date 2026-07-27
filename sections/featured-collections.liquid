@@ -45,11 +45,11 @@
   .fc__pin { width: 100%; min-height: 100vh; display: flex; align-items: center; position: absolute; top: 0; left: 0; }
   .fc__pin.is-fixed { position: fixed; top: 0; left: 0; }
   .fc__pin.is-bottom { position: absolute; top: auto; bottom: 0; }
-  .fc { display: grid; grid-template-columns: 40px 740px 300px; gap: 36px; align-items: center; margin-top: 30px; width: 1200px; max-width: 100%; padding: 36px 24px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+  .fc { display: grid; grid-template-columns: 40px 1fr 300px; gap: 36px; align-items: center; margin-top: 30px; width: 100%; padding: 36px 24px; box-sizing: border-box; }
   .fc__dots { display: flex; flex-direction: column; gap: 16px; }
   .fc__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; padding: 0; }
   .fc__dot.is-active { background: var(--brown); border-color: var(--brown); }
-  .fc__stage { position: relative; border-radius: var(--radius); overflow: hidden; width: 100%; height: 516px; }
+  .fc__stage { position: relative; border-radius: var(--radius); overflow: hidden; width: 100%; aspect-ratio: 812 / 516; }
   .fc__slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; pointer-events: none; }
   .fc__slide.is-active { opacity: 1; pointer-events: auto; }
   .fc__slide img, .fc__slide svg { width: 100%; height: 100%; object-fit: cover; }
@@ -60,7 +60,7 @@
   .fc__item.is-active { opacity: 1; }
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  @media (max-width: 860px){ .featured-band { margin: 0; border-radius: 0; } .fc { grid-template-columns: 1fr; width: 100%; } .fc__stage { height: auto; aspect-ratio: 812 / 516; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
+  @media (max-width: 860px){ .featured-band { margin: 0; border-radius: 0; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {

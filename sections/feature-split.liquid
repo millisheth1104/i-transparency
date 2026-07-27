@@ -1,6 +1,6 @@
 <section class="section feature-split">
   <div class="container feature-split__inner {% if section.settings.image_right %}feature-split--reverse{% endif %}">
-    <div class="feature-split__media" data-fit-media>
+    <div class="feature-split__media">
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" width="1200" height="1400" loading="lazy">
       {%- else -%}

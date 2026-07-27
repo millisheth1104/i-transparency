@@ -32,24 +32,6 @@
   <body class="template-{{ request.page_type | handle }}">
     {% section 'header' %}
 
-    <script>
-      (function () {
-        function setHeaderHeightVar() {
-          var header = document.querySelector('[data-header]');
-          var announcement = document.querySelector('[data-announcement-bar]');
-          var h = (header ? header.getBoundingClientRect().height : 0) + (announcement ? announcement.getBoundingClientRect().height : 0);
-          document.documentElement.style.setProperty('--header-height', h + 'px');
-        }
-        setHeaderHeightVar();
-        window.addEventListener('resize', setHeaderHeightVar);
-        window.addEventListener('load', setHeaderHeightVar);
-        var header = document.querySelector('[data-header]');
-        if (header && 'ResizeObserver' in window) {
-          new ResizeObserver(setHeaderHeightVar).observe(header);
-        }
-      })();
-    </script>
-
     <main id="MainContent" class="content-for-layout" role="main">
       {{ content_for_layout }}
     </main>
@@ -63,6 +45,5 @@
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
     <script src="{{ 'scroll-reveal.js' | asset_url }}" defer></script>
-    <script src="{{ 'section-fit.js' | asset_url }}" defer></script>
   </body>
 </html>
