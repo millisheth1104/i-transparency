@@ -43,8 +43,8 @@
   .hero { position: relative; }
   .hero__media {
     position: relative;
-    width: 1152px;
-    max-width: calc(100% - 48px); /* 24px page margin each side below 1152+48 */
+    width: calc(100% - (var(--gutter) * 2)); /* same box-sizing formula as the header's .container */
+    max-width: var(--container);
     aspect-ratio: 1152 / 565;     /* scales height proportionally as width shrinks */
     max-height: calc(100svh - 120px); /* keeps the whole card (incl. bottom pill) on screen under the header */
     margin: 24px auto 0;
