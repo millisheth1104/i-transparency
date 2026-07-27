@@ -60,11 +60,12 @@
 
 .bestsellers .section-sub{
     text-align:center;
-    font-size:15px;
+    font-size:13px;
     letter-spacing:3px;
     text-transform:uppercase;
-    color:#8d7966;
-    margin-bottom:55px;
+    color:#a89b8a;
+    font-weight:400;
+    margin-bottom:40px;
 }
 
 .bs-wrap{
@@ -74,8 +75,9 @@
 .bs-row{
     display:grid;
     grid-auto-flow:column;
-    grid-auto-columns:calc((100% - 80px)/3);
-    gap:40px;
+    grid-auto-columns:calc((100% - 76px)/3);
+    gap:38px;
+    align-items:start;
 
     overflow-x:auto;
     scroll-behavior:smooth;
@@ -92,104 +94,125 @@
 
 /* PRODUCT CARD */
 
-.product-card{
+.bestsellers .product-card{
     width:100%;
+    height:100%;
     background:transparent;
     border:none;
     padding:0;
+    display:flex;
+    flex-direction:column;
 }
 
-.product-card__media{
+.bestsellers .product-card__media{
     position:relative;
     overflow:hidden;
-    border-radius:28px;
-    aspect-ratio:0.72;
+    border-radius:18px;
+    aspect-ratio:3/4;
     background:#f5f3ef;
+    padding:0;
+    display:block;
 }
 
-.product-card__media img{
+.bestsellers .product-card__media img{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:.45s ease;
+    transition:transform .45s ease;
 }
 
-.product-card:hover .product-card__media img{
+.bestsellers .product-card:hover .product-card__media img{
     transform:scale(1.03);
 }
 
-.product-card__body{
-    padding:18px 0 0;
+.bestsellers .product-card__body{
+    padding:16px 0 0;
+    display:flex;
+    flex-direction:column;
+    flex:1;
 }
 
-.product-card__title{
-    font-size:20px;
+.bestsellers .product-card__title{
+    font-size:21px;
+    font-weight:500;
     letter-spacing:3px;
     text-transform:uppercase;
-    margin-bottom:8px;
+    margin-bottom:6px;
+    line-height:1.3;
 }
 
-.product-card__meta{
-    font-size:13px;
+.bestsellers .product-card__meta{
+    font-size:12px;
+    letter-spacing:.3px;
     color:#8c8c8c;
     line-height:1.5;
-    margin-bottom:18px;
+    margin:0;
 }
 
-.product-card__price{
+.bestsellers .product-card__meta:first-of-type{
+    color:#5f5246;
+}
+
+.bestsellers .product-card__price{
     display:block;
-    font-size:28px;
-    margin-bottom:24px;
+    font-size:19px;
     font-weight:500;
+    margin:10px 0 16px;
+}
+
+/* pins price+button to a shared baseline regardless of how many meta lines a card has */
+.bestsellers .product-card__price{
+    margin-top:auto;
 }
 
 /* BUTTON */
 
-.product-card__add{
-
+.bestsellers .product-card__add{
     width:100%;
-    height:56px;
-
+    height:52px;
     border:1px solid #b39b7d;
-
     background:transparent;
-
     text-transform:uppercase;
-
     letter-spacing:3px;
-
+    font-size:13px;
     transition:.3s;
 }
 
-.product-card__add:hover{
-
+.bestsellers .product-card__add:hover{
     background:#5f5246;
-
     color:#fff;
+    border-color:#5f5246;
+}
 
+.bestsellers .product-card__add[disabled]{
+    opacity:.6;
+    cursor:default;
 }
 
 /* HEART */
 
-.product-card .wishlist-button,
-.product-card .card__badge,
-.product-card .card__wishlist{
-
+.bestsellers .product-card__wish{
     position:absolute;
+    top:14px;
+    right:14px;
+    background:none;
+    border:none;
+    padding:0;
+    color:#5f5246;
+}
 
-    top:16px;
-
-    right:16px;
-
+.bestsellers .product-card__wish svg{
+    width:18px;
+    height:18px;
 }
 
 /* ARROWS */
 
 .bs-arrow{
 
-    width:56px;
+    width:48px;
 
-    height:56px;
+    height:48px;
 
     border:1px solid #8d7966;
 
@@ -215,29 +238,27 @@
 
 .bs-arrow svg{
 
-    width:18px;
+    width:16px;
 
-    height:18px;
+    height:16px;
 
 }
 
 .bs-arrow:hover{
 
-    background:#8d7966;
-
-    color:#fff;
+    background:#f2ece2;
 
 }
 
 .bs-arrow--prev{
 
-    left:-70px;
+    left:-60px;
 
 }
 
 .bs-arrow--next{
 
-    right:-70px;
+    right:-60px;
 
 }
 
@@ -290,7 +311,7 @@ padding:70px 0;
     function alignArrows(){
       var media = sec.querySelector('.product-card__media');
       if (!media || !wrap) return;
-      var top = media.offsetHeight / 2 - 28;
+      var top = media.offsetHeight / 2 - 24;
       if (prev) prev.style.top = top + 'px';
       if (next) next.style.top = top + 'px';
     }
