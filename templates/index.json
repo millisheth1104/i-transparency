@@ -27,7 +27,7 @@
     "feature_split": {
       "type": "feature-split",
       "custom_css": [
-        ".feature-split__inner {width: calc(100% - 0px); max-width: 1162px; margin: 0 auto;}"
+        ".feature-split__inner {width: calc(100% - 0px); max-width: 1062px; margin: 0 auto;}"
       ],
       "settings": {
         "image": "shopify://shop_images/woven_not_knitted.png",
