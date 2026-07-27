@@ -21,22 +21,22 @@
         {%- endif -%}
       </div>
     </div>
-
-    {%- if section.settings.show_trust -%}
-      <div class="trust-bar">
-        {%- assign items = section.settings.trust_items | split: '|' -%}
-        {%- assign trust_icons = 'box|refresh|cash|truck' | split: '|' -%}
-        {%- for item in items -%}
-          <span class="trust-bar__item">
-            {%- assign icon_index = forloop.index0 | modulo: trust_icons.size -%}
-            {% render 'icon', icon: trust_icons[icon_index] %}
-            {{ item | strip }}
-          </span>
-          {%- unless forloop.last -%}<span class="trust-bar__sep"></span>{%- endunless -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
   </div>
+
+  {%- if section.settings.show_trust -%}
+    <div class="trust-bar">
+      {%- assign items = section.settings.trust_items | split: '|' -%}
+      {%- assign trust_icons = 'box|refresh|cash|truck' | split: '|' -%}
+      {%- for item in items -%}
+        <span class="trust-bar__item">
+          {%- assign icon_index = forloop.index0 | modulo: trust_icons.size -%}
+          {% render 'icon', icon: trust_icons[icon_index] %}
+          {{ item | strip }}
+        </span>
+        {%- unless forloop.last -%}<span class="trust-bar__sep"></span>{%- endunless -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </section>
 
 <style>
@@ -68,8 +68,8 @@
   .trust-bar {
     position: absolute;
     left: 50%;
-    bottom: 16px;
-    transform: translateX(-50%);
+    bottom: 0;
+    transform: translate(-50%, 50%); /* straddles the card's bottom edge -- half on the image, half below it */
     z-index: 2;
     display: flex;
     flex-wrap: nowrap;
