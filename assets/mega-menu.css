@@ -1,0 +1,146 @@
+/* Shop mega menu — exact spec values, not theme tokens (deliberate). */
+
+.mega-menu { position: static; }
+
+.mega-menu__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 18px; /* clears the header's own 18px bottom padding, so the panel starts flush at the header's bottom edge */
+
+  width: 628px;
+  height: 254px;
+  max-width: calc(100vw - 24px);
+
+  background: #F7F2EA;
+  border: 1px solid #8D7C67;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 24px;
+
+  z-index: 60;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, visibility .18s ease;
+}
+
+.mega-menu.is-open .mega-menu__panel {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mega-menu__inner {
+  display: flex;
+  gap: 36px;
+  height: 100%;
+}
+
+/* LEFT — categories */
+
+.mega-menu__left {
+  width: 112px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mega-menu__cat {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  line-height: 140%;
+  color: #4E4A46;
+  background: transparent;
+  padding: 10px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mega-menu__cat.is-active {
+  background: #6C6156;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+/* RIGHT — subcategories */
+
+.mega-menu__right {
+  position: relative;
+  flex: 1;
+}
+
+.mega-menu__group {
+  gap: 36px;
+}
+
+.mega-menu__group:not([hidden]) {
+  display: flex;
+}
+
+.mega-menu__col {
+  width: 122px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mega-menu__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.mega-menu__thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #ddd0b9;
+  display: block;
+}
+
+.mega-menu__thumb img,
+.mega-menu__thumb svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mega-menu__label {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.3;
+  color: #5B554F;
+}
+
+/* Tablet — proportionally reduced (the site's own nav already switches to the
+   mobile drawer at 990px, so this only covers the narrow band just above that). */
+@media (max-width: 1100px) and (min-width: 991px) {
+  .mega-menu__panel { width: 534px; height: 216px; padding: 20px; }
+  .mega-menu__inner { gap: 30px; }
+  .mega-menu__left { width: 96px; gap: 10px; }
+  .mega-menu__cat { font-size: 16px; padding: 8px 10px; }
+  .mega-menu__cat.is-active { padding: 8px 16px; }
+  .mega-menu__col { width: 104px; gap: 20px; }
+  .mega-menu__thumb { width: 34px; height: 34px; }
+  .mega-menu__label { font-size: 14px; }
+}
+
+/* Mobile — no mega menu at all; the trigger behaves like every other link
+   inside the existing .site-nav drawer (site-nav__link styles apply as-is). */
+@media (max-width: 990px) {
+  .mega-menu__panel { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu__panel { transition: none; }
+}

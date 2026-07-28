@@ -1,0 +1,65 @@
+{%- comment -%}
+  Shop mega menu — driven entirely by a Shopify navigation menu (linklist).
+  params: menu (linklist object), label (string), url (string, the trigger's own link)
+  Top-level menu.links = categories (each should link to a parent collection).
+  Each category's own nested .links = subcategories (each should link to a child collection).
+{%- endcomment -%}
+{%- if menu == blank or menu.links.size == 0 -%}
+  <a href="{{ url }}" class="site-nav__link">{{ label }}</a>
+{%- else -%}
+  <div class="site-nav__item mega-menu" data-mega-menu>
+    <a href="{{ url }}"
+       class="site-nav__link mega-menu__trigger"
+       data-mega-trigger
+       aria-haspopup="true"
+       aria-expanded="false">{{ label }}</a>
+
+    <div class="mega-menu__panel" data-mega-panel role="menu" aria-label="{{ label }} categories">
+      <div class="mega-menu__inner">
+
+        <div class="mega-menu__left" role="none">
+          {%- for cat in menu.links -%}
+            <a href="{{ cat.url }}"
+               class="mega-menu__cat{% if forloop.first %} is-active{% endif %}"
+               role="menuitem"
+               data-mega-cat="{{ forloop.index0 }}">{{ cat.title }}</a>
+          {%- endfor -%}
+        </div>
+
+        <div class="mega-menu__right">
+          {%- for cat in menu.links -%}
+            {%- assign subs = cat.links -%}
+            {%- assign sub_count = subs.size -%}
+            {%- assign col1_count = sub_count | plus: 1 | divided_by: 2 -%}
+            <div class="mega-menu__group" data-mega-group="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
+              {%- if sub_count > 0 -%}
+                <div class="mega-menu__col">
+                  {%- for sub in subs -%}
+                    {%- if forloop.index0 < col1_count -%}
+                      {%- render 'mega-menu-item', sub: sub -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <div class="mega-menu__col">
+                  {%- for sub in subs -%}
+                    {%- if forloop.index0 >= col1_count -%}
+                      {%- render 'mega-menu-item', sub: sub -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <div class="mega-menu__col">
+                  {%- render 'mega-menu-item', sub: cat -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {{ 'mega-menu.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'mega-menu.js' | asset_url }}" defer></script>
+{%- endif -%}
