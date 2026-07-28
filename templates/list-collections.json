@@ -1,8 +1,122 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "main-list-collections"
+      "type": "main-list-collections",
+      "disabled": true,
+      "settings": {
+        "breadcrumb_root": "Collections",
+        "eyebrow": "Collections",
+        "heading": "Our <em>collections</em>",
+        "subtext": "One knitted-cotton family across nine natural shades — explore each edit and find the layers for your bed.",
+        "collection_list": [],
+        "columns": "3",
+        "show_count": true
+      }
+    },
+    "178524361353bdec45": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_ca72940_pkUcDe": {
+          "type": "ai_gen_block_ca72940",
+          "disabled": true,
+          "settings": {
+            "columns_desktop": 6,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 20,
+            "max_width": 1600,
+            "desktop_width_percent": 100,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "section_padding_horizontal": 20,
+            "content_padding": 16,
+            "border_radius": 14,
+            "image_aspect_ratio": 100,
+            "hover_lift": 5,
+            "hover_shadow": 12,
+            "shadow_opacity": 0.1,
+            "image_zoom": 1.1,
+            "background_color": "#f7f2ea",
+            "card_background": "#ffffff",
+            "placeholder_background": "#f5f5f5",
+            "text_alignment": "center",
+            "title_size": 18,
+            "title_weight": "600",
+            "title_color": "#5a5148",
+            "text_color": "#5a5148",
+            "show_product_count": false,
+            "count_size": 14,
+            "count_color": "#5a5148"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_ca72940_pkUcDe"
+      ],
+      "settings": {}
+    },
+    "17852440187cd3fd29": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_91db5c1_9UywPB": {
+          "type": "ai_gen_block_91db5c1",
+          "settings": {
+            "desktop_width_percent": 100,
+            "max_width": 1600,
+            "columns_desktop": 6,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "gap": 20,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "section_padding_horizontal": 20,
+            "content_padding": 16,
+            "background_color": "#ffffff",
+            "card_background": "#ffffff",
+            "placeholder_background": "#f5f5f5",
+            "title_color": "#000000",
+            "border_radius": 14,
+            "hover_lift": 5,
+            "hover_shadow_opacity": 0.1,
+            "title_size": 18,
+            "title_weight": "600",
+            "text_alignment": "center",
+            "collection_1": "comforters",
+            "custom_image_1": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_21_37_PM.png",
+            "custom_link_1": "",
+            "collection_2": "bedcover",
+            "custom_link_2": "",
+            "collection_3": "frontpage",
+            "custom_link_3": "",
+            "collection_4": "pillows",
+            "custom_link_4": "",
+            "collection_5": "",
+            "custom_link_5": "",
+            "collection_6": "",
+            "custom_link_6": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_91db5c1_9UywPB"
+      ],
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "178524361353bdec45",
+    "17852440187cd3fd29"
+  ]
 }
