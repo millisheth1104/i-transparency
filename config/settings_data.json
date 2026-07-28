@@ -22,7 +22,9 @@
             "type": "link",
             "settings": {
               "label": "Shop",
-              "link": "/collections/all"
+              "link": "/collections/all",
+              "mega_menu": true,
+              "mega_menu_source": "main-menu"
             }
           },
           "nav-1": {
