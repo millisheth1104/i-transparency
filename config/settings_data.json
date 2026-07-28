@@ -24,7 +24,7 @@
               "label": "Shop",
               "link": "/collections/all",
               "mega_menu": true,
-              "mega_menu_source": ""
+              "mega_menu_source": "shop"
             }
           },
           "nav-1": {
