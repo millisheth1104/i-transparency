@@ -73,7 +73,7 @@
           "settings": {
             "desktop_width_percent": 100,
             "max_width": 1600,
-            "columns_desktop": 6,
+            "columns_desktop": 3,
             "columns_tablet": 3,
             "columns_mobile": "2",
             "gap": 20,
