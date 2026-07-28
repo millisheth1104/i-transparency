@@ -47,14 +47,18 @@
 }
 
 .mega-menu__cat {
-  display: block;
+  box-sizing: border-box;
+  width: 112px;
+  height: 34px;
+  display: flex;
+  align-items: center;
   font-size: 18px;
   letter-spacing: 2px;
   font-weight: 400;
   line-height: 140%;
   color: #4E4A46;
   background: transparent;
-  padding: 10px 12px;
+  padding: 0 12px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -62,7 +66,7 @@
 .mega-menu__cat.is-active {
   background: #6C6156;
   color: #fff;
-  padding: 10px 20px;
+  padding: 0 20px;
 }
 
 /* RIGHT — subcategories */
