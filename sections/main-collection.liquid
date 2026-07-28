@@ -245,17 +245,17 @@
     justify-content:space-between;
     align-items:center;
 
-    width:1152px;
-    max-width:calc(100% - 48px);
+    width:100%;
+    max-width:var(--container);
+    box-sizing:border-box;
 
     margin:40px auto 60px;
-    padding:16px;
+    padding:24px var(--gutter);
 
     gap:64px;
 
     background:var(--cream-2);
     border-radius:24px;
-    box-sizing:border-box;
 }
 
 /* LEFT SIDE */
@@ -433,12 +433,12 @@
 
 }
 
-  #shopify-section-{{ section.id }} .mc-feature { display: grid; grid-template-columns: 260px 260px 1fr; grid-auto-rows: auto; row-gap: 0; column-gap: 30px; justify-content: space-between; width: 1152px; max-width: 100%; margin: 40px auto; }
+  #shopify-section-{{ section.id }} .mc-feature { display: grid; grid-template-columns: 260px 260px 1fr; grid-auto-rows: auto; row-gap: 0; column-gap: 30px; justify-content: space-between; margin: 40px 0; }
   #shopify-section-{{ section.id }} .mc-feature__grid { display: contents; }
   #shopify-section-{{ section.id }} .mc-feature__media { grid-column: 3; grid-row: 1 / 3; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
 
-  #shopify-section-{{ section.id }} .mc-grid { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 30px; width: 1152px; max-width: 100%; margin: 10px auto 0; }
+  #shopify-section-{{ section.id }} .mc-grid { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 30px; margin-top: 10px; }
 
   /* Shop grid product cards: fixed 260px container that hugs its content height, square image corners, no border (per design spec) */
   #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
