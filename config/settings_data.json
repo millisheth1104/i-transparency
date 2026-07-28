@@ -22,35 +22,45 @@
             "type": "link",
             "settings": {
               "label": "Shop",
-              "link": "/collections/all"
+              "link": "/collections/all",
+              "mega_menu": true,
+              "mega_menu_source": "shop"
             }
           },
           "nav-1": {
             "type": "link",
             "settings": {
               "label": "Collections",
-              "link": "/collections"
+              "link": "/collections",
+              "mega_menu": false,
+              "mega_menu_source": ""
             }
           },
           "nav-2": {
             "type": "link",
             "settings": {
               "label": "Corporate",
-              "link": "shopify://pages/corporate"
+              "link": "shopify://pages/corporate",
+              "mega_menu": false,
+              "mega_menu_source": ""
             }
           },
           "nav-3": {
             "type": "link",
             "settings": {
               "label": "Contact",
-              "link": "/pages/contact"
+              "link": "/pages/contact",
+              "mega_menu": false,
+              "mega_menu_source": ""
             }
           },
           "link_CkxeKg": {
             "type": "link",
             "settings": {
               "label": "Link",
-              "link": ""
+              "link": "",
+              "mega_menu": false,
+              "mega_menu_source": ""
             }
           }
         },
