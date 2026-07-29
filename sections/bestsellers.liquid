@@ -1,7 +1,7 @@
-<section class="section bestsellers">
+<section class="section bestsellers" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
   <div class="container">
-    <p class="eyebrow text-center" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
-    {%- if section.settings.subheading != blank -%}<div class="section-sub" style="margin-top:0;font-size:{{ section.settings.subheading_size }}px;margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.subheading }}</div>{%- endif -%}
+    <p class="eyebrow text-center" style="font-size:{{ section.settings.eyebrow_size }}px;color:{{ section.settings.eyebrow_color }};font-family:var(--font-{{ section.settings.eyebrow_font }})">{{ section.settings.eyebrow }}</p>
+    {%- if section.settings.subheading != blank -%}<div class="section-sub" style="margin-top:0;font-size:{{ section.settings.subheading_size }}px;margin-bottom:{{ section.settings.header_spacing }}px;color:{{ section.settings.subheading_color }};font-family:var(--font-{{ section.settings.subheading_font }})">{{ section.settings.subheading }}</div>{%- endif -%}
 
     <div class="bs-wrap">
       <button class="round-btn bs-arrow bs-arrow--prev" data-scroll-prev aria-label="Previous">{% render 'icon', icon: 'arrow-left' %}</button>
@@ -330,6 +330,13 @@ padding:70px 0;
     { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
     { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#8d7966" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color", "default": "#a89b8a" },
+    { "type": "select", "id": "eyebrow_font", "label": "Eyebrow font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "subheading_font", "label": "Subheading font", "default": "sans", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
     { "type": "header", "content": "Products" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "limit", "label": "Products", "min": 3, "max": 12, "step": 1, "default": 8 }

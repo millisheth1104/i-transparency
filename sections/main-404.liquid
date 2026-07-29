@@ -1,8 +1,8 @@
-<section class="section error-404">
+<section class="section error-404" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
   <div class="container error-404__inner">
-    <p class="eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
-    <h1 class="error-404__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px);margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.heading }}</h1>
-    {%- if section.settings.text != blank -%}<div class="error-404__text" style="font-size:{{ section.settings.text_size }}px">{{ section.settings.text }}</div>{%- endif -%}
+    <p class="eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px;color:{{ section.settings.eyebrow_color }};font-family:var(--font-{{ section.settings.eyebrow_font }})">{{ section.settings.eyebrow }}</p>
+    <h1 class="error-404__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px);margin-bottom:{{ section.settings.header_spacing }}px;color:{{ section.settings.heading_color }};font-family:var(--font-{{ section.settings.heading_font }})">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<div class="error-404__text" style="font-size:{{ section.settings.text_size }}px;color:{{ section.settings.text_color }};font-family:var(--font-{{ section.settings.text_font }})">{{ section.settings.text }}</div>{%- endif -%}
     <a class="btn" href="{{ routes.root_url }}">{{ section.settings.button_label }}</a>
   </div>
 </section>
@@ -25,6 +25,15 @@
     { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 46 },
     { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#8c8275" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#5a5148" },
+    { "type": "color", "id": "text_color", "label": "Subheading color", "default": "#8c8275" },
+    { "type": "select", "id": "eyebrow_font", "label": "Eyebrow font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "heading_font", "label": "Heading font", "default": "serif", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "text_font", "label": "Subheading font", "default": "sans", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
     { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Continue shopping" }
   ]

@@ -1,5 +1,5 @@
 <section class="hero">
-  <div class="hero__media">
+  <div class="hero__media" style="margin-top:{{ section.settings.image_margin_top }}px;border-radius:{{ section.settings.image_radius }}px;border:{{ section.settings.image_border_width }}px solid {{ section.settings.image_border_color }}">
     {%- if section.settings.image != blank -%}
       <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="{{ section.settings.heading | escape }}" width="2400" height="1200" loading="eager">
     {%- else -%}
@@ -9,9 +9,9 @@
     <button class="round-btn hero__next" aria-label="Explore" data-hero-next>{% render 'icon', icon: 'arrow-right' %}</button>
 
     <div class="hero__content">
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow hero__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      <h1 class="hero__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.48 | round }}px, 7vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h1>
-      {%- if section.settings.text != blank -%}<div class="hero__text" style="font-size:{{ section.settings.text_size }}px;margin-top:{{ section.settings.header_spacing }}px">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow hero__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px;color:{{ section.settings.eyebrow_color }};font-family:var(--font-{{ section.settings.eyebrow_font }})">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="hero__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.48 | round }}px, 7vw, {{ section.settings.heading_size }}px);color:{{ section.settings.heading_color }};font-family:var(--font-{{ section.settings.heading_font }})">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}<div class="hero__text" style="font-size:{{ section.settings.text_size }}px;margin-top:{{ section.settings.header_spacing }}px;color:{{ section.settings.text_color }};font-family:var(--font-{{ section.settings.text_font }})">{{ section.settings.text }}</div>{%- endif -%}
       <div class="hero__actions">
         {%- if section.settings.button_label_1 != blank -%}
           <a class="btn" href="{{ section.settings.button_link_1 }}">{{ section.settings.button_label_1 }}</a>
@@ -115,6 +115,17 @@
     { "type": "range", "id": "heading_size", "label": "Heading size", "min": 60, "max": 120, "step": 2, "unit": "px", "default": 92 },
     { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#8d7c67" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#57534a" },
+    { "type": "color", "id": "text_color", "label": "Subheading color", "default": "#57534a" },
+    { "type": "select", "id": "eyebrow_font", "label": "Eyebrow font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "heading_font", "label": "Heading font", "default": "serif", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "text_font", "label": "Subheading font", "default": "sans", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Image style" },
+    { "type": "range", "id": "image_radius", "label": "Image border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#5a5148" },
+    { "type": "range", "id": "image_margin_top", "label": "Image margin top", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 24 },
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "button_label_1", "label": "Button 1 label", "default": "Shop by category" },
     { "type": "url", "id": "button_link_1", "label": "Button 1 link" },

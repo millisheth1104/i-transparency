@@ -1,5 +1,5 @@
-<section class="section featured-band">
-  <p class="eyebrow text-center fc__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
+<section class="section featured-band" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
+  <p class="eyebrow text-center fc__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px;color:{{ section.settings.eyebrow_color }};font-family:var(--font-{{ section.settings.eyebrow_font }})">{{ section.settings.eyebrow }}</p>
 
   <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 30 | at_least: 150 }}vh;">
     <div class="fc__pin" data-fc-pin>
@@ -10,7 +10,7 @@
           {%- endfor -%}
         </div>
 
-        <div class="fc__stage">
+        <div class="fc__stage" style="border-radius:{{ section.settings.stage_image_radius }}px">
           {%- for block in section.blocks -%}
             <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
               {%- if block.settings.image != blank -%}
@@ -185,7 +185,14 @@
   "settings": [
     { "type": "header", "content": "Section header" },
     { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Featured Collections" },
-    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 }
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#8c8275" },
+    { "type": "select", "id": "eyebrow_font", "label": "Eyebrow font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 36 },
+    { "type": "header", "content": "Slide image" },
+    { "type": "range", "id": "stage_image_radius", "label": "Image border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 14 }
   ],
   "blocks": [
     {

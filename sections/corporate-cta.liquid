@@ -1,16 +1,16 @@
-<section class="section corporate-cta">
+<section class="section corporate-cta" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
   <div class="container">
     <div class="cta-band">
-      <div class="cta-band__media">
+      <div class="cta-band__media" style="padding:{{ section.settings.image_margin }}px">
         {%- if section.settings.image != blank -%}
-          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" width="1200" height="800" loading="lazy">
+          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.heading | escape }}" width="1200" height="800" loading="lazy" style="border-radius:{{ section.settings.image_radius }}px;border:{{ section.settings.image_border_width }}px solid {{ section.settings.image_border_color }}">
         {%- else -%}
           {{ 'lifestyle-2' | placeholder_svg_tag }}
         {%- endif -%}
       </div>
       <div class="cta-band__body">
-        <p class="eyebrow cta-band__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
-        {%- if section.settings.text != blank -%}<div class="cta-band__text" style="font-size:{{ section.settings.text_size }}px;margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.text }}</div>{%- endif -%}
+        <p class="eyebrow cta-band__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px;color:{{ section.settings.eyebrow_color }};font-family:var(--font-{{ section.settings.eyebrow_font }})">{{ section.settings.eyebrow }}</p>
+        {%- if section.settings.text != blank -%}<div class="cta-band__text" style="font-size:{{ section.settings.text_size }}px;margin-bottom:{{ section.settings.header_spacing }}px;color:{{ section.settings.text_color }};font-family:var(--font-{{ section.settings.text_font }})">{{ section.settings.text }}</div>{%- endif -%}
         <div class="cta-band__actions">
           {%- if section.settings.button_label_1 != blank -%}<a class="btn btn--gold" href="{{ section.settings.button_link_1 }}">{{ section.settings.button_label_1 }}</a>{%- endif -%}
           {%- if section.settings.button_label_2 != blank -%}<a class="btn btn--light" href="{{ section.settings.button_link_2 }}">{{ section.settings.button_label_2 }}</a>{%- endif -%}
@@ -43,6 +43,18 @@
     { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
     { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 30 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#b7a386" },
+    { "type": "color", "id": "text_color", "label": "Subheading color", "default": "rgba(244,238,228,0.75)" },
+    { "type": "select", "id": "eyebrow_font", "label": "Eyebrow font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "text_font", "label": "Subheading font", "default": "sans", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Image style" },
+    { "type": "range", "id": "image_radius", "label": "Image border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#ffffff" },
+    { "type": "range", "id": "image_margin", "label": "Image margin", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 22 },
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "button_label_1", "label": "Button 1 label", "default": "Request a quote" },
     { "type": "url", "id": "button_link_1", "label": "Button 1 link" },

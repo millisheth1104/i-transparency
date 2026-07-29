@@ -1,9 +1,9 @@
-<section class="section sleepscape">
+<section class="section sleepscape" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
   <div class="sleepscape__inner">
-    <h2 class="section-heading" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h2>
-    {%- if section.settings.subtext != blank -%}<div class="section-sub" style="font-size:{{ section.settings.subheading_size }}px">{{ section.settings.subtext }}</div>{%- endif -%}
+    <h2 class="section-heading" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px);color:{{ section.settings.heading_color }};font-family:var(--font-{{ section.settings.heading_font }})">{{ section.settings.heading }}</h2>
+    {%- if section.settings.subtext != blank -%}<div class="section-sub" style="font-size:{{ section.settings.subheading_size }}px;color:{{ section.settings.subheading_color }};font-family:var(--font-{{ section.settings.subheading_font }})">{{ section.settings.subtext }}</div>{%- endif -%}
 
-    <div class="sleepscape__stage" style="margin-top:{{ section.settings.header_spacing }}px">
+    <div class="sleepscape__stage" style="margin-top:{{ section.settings.header_spacing }}px;border-radius:{{ section.settings.image_radius }}px;border:{{ section.settings.image_border_width }}px solid {{ section.settings.image_border_color }}">
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.heading | escape }}" width="2000" height="1200" loading="lazy">
       {%- else -%}
@@ -81,8 +81,18 @@
     { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
     { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#5a5148" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color", "default": "#8c8275" },
+    { "type": "select", "id": "heading_font", "label": "Heading font", "default": "serif", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "select", "id": "subheading_font", "label": "Subheading font", "default": "sans", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
     { "type": "header", "content": "Room" },
-    { "type": "image_picker", "id": "image", "label": "Room image" }
+    { "type": "image_picker", "id": "image", "label": "Room image" },
+    { "type": "range", "id": "image_radius", "label": "Image border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#5a5148" }
   ],
   "blocks": [
     {

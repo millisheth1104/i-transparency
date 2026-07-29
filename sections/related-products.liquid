@@ -11,10 +11,10 @@
   endif
 -%}
 
-<section class="section rel" data-section-id="{{ section.id }}">
+<section class="section rel" data-section-id="{{ section.id }}" style="padding-top:{{ section.settings.section_padding_top }}px;padding-bottom:{{ section.settings.section_padding_bottom }}px">
   <div class="container">
     {%- if section.settings.heading != blank -%}
-      <p class="eyebrow rel__eyebrow" style="font-size:{{ section.settings.heading_size }}px">{{ section.settings.heading }}</p>
+      <p class="eyebrow rel__eyebrow" style="font-size:{{ section.settings.heading_size }}px;color:{{ section.settings.heading_color }};font-family:var(--font-{{ section.settings.heading_font }})">{{ section.settings.heading }}</p>
     {%- endif -%}
 
     <div class="rel__wrap" style="margin-top:{{ section.settings.header_spacing }}px">
@@ -128,6 +128,11 @@
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "You may also like" },
     { "type": "range", "id": "heading_size", "label": "Heading size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
     { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#8d7966" },
+    { "type": "select", "id": "heading_font", "label": "Heading font", "default": "ui", "options": [ { "value": "serif", "label": "Serif (Fraunces)" }, { "value": "sans", "label": "Sans (Mulish)" }, { "value": "ui", "label": "UI label (Outfit)" } ] },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "section_padding_top", "label": "Padding top", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Padding bottom", "min": 0, "max": 150, "step": 5, "unit": "px", "default": 90 },
     { "type": "header", "content": "Products" },
     { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to use recommendations or the product's own collection." },
     { "type": "range", "id": "products_limit", "label": "Products to show", "min": 3, "max": 12, "step": 1, "default": 6 }
