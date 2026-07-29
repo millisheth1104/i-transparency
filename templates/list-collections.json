@@ -11,7 +11,6 @@
   "sections": {
     "main": {
       "type": "main-list-collections",
-      "disabled": true,
       "settings": {
         "breadcrumb_root": "Collections",
         "eyebrow": "Collections",
@@ -120,9 +119,9 @@
         "ai_gen_block_9b2225b_NTjJtX": {
           "type": "ai_gen_block_9b2225b",
           "settings": {
-            "eyebrow": "",
-            "heading": "Shop by Category",
-            "subheading": "",
+            "eyebrow": "Collections",
+            "heading": "Our <em>collections</em>",
+            "subheading": "<p><br/>One knitted-cotton family across nine natural shades — explore each edit and find the layers for your bed.<br/></p>",
             "heading_size": 36,
             "eyebrow_size": 12,
             "subheading_size": 14,
