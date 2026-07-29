@@ -70,6 +70,7 @@
       "blocks": {
         "ai_gen_block_91db5c1_9UywPB": {
           "type": "ai_gen_block_91db5c1",
+          "disabled": true,
           "settings": {
             "desktop_width_percent": 100,
             "max_width": 1600,
@@ -112,11 +113,77 @@
         "ai_gen_block_91db5c1_9UywPB"
       ],
       "settings": {}
+    },
+    "1785304469e0c81be6": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_9b2225b_NTjJtX": {
+          "type": "ai_gen_block_9b2225b",
+          "settings": {
+            "eyebrow": "",
+            "heading": "Shop by Category",
+            "subheading": "",
+            "heading_size": 36,
+            "eyebrow_size": 12,
+            "subheading_size": 14,
+            "header_spacing": 40,
+            "columns_desktop": 3,
+            "columns_mobile": "1",
+            "grid_gap": 24,
+            "section_padding": 60,
+            "desktop_width_percent": 100,
+            "image_aspect_ratio": 130,
+            "image_border_radius": 4,
+            "card_title_size": 22,
+            "enable_hover_zoom": true,
+            "show_overlay": true,
+            "show_index": true,
+            "show_product_count": true,
+            "show_view_link": true,
+            "link_text": "VIEW COLLECTION",
+            "background_color": "#f2f1ee",
+            "eyebrow_color": "#8a8a86",
+            "heading_color": "#2b2b28",
+            "subheading_color": "#6f6f6b",
+            "overlay_text_color": "#ffffff",
+            "link_color": "#2b2b28",
+            "placeholder_bg_color": "#e4e2dd",
+            "overlay_opacity": 0.5,
+            "show_card_1": true,
+            "collection_1": "bedcover",
+            "custom_link_1": "",
+            "show_card_2": true,
+            "collection_2": "frontpage",
+            "custom_image_2": "shopify://shop_images/Screenshot_2026-07-21_182231.png",
+            "custom_link_2": "",
+            "show_card_3": true,
+            "collection_3": "comforters",
+            "custom_image_3": "shopify://shop_images/05.png",
+            "custom_link_3": "",
+            "show_card_4": false,
+            "collection_4": "pillows",
+            "custom_image_4": "shopify://shop_images/wovennotknitted.png",
+            "custom_link_4": "",
+            "show_card_5": false,
+            "collection_5": "",
+            "custom_link_5": "",
+            "show_card_6": false,
+            "collection_6": "",
+            "custom_link_6": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_9b2225b_NTjJtX"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
     "178524361353bdec45",
-    "17852440187cd3fd29"
+    "17852440187cd3fd29",
+    "1785304469e0c81be6"
   ]
 }
