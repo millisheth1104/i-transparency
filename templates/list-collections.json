@@ -127,7 +127,7 @@
             "eyebrow_size": 12,
             "subheading_size": 14,
             "header_spacing": 40,
-            "columns_desktop": 3,
+            "columns_desktop": 4,
             "columns_mobile": "1",
             "grid_gap": 24,
             "section_padding": 60,
