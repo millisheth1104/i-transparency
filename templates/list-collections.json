@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-list-collections",
+      "disabled": true,
       "settings": {
         "breadcrumb_root": "Collections",
         "eyebrow": "Collections",
@@ -140,13 +141,13 @@
             "show_product_count": true,
             "show_view_link": true,
             "link_text": "VIEW COLLECTION",
-            "background_color": "#f2f1ee",
-            "eyebrow_color": "#8a8a86",
-            "heading_color": "#2b2b28",
-            "subheading_color": "#6f6f6b",
+            "background_color": "#EFE8DC",
+            "eyebrow_color": "#8C8275",
+            "heading_color": "#5A5148",
+            "subheading_color": "#8C8275",
             "overlay_text_color": "#FFFFFF",
             "link_color": "#2b2b28",
-            "placeholder_bg_color": "#e4e2dd",
+            "placeholder_bg_color": "#EFE8DC",
             "overlay_opacity": 0.5,
             "show_card_1": true,
             "collection_1": "bedcover",
