@@ -11,8 +11,8 @@
     <nav class="site-nav" aria-label="Primary">
       {%- for block in section.blocks -%}
         <div {{ block.shopify_attributes }}>
-          {%- if block.settings.mega_menu and block.settings.mega_menu_source != blank -%}
-            {%- render 'mega-menu', menu: linklists[block.settings.mega_menu_source], label: block.settings.label, url: block.settings.link -%}
+          {%- if block.settings.mega_menu_collection != blank -%}
+            {%- render 'mega-menu', collection: block.settings.mega_menu_collection, label: block.settings.label, url: block.settings.link, all_blocks: section.blocks -%}
           {%- else -%}
             <a href="{{ block.settings.link }}" class="site-nav__link">{{ block.settings.label }}</a>
           {%- endif -%}
@@ -78,8 +78,7 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "Link" },
         { "type": "url", "id": "link", "label": "Link" },
-        { "type": "checkbox", "id": "mega_menu", "label": "Enable mega menu dropdown", "default": false },
-        { "type": "link_list", "id": "mega_menu_source", "label": "Mega menu navigation", "info": "Pick a menu whose top-level items link to parent collections, each with nested links to child collections." }
+        { "type": "collection", "id": "mega_menu_collection", "label": "Mega menu collection (optional)", "info": "If set, and this collection has a 'Sub collections' metafield, a mega menu opens on hover. Leave blank for a plain link." }
       ]
     }
   ],

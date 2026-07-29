@@ -1,0 +1,19 @@
+{%- comment -%}
+  Left-column list of sibling mega-menu-enabled nav items (the top-level
+  parent categories row, e.g. Bedsheets / Bed Covers / Comforters / ...).
+  Plain navigational links -- clicking one goes to that collection's own
+  page rather than swapping this menu's content, so each mega menu instance
+  only ever has to resolve its own collection's metafields (no querying
+  every sibling parent's sub-collections/products on every page load).
+  params: all_blocks (section.blocks array), current_collection (Collection)
+{%- endcomment -%}
+<ul class="mega-menu__list mega-menu__list--parent" data-mega-parentlist>
+  {%- for b in all_blocks -%}
+    {%- if b.settings.mega_menu_collection != blank -%}
+      <li>
+        <a href="{{ b.settings.link | default: b.settings.mega_menu_collection.url }}"
+           class="mega-menu__list-link{% if b.settings.mega_menu_collection.handle == current_collection.handle %} is-active{% endif %}">{{ b.settings.label }}</a>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>

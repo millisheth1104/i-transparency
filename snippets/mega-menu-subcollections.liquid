@@ -1,0 +1,20 @@
+{%- comment -%}
+  Right-panel grid of sub-collection circles (mega menu "state 1" — before
+  a specific sub-collection has been hovered).
+  params: sub_collections (array of Collection, from the parent's
+  metafields.custom.sub_collections)
+{%- endcomment -%}
+<div class="mega-menu__grid">
+  {%- for sub in sub_collections -%}
+    <a href="{{ sub.url }}" class="mega-menu__sub-item" data-mega-sub-trigger data-panel="sub-{{ forloop.index0 }}">
+      <span class="mega-menu__sub-thumb">
+        {%- if sub.image -%}
+          <img src="{{ sub.image | image_url: width: 120 }}" alt="{{ sub.title | escape }}" width="60" height="60" loading="lazy">
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </span>
+      <span class="mega-menu__sub-label">{{ sub.title }}</span>
+    </a>
+  {%- endfor -%}
+</div>

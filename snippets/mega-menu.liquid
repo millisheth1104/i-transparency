@@ -1,10 +1,16 @@
 {%- comment -%}
-  Shop mega menu — driven entirely by a Shopify navigation menu (linklist).
-  params: menu (linklist object), label (string), url (string, the trigger's own link)
-  Top-level menu.links = categories (each should link to a parent collection).
-  Each category's own nested .links = subcategories (each should link to a child collection).
+  Fully dynamic mega menu — no hardcoded collections/products.
+  Data source: collection metafields only.
+    - parent collection: metafields.custom.sub_collections (list of collections)
+    - each sub-collection:  metafields.custom.featured_products (list of products)
+  params:
+    collection  — the parent Collection (from the nav block's collection picker)
+    label       — nav link label (string)
+    url         — nav link href (string)
+    all_blocks  — section.blocks, used to list sibling mega-menu nav items in the sidebar
 {%- endcomment -%}
-{%- if menu == blank or menu.links.size == 0 -%}
+{%- assign sub_collections = collection.metafields.custom.sub_collections.value -%}
+{%- if sub_collections == blank or sub_collections.size == 0 -%}
   <a href="{{ url }}" class="site-nav__link">{{ label }}</a>
 {%- else -%}
   <div class="site-nav__item mega-menu" data-mega-menu>
@@ -14,44 +20,31 @@
        aria-haspopup="true"
        aria-expanded="false">{{ label }}</a>
 
-    <div class="mega-menu__panel" data-mega-panel role="menu" aria-label="{{ label }} categories">
+    <div class="mega-menu__panel" data-mega-panel role="menu" aria-label="{{ label }}">
       <div class="mega-menu__inner">
 
-        <div class="mega-menu__left" role="none">
-          {%- for cat in menu.links -%}
-            <a href="{{ cat.url }}"
-               class="mega-menu__cat{% if forloop.first %} is-active{% endif %}"
-               role="menuitem"
-               data-mega-cat="{{ forloop.index0 }}">{{ cat.title }}</a>
-          {%- endfor -%}
+        <div class="mega-menu__sidebar" data-mega-sidebar>
+          {%- render 'mega-menu-parent', all_blocks: all_blocks, current_collection: collection -%}
+
+          <ul class="mega-menu__list mega-menu__list--sub" data-mega-sublist hidden>
+            {%- for sub in sub_collections -%}
+              <li>
+                <a href="{{ sub.url }}"
+                   class="mega-menu__list-link{% if forloop.first %} is-active{% endif %}"
+                   data-mega-sub-link
+                   data-panel="sub-{{ forloop.index0 }}">{{ sub.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
         </div>
 
-        <div class="mega-menu__right">
-          {%- for cat in menu.links -%}
-            {%- assign subs = cat.links -%}
-            {%- assign sub_count = subs.size -%}
-            {%- assign col1_count = sub_count | plus: 1 | divided_by: 2 -%}
-            <div class="mega-menu__group" data-mega-group="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
-              {%- if sub_count > 0 -%}
-                <div class="mega-menu__col">
-                  {%- for sub in subs -%}
-                    {%- if forloop.index0 < col1_count -%}
-                      {%- render 'mega-menu-item', sub: sub -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </div>
-                <div class="mega-menu__col">
-                  {%- for sub in subs -%}
-                    {%- if forloop.index0 >= col1_count -%}
-                      {%- render 'mega-menu-item', sub: sub -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              {%- else -%}
-                <div class="mega-menu__col">
-                  {%- render 'mega-menu-item', sub: cat -%}
-                </div>
-              {%- endif -%}
+        <div class="mega-menu__content" data-mega-content>
+          <div class="mega-menu__view is-active" data-mega-view="grid">
+            {%- render 'mega-menu-subcollections', sub_collections: sub_collections -%}
+          </div>
+          {%- for sub in sub_collections -%}
+            <div class="mega-menu__view" data-mega-view="sub-{{ forloop.index0 }}">
+              {%- render 'mega-menu-featured-products', collection: sub -%}
             </div>
           {%- endfor -%}
         </div>

@@ -1,0 +1,33 @@
+{%- comment -%}
+  Featured-products grid for one sub-collection (mega menu "state 2" —
+  shown once that sub-collection is hovered).
+  Data source: the sub-collection's own metafields.custom.featured_products
+  (list of products). Falls back to the collection's first 5 products if
+  that metafield hasn't been set yet, so the menu never renders empty
+  before the merchant configures it.
+  params: collection (the sub Collection)
+{%- endcomment -%}
+{%- assign featured = collection.metafields.custom.featured_products.value -%}
+{%- if featured == blank or featured.size == 0 -%}
+  {%- assign featured = collection.products | slice: 0, 5 -%}
+{%- endif -%}
+<div class="mega-menu__featured">
+  <div class="mega-menu__featured-head">
+    <span class="mega-menu__featured-title">Featured</span>
+    <a href="{{ collection.url }}" class="mega-menu__view-all">View all</a>
+  </div>
+  <div class="mega-menu__product-grid">
+    {%- for product in featured limit: 5 -%}
+      <a href="{{ product.url }}" class="mega-menu__product">
+        <span class="mega-menu__product-media">
+          {%- if product.featured_image -%}
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" width="150" height="150" loading="lazy">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </span>
+        <span class="mega-menu__product-title">{{ product.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>

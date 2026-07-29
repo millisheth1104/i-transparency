@@ -1,28 +1,28 @@
-/* Shop mega menu — exact spec values, not theme tokens (deliberate). */
+/* Mega menu — exact spec values (not theme tokens, deliberate per brief). */
 
 .mega-menu { position: static; }
 
 .mega-menu__panel {
   position: absolute;
   top: 100%;
-  left: 0;
-  margin-top: 18px; /* clears the header's own 18px bottom padding, so the panel starts flush at the header's bottom edge */
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 18px; /* clears the header's own 18px bottom padding */
 
-  width: 628px;
-  height: 254px;
-  max-width: calc(100vw - 24px);
+  width: 1150px;
+  max-width: calc(100vw - 32px);
 
-  background: #F7F2EA;
-  border: 1px solid #8D7C67;
+  background: #F8F4ED;
+  border: 1px solid #B8A998;
   border-radius: 0;
   box-shadow: none;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 32px;
 
   z-index: 60;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .18s ease, visibility .18s ease;
+  transition: opacity .2s ease, visibility .2s ease;
 }
 
 .mega-menu.is-open .mega-menu__panel {
@@ -32,120 +32,194 @@
 
 .mega-menu__inner {
   display: flex;
-  gap: 36px;
-  height: 100%;
+  gap: 40px;
 }
 
-/* LEFT — categories */
+/* Sidebar — parent categories, then (once a sub-collection is hovered) the
+   sub-collection list replaces it. */
 
-.mega-menu__left {
-  width: 112px;
+.mega-menu__sidebar {
+  width: 220px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-.mega-menu__cat {
-  box-sizing: border-box;
-  width: max-content;
-  min-width: 112px;
-  height: 34px;
+.mega-menu__list { display: flex; flex-direction: column; gap: 4px; }
+.mega-menu__list[hidden] { display: none; }
+
+.mega-menu__list-link {
   display: flex;
   align-items: center;
-  font-size: 18px;
+  height: 44px;
+  padding: 0 16px;
+  font-family: var(--font-ui, inherit);
+  font-size: 15px;
   letter-spacing: 2px;
-  font-weight: 400;
-  line-height: 140%;
-  color: #4E4A46;
+  text-transform: uppercase;
+  color: var(--brown-2, #4E4A46);
   background: transparent;
-  padding: 0 12px;
   text-decoration: none;
+  border-radius: 2px;
+  transition: background .15s ease, color .15s ease;
   white-space: nowrap;
 }
 
-.mega-menu__cat.is-active {
-  background: #6C6156;
+.mega-menu__list-link.is-active {
+  background: var(--brown, #4a4139);
   color: #fff;
-  padding: 0 20px;
 }
 
-/* RIGHT — subcategories */
+/* Right content — two "views" cross-fade between each other. */
 
-.mega-menu__right {
+.mega-menu__content { position: relative; flex: 1; min-height: 340px; }
+
+.mega-menu__view {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+
+.mega-menu__view.is-active {
+  opacity: 1;
+  visibility: visible;
   position: relative;
-  flex: 1;
 }
 
-.mega-menu__group {
-  gap: 36px;
+/* State 1 — sub-collection circle grid */
+
+.mega-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+  row-gap: 24px;
 }
 
-.mega-menu__group:not([hidden]) {
+.mega-menu__sub-item {
   display: flex;
-}
-
-.mega-menu__col {
-  width: 122px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.mega-menu__item {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   text-decoration: none;
 }
 
-.mega-menu__thumb {
-  width: 40px;
-  height: 40px;
+.mega-menu__sub-thumb {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  background: #ddd0b9;
+  background: var(--sand, #ddd0b9);
   display: block;
 }
 
-.mega-menu__thumb img,
-.mega-menu__thumb svg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.mega-menu__sub-thumb img,
+.mega-menu__sub-thumb svg { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.mega-menu__label {
+.mega-menu__sub-label {
+  font-family: var(--font-sans, inherit);
   font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.3;
-  color: #5B554F;
+  color: var(--brown-2, #5B554F);
 }
 
-/* Tablet — proportionally reduced (the site's own nav already switches to the
-   mobile drawer at 990px, so this only covers the narrow band just above that). */
-@media (max-width: 1100px) and (min-width: 991px) {
-  .mega-menu__panel { width: 534px; height: 216px; padding: 20px; }
-  .mega-menu__inner { gap: 30px; }
-  .mega-menu__left { width: 96px; gap: 10px; }
-  .mega-menu__cat { font-size: 16px; padding: 8px 10px; }
-  .mega-menu__cat.is-active { padding: 8px 16px; }
-  .mega-menu__col { width: 104px; gap: 20px; }
-  .mega-menu__thumb { width: 34px; height: 34px; }
-  .mega-menu__label { font-size: 14px; }
+/* State 2 — featured products */
+
+.mega-menu__featured-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-/* Mobile — no mega menu at all; the trigger behaves like every other link
-   inside the existing .site-nav drawer (site-nav__link styles apply as-is). */
+.mega-menu__featured-title {
+  font-family: var(--font-ui, inherit);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--taupe, #8C8275);
+}
+
+.mega-menu__view-all {
+  font-family: var(--font-serif, inherit);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--brown-2, #5B554F);
+  text-decoration: none;
+}
+.mega-menu__view-all:hover { text-decoration: underline; }
+
+.mega-menu__product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.mega-menu__product { display: block; text-decoration: none; }
+
+.mega-menu__product-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--cream-2, #ece3d5);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.mega-menu__product-media img,
+.mega-menu__product-media svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.mega-menu__product-title {
+  font-family: var(--font-sans, inherit);
+  font-size: 13px;
+  color: var(--brown-2, #5B554F);
+}
+
+/* Tablet — proportionally reduced spacing */
+@media (max-width: 1200px) and (min-width: 991px) {
+  .mega-menu__panel { padding: 24px; }
+  .mega-menu__inner { gap: 28px; }
+  .mega-menu__sidebar { width: 180px; }
+  .mega-menu__grid { column-gap: 32px; row-gap: 18px; }
+  .mega-menu__product-grid { gap: 14px; }
+}
+
+/* Mobile — click-to-open accordion inside the existing nav drawer instead
+   of a hover overlay. */
 @media (max-width: 990px) {
-  .mega-menu__panel { display: none !important; }
+  .mega-menu__panel {
+    position: static;
+    display: none;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+    border: none;
+    border-top: 1px solid var(--line, #d8ccb6);
+    border-radius: 0;
+    padding: 16px 0 4px;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+  .mega-menu.is-open .mega-menu__panel { display: block; }
+  .mega-menu__trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+  .mega-menu__trigger::after {
+    content: '+';
+    font-size: 18px;
+    line-height: 1;
+    transition: transform .15s ease;
+  }
+  .mega-menu.is-open .mega-menu__trigger::after { transform: rotate(45deg); }
+
+  .mega-menu__inner { flex-direction: column; gap: 20px; }
+  .mega-menu__sidebar { width: 100%; }
+  .mega-menu__list-link { height: 40px; padding: 0 10px; font-size: 13px; }
+  .mega-menu__content { min-height: 0; }
+  .mega-menu__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 16px; }
+  .mega-menu__sub-thumb { width: 44px; height: 44px; }
+  .mega-menu__product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mega-menu__panel { transition: none; }
+  .mega-menu__panel, .mega-menu__view { transition: none; }
 }
