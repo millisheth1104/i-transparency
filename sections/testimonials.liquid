@@ -1,5 +1,5 @@
 <section class="section testimonials">
-  <div class="container"><p class="eyebrow text-center">{{ section.settings.eyebrow }}</p></div>
+  <div class="container"><p class="eyebrow text-center" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p></div>
 
   <div class="tm-wrap">
     <div class="tm-row">
@@ -40,7 +40,9 @@
 {
   "name": "Testimonials",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ratings & Reviews" }
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Ratings & Reviews" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 }
   ],
   "blocks": [
     {

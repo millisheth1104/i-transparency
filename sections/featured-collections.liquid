@@ -1,5 +1,5 @@
 <section class="section featured-band">
-  <p class="eyebrow text-center fc__eyebrow">{{ section.settings.eyebrow }}</p>
+  <p class="eyebrow text-center fc__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
 
   <div class="fc__track" data-fc-track style="height: {{ section.blocks.size | times: 30 | at_least: 150 }}vh;">
     <div class="fc__pin" data-fc-pin>
@@ -183,7 +183,9 @@
 {
   "name": "Featured collections",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured Collections" }
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Featured Collections" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 }
   ],
   "blocks": [
     {

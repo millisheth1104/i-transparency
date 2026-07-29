@@ -1,8 +1,8 @@
 <section class="section error-404">
   <div class="container error-404__inner">
-    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
-    <h1 class="error-404__title">{{ section.settings.heading }}</h1>
-    {%- if section.settings.text != blank -%}<p class="error-404__text">{{ section.settings.text }}</p>{%- endif -%}
+    <p class="eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
+    <h1 class="error-404__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px);margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<div class="error-404__text" style="font-size:{{ section.settings.text_size }}px">{{ section.settings.text }}</div>{%- endif -%}
     <a class="btn" href="{{ routes.root_url }}">{{ section.settings.button_label }}</a>
   </div>
 </section>
@@ -17,9 +17,15 @@
 {
   "name": "404 page",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "404" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Page not found" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "The page you're looking for doesn't exist or has moved." },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "404" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Page not found" },
+    { "type": "richtext", "id": "text", "label": "Subheading", "default": "<p>The page you're looking for doesn't exist or has moved.</p>" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Continue shopping" }
   ]
 }

@@ -1,7 +1,7 @@
 <section class="section bestsellers">
   <div class="container">
-    <p class="eyebrow text-center">{{ section.settings.eyebrow }}</p>
-    {%- if section.settings.subheading != blank -%}<p class="section-sub" style="margin-top:0">{{ section.settings.subheading }}</p>{%- endif -%}
+    <p class="eyebrow text-center" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
+    {%- if section.settings.subheading != blank -%}<div class="section-sub" style="margin-top:0;font-size:{{ section.settings.subheading_size }}px;margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.subheading }}</div>{%- endif -%}
 
     <div class="bs-wrap">
       <button class="round-btn bs-arrow bs-arrow--prev" data-scroll-prev aria-label="Previous">{% render 'icon', icon: 'arrow-left' %}</button>
@@ -324,8 +324,13 @@ padding:70px 0;
 {
   "name": "Bestsellers",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Bestsellers" },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Loved by 1,200+ homes" },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Bestsellers" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Loved by 1,200+ homes</p>" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Products" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "limit", "label": "Products", "min": 3, "max": 12, "step": 1, "default": 8 }
   ],

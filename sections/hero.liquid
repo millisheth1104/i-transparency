@@ -9,9 +9,9 @@
     <button class="round-btn hero__next" aria-label="Explore" data-hero-next>{% render 'icon', icon: 'arrow-right' %}</button>
 
     <div class="hero__content">
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      <h1 class="hero__title">{{ section.settings.heading }}</h1>
-      {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow hero__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="hero__title" style="font-size:clamp({{ section.settings.heading_size | times: 0.48 | round }}px, 7vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}<div class="hero__text" style="font-size:{{ section.settings.text_size }}px;margin-top:{{ section.settings.header_spacing }}px">{{ section.settings.text }}</div>{%- endif -%}
       <div class="hero__actions">
         {%- if section.settings.button_label_1 != blank -%}
           <a class="btn" href="{{ section.settings.button_link_1 }}">{{ section.settings.button_label_1 }}</a>
@@ -107,9 +107,15 @@
   "name": "Hero",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Background image" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship" },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The art of <em>sleep.</em>" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Designed to transform your bedroom into a quiet sanctuary of restful serenity." },
+    { "type": "richtext", "id": "text", "label": "Subheading", "default": "<p>Designed to transform your bedroom into a quiet sanctuary of restful serenity.</p>" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 60, "max": 120, "step": 2, "unit": "px", "default": 92 },
+    { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "button_label_1", "label": "Button 1 label", "default": "Shop by category" },
     { "type": "url", "id": "button_link_1", "label": "Button 1 link" },
     { "type": "text", "id": "button_label_2", "label": "Button 2 label", "default": "Featured collections" },

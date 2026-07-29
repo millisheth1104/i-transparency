@@ -11,10 +11,10 @@
 
     <p class="lc-crumb">{{ section.settings.breadcrumb_root }} <span>/</span> All</p>
 
-    <div class="lc-intro">
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      {%- if section.settings.heading != blank -%}<h1 class="section-heading">{{ section.settings.heading }}</h1>{%- endif -%}
-      {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
+    <div class="lc-intro" style="margin-bottom:{{ section.settings.header_spacing }}px">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h1 class="section-heading" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h1>{%- endif -%}
+      {%- if section.settings.subtext != blank -%}<div class="section-sub" style="font-size:{{ section.settings.subheading_size }}px">{{ section.settings.subtext }}</div>{%- endif -%}
     </div>
 
     {%- if list.size > 0 -%}
@@ -93,9 +93,15 @@
   "name": "Main list collections",
   "settings": [
     { "type": "text", "id": "breadcrumb_root", "label": "Breadcrumb root", "default": "Collections" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collections" },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Collections" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Our <em>collections</em>" },
-    { "type": "text", "id": "subtext", "label": "Subtext", "default": "One knitted-cotton family across nine natural shades — explore each edit and find the layers for your bed." },
+    { "type": "richtext", "id": "subtext", "label": "Subheading", "default": "<p>One knitted-cotton family across nine natural shades — explore each edit and find the layers for your bed.</p>" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 48 },
+    { "type": "header", "content": "Layout" },
     { "type": "collection_list", "id": "collection_list", "label": "Collections", "info": "Leave empty to show all collections" },
     { "type": "select", "id": "columns", "label": "Columns", "default": "3", "options": [ { "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
     { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true }

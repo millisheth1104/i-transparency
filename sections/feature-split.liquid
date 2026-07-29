@@ -8,8 +8,8 @@
       {%- endif -%}
     </div>
     <div class="feature-split__body">
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      <h2 class="feature-split__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px;margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="feature-split__heading" style="font-size:clamp({{ section.settings.heading_size | times: 0.6 | round }}px, 4.5vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h2>
       {%- if section.settings.intro != blank -%}<div class="feature-split__intro">{{ section.settings.intro }}</div>{%- endif -%}
       {%- if section.settings.text != blank -%}<div class="feature-split__text">{{ section.settings.text }}</div>{%- endif -%}
       {%- if section.settings.button_label != blank -%}
@@ -40,8 +40,13 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "checkbox", "id": "image_right", "label": "Image on right", "default": false },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Breathable build · Zero bleed" },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Breathable build · Zero bleed" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "<em>Woven,</em> not knitted." },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 30, "max": 70, "step": 2, "unit": "px", "default": 56 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 18 },
+    { "type": "header", "content": "Body copy" },
     { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <strong>Ours is woven.</strong></p>" },
     { "type": "richtext", "id": "text", "label": "Body", "default": "<p>Woven gives cotton a different life — a soft, slightly elastic, three-dimensional hand that breathes in summer and holds warmth in winter. It drapes instead of lying stiff, and softens further with every wash rather than wearing thin. It is, simply, the most touchable bed you will own.</p>" },
     { "type": "text", "id": "button_label", "label": "Button label" },

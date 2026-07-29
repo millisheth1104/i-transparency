@@ -1,9 +1,9 @@
 <section class="section sleepscape">
   <div class="sleepscape__inner">
-    <h2 class="section-heading">{{ section.settings.heading }}</h2>
-    {%- if section.settings.subtext != blank -%}<p class="section-sub">{{ section.settings.subtext }}</p>{%- endif -%}
+    <h2 class="section-heading" style="font-size:clamp({{ section.settings.heading_size | times: 0.65 | round }}px, 4vw, {{ section.settings.heading_size }}px)">{{ section.settings.heading }}</h2>
+    {%- if section.settings.subtext != blank -%}<div class="section-sub" style="font-size:{{ section.settings.subheading_size }}px">{{ section.settings.subtext }}</div>{%- endif -%}
 
-    <div class="sleepscape__stage">
+    <div class="sleepscape__stage" style="margin-top:{{ section.settings.header_spacing }}px">
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.heading | escape }}" width="2000" height="1200" loading="lazy">
       {%- else -%}
@@ -75,8 +75,13 @@
 {
   "name": "Sleepscape",
   "settings": [
+    { "type": "header", "content": "Section header" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Build your <em>sleepscape</em>" },
-    { "type": "text", "id": "subtext", "label": "Subtext", "default": "Tap a piece to add it — build the layered look in one go." },
+    { "type": "richtext", "id": "subtext", "label": "Subheading", "default": "<p>Tap a piece to add it — build the layered look in one go.</p>" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "header", "content": "Room" },
     { "type": "image_picker", "id": "image", "label": "Room image" }
   ],
   "blocks": [

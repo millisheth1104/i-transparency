@@ -9,8 +9,8 @@
         {%- endif -%}
       </div>
       <div class="cta-band__body">
-        <p class="eyebrow cta-band__eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- if section.settings.text != blank -%}<p class="cta-band__text">{{ section.settings.text }}</p>{%- endif -%}
+        <p class="eyebrow cta-band__eyebrow" style="font-size:{{ section.settings.eyebrow_size }}px">{{ section.settings.eyebrow }}</p>
+        {%- if section.settings.text != blank -%}<div class="cta-band__text" style="font-size:{{ section.settings.text_size }}px;margin-bottom:{{ section.settings.header_spacing }}px">{{ section.settings.text }}</div>{%- endif -%}
         <div class="cta-band__actions">
           {%- if section.settings.button_label_1 != blank -%}<a class="btn btn--gold" href="{{ section.settings.button_link_1 }}">{{ section.settings.button_label_1 }}</a>{%- endif -%}
           {%- if section.settings.button_label_2 != blank -%}<a class="btn btn--light" href="{{ section.settings.button_link_2 }}">{{ section.settings.button_label_2 }}</a>{%- endif -%}
@@ -37,8 +37,13 @@
   "name": "Corporate CTA",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Corporate & Bulk Orders" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply." },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Eyebrow text", "default": "Corporate & Bulk Orders" },
+    { "type": "richtext", "id": "text", "label": "Subheading", "default": "<p>Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply.</p>" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "text_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 30 },
+    { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "button_label_1", "label": "Button 1 label", "default": "Request a quote" },
     { "type": "url", "id": "button_link_1", "label": "Button 1 link" },
     { "type": "text", "id": "button_label_2", "label": "Button 2 label", "default": "Enquire now" },

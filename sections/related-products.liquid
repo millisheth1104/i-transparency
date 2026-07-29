@@ -14,10 +14,10 @@
 <section class="section rel" data-section-id="{{ section.id }}">
   <div class="container">
     {%- if section.settings.heading != blank -%}
-      <p class="eyebrow rel__eyebrow">{{ section.settings.heading }}</p>
+      <p class="eyebrow rel__eyebrow" style="font-size:{{ section.settings.heading_size }}px">{{ section.settings.heading }}</p>
     {%- endif -%}
 
-    <div class="rel__wrap">
+    <div class="rel__wrap" style="margin-top:{{ section.settings.header_spacing }}px">
       <button class="round-btn rel__nav rel__nav--prev" type="button" aria-label="Previous" data-rel-prev>
         {% render 'icon', icon: 'arrow-left' %}
       </button>
@@ -124,7 +124,11 @@
   "tag": "section",
   "class": "section-related-products",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" },
+    { "type": "header", "content": "Section header" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "You may also like" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "header_spacing", "label": "Header spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Products" },
     { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to use recommendations or the product's own collection." },
     { "type": "range", "id": "products_limit", "label": "Products to show", "min": 3, "max": 12, "step": 1, "default": 6 }
   ],
