@@ -122,11 +122,11 @@
           "settings": {
             "eyebrow": "Collections",
             "heading": "Our <em>collections</em>",
-            "subheading": "<p><br/></p>",
+            "subheading": "",
             "heading_size": 36,
             "eyebrow_size": 12,
             "subheading_size": 14,
-            "header_spacing": 40,
+            "header_spacing": 24,
             "columns_desktop": 3,
             "columns_mobile": "1",
             "grid_gap": 24,
