@@ -160,7 +160,7 @@
             "collection_3": "comforters",
             "custom_image_3": "shopify://shop_images/05.png",
             "custom_link_3": "",
-            "show_card_4": false,
+            "show_card_4": true,
             "collection_4": "pillows",
             "custom_image_4": "shopify://shop_images/wovennotknitted.png",
             "custom_link_4": "",
