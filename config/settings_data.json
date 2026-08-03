@@ -23,8 +23,7 @@
             "settings": {
               "label": "Shop",
               "link": "/collections/all",
-              "mega_menu": false,
-              "mega_menu_source": "shop"
+              "mega_menu_collection": 311863148751
             }
           },
           "nav-1": {
@@ -32,8 +31,7 @@
             "settings": {
               "label": "Collections",
               "link": "/collections",
-              "mega_menu": false,
-              "mega_menu_source": ""
+              "mega_menu_collection": 311863181519
             }
           },
           "nav-2": {
