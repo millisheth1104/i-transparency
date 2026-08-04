@@ -15,7 +15,21 @@
         "image": "shopify://shop_images/hero_page_png.png",
         "eyebrow": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship",
         "heading": "The art of <em>sleep.</em>",
-        "text": "Designed to transform your bedroom into a quiet sanctuary of restful serenity.",
+        "text": "<p>Designed to transform your bedroom into a quiet sanctuary of restful serenity.</p>",
+        "eyebrow_size": 12,
+        "heading_size": 92,
+        "text_size": 16,
+        "header_spacing": 20,
+        "eyebrow_color": "#8d7c67",
+        "heading_color": "#57534a",
+        "text_color": "#57534a",
+        "eyebrow_font": "ui",
+        "heading_font": "serif",
+        "text_font": "sans",
+        "image_radius": 20,
+        "image_border_width": 0,
+        "image_border_color": "#5a5148",
+        "image_margin_top": 24,
         "button_label_1": "Shop by category",
         "button_link_1": "",
         "button_label_2": "Featured collections",
@@ -34,6 +48,19 @@
         "image_right": false,
         "eyebrow": "Breathable build · Zero bleed",
         "heading": "<em>Woven,</em> not knitted.",
+        "eyebrow_size": 12,
+        "heading_size": 56,
+        "header_spacing": 18,
+        "eyebrow_color": "#8c8275",
+        "heading_color": "#5a5148",
+        "eyebrow_font": "ui",
+        "heading_font": "serif",
+        "section_padding_top": 90,
+        "section_padding_bottom": 90,
+        "image_radius": 14,
+        "image_border_width": 0,
+        "image_border_color": "#5a5148",
+        "image_margin": 0,
         "intro": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <br/><strong>Ours is woven.</strong></p>",
         "text": "<p>Woven gives cotton a different life — a soft, slightly elastic, three-dimensional hand that breathes in summer and holds warmth in winter. It drapes instead of lying stiff, and softens further with every wash rather than wearing thin. It is, simply, the most touchable bed you will own.</p>",
         "button_label": "",
@@ -83,7 +110,13 @@
         "b4"
       ],
       "settings": {
-        "eyebrow": "Featured Collections"
+        "eyebrow": "Featured Collections",
+        "eyebrow_size": 12,
+        "eyebrow_color": "#8c8275",
+        "eyebrow_font": "ui",
+        "section_padding_top": 36,
+        "section_padding_bottom": 36,
+        "stage_image_radius": 14
       }
     },
     "sleepscape": {
@@ -114,8 +147,20 @@
       ],
       "settings": {
         "heading": "Build your <em>sleepscape</em>",
-        "subtext": "Tap a piece to add it — build the layered look in one go.",
-        "image": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_21_37_PM.png"
+        "subtext": "<p>Tap a piece to add it — build the layered look in one go.</p>",
+        "heading_size": 40,
+        "subheading_size": 16,
+        "header_spacing": 36,
+        "heading_color": "#5a5148",
+        "subheading_color": "#8c8275",
+        "heading_font": "serif",
+        "subheading_font": "sans",
+        "section_padding_top": 90,
+        "section_padding_bottom": 90,
+        "image": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_21_37_PM.png",
+        "image_radius": 14,
+        "image_border_width": 0,
+        "image_border_color": "#5a5148"
       }
     },
     "category_showcase": {
@@ -126,7 +171,10 @@
           "settings": {
             "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed covers",
-            "link": ""
+            "link": "",
+            "image_radius": 14,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
           }
         },
         "c2": {
@@ -134,7 +182,10 @@
           "settings": {
             "image": "shopify://shop_images/02.png",
             "title": "Comforters",
-            "link": ""
+            "link": "",
+            "image_radius": 14,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
           }
         },
         "c3": {
@@ -142,7 +193,10 @@
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
             "title": "Throws",
-            "link": ""
+            "link": "",
+            "image_radius": 14,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
           }
         },
         "c4": {
@@ -150,7 +204,10 @@
           "settings": {
             "image": "shopify://shop_images/04.jpg",
             "title": "Pillow covers",
-            "link": ""
+            "link": "",
+            "image_radius": 14,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
           }
         },
         "c5": {
@@ -158,7 +215,10 @@
           "settings": {
             "image": "shopify://shop_images/05.png",
             "title": "Cushions",
-            "link": ""
+            "link": "",
+            "image_radius": 14,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
           }
         }
       },
@@ -171,7 +231,16 @@
       ],
       "settings": {
         "heading": "Shop by <em>category</em>",
-        "subtext": "One knitted-cotton family, three ways to layer your bed — across nine shades drawn from the earth.",
+        "subtext": "<p>One knitted-cotton family, three ways to layer your bed — across nine shades drawn from the earth.</p>",
+        "heading_size": 40,
+        "subheading_size": 16,
+        "header_spacing": 40,
+        "heading_color": "#5a5148",
+        "subheading_color": "#8c8275",
+        "heading_font": "serif",
+        "subheading_font": "sans",
+        "section_padding_top": 90,
+        "section_padding_bottom": 90,
         "button_label": "View all",
         "button_link": ""
       }
@@ -180,7 +249,16 @@
       "type": "bestsellers",
       "settings": {
         "eyebrow": "Bestsellers",
-        "subheading": "Loved by 1,200+ homes",
+        "subheading": "<p>Loved by 1,200+ homes</p>",
+        "eyebrow_size": 13,
+        "subheading_size": 13,
+        "header_spacing": 40,
+        "eyebrow_color": "#8d7966",
+        "subheading_color": "#a89b8a",
+        "eyebrow_font": "ui",
+        "subheading_font": "sans",
+        "section_padding_top": 90,
+        "section_padding_bottom": 90,
         "collection": "bedcover",
         "limit": 8
       }
@@ -242,7 +320,12 @@
         "t4"
       ],
       "settings": {
-        "eyebrow": "Ratings & Reviews"
+        "eyebrow": "Ratings & Reviews",
+        "eyebrow_size": 12,
+        "eyebrow_color": "#8c8275",
+        "eyebrow_font": "ui",
+        "section_padding_top": 90,
+        "section_padding_bottom": 90
       }
     },
     "corporate_cta": {
@@ -250,12 +333,29 @@
       "settings": {
         "image": "shopify://shop_images/req_a_quote.png",
         "eyebrow": "Corporate & Bulk Orders",
-        "text": "Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply.",
+        "text": "<p>Premium knitted-cotton bedding for hotels, resorts, designers, architects and developers — with trade pricing, custom shades and reliable supply.</p>",
+        "eyebrow_size": 12,
+        "text_size": 16,
+        "header_spacing": 30,
+        "eyebrow_color": "#b7a386",
+        "text_color": "#f4eee4bf",
+        "eyebrow_font": "ui",
+        "text_font": "sans",
+        "section_padding_top": 0,
+        "section_padding_bottom": 0,
+        "image_radius": 0,
+        "image_border_width": 0,
+        "image_border_color": "#ffffff",
+        "image_margin": 22,
         "button_label_1": "Request a quote",
         "button_link_1": "",
         "button_label_2": "Enquire now",
         "button_link_2": ""
       }
+    },
+    "1785822053edd24849": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -266,6 +366,7 @@
     "category_showcase",
     "bestsellers",
     "testimonials",
-    "corporate_cta"
+    "corporate_cta",
+    "1785822053edd24849"
   ]
 }
