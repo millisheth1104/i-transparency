@@ -80,6 +80,15 @@
         { "type": "url", "id": "link", "label": "Link" },
         { "type": "collection", "id": "mega_menu_collection", "label": "Mega menu collection (optional)", "info": "If set, and this collection has a 'Sub collections' metafield, a mega menu opens on hover. Leave blank for a plain link." }
       ]
+    },
+    {
+      "type": "mega_menu_link",
+      "name": "Mega menu link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Menu" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Used if the mega menu collection below is left empty." },
+        { "type": "collection", "id": "mega_menu_collection", "label": "Mega menu collection", "info": "Requires a 'Sub collections' metafield on this collection to populate the mega menu." }
+      ]
     }
   ],
   "max_blocks": 8,
