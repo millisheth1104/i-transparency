@@ -66,21 +66,21 @@
           "type": "category",
           "settings": {
             "title": "Bedsheets",
-            "link": ""
+            "link": "shopify://collections/frontpage"
           }
         },
         "category_xRcjji": {
           "type": "category",
           "settings": {
             "title": "Bed Covers",
-            "link": ""
+            "link": "shopify://collections/bedcover"
           }
         },
         "category_pCWmQL": {
           "type": "category",
           "settings": {
             "title": "Pillows",
-            "link": ""
+            "link": "shopify://collections/pillows"
           }
         },
         "category_UPnJjK": {
