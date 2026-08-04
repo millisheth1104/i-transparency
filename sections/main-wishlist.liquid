@@ -13,18 +13,28 @@
       </div>
     </div>
 
-    <div class="grid grid--4 wishlist-grid" data-wishlist-grid hidden>
-      {%- assign coll = collections[section.settings.collection] -%}
-      {%- if coll != empty and coll.products.size > 0 -%}
-        {%- assign products_list = coll.products -%}
-      {%- else -%}
-        {%- assign products_list = collections.all.products -%}
-      {%- endif -%}
-      {%- for product in products_list limit: section.settings.max_products -%}
-        <div data-wishlist-card="{{ product.id }}" hidden>
-          {% render 'product-card', product: product %}
-        </div>
-      {%- endfor -%}
+    <div class="wishlist-wrap" data-wishlist-grid hidden>
+      <button class="round-btn wishlist-arrow wishlist-arrow--prev" type="button" aria-label="Previous" data-wishlist-prev>
+        {% render 'icon', icon: 'arrow-left' %}
+      </button>
+
+      <div class="wishlist-row" data-wishlist-row>
+        {%- assign coll = collections[section.settings.collection] -%}
+        {%- if coll != empty and coll.products.size > 0 -%}
+          {%- assign products_list = coll.products -%}
+        {%- else -%}
+          {%- assign products_list = collections.all.products -%}
+        {%- endif -%}
+        {%- for product in products_list limit: section.settings.max_products -%}
+          <div class="wishlist-item" data-wishlist-card="{{ product.id }}" hidden>
+            {% render 'product-card', product: product %}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <button class="round-btn wishlist-arrow wishlist-arrow--next" type="button" aria-label="Next" data-wishlist-next>
+        {% render 'icon', icon: 'arrow-right' %}
+      </button>
     </div>
 
     <div class="wishlist-empty" data-wishlist-empty>
@@ -39,6 +49,7 @@
 
 <style>
   .wishlist-sec { padding-top: 40px; }
+  .wishlist-sec .container { max-width: 1272px; margin: auto; }
   .wishlist-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 34px; flex-wrap: wrap; }
   .wishlist-sec__label { margin: 0; }
   .wishlist-toolbar { display: flex; align-items: center; gap: 26px; }
@@ -46,10 +57,33 @@
   .wishlist-share:hover { color: var(--taupe-dark); }
   .wishlist-share.is-copied span::after { content: ' — copied'; color: var(--taupe); }
   .wishlist-moveall { letter-spacing: .18em; }
-  .wishlist-grid { grid-template-columns: repeat(auto-fill, 260px); }
-  .wishlist-grid .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
-  .wishlist-grid .product-card__media { border-radius: 0; aspect-ratio: unset; width: 260px; height: 345px; max-width: 100%; }
-  .wishlist-grid .product-card__body { padding-top: 20px; flex: 0 0 auto; }
+
+  /* Carousel (matches homepage Bestsellers styling) */
+  .wishlist-wrap { position: relative; }
+  .wishlist-row { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 76px) / 3); gap: 38px; align-items: start; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+  .wishlist-row::-webkit-scrollbar { display: none; }
+  .wishlist-item { display: flex; }
+  .wishlist-item .product-card { width: 100%; height: 100%; background: transparent; border: none; padding: 0; display: flex; flex-direction: column; }
+  .wishlist-item .product-card__media { position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 3/4; background: #f5f3ef; padding: 0; display: block; }
+  .wishlist-item .product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+  .wishlist-item .product-card:hover .product-card__media img { transform: scale(1.03); }
+  .wishlist-item .product-card__body { padding: 16px 0 0; display: flex; flex-direction: column; flex: 1; }
+  .wishlist-item .product-card__title { font-size: 21px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; }
+  .wishlist-item .product-card__meta { font-size: 12px; letter-spacing: .3px; color: #8c8c8c; line-height: 1.5; margin: 0; }
+  .wishlist-item .product-card__meta:first-of-type { color: #5f5246; }
+  .wishlist-item .product-card__price { display: block; font-size: 19px; font-weight: 500; margin: 10px 0 16px; margin-top: auto; }
+  .wishlist-item .product-card__add { width: 100%; height: 52px; border: 1px solid #b39b7d; background: transparent; text-transform: uppercase; letter-spacing: 3px; font-size: 13px; transition: .3s; }
+  .wishlist-item .product-card__add:hover { background: #5f5246; color: #fff; border-color: #5f5246; }
+  .wishlist-item .product-card__add[disabled] { opacity: .6; cursor: default; }
+  .wishlist-item .product-card__wish { position: absolute; top: 14px; right: 14px; background: none; border: none; padding: 0; color: #5f5246; }
+  .wishlist-item .product-card__wish svg { width: 18px; height: 18px; }
+
+  .wishlist-arrow { width: 48px; height: 48px; border: 1px solid #8d7966; border-radius: 999px; background: #fff; display: flex; align-items: center; justify-content: center; position: absolute; top: 0; transition: .3s; z-index: 10; }
+  .wishlist-arrow svg { width: 16px; height: 16px; }
+  .wishlist-arrow:hover { background: #f2ece2; }
+  .wishlist-arrow--prev { left: -60px; }
+  .wishlist-arrow--next { right: -60px; }
+
   .wishlist-empty { text-align: center; padding: 70px 0 50px; }
   .wishlist-empty__title { font-size: clamp(28px, 4vw, 44px); }
   .wishlist-empty__title em { font-style: italic; }
@@ -57,7 +91,48 @@
   @media (max-width: 600px) {
     .wishlist-top { flex-direction: column; align-items: flex-start; }
   }
+  @media (max-width: 990px) {
+    .wishlist-row { grid-auto-columns: calc((100% - 30px) / 2); }
+    .wishlist-arrow { display: none; }
+  }
+  @media (max-width: 600px) {
+    .wishlist-row { grid-auto-columns: 82%; }
+  }
 </style>
+
+<script>
+(function(){
+  var root = document.querySelector('[data-wishlist-page]');
+  if (!root || root.dataset.wishlistCarouselInit) return;
+  root.dataset.wishlistCarouselInit = '1';
+  var wrap = root.querySelector('[data-wishlist-grid]');
+  var row = root.querySelector('[data-wishlist-row]');
+  var prev = root.querySelector('[data-wishlist-prev]');
+  var next = root.querySelector('[data-wishlist-next]');
+  if (!row) return;
+  function step(){ return row.clientWidth / 3 + 38; }
+  if (prev) prev.addEventListener('click', function(){ row.scrollBy({left: -step(), behavior: 'smooth'}); });
+  if (next) next.addEventListener('click', function(){ row.scrollBy({left: step(), behavior: 'smooth'}); });
+
+  function alignArrows(){
+    var media = row.querySelector('.product-card__media');
+    if (!media) return;
+    var top = media.offsetHeight / 2 - 24;
+    if (prev) prev.style.top = top + 'px';
+    if (next) next.style.top = top + 'px';
+  }
+  alignArrows();
+  window.addEventListener('resize', alignArrows);
+
+  /* wishlist.js toggles this wrap's [hidden] attribute after reading
+     localStorage (async relative to this script), so re-measure whenever
+     that happens or the saved-items list changes, not just once at load. */
+  if (wrap && 'MutationObserver' in window) {
+    new MutationObserver(alignArrows).observe(wrap, { attributes: true, attributeFilter: ['hidden'] });
+  }
+  document.addEventListener('wishlist:change', function(){ setTimeout(alignArrows, 0); });
+})();
+</script>
 
 {% schema %}
 {
