@@ -101,13 +101,67 @@
             "title": "Soft Haven",
             "link": ""
           }
+        },
+        "b5": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Ornate",
+            "link": "/collections/ornate"
+          }
+        },
+        "b6": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Reflect",
+            "link": "/collections/reflect"
+          }
+        },
+        "b7": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Ethereal",
+            "link": "/collections/ethereal-bd"
+          }
+        },
+        "b8": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Timeless Grace",
+            "link": "/collections/timeless-grace-db"
+          }
+        },
+        "b9": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Embellish",
+            "link": "/collections/embellish-db"
+          }
+        },
+        "b10": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "title": "Essence",
+            "link": "/collections/essence"
+          }
         }
       },
       "block_order": [
         "b1",
         "b2",
         "b3",
-        "b4"
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10"
       ],
       "settings": {
         "eyebrow": "Featured Collections",
