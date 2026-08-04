@@ -89,13 +89,23 @@
             "title": "Comforters",
             "link": ""
           }
+        },
+        "promo_band_XitcdV": {
+          "type": "promo_band",
+          "settings": {
+            "position": 4,
+            "heading": "Printed",
+            "text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
+            "image": "shopify://shop_images/02_-_Edited.png"
+          }
         }
       },
       "block_order": [
         "category_J9qF7r",
         "category_xRcjji",
         "category_pCWmQL",
-        "category_UPnJjK"
+        "category_UPnJjK",
+        "promo_band_XitcdV"
       ],
       "name": "Main collection",
       "settings": {
@@ -108,22 +118,10 @@
         "show_feature_media": true,
         "feature_media_image": "shopify://shop_images/sleepscape_room_img.jpg"
       }
-    },
-    "promo_band_XitcdV": {
-      "type": "promo-band",
-      "name": "Promo band",
-      "settings": {
-        "heading": "Printed",
-        "text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
-        "image": "shopify://shop_images/02_-_Edited.png",
-        "button_label": "",
-        "button_link": ""
-      }
     }
   },
   "order": [
     "main",
-    "main_collection_BpJadB",
-    "promo_band_XitcdV"
+    "main_collection_BpJadB"
   ]
 }
