@@ -84,7 +84,7 @@
   .fc.is-revealed .fc__num, .fc.is-revealed .fc__name { opacity: 1; transform: translateY(0); }
 
   /* Per-item stagger (0.12s apart), plus a small extra offset on the title
-     relative to its own number, per block position (up to 8 blocks). */
+     relative to its own number, per block position (up to 14 blocks). */
   .fc__item:nth-child(1) { transition-delay: .15s; } .fc__item:nth-child(1) .fc__num { transition-delay: .15s; } .fc__item:nth-child(1) .fc__name { transition-delay: .23s; }
   .fc__item:nth-child(2) { transition-delay: .27s; } .fc__item:nth-child(2) .fc__num { transition-delay: .27s; } .fc__item:nth-child(2) .fc__name { transition-delay: .35s; }
   .fc__item:nth-child(3) { transition-delay: .39s; } .fc__item:nth-child(3) .fc__num { transition-delay: .39s; } .fc__item:nth-child(3) .fc__name { transition-delay: .47s; }
@@ -93,6 +93,12 @@
   .fc__item:nth-child(6) { transition-delay: .75s; } .fc__item:nth-child(6) .fc__num { transition-delay: .75s; } .fc__item:nth-child(6) .fc__name { transition-delay: .83s; }
   .fc__item:nth-child(7) { transition-delay: .87s; } .fc__item:nth-child(7) .fc__num { transition-delay: .87s; } .fc__item:nth-child(7) .fc__name { transition-delay: .95s; }
   .fc__item:nth-child(8) { transition-delay: .99s; } .fc__item:nth-child(8) .fc__num { transition-delay: .99s; } .fc__item:nth-child(8) .fc__name { transition-delay: 1.07s; }
+  .fc__item:nth-child(9) { transition-delay: 1.11s; } .fc__item:nth-child(9) .fc__num { transition-delay: 1.11s; } .fc__item:nth-child(9) .fc__name { transition-delay: 1.19s; }
+  .fc__item:nth-child(10) { transition-delay: 1.23s; } .fc__item:nth-child(10) .fc__num { transition-delay: 1.23s; } .fc__item:nth-child(10) .fc__name { transition-delay: 1.31s; }
+  .fc__item:nth-child(11) { transition-delay: 1.35s; } .fc__item:nth-child(11) .fc__num { transition-delay: 1.35s; } .fc__item:nth-child(11) .fc__name { transition-delay: 1.43s; }
+  .fc__item:nth-child(12) { transition-delay: 1.47s; } .fc__item:nth-child(12) .fc__num { transition-delay: 1.47s; } .fc__item:nth-child(12) .fc__name { transition-delay: 1.55s; }
+  .fc__item:nth-child(13) { transition-delay: 1.59s; } .fc__item:nth-child(13) .fc__num { transition-delay: 1.59s; } .fc__item:nth-child(13) .fc__name { transition-delay: 1.67s; }
+  .fc__item:nth-child(14) { transition-delay: 1.71s; } .fc__item:nth-child(14) .fc__num { transition-delay: 1.71s; } .fc__item:nth-child(14) .fc__name { transition-delay: 1.79s; }
 
   @media (prefers-reduced-motion: reduce) {
     .fc__eyebrow, .fc__stage, .fc__dots, .fc__item, .fc__num, .fc__name { transition: none !important; opacity: 1 !important; transform: none !important; }
@@ -205,7 +211,7 @@
       ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 14,
   "presets": [
     {
       "name": "Featured collections",
