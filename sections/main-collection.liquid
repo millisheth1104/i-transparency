@@ -81,13 +81,31 @@
         {%- if section.settings.hero_text != blank -%}
           <p class="mc-hero__sub">{{ section.settings.hero_text }}</p>
         {%- endif -%}
-        {%- if section.blocks.size > 0 -%}
+        {%- liquid
+          assign category_blocks = section.blocks | where: 'type', 'category'
+        -%}
+        {%- if category_blocks.size > 0 -%}
           <div class="mc-hero__cats">
-            {%- for block in section.blocks -%}
+            {%- for block in category_blocks -%}
+              {%- liquid
+                assign fallback_asset = blank
+                case block.settings.title
+                  when 'Bedsheets'
+                    assign fallback_asset = 'shop-category-bedsheets.jpg'
+                  when 'Bed Covers'
+                    assign fallback_asset = 'shop-category-bedcovers.jpg'
+                  when 'Pillows'
+                    assign fallback_asset = 'shop-category-pillows.jpg'
+                  when 'Comforters'
+                    assign fallback_asset = 'shop-category-comforters.jpg'
+                endcase
+              -%}
               <a href="{{ block.settings.link }}" class="mc-cat" {{ block.shopify_attributes }}>
                 <span class="mc-cat__img">
                   {%- if block.settings.image != blank -%}
                     <img src="{{ block.settings.image | image_url: width: 320 }}" alt="{{ block.settings.title | escape }}" width="160" height="160" loading="lazy">
+                  {%- elsif fallback_asset != blank -%}
+                    <img src="{{ fallback_asset | asset_url }}" alt="{{ block.settings.title | escape }}" width="160" height="160" loading="lazy">
                   {%- else -%}
                     {{ 'collection-1' | placeholder_svg_tag }}
                   {%- endif -%}
