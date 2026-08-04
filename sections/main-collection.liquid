@@ -433,12 +433,13 @@
 
 }
 
-  /* Flexbox, not grid: the tall media must stretch to match the product
-     grid's natural height, never the other way round. A CSS Grid item
-     spanning both rows factors its own intrinsic aspect ratio into the
-     rows' "auto" sizing, inflating them past the cards' real content
-     height (the bug this replaced). */
-  #shopify-section-{{ section.id }} .mc-feature { display: flex; align-items: stretch; gap: 30px; margin: 40px 0; }
+  /* align-items: flex-start (not stretch): the media's own intrinsic
+     aspect ratio can make it naturally taller than the 2x2 card grid.
+     Stretching would inflate the grid's outer box to match without the
+     actual rows filling that space, leaving a gap below the cards. The
+     script below measures the grid's real rendered height and sets the
+     media's height to match exactly instead, whichever way that goes. */
+  #shopify-section-{{ section.id }} .mc-feature { display: flex; align-items: flex-start; gap: 30px; margin: 40px 0; }
   #shopify-section-{{ section.id }} .mc-feature__grid { display: grid; grid-template-columns: 260px 260px; grid-auto-rows: auto; row-gap: 0; column-gap: 30px; flex-shrink: 0; }
   #shopify-section-{{ section.id }} .mc-feature__media { flex: 1 1 auto; min-width: 0; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
@@ -482,6 +483,32 @@
     #shopify-section-{{ section.id }} .mc-cat__img { height: 78px; }
   }
 </style>
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    function syncFeatureHeight() {
+      root.querySelectorAll('.mc-feature').forEach(function (feature) {
+        var grid = feature.querySelector('.mc-feature__grid');
+        var media = feature.querySelector('.mc-feature__media');
+        if (!grid || !media) return;
+        if (window.matchMedia('(max-width: 990px)').matches) {
+          media.style.height = '';
+          return;
+        }
+        media.style.height = grid.getBoundingClientRect().height + 'px';
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', syncFeatureHeight);
+    } else {
+      syncFeatureHeight();
+    }
+    window.addEventListener('load', syncFeatureHeight);
+    window.addEventListener('resize', syncFeatureHeight);
+  })();
+</script>
 
 {% schema %}
 {
