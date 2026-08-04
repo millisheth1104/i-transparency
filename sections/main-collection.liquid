@@ -347,10 +347,14 @@
     height:100%;
     object-fit:cover;
     transition:.3s;
+    /* Zoomed in so the busy part of each lifestyle photo fills the circle,
+       cropping out the softer/lighter background near the source image's
+       edges that otherwise shows as a pale ring once cropped to a circle. */
+    transform:scale(1.35);
 }
 
 #shopify-section-{{ section.id }} .mc-cat:hover .mc-cat__img img{
-    transform:scale(1.05);
+    transform:scale(1.42);
 }
 
 #shopify-section-{{ section.id }} .mc-cat__label{
