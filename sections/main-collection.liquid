@@ -459,6 +459,10 @@
      settings below (editable in the theme editor), not hardcoded here — so
      it stays a fixed ratio (not height:auto) regardless of the container's
      actual width or the source image's native aspect ratio. */
+  /* Inset with the same 60px side margin as .mc-promo__text, so the image
+     doesn't run edge-to-edge inside the card — it gets its own rounded
+     corners since it no longer touches the outer card's rounded edges. */
+  #shopify-section-{{ section.id }} .mc-promo__media { margin: 0 60px 40px; border-radius: var(--radius); overflow: hidden; }
   #shopify-section-{{ section.id }} .mc-promo__media img, #shopify-section-{{ section.id }} .mc-promo__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   #shopify-section-{{ section.id }} .mc-pager { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 60px; }
