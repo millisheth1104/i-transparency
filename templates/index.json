@@ -260,7 +260,6 @@
         "c4": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/04.jpg",
             "title": "Pillow covers",
             "link": "",
             "image_radius": 14,
