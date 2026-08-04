@@ -4,10 +4,11 @@
     - parent collection: metafields.custom.sub_collections (list of collections)
     - each sub-collection:  metafields.custom.featured_products (list of products)
   params:
-    collection  — the parent Collection (from the nav block's collection picker)
+    collection  — the parent Collection (from the menu link's linked resource)
     label       — nav link label (string)
     url         — nav link href (string)
-    all_blocks  — section.blocks, used to list sibling mega-menu nav items in the sidebar
+    all_links   — the native menu's sibling links, used to list sibling
+                  mega-menu nav items in the sidebar
 {%- endcomment -%}
 {%- assign sub_collections = collection.metafields.custom.sub_collections.value -%}
 {%- if sub_collections == blank or sub_collections.size == 0 -%}
@@ -24,7 +25,7 @@
       <div class="mega-menu__inner">
 
         <div class="mega-menu__sidebar" data-mega-sidebar>
-          {%- render 'mega-menu-parent', all_blocks: all_blocks, current_collection: collection -%}
+          {%- render 'mega-menu-parent', all_links: all_links, current_collection: collection -%}
 
           <ul class="mega-menu__list mega-menu__list--sub" data-mega-sublist hidden>
             {%- for sub in sub_collections -%}

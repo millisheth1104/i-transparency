@@ -9,12 +9,14 @@
     </a>
 
     <nav class="site-nav" aria-label="Primary">
-      {%- for block in section.blocks -%}
-        <div {{ block.shopify_attributes }}>
-          {%- if block.settings.mega_menu_collection != blank -%}
-            {%- render 'mega-menu', collection: block.settings.mega_menu_collection, label: block.settings.label, url: block.settings.link, all_blocks: section.blocks -%}
+      {%- assign nav_menu = linklists[section.settings.menu] -%}
+      {%- for link in nav_menu.links -%}
+        <div>
+          {%- assign sub_collections = link.object.metafields.custom.sub_collections.value -%}
+          {%- if sub_collections != blank and sub_collections.size > 0 -%}
+            {%- render 'mega-menu', collection: link.object, label: link.title, url: link.url, all_links: nav_menu.links -%}
           {%- else -%}
-            <a href="{{ block.settings.link }}" class="site-nav__link">{{ block.settings.label }}</a>
+            <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -69,36 +71,7 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "paragraph", "content": "Nav links are edited below as blocks. Logo is set in Theme settings." }
-  ],
-  "blocks": [
-    {
-      "type": "link",
-      "name": "Nav link",
-      "settings": [
-        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
-        { "type": "url", "id": "link", "label": "Link" },
-        { "type": "collection", "id": "mega_menu_collection", "label": "Mega menu collection (optional)", "info": "If set, and this collection has a 'Sub collections' metafield, a mega menu opens on hover. Leave blank for a plain link." }
-      ]
-    },
-    {
-      "type": "mega_menu_link",
-      "name": "Mega menu link",
-      "settings": [
-        { "type": "text", "id": "label", "label": "Label", "default": "Menu" },
-        { "type": "url", "id": "link", "label": "Link", "info": "Used if the mega menu collection below is left empty." },
-        { "type": "collection", "id": "mega_menu_collection", "label": "Mega menu collection", "info": "Requires a 'Sub collections' metafield on this collection to populate the mega menu." }
-      ]
-    }
-  ],
-  "max_blocks": 8,
-  "default": {
-    "blocks": [
-      { "type": "link", "settings": { "label": "Shop", "link": "/collections/all" } },
-      { "type": "link", "settings": { "label": "Collections", "link": "/collections" } },
-      { "type": "link", "settings": { "label": "Corporate", "link": "/pages/corporate" } },
-      { "type": "link", "settings": { "label": "Contact", "link": "/pages/contact" } }
-    ]
-  }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Managed in Online Store > Navigation. Any top-level item pointing to a collection with a 'Sub collections' metafield automatically becomes a mega menu — no extra setup needed here." }
+  ]
 }
 {% endschema %}

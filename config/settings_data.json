@@ -17,53 +17,9 @@
     "sections": {
       "header": {
         "type": "header",
-        "blocks": {
-          "nav-0": {
-            "type": "link",
-            "settings": {
-              "label": "Shop",
-              "link": "/collections/all",
-              "mega_menu_collection": "311863148751"
-            }
-          },
-          "nav-1": {
-            "type": "link",
-            "settings": {
-              "label": "Collections",
-              "link": "/collections",
-              "mega_menu_collection": "311863181519"
-            }
-          },
-          "nav-2": {
-            "type": "link",
-            "settings": {
-              "label": "Corporate",
-              "link": "shopify://pages/corporate"
-            }
-          },
-          "nav-3": {
-            "type": "link",
-            "settings": {
-              "label": "Contact",
-              "link": "/pages/contact"
-            }
-          },
-          "link_CkxeKg": {
-            "type": "link",
-            "settings": {
-              "label": "Link",
-              "link": ""
-            }
-          }
-        },
-        "block_order": [
-          "nav-0",
-          "nav-1",
-          "nav-2",
-          "nav-3",
-          "link_CkxeKg"
-        ],
-        "settings": {}
+        "settings": {
+          "menu": "main-menu"
+        }
       },
       "footer": {
         "type": "footer",
