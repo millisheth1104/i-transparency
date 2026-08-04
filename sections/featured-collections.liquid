@@ -24,13 +24,15 @@
           {%- endfor -%}
         </div>
 
-        <div class="fc__list">
-          {%- for block in section.blocks -%}
-            <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
-              <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-              <span class="fc__name">{{ block.settings.title }}</span>
-            </button>
-          {%- endfor -%}
+        <div class="fc__list" data-fc-list>
+          <div class="fc__list-inner" data-fc-list-inner>
+            {%- for block in section.blocks -%}
+              <button class="fc__item {% if forloop.first %}is-active{% endif %}" data-fc-item="{{ forloop.index0 }}">
+                <span class="fc__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+                <span class="fc__name">{{ block.settings.title }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
         </div>
       </div>
     </div>
@@ -53,12 +55,17 @@
   .fc__slide img, .fc__slide svg { width: 100%; height: 100%; object-fit: cover; }
   .fc__slide-num { position: absolute; top: 28px; left: 34px; color: var(--brown-2); font-size: 13px; letter-spacing: .1em; z-index: 1; }
   .fc__slide-title { position: absolute; top: 50px; left: 34px; color: var(--brown); font-size: 34px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; z-index: 1; }
-  .fc__list { display: flex; flex-direction: column; gap: 26px; }
+  /* Windowed to show only 4 items at a time: fixed height (set in JS from
+     real item measurements) clips overflow, and the inner wrapper slides
+     vertically so older items scroll out the top as newer ones enter the
+     bottom, keeping the active item always in view. */
+  .fc__list { overflow: hidden; }
+  .fc__list-inner { display: flex; flex-direction: column; gap: 26px; transition: transform .6s cubic-bezier(.22,1,.36,1); }
   .fc__item { background: none; border: none; text-align: left; padding: 0; display: flex; flex-direction: column; gap: 4px; opacity: .45; transition: opacity .25s; }
   .fc__item.is-active { opacity: 1; }
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; } }
+  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { overflow: visible; height: auto !important; } .fc__list-inner { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; transform: none !important; } }
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
@@ -109,14 +116,48 @@
   document.querySelectorAll('[data-fc]').forEach(function(root){
     if (root.dataset.fcInit) return;
     root.dataset.fcInit = '1';
+
+    /* Windowed list: only 4 items are visible at once. Once the active
+       item advances past the 4th slot, the window slides forward by one
+       item at a time (oldest drops off the top, next one enters at the
+       bottom) instead of dumping the whole list on screen. */
+    var VISIBLE_COUNT = 4;
+    var list = root.querySelector('[data-fc-list]');
+    var listInner = root.querySelector('[data-fc-list-inner]');
+
+    function updateWindow(activeIndex){
+      if (!list || !listInner) return;
+      var items = Array.prototype.slice.call(listInner.querySelectorAll('[data-fc-item]'));
+      var total = items.length;
+      if (total <= VISIBLE_COUNT) {
+        list.style.height = '';
+        listInner.style.transform = '';
+        return;
+      }
+      var windowStart = Math.min(Math.max(activeIndex - (VISIBLE_COUNT - 1), 0), total - VISIBLE_COUNT);
+      var startItem = items[windowStart];
+      var endItem = items[windowStart + VISIBLE_COUNT - 1];
+      var offset = startItem.offsetTop;
+      var height = (endItem.offsetTop + endItem.offsetHeight) - offset;
+      list.style.height = height + 'px';
+      listInner.style.transform = 'translateY(-' + offset + 'px)';
+    }
+
     function go(i){
+      i = parseInt(i, 10);
       root.querySelectorAll('[data-fc-slide]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcSlide==i); });
       root.querySelectorAll('[data-fc-item]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcItem==i); });
       root.querySelectorAll('[data-fc-dot]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcDot==i); });
+      updateWindow(i);
     }
     root.querySelectorAll('[data-fc-item],[data-fc-dot]').forEach(function(el){
       el.addEventListener('click', function(){ go(el.dataset.fcItem || el.dataset.fcDot); });
     });
+    window.addEventListener('resize', function(){
+      var activeItem = listInner ? listInner.querySelector('[data-fc-item].is-active') : null;
+      updateWindow(activeItem ? parseInt(activeItem.dataset.fcItem, 10) : 0);
+    });
+    updateWindow(0);
 
     /* Scroll-scrub: the track above is deliberately kept as short as
        possible (blocks x 30vh, floored at 150vh) while still exceeding
