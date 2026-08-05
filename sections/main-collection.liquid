@@ -477,6 +477,13 @@
   #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
   #shopify-section-{{ section.id }} .product-card__media { border-radius: 0; aspect-ratio: unset; width: 260px; height: 345px; max-width: 100%; }
   #shopify-section-{{ section.id }} .product-card__body { padding-top: 20px; flex: 0 0 auto; }
+  /* Body height is intrinsic here (flex: 0 0 auto), so price's margin-top:
+     auto has no slack to push into — titles that wrap to 1 vs 3 lines would
+     otherwise leave category/price/button starting at a different height
+     per card. Reserving a fixed title height (3 lines' worth) keeps every
+     card's info block starting at the same position regardless of title
+     length, without touching the title text itself. */
+  #shopify-section-{{ section.id }} .product-card__title { min-height: calc(21px * 1.3 * 3); }
 
   #shopify-section-{{ section.id }} .mc-promo { background: var(--cream-2); border-radius: var(--radius-lg); overflow: hidden; margin: 50px 0; }
   #shopify-section-{{ section.id }} .mc-promo__text { padding: 56px 60px 36px; }
