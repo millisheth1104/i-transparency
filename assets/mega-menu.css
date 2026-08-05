@@ -44,7 +44,10 @@
 .mega-menu__list li { list-style: none; }
 
 .mega-menu__list--categories {
-  width: 112px;
+  /* Hugs the widest label (e.g. "Digital Prints") instead of a fixed width,
+     so the active highlight box never clips longer category names. */
+  width: fit-content;
+  min-width: 112px;
   flex-shrink: 0;
 }
 

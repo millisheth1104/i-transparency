@@ -5,8 +5,8 @@
     - each category:         metafields.custom.sub_collections (list of its own sub-collections, e.g. Digital Prints)
   Structure: left = category tabs (top-level's sub_collections), right = the
   active category's own sub_collections as a circle grid. A category with no
-  sub_collections of its own falls back to a "Shop {category}" link instead
-  of an empty panel.
+  sub_collections of its own falls back to a featured-products grid of its
+  own products instead of an empty panel.
   params:
     collection  — the top-level Collection (from the menu link's linked resource)
     label       — nav link label (string)
@@ -46,9 +46,7 @@
               {%- if cat_subs != blank and cat_subs.size > 0 -%}
                 {%- render 'mega-menu-subcollections', sub_collections: cat_subs -%}
               {%- else -%}
-                <div class="mega-menu__empty">
-                  <a href="{{ cat.url }}" class="mega-menu__view-all">Shop {{ cat.title }}</a>
-                </div>
+                {%- render 'mega-menu-featured-products', collection: cat -%}
               {%- endif -%}
             </div>
           {%- endfor -%}
