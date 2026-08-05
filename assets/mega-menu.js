@@ -4,10 +4,7 @@
   document.querySelectorAll('[data-mega-menu]').forEach(function (wrap) {
     var trigger = wrap.querySelector('[data-mega-trigger]');
     var panel = wrap.querySelector('[data-mega-panel]');
-    var sublist = wrap.querySelector('[data-mega-sublist]');
-    var parentlist = wrap.querySelector('[data-mega-parentlist]');
-    var subTriggers = wrap.querySelectorAll('[data-mega-sub-trigger]');
-    var subLinks = wrap.querySelectorAll('[data-mega-sub-link]');
+    var catLinks = wrap.querySelectorAll('[data-mega-cat-link]');
     var views = wrap.querySelectorAll('[data-mega-view]');
     if (!trigger || !panel) return;
 
@@ -22,46 +19,36 @@
     }
 
     function reset() {
-      // Back to "state 1": parent list visible, grid of sub-collections shown.
-      if (sublist) sublist.hidden = true;
-      if (parentlist) parentlist.hidden = false;
-      showView('grid');
+      // Back to the default: first category active, its panel shown.
+      activate(catLinks.length ? catLinks[0].getAttribute('data-panel') : null);
     }
 
-    function showView(name) {
+    function activate(panelName) {
+      if (!panelName) return;
+      catLinks.forEach(function (l) {
+        var isMatch = l.getAttribute('data-panel') === panelName;
+        l.classList.toggle('is-active', isMatch);
+        l.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
       views.forEach(function (v) {
-        v.classList.toggle('is-active', v.getAttribute('data-mega-view') === name);
+        v.classList.toggle('is-active', v.getAttribute('data-mega-view') === panelName);
       });
     }
 
-    function activateSub(panelName) {
-      // Drill into "state 2": sub-collection list replaces the parent list,
-      // matching item highlighted, right panel swaps to featured products.
-      if (parentlist) parentlist.hidden = true;
-      if (sublist) sublist.hidden = false;
-      subLinks.forEach(function (l) {
-        l.classList.toggle('is-active', l.getAttribute('data-panel') === panelName);
-      });
-      showView(panelName);
-    }
-
-    subTriggers.forEach(function (el) {
+    catLinks.forEach(function (el) {
       el.addEventListener('mouseenter', function () {
         if (mobileQuery.matches) return;
-        activateSub(el.getAttribute('data-panel'));
+        activate(el.getAttribute('data-panel'));
       });
-    });
-
-    subLinks.forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
+      el.addEventListener('focus', function () {
         if (mobileQuery.matches) return;
-        activateSub(el.getAttribute('data-panel'));
+        activate(el.getAttribute('data-panel'));
       });
     });
 
     if (mobileQuery.matches) {
-      // Mobile: click-to-open accordion, no hover state-switching (state 1
-      // grid is shown as the initial/default content only).
+      // Mobile: click-to-open accordion, no hover state-switching (first
+      // category's panel is shown as the initial/default content only).
       trigger.addEventListener('click', function (e) {
         e.preventDefault();
         var willOpen = !wrap.classList.contains('is-open');

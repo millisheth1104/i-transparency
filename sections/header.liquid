@@ -14,7 +14,7 @@
         <div>
           {%- assign sub_collections = link.object.metafields.custom.sub_collections.value -%}
           {%- if sub_collections != blank and sub_collections.size > 0 -%}
-            {%- render 'mega-menu', collection: link.object, label: link.title, url: link.url, all_links: nav_menu.links -%}
+            {%- render 'mega-menu', collection: link.object, label: link.title, url: link.url -%}
           {%- else -%}
             <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
           {%- endif -%}

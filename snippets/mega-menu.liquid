@@ -1,17 +1,19 @@
 {%- comment -%}
   Fully dynamic mega menu — no hardcoded collections/products.
   Data source: collection metafields only.
-    - parent collection: metafields.custom.sub_collections (list of collections)
-    - each sub-collection:  metafields.custom.featured_products (list of products)
+    - top-level collection:  metafields.custom.sub_collections (list of category collections, e.g. Bedsheets)
+    - each category:         metafields.custom.sub_collections (list of its own sub-collections, e.g. Digital Prints)
+  Structure: left = category tabs (top-level's sub_collections), right = the
+  active category's own sub_collections as a circle grid. A category with no
+  sub_collections of its own falls back to a "Shop {category}" link instead
+  of an empty panel.
   params:
-    collection  — the parent Collection (from the menu link's linked resource)
+    collection  — the top-level Collection (from the menu link's linked resource)
     label       — nav link label (string)
     url         — nav link href (string)
-    all_links   — the native menu's sibling links, used to list sibling
-                  mega-menu nav items in the sidebar
 {%- endcomment -%}
-{%- assign sub_collections = collection.metafields.custom.sub_collections.value -%}
-{%- if sub_collections == blank or sub_collections.size == 0 -%}
+{%- assign categories = collection.metafields.custom.sub_collections.value -%}
+{%- if categories == blank or categories.size == 0 -%}
   <a href="{{ url }}" class="site-nav__link">{{ label }}</a>
 {%- else -%}
   <div class="site-nav__item mega-menu" data-mega-menu>
@@ -24,28 +26,30 @@
     <div class="mega-menu__panel" data-mega-panel role="menu" aria-label="{{ label }}">
       <div class="mega-menu__inner">
 
-        <div class="mega-menu__sidebar" data-mega-sidebar>
-          {%- render 'mega-menu-parent', all_links: all_links, current_collection: collection -%}
-
-          <ul class="mega-menu__list mega-menu__list--sub" data-mega-sublist hidden>
-            {%- for sub in sub_collections -%}
-              <li>
-                <a href="{{ sub.url }}"
-                   class="mega-menu__list-link{% if forloop.first %} is-active{% endif %}"
-                   data-mega-sub-link
-                   data-panel="sub-{{ forloop.index0 }}">{{ sub.title }}</a>
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
+        <ul class="mega-menu__list mega-menu__list--categories" data-mega-categories role="tablist">
+          {%- for cat in categories -%}
+            <li role="presentation">
+              <a href="{{ cat.url }}"
+                 class="mega-menu__list-link{% if forloop.first %} is-active{% endif %}"
+                 data-mega-cat-link
+                 data-panel="cat-{{ forloop.index0 }}"
+                 role="tab"
+                 aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ cat.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
 
         <div class="mega-menu__content" data-mega-content>
-          <div class="mega-menu__view is-active" data-mega-view="grid">
-            {%- render 'mega-menu-subcollections', sub_collections: sub_collections -%}
-          </div>
-          {%- for sub in sub_collections -%}
-            <div class="mega-menu__view" data-mega-view="sub-{{ forloop.index0 }}">
-              {%- render 'mega-menu-featured-products', collection: sub -%}
+          {%- for cat in categories -%}
+            <div class="mega-menu__view{% if forloop.first %} is-active{% endif %}" data-mega-view="cat-{{ forloop.index0 }}">
+              {%- assign cat_subs = cat.metafields.custom.sub_collections.value -%}
+              {%- if cat_subs != blank and cat_subs.size > 0 -%}
+                {%- render 'mega-menu-subcollections', sub_collections: cat_subs -%}
+              {%- else -%}
+                <div class="mega-menu__empty">
+                  <a href="{{ cat.url }}" class="mega-menu__view-all">Shop {{ cat.title }}</a>
+                </div>
+              {%- endif -%}
             </div>
           {%- endfor -%}
         </div>

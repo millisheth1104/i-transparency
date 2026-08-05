@@ -35,18 +35,15 @@
   gap: 40px;
 }
 
-/* Sidebar — parent categories, then (once a sub-collection is hovered) the
-   sub-collection list replaces it. */
-
-.mega-menu__sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-}
+/* Left column — the menu's own categories (e.g. Bedsheets, Bed Covers…),
+   always visible; hovering one swaps only the right-side content below. */
 
 .mega-menu__list { display: flex; flex-direction: column; gap: 4px; }
-.mega-menu__list[hidden] { display: none; }
+
+.mega-menu__list--categories {
+  width: 220px;
+  flex-shrink: 0;
+}
 
 .mega-menu__list-link {
   display: flex;
@@ -70,9 +67,13 @@
   color: #fff;
 }
 
-/* Right content — two "views" cross-fade between each other. */
+/* Right content — one "view" per left-column category, cross-fading
+   between each other. Sized by content (no fixed height) so the panel
+   never carries empty space when a category has few/no sub-items. */
 
-.mega-menu__content { position: relative; flex: 1; min-height: 340px; }
+.mega-menu__content { position: relative; flex: 1; }
+
+.mega-menu__empty { display: flex; align-items: flex-start; }
 
 .mega-menu__view {
   position: absolute;
@@ -179,7 +180,7 @@
 @media (max-width: 1200px) and (min-width: 991px) {
   .mega-menu__panel { padding: 24px; }
   .mega-menu__inner { gap: 28px; }
-  .mega-menu__sidebar { width: 180px; }
+  .mega-menu__list--categories { width: 180px; }
   .mega-menu__grid { column-gap: 32px; row-gap: 18px; }
   .mega-menu__product-grid { gap: 14px; }
 }
@@ -212,9 +213,8 @@
   .mega-menu.is-open .mega-menu__trigger::after { transform: rotate(45deg); }
 
   .mega-menu__inner { flex-direction: column; gap: 20px; }
-  .mega-menu__sidebar { width: 100%; }
+  .mega-menu__list--categories { width: 100%; }
   .mega-menu__list-link { height: 40px; padding: 0 10px; font-size: 13px; }
-  .mega-menu__content { min-height: 0; }
   .mega-menu__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 16px; }
   .mega-menu__sub-thumb { width: 44px; height: 44px; }
   .mega-menu__product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
