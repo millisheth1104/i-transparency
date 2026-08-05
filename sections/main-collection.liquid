@@ -466,7 +466,12 @@
   #shopify-section-{{ section.id }} .mc-feature__media { flex: 1 1 auto; min-width: 0; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
 
-  #shopify-section-{{ section.id }} .mc-grid { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 30px; margin-top: 10px; }
+  /* flex-start (not space-between): with fixed-width 260px cards,
+     space-between stretches the gap to fill the row when there are fewer
+     items than a full row (e.g. only 2 products left after the 2x2
+     feature block), pushing the last card to the far edge. A fixed
+     column gap keeps cards flush together regardless of row fill. */
+  #shopify-section-{{ section.id }} .mc-grid { display: flex; flex-wrap: wrap; justify-content: flex-start; column-gap: 30px; row-gap: 30px; margin-top: 10px; }
 
   /* Shop grid product cards: fixed 260px container that hugs its content height, square image corners, no border (per design spec) */
   #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
