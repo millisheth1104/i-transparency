@@ -9,7 +9,7 @@
   transform: translateX(-50%);
   margin-top: 18px; /* clears the header's own 18px bottom padding */
 
-  width: 1150px;
+  width: 628px;
   max-width: calc(100vw - 32px);
 
   background: #F8F4ED;
@@ -17,7 +17,7 @@
   border-radius: 0;
   box-shadow: none;
   box-sizing: border-box;
-  padding: 32px;
+  padding: 24px;
 
   z-index: 60;
   opacity: 0;
@@ -32,27 +32,30 @@
 
 .mega-menu__inner {
   display: flex;
-  gap: 40px;
+  gap: 24px;
 }
 
 /* Left column — the menu's own categories (e.g. Bedsheets, Bed Covers…),
-   always visible; hovering one swaps only the right-side content below. */
+   always visible; hovering one swaps only the right-side content below.
+   list-style is set explicitly (not just relied on via display:flex) so
+   bullets never show regardless of how a browser treats flex <li> markers. */
 
-.mega-menu__list { display: flex; flex-direction: column; gap: 4px; }
+.mega-menu__list { display: flex; flex-direction: column; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.mega-menu__list li { list-style: none; }
 
 .mega-menu__list--categories {
-  width: 220px;
+  width: 112px;
   flex-shrink: 0;
 }
 
 .mega-menu__list-link {
   display: flex;
   align-items: center;
-  height: 44px;
-  padding: 0 16px;
+  height: 36px;
+  padding: 0 12px;
   font-family: var(--font-ui, inherit);
-  font-size: 15px;
-  letter-spacing: 2px;
+  font-size: 13px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--brown-2, #4E4A46);
   background: transparent;
@@ -94,20 +97,21 @@
 .mega-menu__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 48px;
-  row-gap: 24px;
+  column-gap: 24px;
+  row-gap: 12px;
+  list-style: none;
 }
 
 .mega-menu__sub-item {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   text-decoration: none;
 }
 
 .mega-menu__sub-thumb {
-  width: 60px;
-  height: 60px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -120,7 +124,7 @@
 
 .mega-menu__sub-label {
   font-family: var(--font-sans, inherit);
-  font-size: 16px;
+  font-size: 13px;
   color: var(--brown-2, #5B554F);
 }
 
@@ -176,14 +180,8 @@
   color: var(--brown-2, #5B554F);
 }
 
-/* Tablet — proportionally reduced spacing */
-@media (max-width: 1200px) and (min-width: 991px) {
-  .mega-menu__panel { padding: 24px; }
-  .mega-menu__inner { gap: 28px; }
-  .mega-menu__list--categories { width: 180px; }
-  .mega-menu__grid { column-gap: 32px; row-gap: 18px; }
-  .mega-menu__product-grid { gap: 14px; }
-}
+/* Tablet: the base desktop sizing (628px panel) already fits comfortably
+   under 1200px, so no tablet-specific overrides are needed here anymore. */
 
 /* Mobile — click-to-open accordion inside the existing nav drawer instead
    of a hover overlay. */
