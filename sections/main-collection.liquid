@@ -471,11 +471,17 @@
      items than a full row (e.g. only 2 products left after the 2x2
      feature block), pushing the last card to the far edge. A fixed
      column gap keeps cards flush together regardless of row fill. */
-  #shopify-section-{{ section.id }} .mc-grid { display: flex; flex-wrap: wrap; justify-content: flex-start; column-gap: 30px; row-gap: 30px; margin-top: 10px; }
+  /* True 4-column grid (not fixed-width flex items): cards stretch to fill
+     each column exactly, so the row always spans the full container width
+     with no leftover gap on the right when the container is wider than
+     4 * 260px + gaps. */
+  #shopify-section-{{ section.id }} .mc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 30px; row-gap: 30px; margin-top: 10px; }
 
-  /* Shop grid product cards: fixed 260px container that hugs its content height, square image corners, no border (per design spec) */
-  #shopify-section-{{ section.id }} .product-card { border: none; width: 260px; height: auto; max-width: 100%; margin: 0; }
-  #shopify-section-{{ section.id }} .product-card__media { border-radius: 0; aspect-ratio: unset; width: 260px; height: 345px; max-width: 100%; }
+  /* Shop grid product cards: fill their grid column, image keeps the same
+     260:345 proportions as before (now via aspect-ratio, since width is
+     no longer fixed) — square image corners, no border (per design spec) */
+  #shopify-section-{{ section.id }} .product-card { border: none; width: 100%; height: auto; max-width: 100%; margin: 0; min-width: 0; }
+  #shopify-section-{{ section.id }} .product-card__media { border-radius: 0; aspect-ratio: 260 / 345; width: 100%; height: auto; max-width: 100%; }
   #shopify-section-{{ section.id }} .product-card__body { padding-top: 20px; flex: 0 0 auto; }
   /* Body height is intrinsic here (flex: 0 0 auto), so price's margin-top:
      auto has no slack to push into — titles that wrap to 1 vs 3 lines would
@@ -517,12 +523,16 @@
     #shopify-section-{{ section.id }} .mc-feature { flex-direction: column; }
     #shopify-section-{{ section.id }} .mc-feature__grid { grid-template-columns: 1fr 1fr; width: 100%; }
     #shopify-section-{{ section.id }} .mc-feature__media { flex: none; width: 100%; aspect-ratio: 16/9; }
+    #shopify-section-{{ section.id }} .mc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 700px) {
     #shopify-section-{{ section.id }} .mc-bar { flex-direction: column; align-items: flex-start; gap: 18px; }
     #shopify-section-{{ section.id }} .mc-hero__cats { gap: 22px; }
     #shopify-section-{{ section.id }} .mc-cat, #shopify-section-{{ section.id }} .mc-cat__img { width: 78px; }
     #shopify-section-{{ section.id }} .mc-cat__img { height: 78px; }
+  }
+  @media (max-width: 480px) {
+    #shopify-section-{{ section.id }} .mc-grid { grid-template-columns: 1fr; }
   }
 </style>
 
