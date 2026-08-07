@@ -22,6 +22,15 @@
           "menu": "main-menu"
         }
       },
+      "bestsellers": {
+        "type": "bestsellers",
+        "settings": {
+          "eyebrow": "Bestsellers",
+          "subheading": "<p>Loved by 1,200+ homes</p>",
+          "collection": "bedcover",
+          "limit": 8
+        }
+      },
       "footer": {
         "type": "footer",
         "blocks": {
