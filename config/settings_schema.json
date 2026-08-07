@@ -23,6 +23,40 @@
     ]
   },
   {
+    "name": "Newsletter popup",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "popup_image",
+        "label": "Popup image"
+      },
+      {
+        "type": "text",
+        "id": "popup_eyebrow",
+        "label": "Eyebrow",
+        "default": "First Order"
+      },
+      {
+        "type": "text",
+        "id": "popup_heading",
+        "label": "Heading",
+        "default": "Get ₹500 off"
+      },
+      {
+        "type": "textarea",
+        "id": "popup_body",
+        "label": "Body text",
+        "default": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order."
+      },
+      {
+        "type": "text",
+        "id": "popup_button",
+        "label": "Button label",
+        "default": "Claim coupon"
+      }
+    ]
+  },
+  {
     "name": "Contact",
     "settings": [
       {

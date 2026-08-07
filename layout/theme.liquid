@@ -41,7 +41,13 @@
     {%- if request.page_type == 'index' -%}
       {% render 'whatsapp-float' %}
     {%- endif -%}
-    {% render 'popup' %}
+    {% render 'popup',
+      image: settings.popup_image,
+      eyebrow: settings.popup_eyebrow,
+      heading: settings.popup_heading,
+      body: settings.popup_body,
+      button: settings.popup_button
+    %}
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer></script>
     <script src="{{ 'scroll-reveal.js' | asset_url }}" defer></script>
