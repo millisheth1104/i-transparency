@@ -47,7 +47,11 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; }
+/* iOS Safari keeps a native white rounded background on <button> even
+   with background:none set unless appearance is explicitly cleared —
+   this is what put a white box behind every icon-only button (wishlist
+   hearts, hotspot dots, etc.) on iPhone only. */
+button { font-family: inherit; cursor: pointer; appearance: none; -webkit-appearance: none; background-color: transparent; }
 
 h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; color: var(--brown); margin: 0; line-height: 1.1; }
 
