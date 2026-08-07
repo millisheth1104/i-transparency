@@ -104,6 +104,7 @@
         },
         "b5": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Ornate",
             "link": "/collections/ornate"
@@ -111,6 +112,7 @@
         },
         "b6": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Reflect",
             "link": "/collections/reflect"
@@ -118,6 +120,7 @@
         },
         "b7": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Ethereal",
             "link": "/collections/ethereal-bd"
@@ -125,6 +128,7 @@
         },
         "b8": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Timeless Grace",
             "link": "/collections/timeless-grace-db"
@@ -132,6 +136,7 @@
         },
         "b9": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Embellish",
             "link": "/collections/embellish-db"
@@ -139,6 +144,7 @@
         },
         "b10": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Essence",
             "link": "/collections/essence"
@@ -196,12 +202,22 @@
             "x": 40,
             "y": 50
           }
+        },
+        "hotspot_brkVMa": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "subtitle": "Ivory · 2N Pillow Covers",
+            "x": 40,
+            "y": 50
+          }
         }
       },
       "block_order": [
         "hotspot_9tG7kD",
         "h2",
-        "hotspot_TMJWpY"
+        "hotspot_TMJWpY",
+        "hotspot_brkVMa"
       ],
       "settings": {
         "heading": "Build your <em>sleepscape</em>",
