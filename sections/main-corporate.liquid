@@ -162,6 +162,28 @@
   </div>
 </div>
 
+<script>
+  (function () {
+    var SHEET_WEBHOOK_URL = {{ s.sheet_webhook_url | default: '' | json }};
+    if (!SHEET_WEBHOOK_URL) return;
+    var form = document.querySelector('#corp-form form');
+    if (!form || form.dataset.sheetInit) return;
+    form.dataset.sheetInit = '1';
+    form.addEventListener('submit', function () {
+      var data = new FormData(form);
+      var params = new URLSearchParams();
+      params.append('name', data.get('contact[name]') || '');
+      params.append('email', data.get('contact[email]') || '');
+      params.append('phone', data.get('contact[phone]') || '');
+      params.append('message', data.get('contact[body]') || '');
+      params.append('source', 'Corporate gifting');
+      /* fire-and-forget alongside Shopify's own submission; keepalive lets
+         it survive the page navigation that follows */
+      fetch(SHEET_WEBHOOK_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: params });
+    });
+  })();
+</script>
+
 <style>
   .corp { padding: 30px 0 90px; }
   .corp section { margin-bottom: 90px; }
@@ -296,7 +318,8 @@
     { "type": "header", "content": "Enquiry form" },
     { "type": "text", "id": "form_heading", "label": "Heading", "default": "Enquire about corporate gifting" },
     { "type": "text", "id": "form_sub", "label": "Sub text", "default": "Share your requirements and our team will get in touch with you to create a solution that fits your needs." },
-    { "type": "image_picker", "id": "form_image", "label": "Form image" }
+    { "type": "image_picker", "id": "form_image", "label": "Form image" },
+    { "type": "text", "id": "sheet_webhook_url", "label": "Google Sheet webhook URL", "info": "Paste the Apps Script Web App URL here to also log submissions to a Google Sheet." }
   ],
   "presets": [{ "name": "Corporate page" }]
 }
