@@ -6,12 +6,15 @@
     {%- comment -%} Map + info {%- endcomment -%}
     <div class="contactp__top">
       <div class="contactp__map">
-        {%- if s.map_embed != blank -%}
-          {{ s.map_embed }}
-        {%- elsif s.map_image != blank -%}
+        {%- if s.map_image != blank -%}
           <img src="{{ s.map_image | image_url: width: 1400 }}" alt="Map to our office" width="1200" height="640" loading="lazy">
+        {%- elsif s.map_embed != blank -%}
+          {{ s.map_embed }}
         {%- else -%}
-          {{ 'image' | placeholder_svg_tag }}
+          <a class="contactp__map-fallback" href="https://www.google.com/maps/search/?api=1&query={{ s.office_address | url_encode }}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <span>Get directions</span>
+          </a>
         {%- endif -%}
       </div>
       <div class="contactp__info">
@@ -93,9 +96,11 @@
   .contactp { padding: 40px 0 90px; }
   .contactp__crumb { color: var(--brown); margin-bottom: 28px; }
   .contactp__top { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: start; }
-  .contactp__map { border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
-  .contactp__map img, .contactp__map svg { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4/3; }
+  .contactp__map { border-radius: var(--radius); overflow: hidden; background: var(--cream-2); aspect-ratio: 4/3; }
+  .contactp__map img { width: 100%; height: 100%; object-fit: cover; }
   .contactp__map iframe { width: 100%; height: 100%; min-height: 440px; border: 0; display: block; }
+  .contactp__map-fallback { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--brown); text-decoration: none; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
+  .contactp__map-fallback:hover { color: var(--taupe-dark); }
   .contactp__info { display: flex; flex-direction: column; gap: 30px; padding-top: 10px; }
   .contactp__info-row { display: flex; gap: 18px; }
   .contactp__ico { color: var(--brown); flex: none; margin-top: 2px; }
@@ -126,8 +131,8 @@
   "name": "Contact page",
   "settings": [
     { "type": "header", "content": "Map" },
-    { "type": "html", "id": "map_embed", "label": "Map embed (iframe)", "info": "Paste a Google Maps embed iframe. Falls back to the image below.", "default": "<iframe src=\"https://www.google.com/maps?q=Thakor+Industrial+Estate,+Premier+Road,+Khalai+Village,+Vidyavihar+West,+Vidyavihar,+Mumbai,+Maharashtra+400086&output=embed\" loading=\"lazy\" allowfullscreen></iframe>" },
-    { "type": "image_picker", "id": "map_image", "label": "Map image (fallback)" },
+    { "type": "image_picker", "id": "map_image", "label": "Map image (preferred — an embedded iframe often fails to load on the myshopify.com preview domain)" },
+    { "type": "html", "id": "map_embed", "label": "Map embed (iframe, optional)", "info": "Only used if no map image is set above. Paste a Google Maps embed iframe." },
     { "type": "header", "content": "Contact details" },
     { "type": "text", "id": "office_label", "label": "Office label", "default": "Corporate Office" },
     { "type": "textarea", "id": "office_address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
