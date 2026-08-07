@@ -131,7 +131,8 @@
           "logo_5": "shopify://shop_images/Screenshot_2026-08-07_114023.png",
           "form_heading": "Enquire about corporate gifting",
           "form_sub": "Share your requirements and our team will get in touch with you to create a solution that fits your needs.",
-          "form_image": "shopify://shop_images/contact_us_img.png"
+          "form_image": "shopify://shop_images/contact_us_img.png",
+          "sheet_webhook_url": "https://script.google.com/macros/s/AKfycbwizCQNMXtX3WfRV3eXe2ZDlvjj8ldW9cnKn1pbaDjWnI6VlGxlFpmsJndDMv24Qz8F/exec"
         }
       }
     },
