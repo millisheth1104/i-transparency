@@ -31,9 +31,9 @@
         "image_border_color": "#5a5148",
         "image_margin_top": 24,
         "button_label_1": "Shop by category",
-        "button_link_1": "",
+        "button_link_1": "shopify://collections/all",
         "button_label_2": "Featured collections",
-        "button_link_2": "",
+        "button_link_2": "shopify://collections",
         "show_trust": true,
         "trust_items": "Free delivery | 7 day returns | Cash on delivery available | Delivered in 48 hours"
       }
