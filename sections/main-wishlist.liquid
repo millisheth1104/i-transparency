@@ -14,10 +14,6 @@
     </div>
 
     <div class="wishlist-wrap" data-wishlist-grid hidden>
-      <button class="round-btn wishlist-arrow wishlist-arrow--prev" type="button" aria-label="Previous" data-wishlist-prev>
-        {% render 'icon', icon: 'arrow-left' %}
-      </button>
-
       <div class="wishlist-row" data-wishlist-row>
         {%- assign coll = collections[section.settings.collection] -%}
         {%- if coll != empty and coll.products.size > 0 -%}
@@ -31,10 +27,6 @@
           </div>
         {%- endfor -%}
       </div>
-
-      <button class="round-btn wishlist-arrow wishlist-arrow--next" type="button" aria-label="Next" data-wishlist-next>
-        {% render 'icon', icon: 'arrow-right' %}
-      </button>
     </div>
 
     <div class="wishlist-empty" data-wishlist-empty>
@@ -58,10 +50,8 @@
   .wishlist-share.is-copied span::after { content: ' — copied'; color: var(--taupe); }
   .wishlist-moveall { letter-spacing: .18em; }
 
-  /* Carousel (matches homepage Bestsellers styling) */
   .wishlist-wrap { position: relative; }
-  .wishlist-row { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 76px) / 3); gap: 38px; align-items: start; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
-  .wishlist-row::-webkit-scrollbar { display: none; }
+  .wishlist-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; align-items: start; }
   .wishlist-item { display: flex; }
   .wishlist-item .product-card { width: 100%; height: 100%; background: transparent; border: none; padding: 0; display: flex; flex-direction: column; }
   .wishlist-item .product-card__media { position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 3/4; background: #f5f3ef; padding: 0; display: block; }
@@ -78,12 +68,6 @@
   .wishlist-item .product-card__wish { position: absolute; top: 14px; right: 14px; background: none; border: none; padding: 0; color: #5f5246; }
   .wishlist-item .product-card__wish svg { width: 18px; height: 18px; }
 
-  .wishlist-arrow { width: 48px; height: 48px; border: 1px solid #8d7966; border-radius: 999px; background: #fff; display: flex; align-items: center; justify-content: center; position: absolute; top: 0; transition: .3s; z-index: 10; }
-  .wishlist-arrow svg { width: 16px; height: 16px; }
-  .wishlist-arrow:hover { background: #f2ece2; }
-  .wishlist-arrow--prev { left: -60px; }
-  .wishlist-arrow--next { right: -60px; }
-
   .wishlist-empty { text-align: center; padding: 70px 0 50px; }
   .wishlist-empty__title { font-size: clamp(28px, 4vw, 44px); }
   .wishlist-empty__title em { font-style: italic; }
@@ -92,47 +76,12 @@
     .wishlist-top { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 990px) {
-    .wishlist-row { grid-auto-columns: calc((100% - 30px) / 2); }
-    .wishlist-arrow { display: none; }
+    .wishlist-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 600px) {
-    .wishlist-row { grid-auto-columns: 82%; }
+    .wishlist-row { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
-
-<script>
-(function(){
-  var root = document.querySelector('[data-wishlist-page]');
-  if (!root || root.dataset.wishlistCarouselInit) return;
-  root.dataset.wishlistCarouselInit = '1';
-  var wrap = root.querySelector('[data-wishlist-grid]');
-  var row = root.querySelector('[data-wishlist-row]');
-  var prev = root.querySelector('[data-wishlist-prev]');
-  var next = root.querySelector('[data-wishlist-next]');
-  if (!row) return;
-  function step(){ return row.clientWidth / 3 + 38; }
-  if (prev) prev.addEventListener('click', function(){ row.scrollBy({left: -step(), behavior: 'smooth'}); });
-  if (next) next.addEventListener('click', function(){ row.scrollBy({left: step(), behavior: 'smooth'}); });
-
-  function alignArrows(){
-    var media = row.querySelector('.product-card__media');
-    if (!media) return;
-    var top = media.offsetHeight / 2 - 24;
-    if (prev) prev.style.top = top + 'px';
-    if (next) next.style.top = top + 'px';
-  }
-  alignArrows();
-  window.addEventListener('resize', alignArrows);
-
-  /* wishlist.js toggles this wrap's [hidden] attribute after reading
-     localStorage (async relative to this script), so re-measure whenever
-     that happens or the saved-items list changes, not just once at load. */
-  if (wrap && 'MutationObserver' in window) {
-    new MutationObserver(alignArrows).observe(wrap, { attributes: true, attributeFilter: ['hidden'] });
-  }
-  document.addEventListener('wishlist:change', function(){ setTimeout(alignArrows, 0); });
-})();
-</script>
 
 {% schema %}
 {
