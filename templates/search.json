@@ -7,7 +7,9 @@
       "type": "bestsellers",
       "settings": {
         "eyebrow": "Bestsellers",
-        "subheading": "Loved by 1,200+ homes"
+        "subheading": "Loved by 1,200+ homes",
+        "collection": "bedcover",
+        "limit": 8
       }
     }
   },
