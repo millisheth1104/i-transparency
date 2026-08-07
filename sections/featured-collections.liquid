@@ -65,7 +65,7 @@
   .fc__item.is-active { opacity: 1; }
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { overflow: visible; height: auto !important; } .fc__list-inner { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; transform: none !important; } }
+  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } .fc__dots { flex-direction: row; } .fc__list { overflow: visible; height: auto !important; } .fc__list-inner { flex-direction: row; flex-wrap: wrap; gap: 16px 30px; transform: none !important; } .fc__slide-num { top: 16px; left: 20px; font-size: 11px; } .fc__slide-title { top: 28px; left: 20px; font-size: 20px; } }
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
