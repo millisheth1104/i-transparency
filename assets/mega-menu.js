@@ -9,7 +9,6 @@
     if (!trigger || !panel) return;
 
     function open() {
-      /* Close any other open mega menu first so only one is ever visible. */
       document.querySelectorAll('[data-mega-menu].is-open').forEach(function (other) {
         if (other !== wrap) other.classList.remove('is-open');
       });
@@ -39,10 +38,6 @@
       });
     }
 
-    /* Switching categories within an already-open panel still responds to
-       hover on desktop (a nicer feel once you're already inside the
-       panel) — this is independent from what opens/closes the panel
-       itself, which is click-only below. */
     catLinks.forEach(function (el) {
       el.addEventListener('mouseenter', function () {
         if (mobileQuery.matches) return;
@@ -54,22 +49,29 @@
       });
     });
 
-    /* Click-only open/close, same on desktop and mobile — no hover
-       trigger at all, so the panel only ever appears from an explicit
-       click on the word itself, never from the cursor merely passing
-       near or under it. */
-    trigger.addEventListener('click', function (e) {
-      e.preventDefault();
-      var willOpen = !wrap.classList.contains('is-open');
-      if (willOpen) { reset(); open(); } else { close(); }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!wrap.contains(e.target)) close();
-    });
-
-    wrap.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { close(); reset(); trigger.focus(); }
-    });
+    if (mobileQuery.matches) {
+      // Mobile: click-to-open accordion, no hover state-switching (first
+      // category's panel is shown as the initial/default content only).
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        var willOpen = !wrap.classList.contains('is-open');
+        if (willOpen) { reset(); open(); } else { close(); }
+      });
+    } else {
+      /* Desktop: hover-only, scoped to this wrap's own bounding box (the
+         trigger word — the panel itself is a descendant, so moving into
+         it doesn't fire mouseleave). Clicking the word still navigates
+         normally to its own collection page, since nothing here calls
+         preventDefault on desktop. */
+      wrap.addEventListener('mouseenter', open);
+      wrap.addEventListener('mouseleave', function () { close(); reset(); });
+      wrap.addEventListener('focusin', open);
+      wrap.addEventListener('focusout', function (e) {
+        if (!wrap.contains(e.relatedTarget)) { close(); reset(); }
+      });
+      wrap.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { close(); reset(); trigger.focus(); }
+      });
+    }
   });
 })();
