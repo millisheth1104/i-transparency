@@ -9,11 +9,14 @@
 .mega-menu__panel {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   margin-top: 18px; /* clears the header's own 18px bottom padding */
 
-  width: 628px;
+  /* Anchored to the trigger's own left edge (not centered) and sized
+     down from the original 628px spec so the panel's footprint reads
+     as "attached to this word" rather than a huge zone that happens
+     to span past neighboring nav items too. */
+  width: 460px;
   max-width: calc(100vw - 32px);
 
   background: #F8F4ED;
@@ -21,7 +24,7 @@
   border-radius: 0;
   box-shadow: none;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 20px;
 
   z-index: 60;
   opacity: 0;
@@ -164,7 +167,7 @@
 .mega-menu__product-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: 14px;
 }
 
 .mega-menu__product { display: block; text-decoration: none; }
