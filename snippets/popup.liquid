@@ -40,7 +40,8 @@
 </div>
 
 <style>
-  .bm-popup { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .bm-popup { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; pointer-events: none; }
+  .bm-popup.is-open { pointer-events: auto; }
   .bm-popup[hidden] { display: none; }
   .bm-popup__overlay { position: absolute; inset: 0; background: rgba(74,65,57,.55); backdrop-filter: blur(1px); opacity: 0; transition: opacity .3s ease; }
   .bm-popup.is-open .bm-popup__overlay { opacity: 1; }
@@ -73,6 +74,7 @@
     if (sessionStorage.getItem(KEY)) return;
 
     function open(){
+      sessionStorage.setItem(KEY, '1');
       root.hidden = false;
       root.setAttribute('aria-hidden', 'false');
       requestAnimationFrame(function(){ root.classList.add('is-open'); });
