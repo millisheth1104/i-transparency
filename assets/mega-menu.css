@@ -1,6 +1,10 @@
 /* Mega menu — exact spec values (not theme tokens, deliberate per brief). */
 
-.mega-menu { position: static; }
+/* Must be a positioning context of its own — otherwise .mega-menu__panel's
+   position:absolute skips right past it and anchors to .site-nav (the
+   whole centered nav bar) instead, so every dropdown ends up centered
+   under the entire nav regardless of which item is actually hovered. */
+.mega-menu { position: relative; }
 
 .mega-menu__panel {
   position: absolute;
