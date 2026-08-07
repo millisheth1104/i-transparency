@@ -401,9 +401,9 @@
         "image_border_color": "#ffffff",
         "image_margin": 22,
         "button_label_1": "Request a quote",
-        "button_link_1": "",
+        "button_link_1": "shopify://pages/contact",
         "button_label_2": "Enquire now",
-        "button_link_2": ""
+        "button_link_2": "shopify://pages/contact"
       }
     },
     "1785822053edd24849": {
