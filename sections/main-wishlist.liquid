@@ -25,11 +25,12 @@
           collection.products is silently capped at 50 items unless
           wrapped in {% paginate %} — that cap, not max_products, is why
           products beyond the first 50 in the store never got a card
-          here at all. Paginate by the real max so the whole catalog
-          (up to that cap) is actually available to index.
+          here at all. paginate's "by" must be a literal number (not a
+          setting variable), so this is hardcoded to Shopify's own hard
+          maximum for that tag, which comfortably covers the catalog.
         {%- endcomment -%}
-        {%- paginate source_coll.products by section.settings.max_products -%}
-          {%- for product in source_coll.products -%}
+        {%- paginate source_coll.products by 250 -%}
+          {%- for product in source_coll.products limit: section.settings.max_products -%}
             <div class="wishlist-item" data-wishlist-card="{{ product.id }}" hidden>
               {% render 'product-card', product: product %}
             </div>
