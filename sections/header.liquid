@@ -21,6 +21,13 @@
         </div>
       {%- endfor -%}
     </nav>
+    {%- comment -%} Included once here, not per mega-menu instance — the
+      snippet gets rendered once per top-level nav item, and a <script>
+      tag re-executes every time it appears in the DOM regardless of
+      identical src, which was double-binding every click handler and
+      immediately toggling the panel back closed. {%- endcomment -%}
+    {{ 'mega-menu.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'mega-menu.js' | asset_url }}" defer></script>
 
     <div class="site-header__actions">
       <a href="{{ routes.search_url }}" aria-label="Search">{% render 'icon', icon: 'search' %}</a>
