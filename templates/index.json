@@ -176,48 +176,28 @@
     "sleepscape": {
       "type": "sleepscape",
       "blocks": {
-        "hotspot_9tG7kD": {
-          "type": "hotspot",
-          "settings": {
-            "product": "",
-            "subtitle": "Ivory · 2N Pillow Covers",
-            "x": 40,
-            "y": 50
-          }
-        },
         "h2": {
           "type": "hotspot",
           "settings": {
-            "product": "blanket",
+            "product": "knitted-cushion-cover",
             "subtitle": "Blanket",
-            "x": 62,
-            "y": 42
+            "x": 76,
+            "y": 32
           }
         },
         "hotspot_TMJWpY": {
           "type": "hotspot",
           "settings": {
-            "product": "",
-            "subtitle": "Ivory · 2N Pillow Covers",
-            "x": 40,
-            "y": 50
-          }
-        },
-        "hotspot_brkVMa": {
-          "type": "hotspot",
-          "settings": {
-            "product": "",
-            "subtitle": "Ivory · 2N Pillow Covers",
-            "x": 40,
+            "product": "knitscape-stripes-bedspread",
+            "subtitle": "",
+            "x": 45,
             "y": 50
           }
         }
       },
       "block_order": [
-        "hotspot_9tG7kD",
         "h2",
-        "hotspot_TMJWpY",
-        "hotspot_brkVMa"
+        "hotspot_TMJWpY"
       ],
       "settings": {
         "heading": "Build your <em>sleepscape</em>",
@@ -229,7 +209,7 @@
         "subheading_color": "#8c8275",
         "heading_font": "serif",
         "subheading_font": "sans",
-        "section_padding_top": 90,
+        "section_padding_top": 65,
         "section_padding_bottom": 90,
         "image": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_21_37_PM.png",
         "image_radius": 14,
