@@ -17,15 +17,24 @@
       <div class="wishlist-row" data-wishlist-row>
         {%- assign coll = collections[section.settings.collection] -%}
         {%- if coll != empty and coll.products.size > 0 -%}
-          {%- assign products_list = coll.products -%}
+          {%- assign source_coll = coll -%}
         {%- else -%}
-          {%- assign products_list = collections.all.products -%}
+          {%- assign source_coll = collections.all -%}
         {%- endif -%}
-        {%- for product in products_list limit: section.settings.max_products -%}
-          <div class="wishlist-item" data-wishlist-card="{{ product.id }}" hidden>
-            {% render 'product-card', product: product %}
-          </div>
-        {%- endfor -%}
+        {%- comment -%}
+          collection.products is silently capped at 50 items unless
+          wrapped in {% paginate %} — that cap, not max_products, is why
+          products beyond the first 50 in the store never got a card
+          here at all. Paginate by the real max so the whole catalog
+          (up to that cap) is actually available to index.
+        {%- endcomment -%}
+        {%- paginate source_coll.products by section.settings.max_products -%}
+          {%- for product in source_coll.products -%}
+            <div class="wishlist-item" data-wishlist-card="{{ product.id }}" hidden>
+              {% render 'product-card', product: product %}
+            </div>
+          {%- endfor -%}
+        {%- endpaginate -%}
       </div>
     </div>
 
@@ -92,7 +101,7 @@
     { "type": "text", "id": "share_label", "label": "Share button", "default": "Share wishlist" },
     { "type": "text", "id": "move_all_label", "label": "Move all button", "default": "Move all to cart" },
     { "type": "collection", "id": "collection", "label": "Source collection (defaults to all products)" },
-    { "type": "range", "id": "max_products", "label": "Max products to index", "info": "Must be at least your total product count, or wishlisted items beyond this cap won't have a card to show at all.", "min": 12, "max": 300, "step": 12, "default": 300 }
+    { "type": "range", "id": "max_products", "label": "Max products to index", "info": "Must be at least your total product count, or wishlisted items beyond this cap won't have a card to show at all. 250 is Shopify's hard maximum here.", "min": 12, "max": 250, "step": 12, "default": 250 }
   ],
   "presets": [{ "name": "Wishlist" }]
 }
