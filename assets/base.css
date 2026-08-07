@@ -151,7 +151,15 @@ label { display: block; font-family: var(--font-ui); font-size: 12px; letter-spa
   :root { --gutter: 24px; }
   .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .grid--3 { grid-template-columns: 1fr; }
-  .section { padding: 60px 0; }
+  /* Every section injects its own desktop padding as an inline style
+     (style="padding-top:{{ setting }}px"), which beats any external
+     class rule regardless of media query — so this has to be
+     !important to actually take effect on mobile instead of every
+     section stacking ~90px+90px of dead space top and bottom. */
+  .section, .section--tight { padding: 60px 0 !important; }
+}
+@media (max-width: 700px) {
+  .section, .section--tight { padding: 44px 0 !important; }
 }
 @media (max-width: 600px) {
   .grid--4 { grid-template-columns: 1fr; }

@@ -33,7 +33,36 @@
   .tm-card:nth-child(2) blockquote, .tm-card:nth-child(4) blockquote { font-size: 18px; }
   .tm-card--hl blockquote { font-size: 21px; }
   .tm-card figcaption { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: rgba(244,237,224,.8); }
-  @media (max-width: 700px){ .tm-card, .tm-card:nth-child(2), .tm-card:nth-child(4), .tm-card--hl { flex-basis: 82%; width: auto; height: auto; padding: 40px 30px; transform: none; } .tm-card:nth-child(even) { transform: none; } }
+  @media (max-width: 700px){
+    /* The desktop "fanned deck" look relies on negative margins + nowrap
+       flex to overlap cards on purpose. On mobile that same overlap plus
+       flex-shrink squeezed all 5 cards into one unreadable pile instead
+       of a real carousel, since it was never given its own mobile
+       layout. Rebuilt as a horizontal scroll-snap strip instead. */
+    .tm-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      justify-content: flex-start;
+      padding: 20px 24px 10px;
+      gap: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tm-row::-webkit-scrollbar { display: none; }
+    .tm-card, .tm-card:nth-child(2), .tm-card:nth-child(4), .tm-card--hl {
+      flex: 0 0 80%;
+      width: 80%;
+      height: auto;
+      min-height: 0;
+      padding: 32px 26px;
+      margin: 0;
+      transform: none;
+      scroll-snap-align: center;
+    }
+    .tm-card:hover, .tm-card--hl:hover { transform: none; }
+    .tm-card blockquote, .tm-card--hl blockquote { font-size: 16px; }
+  }
 </style>
 
 {% schema %}
