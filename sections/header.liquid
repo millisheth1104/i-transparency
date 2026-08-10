@@ -14,7 +14,18 @@
         <div>
           {%- assign sub_collections = link.object.metafields.custom.sub_collections.value -%}
           {%- if sub_collections != blank and sub_collections.size > 0 -%}
-            {%- render 'mega-menu', collection: link.object, label: link.title, url: link.url -%}
+            {%- comment -%} "Collections" is wired to a catch-all smart
+              collection (every product) purely so the mega-menu dropdown
+              has a metafield source to hang off of. Clicking the word
+              itself should land on Shopify's actual "browse all
+              collections" page, not a flat 97-product dump — override
+              just that destination while the dropdown keeps working off
+              link.object as before. {%- endcomment -%}
+            {%- assign nav_url = link.url -%}
+            {%- if link.object.handle == 'collections-menu-root' -%}
+              {%- assign nav_url = routes.collections_url -%}
+            {%- endif -%}
+            {%- render 'mega-menu', collection: link.object, label: link.title, url: nav_url -%}
           {%- else -%}
             <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
           {%- endif -%}
