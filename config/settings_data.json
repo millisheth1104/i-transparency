@@ -63,7 +63,7 @@
             "settings": {
               "title": "Company",
               "menu": "",
-              "items": "About us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq"
+              "items": "About Us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq\nContact Us|/pages/contact"
             }
           }
         },
