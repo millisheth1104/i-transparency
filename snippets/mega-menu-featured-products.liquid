@@ -10,7 +10,7 @@
 {%- endcomment -%}
 {%- assign featured = collection.metafields.custom.featured_products.value -%}
 {%- if featured == blank or featured.size == 0 -%}
-  {%- assign featured = collection.products | where: 'featured_image' | slice: 0, 3 -%}
+  {%- assign featured = collection.products | where: 'featured_image' | slice: 0, 5 -%}
 {%- endif -%}
 <div class="mega-menu__featured">
   <div class="mega-menu__featured-head">
@@ -18,7 +18,7 @@
     <a href="{{ collection.url }}" class="mega-menu__view-all">View all</a>
   </div>
   <div class="mega-menu__product-grid">
-    {%- for product in featured limit: 3 -%}
+    {%- for product in featured limit: 5 -%}
       <a href="{{ product.url }}" class="mega-menu__product">
         <span class="mega-menu__product-media">
           {%- if product.featured_image -%}

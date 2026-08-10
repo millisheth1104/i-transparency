@@ -34,7 +34,16 @@
                  data-mega-cat-link
                  data-panel="cat-{{ forloop.index0 }}"
                  role="tab"
-                 aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ cat.title }}</a>
+                 aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                <span class="mega-menu__cat-thumb">
+                  {%- if cat.image -%}
+                    <img src="{{ cat.image | image_url: width: 72 }}" alt="" width="36" height="36" loading="lazy">
+                  {%- elsif cat.featured_image -%}
+                    <img src="{{ cat.featured_image | image_url: width: 72 }}" alt="" width="36" height="36" loading="lazy">
+                  {%- endif -%}
+                </span>
+                <span class="mega-menu__cat-label">{{ cat.title }}</span>
+              </a>
             </li>
           {%- endfor -%}
         </ul>
