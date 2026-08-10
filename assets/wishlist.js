@@ -25,8 +25,7 @@
   /* Inject active-heart styling without editing base.css */
   var style = document.createElement('style');
   style.textContent =
-    '.product-card__wish.is-active svg{fill:#e0245e;stroke:#e0245e}' +
-    '.product-card__wish.is-active{background:#fff}';
+    '.product-card__wish.is-active svg{fill:#e0245e;stroke:#e0245e}';
   document.head.appendChild(style);
 
   /* Sync + wire every heart button on the page */
