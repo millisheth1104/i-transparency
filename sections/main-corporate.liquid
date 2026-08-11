@@ -36,11 +36,11 @@
 
     {%- comment -%} Gallery {%- endcomment -%}
     <section class="corp-gallery">
-      <div class="corp-gallery__cell g1">{% render 'corp-img', img: s.g1, ph: 'product-1' %}</div>
-      <div class="corp-gallery__cell g2">{% render 'corp-img', img: s.g2, ph: 'product-2' %}</div>
-      <div class="corp-gallery__cell g3 corp-gallery__tall">{% render 'corp-img', img: s.g3, ph: 'lifestyle-1' %}</div>
-      <div class="corp-gallery__cell g4 corp-gallery__quote"><p>{{ s.gallery_quote }}</p></div>
-      <div class="corp-gallery__cell g5">{% render 'corp-img', img: s.g5, ph: 'lifestyle-2' %}</div>
+      <div class="corp-gallery__cell corp-gallery__tall">{% render 'corp-img', img: s.g3, ph: 'lifestyle-1' %}</div>
+      <div class="corp-gallery__cell corp-gallery__b1">{% render 'corp-img', img: s.g2, ph: 'product-2' %}</div>
+      <div class="corp-gallery__cell corp-gallery__c1">{% render 'corp-img', img: s.g6, ph: 'product-3' %}</div>
+      <div class="corp-gallery__cell corp-gallery__quote corp-gallery__b2"><p>{{ s.gallery_quote }}</p></div>
+      <div class="corp-gallery__cell corp-gallery__c2">{% render 'corp-img', img: s.g1, ph: 'product-1' %}</div>
     </section>
 
     {%- comment -%} Experiences {%- endcomment -%}
@@ -212,12 +212,22 @@
   .corp-strip__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brown); opacity: .5; }
 
   /* Gallery */
-  .corp-gallery { display: grid; grid-template-columns: 1fr 1fr 1.3fr; grid-template-rows: 1fr 1fr; gap: 10px; height: 360px; }
+  .corp-gallery {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr 1.3fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "tall b1 c1" "tall b2 c2";
+    gap: 10px; height: 360px;
+  }
   .corp-gallery__cell { border-radius: 0; overflow: hidden; background: var(--cream-2); }
   .corp-gallery__cell img, .corp-gallery__cell svg { width: 100%; height: 100%; object-fit: cover; }
-  .corp-gallery__tall { grid-row: 1 / span 2; }
-  .corp-gallery__quote { background: var(--sand); display: flex; align-items: center; padding: 18px 22px; }
-  .corp-gallery__quote p { font-family: var(--font-serif); font-size: 18px; line-height: 1.3; color: var(--brown); margin: 0; }
+  .corp-gallery__tall { grid-area: tall; }
+  .corp-gallery__b1 { grid-area: b1; }
+  .corp-gallery__b2 { grid-area: b2; }
+  .corp-gallery__c1 { grid-area: c1; }
+  .corp-gallery__c2 { grid-area: c2; }
+  .corp-gallery__quote { background: var(--sand); display: flex; align-items: center; padding: 24px 26px; }
+  .corp-gallery__quote p { font-family: var(--font-serif); font-size: 22px; line-height: 1.32; color: var(--brown); margin: 0; text-align: left; }
 
   /* Experiences */
   .corp-exp { display: grid; grid-template-columns: 38% 1fr; gap: 20px; align-items: center; background: var(--cream-2); border-radius: 18px; padding: 16px 28px; }
@@ -268,13 +278,22 @@
   .corp-form .btn { margin-top: 14px; }
 
   @media (max-width: 990px) {
-    .corp-gallery { grid-template-columns: 1fr 1fr; }
+    .corp-gallery {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "tall b1" "tall b2" "c1 c2";
+      height: auto;
+    }
+    .corp-gallery__cell { min-height: 200px; }
   }
   @media (max-width: 860px) {
     .corp section { margin-bottom: 60px; }
     .corp-strip, .corp-exp__items { grid-template-columns: 1fr; gap: 26px; }
     .corp-strip__dot, .corp-exp__items .corp-strip__dot { display: none; }
     .corp-exp { grid-template-columns: 1fr; }
+    .corp-gallery {
+      grid-template-columns: 1fr;
+      grid-template-areas: "tall" "b1" "b2" "c1" "c2";
+    }
     .corp-process { grid-template-columns: 1fr; padding: 26px; }
     .corp-process__steps { grid-template-columns: 1fr 1fr; gap: 20px; }
     .corp-process__steps::before { display: none; }
