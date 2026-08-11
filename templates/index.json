@@ -223,7 +223,7 @@
         "c1": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/bed_covers.png",
+            "image": "shopify://shop_images/TERRAWEAVE_BC_W190104_E_92522b78-649e-4406-9e2f-88fcd19abb6b.jpg",
             "title": "Bed covers",
             "link": "shopify://collections/bedcover",
             "image_radius": 40,
@@ -253,16 +253,6 @@
             "image_border_color": "#5a5148"
           }
         },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "title": "Pillow covers",
-            "link": "",
-            "image_radius": 40,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
         "c5": {
           "type": "category",
           "settings": {
@@ -277,7 +267,7 @@
         "c6": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/bedsheet_category.jpg",
+            "image": "shopify://shop_images/ORNATE_DB_resized.jpg",
             "title": "Bedsheet",
             "link": "shopify://collections/frontpage",
             "image_radius": 40,
@@ -301,7 +291,6 @@
         "c1",
         "c2",
         "c3",
-        "c4",
         "c5",
         "c6",
         "c7"
