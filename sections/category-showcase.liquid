@@ -57,17 +57,21 @@
      .ccs-card gets from the JS stack animation), silently rendering it
      with square corners. */
   .ccs-card__clip { position: absolute; inset: 0; overflow: hidden; }
-  .ccs-card__clip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,12,0) 45%, rgba(20,16,12,.4) 100%); pointer-events: none; }
+  /* Darkens both the top (title) and bottom (view-all/next button) so text
+     stays readable regardless of how light the underlying photo is --
+     previously only the bottom half darkened, leaving the top-left title
+     with no contrast guarantee against light images. */
+  .ccs-card__clip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,12,.5) 0%, rgba(20,16,12,0) 28%, rgba(20,16,12,0) 58%, rgba(20,16,12,.5) 100%); pointer-events: none; }
   .ccs-card__hit { position: absolute; inset: 0; z-index: 1; background: none; border: none; padding: 0; cursor: pointer; }
   .ccs-card[data-active="true"] .ccs-card__hit { cursor: default; }
   .ccs-card__media { position: absolute; inset: 0; }
   .ccs-card__media img, .ccs-card__media svg { width: 100%; height: 100%; object-fit: cover; }
-  .ccs-card__num { position: absolute; top: 26px; left: 30px; color: var(--brown-2); font-size: 13px; letter-spacing: .08em; z-index: 2; }
+  .ccs-card__num { position: absolute; top: 26px; left: 30px; color: rgba(244,238,228,.85); font-size: 13px; letter-spacing: .08em; z-index: 2; }
   .ccs-card__content { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .4s ease; }
   .ccs-card[data-active="true"] .ccs-card__content { opacity: 1; pointer-events: auto; }
   .ccs-card[data-active="true"] .ccs-card__content a,
   .ccs-card[data-active="true"] .ccs-card__content button { pointer-events: auto; }
-  .ccs-card__title { position: absolute; top: 44px; left: 30px; color: var(--brown); font-family: var(--font-serif); font-size: 34px; }
+  .ccs-card__title { position: absolute; top: 44px; left: 30px; color: var(--cream); font-family: var(--font-serif); font-size: 34px; text-shadow: 0 1px 8px rgba(0,0,0,.25); }
   .ccs-card__view { position: absolute; left: 30px; bottom: 30px; }
   .ccs-card__next { position: absolute; right: 30px; bottom: 30px; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.6); color: #fff; }
   .ccs-card__next:hover { background: #fff; color: var(--brown); }
