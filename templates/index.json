@@ -225,7 +225,7 @@
           "settings": {
             "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed covers",
-            "link": "",
+            "link": "shopify://collections/bedcover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -236,7 +236,7 @@
           "settings": {
             "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
-            "link": "",
+            "link": "shopify://collections/comforters",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -247,17 +247,7 @@
           "settings": {
             "image": "shopify://shop_images/throws_category.png",
             "title": "Throws",
-            "link": "",
-            "image_radius": 40,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "title": "Pillow covers",
-            "link": "",
+            "link": "shopify://collections/throws",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -268,7 +258,7 @@
           "settings": {
             "image": "shopify://shop_images/cushion_covers_category.jpg",
             "title": "Cushion Covers",
-            "link": "",
+            "link": "shopify://collections/pillows",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -279,7 +269,7 @@
           "settings": {
             "image": "shopify://shop_images/bedsheet_category.jpg",
             "title": "Bedsheet",
-            "link": "",
+            "link": "shopify://collections/frontpage",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -290,7 +280,7 @@
           "settings": {
             "image": "shopify://shop_images/duvet_cover_category.jpg",
             "title": "Duvet Cover",
-            "link": "",
+            "link": "shopify://collections/comforters",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -301,7 +291,6 @@
         "c1",
         "c2",
         "c3",
-        "c4",
         "c5",
         "c6",
         "c7"
