@@ -74,7 +74,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
-            "title": "Bare Earth",
+            "title": "Printed",
             "link": ""
           }
         },
@@ -82,7 +82,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/unnamed.png",
-            "title": "Plush",
+            "title": "Jacquards",
             "link": ""
           }
         },
@@ -90,7 +90,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/shop_hero_-_Edited.jpg",
-            "title": "Terraweave",
+            "title": "Bamboo",
             "link": ""
           }
         },
@@ -98,7 +98,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
-            "title": "Soft Haven",
+            "title": "EMBROIDERY",
             "link": ""
           }
         },
@@ -234,7 +234,7 @@
         "c2": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/02.png",
+            "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
             "link": "",
             "image_radius": 14,
@@ -245,7 +245,7 @@
         "c3": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/bare_earth.png",
+            "image": "shopify://shop_images/throws_category.png",
             "title": "Throws",
             "link": "",
             "image_radius": 14,
@@ -256,7 +256,8 @@
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Pillow covers",
+            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "title": "Pillow",
             "link": "",
             "image_radius": 14,
             "image_border_width": 0,
