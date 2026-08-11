@@ -5,14 +5,16 @@
 
     <div class="ccs-stage" data-ccs style="margin-top:{{ section.settings.header_spacing }}px">
       {%- for block in section.blocks -%}
-        <div class="ccs-card" data-ccs-card style="border-radius:{{ block.settings.image_radius }}px;border:{{ block.settings.image_border_width }}px solid {{ block.settings.image_border_color }}" {{ block.shopify_attributes }}>
+        <div class="ccs-card" data-ccs-card {{ block.shopify_attributes }}>
           <button class="ccs-card__hit" data-ccs-select aria-label="Show {{ block.settings.title | escape }}"></button>
-          <div class="ccs-card__media">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" width="1200" height="900" loading="lazy">
-            {%- else -%}
-              {{ 'collection-1' | placeholder_svg_tag }}
-            {%- endif -%}
+          <div class="ccs-card__clip" style="border-radius:{{ block.settings.image_radius }}px;border:{{ block.settings.image_border_width }}px solid {{ block.settings.image_border_color }}">
+            <div class="ccs-card__media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" width="1200" height="900" loading="lazy">
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
           </div>
           <span class="ccs-card__num">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
           <div class="ccs-card__content">
@@ -34,14 +36,19 @@
   .ccs-card {
     position: absolute; left: 0; top: 0;
     width: 77%; height: 100%;
-    border-radius: var(--radius); overflow: hidden;
     background: var(--cream-2);
     transform-origin: left top;
     transition: transform 1050ms cubic-bezier(.22,1,.36,1),
                 opacity 1050ms cubic-bezier(.22,1,.36,1);
     will-change: transform, opacity;
   }
-  .ccs-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,12,0) 45%, rgba(20,16,12,.4) 100%); pointer-events: none; }
+  /* border-radius + overflow live on this separate, untransformed child —
+     not on .ccs-card itself — because Safari/WebKit has a long-standing
+     bug where overflow:hidden + border-radius fails to clip an element
+     that also has a CSS transform applied (which .ccs-card gets from the
+     JS stack animation), silently rendering it with square corners. */
+  .ccs-card__clip { position: absolute; inset: 0; overflow: hidden; }
+  .ccs-card__clip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,12,0) 45%, rgba(20,16,12,.4) 100%); pointer-events: none; }
   .ccs-card__hit { position: absolute; inset: 0; z-index: 1; background: none; border: none; padding: 0; cursor: pointer; }
   .ccs-card[data-active="true"] .ccs-card__hit { cursor: default; }
   .ccs-card__media { position: absolute; inset: 0; }

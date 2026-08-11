@@ -336,7 +336,7 @@
         "subheading_font": "sans",
         "section_padding_top": 90,
         "section_padding_bottom": 90,
-        "collection": "bedcover",
+        "collection": "homepage-bestsellers",
         "limit": 8
       }
     },
