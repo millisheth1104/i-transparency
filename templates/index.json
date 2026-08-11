@@ -226,7 +226,7 @@
             "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed covers",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -237,7 +237,7 @@
             "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -248,7 +248,7 @@
             "image": "shopify://shop_images/throws_category.png",
             "title": "Throws",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -258,7 +258,7 @@
           "settings": {
             "title": "Pillow covers",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -269,7 +269,7 @@
             "image": "shopify://shop_images/cushion_covers_category.jpg",
             "title": "Cushion Covers",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -280,7 +280,7 @@
             "image": "shopify://shop_images/bedsheet_category.jpg",
             "title": "Bedsheet",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
@@ -291,7 +291,7 @@
             "image": "shopify://shop_images/duvet_cover_category.jpg",
             "title": "Duvet Cover",
             "link": "",
-            "image_radius": 24,
+            "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
           }
