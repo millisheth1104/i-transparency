@@ -253,6 +253,16 @@
             "image_border_color": "#5a5148"
           }
         },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "title": "Pillow covers",
+            "link": "",
+            "image_radius": 40,
+            "image_border_width": 0,
+            "image_border_color": "#5a5148"
+          }
+        },
         "c5": {
           "type": "category",
           "settings": {
@@ -291,6 +301,7 @@
         "c1",
         "c2",
         "c3",
+        "c4",
         "c5",
         "c6",
         "c7"
