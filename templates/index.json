@@ -74,15 +74,15 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
-            "title": "Bare Earth",
+            "title": "Printed",
             "link": ""
           }
         },
         "b2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/02.png",
-            "title": "Plush",
+            "image": "shopify://shop_images/unnamed.png",
+            "title": "Jacquards",
             "link": ""
           }
         },
@@ -90,7 +90,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/shop_hero_-_Edited.jpg",
-            "title": "Terraweave",
+            "title": "Bamboo",
             "link": ""
           }
         },
@@ -98,7 +98,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
-            "title": "Soft Haven",
+            "title": "EMBROIDERY",
             "link": ""
           }
         },
@@ -256,7 +256,8 @@
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Pillow covers",
+            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "title": "Pillow",
             "link": "",
             "image_radius": 14,
             "image_border_width": 0,
@@ -266,30 +267,8 @@
         "c5": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/cushion_covers_category.jpg",
-            "title": "Cushion Covers",
-            "link": "",
-            "image_radius": 14,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
-        "c6": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/bedsheet_category.jpg",
-            "title": "Bedsheet",
-            "link": "",
-            "image_radius": 14,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
-        "c7": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/duvet_cover_category.jpg",
-            "title": "Duvet Cover",
+            "image": "shopify://shop_images/05.png",
+            "title": "Cushions",
             "link": "",
             "image_radius": 14,
             "image_border_width": 0,
@@ -302,9 +281,7 @@
         "c2",
         "c3",
         "c4",
-        "c5",
-        "c6",
-        "c7"
+        "c5"
       ],
       "settings": {
         "heading": "Shop by <em>category</em>",

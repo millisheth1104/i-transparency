@@ -61,7 +61,7 @@
             "heading_font_weight": 600,
             "heading_color": "#333333",
             "heading_margin_bottom": 15,
-            "content_font_size": 16,
+            "content_font_size": 14,
             "content_line_height": 1.8,
             "content_color": "#7b7b7b",
             "link_hover_color": "#333333",
