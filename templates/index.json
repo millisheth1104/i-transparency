@@ -35,7 +35,7 @@
         "button_label_2": "Featured collections",
         "button_link_2": "shopify://collections",
         "show_trust": true,
-        "trust_items": "Free delivery | 7 day returns | Cash on delivery available | Delivered in 48 hours"
+        "trust_items": "Free Shipping | Express Delivery | Dedicated CustomerSupport  | Made in India"
       }
     },
     "feature_split": {
@@ -256,7 +256,8 @@
         "c4": {
           "type": "category",
           "settings": {
-            "title": "Pillow covers",
+            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "title": "Pillow",
             "link": "",
             "image_radius": 14,
             "image_border_width": 0,
@@ -266,30 +267,8 @@
         "c5": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/cushion_covers_category.jpg",
-            "title": "Cushion Covers",
-            "link": "",
-            "image_radius": 14,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
-        "c6": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/bedsheet_category.jpg",
-            "title": "Bedsheet",
-            "link": "",
-            "image_radius": 14,
-            "image_border_width": 0,
-            "image_border_color": "#5a5148"
-          }
-        },
-        "c7": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/duvet_cover_category.jpg",
-            "title": "Duvet Cover",
+            "image": "shopify://shop_images/05.png",
+            "title": "Cushions",
             "link": "",
             "image_radius": 14,
             "image_border_width": 0,
@@ -302,9 +281,7 @@
         "c2",
         "c3",
         "c4",
-        "c5",
-        "c6",
-        "c7"
+        "c5"
       ],
       "settings": {
         "heading": "Shop by <em>category</em>",
