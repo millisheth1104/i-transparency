@@ -25,4 +25,11 @@
 - **"Shop by category" (`templates/index.json` → `sections.category_showcase`)**: was 5 blocks (Bed covers, Comforters, Throws, Pillow covers, Cushions). Per doc: swapped in new lifestyle images for Comforters, Throws, and Cushions (renamed "Cushions" → "Cushion Covers" to match doc wording), and added 2 new blocks — Bedsheet, Duvet Cover — using images extracted from the docx and uploaded via Shopify `stagedUploadsCreate` → curl PUT → `fileCreate` (registered as `shop_images/*_category.*`). "Bed covers" left untouched — doc explicitly noted "is fine".
 - **"Bestsellers" section**: found it pulls live products dynamically from the `bedcover` collection (no per-block images/titles in the theme). The doc's 6 named bestseller images (Bamboo comforter, Green knitted, Woven harmony, Terra weave, Embroidery – linen thread, Statement tape) have no matching products in the catalog — not actionable via theme edit; would require creating/finding those products in Shopify admin first.
 - **"Woven, not knitted" / "Bare Earth" sections**: doc only had "keep but need to change, thinking on this" — no concrete instruction. Left untouched per user decision.
-- Changes are local/uncommitted — not yet pushed to the live theme (git-connected).
+- Committed and pushed to `origin/main` (merged cleanly with 2 routine `shopify[bot]` sync commits first, no conflicts).
+
+## 2026-08-11 — Hover-to-swap secondary product image (all product cards)
+
+- `snippets/product-card.liquid`: when a product has a 2nd image (`p.images[1]`), render it as an absolutely-positioned `.product-card__media-alt` `<img>` on top of the primary image.
+- `assets/base.css`: `.product-card__media-alt` starts at `opacity:0`, crossfades to `opacity:1` on `.product-card:hover`. Single-image products are unaffected (no alt element rendered) and keep the existing hover-zoom only.
+- Applies everywhere this snippet is used: Bestsellers, Related products, Shop grid, Search, Wishlist.
+- Verified in a standalone static HTML mock (real markup + real CSS, served via `python -m http.server` through `.claude/launch.json`) rather than the live theme — no local Shopify dev server/storefront credentials available this session. Hover crossfade confirmed visually; committed and pushed to `origin/main`.
