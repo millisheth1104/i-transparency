@@ -33,3 +33,11 @@
 - `assets/base.css`: `.product-card__media-alt` starts at `opacity:0`, crossfades to `opacity:1` on `.product-card:hover`. Single-image products are unaffected (no alt element rendered) and keep the existing hover-zoom only.
 - Applies everywhere this snippet is used: Bestsellers, Related products, Shop grid, Search, Wishlist.
 - Verified in a standalone static HTML mock (real markup + real CSS, served via `python -m http.server` through `.claude/launch.json`) rather than the live theme — no local Shopify dev server/storefront credentials available this session. Hover crossfade confirmed visually; committed and pushed to `origin/main`.
+
+## 2026-08-11 — Extended hover swap to auto-cycle through all images (3rd, 4th, ...)
+
+- Replaced the single alt-image crossfade with a full cycling gallery: `snippets/product-card.liquid` now renders up to 5 of the product's images as stacked `.product-card__media-frame` elements (first marked `.is-active`).
+- New `assets/product-card-cycle.js` (event-delegated, same pattern as `wishlist.js`): on hover, steps `.is-active` to the next frame every 900ms, looping; on mouse-leave, clears the interval and resets to frame 1. Loaded site-wide via `layout/theme.liquid`.
+- `assets/base.css`: frames are `position:absolute;inset:0;opacity:0`, `.is-active` gets `opacity:1`; inactive frames get `pointer-events:none`.
+- Products with only 1 image render a single frame and never get `data-pc-cycle` — no JS cost, unaffected behavior.
+- Verified in the same static HTML mock, confirmed frame-advance, wrap-around, and reset-on-leave all work. Committed and pushed to `origin/main`.
