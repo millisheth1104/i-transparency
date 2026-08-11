@@ -74,7 +74,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
-            "title": "Printed",
+            "title": "WOVEN",
             "link": ""
           }
         },
@@ -82,23 +82,23 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/unnamed.png",
-            "title": "Jacquards",
+            "title": "embroidery",
             "link": ""
           }
         },
         "b3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/shop_hero_-_Edited.jpg",
-            "title": "Bamboo",
+            "image": "shopify://shop_images/image_2.png",
+            "title": "knitted",
             "link": ""
           }
         },
         "b4": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/bare_earth.png",
-            "title": "EMBROIDERY",
+            "image": "shopify://shop_images/image_3.png",
+            "title": "printed",
             "link": ""
           }
         },
