@@ -13,10 +13,12 @@
     if (frames.length < 2) return;
 
     var index = 0;
-    media.dataset.pcTimer = setInterval(function () {
+    function advance() {
       index = (index + 1) % frames.length;
       frames.forEach(function (frame, i) { frame.classList.toggle('is-active', i === index); });
-    }, INTERVAL_MS);
+    }
+    advance(); // swap to the 2nd image immediately -- don't wait a full interval for the first change
+    media.dataset.pcTimer = setInterval(advance, INTERVAL_MS);
   }, true);
 
   document.addEventListener('mouseleave', function (e) {
