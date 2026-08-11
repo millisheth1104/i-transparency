@@ -269,6 +269,13 @@
   var variants = [];
   try { variants = JSON.parse(dataEl.textContent); } catch(e){}
 
+  /* Preload every variant's image right away -- switching a swatch just
+     swaps `src` (see update() below), so without this the browser has to
+     fetch+decode a fresh ~1200px CDN image on the FIRST click of every
+     color, which is what reads as "slow to load". Warming the browser
+     cache here means that swap is instant by the time someone clicks. */
+  variants.forEach(function(v){ if (v.image) { var pre = new Image(); pre.src = v.image; } });
+
   var idInput = root.querySelector('[data-variant-id]');
   var priceEl = root.querySelector('[data-price]');
   var labelEl = root.querySelector('[data-variant-label]');
@@ -334,6 +341,7 @@
 
   /* Gallery thumbs */
   root.querySelectorAll('[data-thumb]').forEach(function(btn){
+    if (btn.dataset.full) { var preThumb = new Image(); preThumb.src = btn.dataset.full; }
     btn.addEventListener('click', function(){
       if (mainImg) mainImg.src = btn.dataset.full;
       root.querySelectorAll('[data-thumb]').forEach(function(b){ b.classList.remove('is-active'); });

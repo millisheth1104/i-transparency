@@ -22,9 +22,15 @@
     <button class="product-card__wish" aria-label="Add to wishlist" type="button" data-wishlist="{{ p.id }}">{% render 'icon', icon: 'heart' %}</button>
   </a>
   <div class="product-card__body">
-    <a href="{{ p.url }}">
-      <h3 class="product-card__title">{{ p.title }}</h3>
-    </a>
+    {%- assign form_id = 'pc-form-' | append: p.id -%}
+    <div class="product-card__head">
+      <a href="{{ p.url }}">
+        <h3 class="product-card__title">{{ p.title }}</h3>
+      </a>
+      {%- if p.available and show_add != false -%}
+        <button type="submit" form="{{ form_id }}" class="product-card__quick-add" aria-label="Add {{ p.title | escape }} to cart">{% render 'icon', icon: 'bag' %}</button>
+      {%- endif -%}
+    </div>
     {%- if p.metafields.custom.shade != blank and p.metafields.custom.shade != 0 and p.metafields.custom.shade != '0' -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
     {%- if p.type != blank and p.type != 0 and p.type != '0' -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
     {%- if size_value != blank and size_value != 0 and size_value != '0' -%}<p class="product-card__meta">{{ size_value }}</p>{%- endif -%}
@@ -32,7 +38,7 @@
     {%- unless show_add == false -%}
       {%- if p.available -%}
         <product-form>
-          {%- form 'product', p, class: 'product-card__form' -%}
+          {%- form 'product', p, id: form_id, class: 'product-card__form' -%}
             <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
             <button type="submit" class="product-card__add">Add to cart</button>
           {%- endform -%}
