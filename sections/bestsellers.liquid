@@ -77,7 +77,11 @@
     grid-auto-flow:column;
     grid-auto-columns:calc((100% - 76px)/3);
     gap:38px;
-    align-items:start;
+    /* stretch (not start) so every card in a row matches the tallest one --
+       otherwise a 2-line title makes just that card taller instead of the
+       row equalizing, and the price/button's margin-top:auto (meant to pin
+       them to a shared baseline, see below) has no extra space to use. */
+    align-items:stretch;
 
     overflow-x:auto;
     scroll-behavior:smooth;
