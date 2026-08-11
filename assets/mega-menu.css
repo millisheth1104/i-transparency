@@ -12,11 +12,11 @@
   left: 0;
   margin-top: 18px; /* clears the header's own 18px bottom padding */
 
-  /* Anchored to the trigger's own left edge (not centered) and sized
-     down from the original 628px spec so the panel's footprint reads
-     as "attached to this word" rather than a huge zone that happens
-     to span past neighboring nav items too. */
-  width: 460px;
+  /* Width matches the design spec exactly (628px), anchored to the
+     trigger's own left edge (not centered). Height is left content-driven
+     (no fixed 254px) — row height/type size here match the rest of the
+     site's nav rather than being squeezed to hit an exact px total. */
+  width: 628px;
   max-width: calc(100vw - 32px);
 
   background: #F8F4ED;
@@ -119,8 +119,9 @@
 .mega-menu__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 24px;
-  row-gap: 12px;
+  max-width: 271px;
+  column-gap: 45px;
+  row-gap: 24px;
   list-style: none;
 }
 
