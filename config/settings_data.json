@@ -104,7 +104,7 @@
       "main-corporate": {
         "type": "main-corporate",
         "settings": {
-          "hero_image": "shopify://shop_images/corp_hero_giftbox.png",
+          "hero_image": "shopify://shop_images/corparate_hero_page.png",
           "hero_eyebrow": "Crafted with care · Wrapped in elegance",
           "hero_heading": "Thoughtful gifts that leave a <em>lasting impression</em>",
           "hero_button": "Enquire now",
