@@ -13,6 +13,9 @@
   <a href="{{ p.url }}" class="product-card__media">
     {%- if p.featured_image -%}
       <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="600" height="800" loading="lazy">
+      {%- if p.images.size > 1 -%}
+        <img class="product-card__media-alt" src="{{ p.images[1] | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="600" height="800" loading="lazy">
+      {%- endif -%}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}
     {%- endif -%}
