@@ -16,19 +16,19 @@
     {%- comment -%} Feature strip {%- endcomment -%}
     <section class="corp-strip">
       <div class="corp-strip__item">
-        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 13.5 21 17l-3.5 3.5L14 17z"/><path d="M17.5 3.5 21 7l-3.5 3.5L14 7z"/></svg></span>
+        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 13.5 21 17l-3.5 3.5L14 17z"/><path d="M17.5 3.5 21 7l-3.5 3.5L14 7z"/></svg></span>
         <h3 class="corp-strip__t">{{ s.f1_title }}</h3>
         <p class="corp-strip__d">{{ s.f1_text }}</p>
       </div>
       <span class="corp-strip__dot" aria-hidden="true"></span>
       <div class="corp-strip__item">
-        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3v6"/><path d="m8.5 6.5 3.5-3 3.5 3"/><path d="M5 11h14l-1.5 9h-11z"/></svg></span>
+        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3v6"/><path d="m8.5 6.5 3.5-3 3.5 3"/><path d="M5 11h14l-1.5 9h-11z"/></svg></span>
         <h3 class="corp-strip__t">{{ s.f2_title }}</h3>
         <p class="corp-strip__d">{{ s.f2_text }}</p>
       </div>
       <span class="corp-strip__dot" aria-hidden="true"></span>
       <div class="corp-strip__item">
-        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 7h11v9H2z"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
+        <span class="corp-strip__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 7h11v9H2z"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
         <h3 class="corp-strip__t">{{ s.f3_title }}</h3>
         <p class="corp-strip__d">{{ s.f3_text }}</p>
       </div>
@@ -38,10 +38,9 @@
     <section class="corp-gallery">
       <div class="corp-gallery__cell g1">{% render 'corp-img', img: s.g1, ph: 'product-1' %}</div>
       <div class="corp-gallery__cell g2">{% render 'corp-img', img: s.g2, ph: 'product-2' %}</div>
-      <div class="corp-gallery__cell g3">{% render 'corp-img', img: s.g3, ph: 'lifestyle-1' %}</div>
+      <div class="corp-gallery__cell g3 corp-gallery__tall">{% render 'corp-img', img: s.g3, ph: 'lifestyle-1' %}</div>
       <div class="corp-gallery__cell g4 corp-gallery__quote"><p>{{ s.gallery_quote }}</p></div>
       <div class="corp-gallery__cell g5">{% render 'corp-img', img: s.g5, ph: 'lifestyle-2' %}</div>
-      <div class="corp-gallery__cell g6">{% render 'corp-img', img: s.g6, ph: 'product-3' %}</div>
     </section>
 
     {%- comment -%} Experiences {%- endcomment -%}
@@ -187,6 +186,10 @@
 <style>
   .corp { padding: 30px 0 90px; }
   .corp section { margin-bottom: 90px; }
+  /* Hero is full-bleed (margin: 0 var(--gutter), no max-width cap) while .container
+     is centered with a capped max-width — on wide viewports the two edges drift apart.
+     Widen just this page's container to the same edges as the hero, without touching the hero. */
+  .corp .container { max-width: none; }
 
   /* Hero */
   .corp-hero { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--olive); min-height: 560px; display: flex; margin: 0 var(--gutter); }
@@ -198,29 +201,34 @@
   .corp-hero__title { color: var(--cream); font-size: clamp(38px, 5vw, 62px); line-height: 1.08; margin: 0 0 34px; }
   .corp-hero__title em { font-style: italic; }
 
+  /* Below-hero section rhythm (hero's own margin-bottom is untouched — see ".corp section" above) */
+  .corp section.corp-strip, .corp section.corp-gallery, .corp section.corp-exp, .corp section.corp-process { margin-bottom: 34px; }
+
   /* Feature strip */
-  .corp-strip { background: var(--sand); border-radius: var(--radius-lg); padding: 46px 40px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 20px; text-align: center; }
-  .corp-strip__ico { color: var(--brown); display: inline-flex; margin-bottom: 14px; }
-  .corp-strip__t { font-family: var(--font-ui); font-weight: 400; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); margin: 0 0 8px; }
-  .corp-strip__d { color: var(--brown-2); margin: 0 auto; max-width: 26ch; font-size: 14px; }
-  .corp-strip__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brown); opacity: .5; }
+  .corp-strip { background: var(--sand); border-radius: var(--radius-lg); padding: 18px 34px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 14px; text-align: center; }
+  .corp-strip__ico { color: var(--brown); display: inline-flex; margin-bottom: 6px; }
+  .corp-strip__t { font-family: var(--font-ui); font-weight: 400; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--brown); margin: 0 0 4px; }
+  .corp-strip__d { color: var(--brown-2); margin: 0 auto; max-width: 24ch; font-size: 11px; line-height: 1.35; }
+  .corp-strip__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brown); opacity: .5; }
 
   /* Gallery */
-  .corp-gallery { display: grid; grid-template-columns: 1fr 1.2fr 1.8fr; grid-auto-rows: 280px; gap: 18px; }
-  .corp-gallery__cell { border-radius: 0; overflow: hidden; background: var(--cream-2); }
+  .corp-gallery { display: grid; grid-template-columns: 1fr 1fr 1.3fr; grid-template-rows: 1fr 1fr; gap: 10px; height: 360px; }
+  .corp-gallery__cell { border-radius: 10px; overflow: hidden; background: var(--cream-2); }
   .corp-gallery__cell img, .corp-gallery__cell svg { width: 100%; height: 100%; object-fit: cover; }
-  .corp-gallery__quote { background: var(--sand); display: flex; align-items: center; padding: 28px; }
-  .corp-gallery__quote p { font-family: var(--font-serif); font-size: 24px; line-height: 1.25; color: var(--brown); margin: 0; }
+  .corp-gallery__tall { grid-row: 1 / span 2; }
+  .corp-gallery__quote { background: var(--sand); display: flex; align-items: center; padding: 18px 22px; }
+  .corp-gallery__quote p { font-family: var(--font-serif); font-size: 18px; line-height: 1.3; color: var(--brown); margin: 0; }
 
   /* Experiences */
-  .corp-exp { display: grid; grid-template-columns: 38% 1fr; gap: 24px; align-items: center; background: var(--cream-2); border-radius: 22px; padding: 22px 30px; }
-  .corp-exp__title { font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; }
+  .corp-exp { display: grid; grid-template-columns: 38% 1fr; gap: 20px; align-items: center; background: var(--cream-2); border-radius: 18px; padding: 16px 28px; }
+  .corp-exp__title { font-size: clamp(17px, 1.8vw, 21px); line-height: 1.2; }
   .corp-exp__title em { font-style: italic; }
   .corp-exp__items { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 10px; text-align: center; }
-  .corp-exp__item .corp-strip__ico { margin-bottom: 6px; }
-  .corp-exp__item .corp-strip__t { font-size: 11px; letter-spacing: .12em; margin: 0 0 4px; }
-  .corp-exp__item .corp-strip__d { max-width: 18ch; font-size: 12px; line-height: 1.35; }
-  .corp-exp__items .corp-strip__dot { align-self: center; margin-top: 30px; }
+  .corp-exp__item .corp-strip__ico svg { width: 15px; height: 15px; }
+  .corp-exp__item .corp-strip__ico { margin-bottom: 4px; }
+  .corp-exp__item .corp-strip__t { font-size: 10px; letter-spacing: .1em; margin: 0 0 3px; }
+  .corp-exp__item .corp-strip__d { max-width: 18ch; font-size: 11px; line-height: 1.3; }
+  .corp-exp__items .corp-strip__dot { align-self: center; margin-top: 22px; }
 
   /* Process */
   .corp-process { position: relative; overflow: hidden; background: var(--olive); border-radius: 22px; padding: 26px 32px; display: grid; grid-template-columns: 2.3fr 1fr; gap: 24px; color: var(--cream); }
