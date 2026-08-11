@@ -19,7 +19,7 @@
           <span class="ccs-card__num">/{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
           <div class="ccs-card__content">
             <a href="{{ block.settings.link }}" class="ccs-card__title" data-ccs-stop>{{ block.settings.title }}</a>
-            <a class="btn ccs-card__view" href="{{ section.settings.button_link }}" data-ccs-stop>{{ section.settings.button_label }}</a>
+            <a class="btn ccs-card__view" href="{{ block.settings.link | default: section.settings.button_link }}" data-ccs-stop>{{ section.settings.button_label }}</a>
             <button class="round-btn ccs-card__next" data-ccs-next data-ccs-stop aria-label="Next category">{% render 'icon', icon: 'arrow-right' %}</button>
           </div>
         </div>
