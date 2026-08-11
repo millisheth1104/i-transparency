@@ -15,6 +15,7 @@
         "cat-0": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bedsheet_category.jpg",
             "title": "Bedsheets",
             "link": ""
           }
@@ -22,6 +23,7 @@
         "cat-1": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed Covers",
             "link": ""
           }
@@ -29,13 +31,15 @@
         "cat-2": {
           "type": "category",
           "settings": {
-            "title": "Pillows",
+            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "title": "Cushion Covers",
             "link": ""
           }
         },
         "cat-3": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
             "link": ""
           }
@@ -65,6 +69,7 @@
         "category_J9qF7r": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bedsheet_category.jpg",
             "title": "Bedsheets",
             "link": "shopify://collections/frontpage"
           }
@@ -72,6 +77,7 @@
         "category_xRcjji": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed Covers",
             "link": "shopify://collections/bedcover"
           }
@@ -79,13 +85,15 @@
         "category_pCWmQL": {
           "type": "category",
           "settings": {
-            "title": "Pillows",
+            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "title": "Cushion Covers",
             "link": "shopify://collections/pillows"
           }
         },
         "category_UPnJjK": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
             "link": "shopify://collections/comforters"
           }
