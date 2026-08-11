@@ -225,7 +225,7 @@
           "settings": {
             "image": "shopify://shop_images/bed_covers.png",
             "title": "Bed covers",
-            "link": "shopify://collections/bedcover",
+            "link": "shopify://collections/bamboo",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
