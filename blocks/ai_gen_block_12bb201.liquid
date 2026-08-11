@@ -295,6 +295,11 @@
 
   .ai-contact-info-text-{{ ai_gen_id }} {
     flex: 1;
+    /* flex items default to min-width:auto, which stops them shrinking
+       below their content's natural width -- for a long unbroken address
+       this pushes the row past the column and clips it against the edge
+       instead of wrapping. min-width:0 lets it shrink and wrap properly. */
+    min-width: 0;
   }
 
   .ai-contact-info-heading-{{ ai_gen_id }} {
