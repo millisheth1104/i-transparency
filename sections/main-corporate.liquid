@@ -99,24 +99,6 @@
       </div>
     </section>
 
-    {%- comment -%} Trusted brands {%- endcomment -%}
-    <section class="corp-trust">
-      <p class="eyebrow text-center">{{ s.trust_eyebrow }}</p>
-      <div class="corp-trust__logos">
-        {%- for i in (1..5) -%}
-          {%- assign key = 'logo_' | append: i -%}
-          {%- assign logo = s[key] -%}
-          <div class="corp-trust__logo">
-            {%- if logo != blank -%}
-              <img src="{{ logo | image_url: width: 240 }}" alt="Brand {{ i }}" width="120" height="60" loading="lazy">
-            {%- else -%}
-              {{ 'logo' | placeholder_svg_tag }}
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
-    </section>
-
     {%- comment -%} Enquiry form {%- endcomment -%}
     <section class="corp-form" id="corp-form">
       <div class="corp-form__intro">
