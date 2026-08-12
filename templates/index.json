@@ -176,19 +176,28 @@
     "sleepscape": {
       "type": "sleepscape",
       "blocks": {
+        "hotspot_ccR8YV": {
+          "type": "hotspot",
+          "settings": {
+            "product": "woven-harmony-grid-bedspread",
+            "subtitle": "",
+            "x": 75,
+            "y": 42
+          }
+        },
         "h2": {
           "type": "hotspot",
           "settings": {
-            "product": "knitted-cushion-cover",
+            "product": "knitted-nordic-weave-cushion-cover",
             "subtitle": "Blanket",
-            "x": 76,
-            "y": 32
+            "x": 65,
+            "y": 26
           }
         },
         "hotspot_TMJWpY": {
           "type": "hotspot",
           "settings": {
-            "product": "knitscape-stripes-bedspread",
+            "product": "knitted-cable-knit-throw",
             "subtitle": "",
             "x": 45,
             "y": 50
@@ -196,6 +205,7 @@
         }
       },
       "block_order": [
+        "hotspot_ccR8YV",
         "h2",
         "hotspot_TMJWpY"
       ],
@@ -211,7 +221,7 @@
         "subheading_font": "sans",
         "section_padding_top": 65,
         "section_padding_bottom": 90,
-        "image": "shopify://shop_images/ChatGPT_Image_Jul_27_2026_03_21_37_PM.png",
+        "image": "shopify://shop_images/color_corrected.png",
         "image_radius": 14,
         "image_border_width": 0,
         "image_border_color": "#5a5148"
@@ -223,7 +233,7 @@
         "c1": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/TERRAWEAVE_BC_W190104_E_92522b78-649e-4406-9e2f-88fcd19abb6b.jpg",
+            "image": "shopify://shop_images/TERRAWEAVE_BC_W190104_D_a03cc610-2b56-4f57-90a7-ffff7870773e.jpg",
             "title": "Bed covers",
             "link": "shopify://collections/bedcover",
             "image_radius": 40,
@@ -278,7 +288,7 @@
         "c7": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/duvet_cover_category.jpg",
+            "image": "shopify://shop_images/SIGNATURE_DC_D300102_A.jpg",
             "title": "Duvet Cover",
             "link": "shopify://collections/comforters",
             "image_radius": 40,
