@@ -256,7 +256,7 @@
         "c5": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/cushion_covers_category.jpg",
+            "image": "shopify://shop_images/cushioncovers_category.png",
             "title": "Cushion Covers",
             "link": "shopify://collections/pillows",
             "image_radius": 40,
