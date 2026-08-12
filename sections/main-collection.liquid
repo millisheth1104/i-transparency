@@ -27,7 +27,15 @@
                 <select name="{{ filter.param_name }}" aria-label="{{ filter.label | escape }}" onchange="this.form.submit()">
                   <option value="">{{ filter.label }}</option>
                   {%- for value in filter.values -%}
-                    <option value="{{ value.value }}" {% if value.active %}selected{% endif %}>{{ value.label }} ({{ value.count }})</option>
+                    {%- assign display_label = value.label -%}
+                    {%- if filter.label == 'Size' -%}
+                      {%- if value.label == 'Single' -%}
+                        {%- assign display_label = 'King' -%}
+                      {%- elsif value.label == 'Double' -%}
+                        {%- assign display_label = 'Super King' -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                    <option value="{{ value.value }}" {% if value.active %}selected{% endif %}>{{ display_label }}</option>
                   {%- endfor -%}
                 </select>
               </span>
@@ -65,7 +73,15 @@
         <span class="mc-applied__label">Applied</span>
         {%- for filter in collection.filters -%}
           {%- for value in filter.active_values -%}
-            <a class="mc-chip" href="{{ value.remove_url }}">{{ value.label }} <span aria-hidden="true">&times;</span></a>
+            {%- assign chip_label = value.label -%}
+            {%- if filter.label == 'Size' -%}
+              {%- if value.label == 'Single' -%}
+                {%- assign chip_label = 'King' -%}
+              {%- elsif value.label == 'Double' -%}
+                {%- assign chip_label = 'Super King' -%}
+              {%- endif -%}
+            {%- endif -%}
+            <a class="mc-chip" href="{{ value.remove_url }}">{{ chip_label }} <span aria-hidden="true">&times;</span></a>
           {%- endfor -%}
         {%- endfor -%}
         <a class="mc-applied__clear" href="{{ collection.url }}">Clear all</a>
