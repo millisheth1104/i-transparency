@@ -16,6 +16,12 @@
 
     observer.observe(sentinel);
 
+    function finish() {
+      observer.disconnect();
+      sentinel.remove();
+      if (spinner) spinner.remove();
+    }
+
     function loadNext() {
       var nextUrl = sentinel.dataset.nextUrl;
       if (!nextUrl || loading) return;
@@ -32,19 +38,17 @@
 
           var newSentinel = doc.querySelector('[data-mc-infinite]');
           var newNextUrl = newSentinel ? newSentinel.dataset.nextUrl : '';
-          if (newNextUrl) {
-            sentinel.dataset.nextUrl = newNextUrl;
+          // No cards, no next url, or the next url didn't advance — treat as end of content.
+          if (!newCards.length || !newNextUrl || newNextUrl === nextUrl) {
+            finish();
           } else {
-            observer.disconnect();
-            sentinel.remove();
+            sentinel.dataset.nextUrl = newNextUrl;
+            loading = false;
+            if (spinner) spinner.hidden = true;
           }
         })
         .catch(function () {
-          observer.disconnect();
-        })
-        .finally(function () {
-          loading = false;
-          if (spinner) spinner.hidden = true;
+          finish();
         });
     }
   }
