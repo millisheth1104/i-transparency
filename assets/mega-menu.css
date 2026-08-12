@@ -119,22 +119,22 @@
 .mega-menu__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 271px;
+  max-width: 320px;
   column-gap: 45px;
-  row-gap: 24px;
+  row-gap: 28px;
   list-style: none;
 }
 
 .mega-menu__sub-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
 }
 
 .mega-menu__sub-thumb {
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
