@@ -205,30 +205,9 @@
           {%- endfor -%}
         </div>
 
-        {%- comment -%} Pagination {%- endcomment -%}
-        {%- if paginate.pages > 1 -%}
-          <nav class="mc-pager" aria-label="Pagination">
-            {%- if paginate.previous -%}
-              <a class="mc-pager__arrow" href="{{ paginate.previous.url }}" aria-label="Previous">{% render 'icon', icon: 'arrow-left' %}</a>
-            {%- else -%}
-              <span class="mc-pager__arrow is-disabled">{% render 'icon', icon: 'arrow-left' %}</span>
-            {%- endif -%}
-            {%- for part in paginate.parts -%}
-              {%- if part.is_link -%}
-                <a class="mc-pager__num" href="{{ part.url }}">{{ part.title }}</a>
-              {%- elsif part.title == paginate.current_page -%}
-                <span class="mc-pager__num is-current" aria-current="page">{{ part.title }}</span>
-              {%- else -%}
-                <span class="mc-pager__num mc-pager__gap">{{ part.title }}</span>
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if paginate.next -%}
-              <a class="mc-pager__arrow" href="{{ paginate.next.url }}" aria-label="Next">{% render 'icon', icon: 'arrow-right' %}</a>
-            {%- else -%}
-              <span class="mc-pager__arrow is-disabled">{% render 'icon', icon: 'arrow-right' %}</span>
-            {%- endif -%}
-          </nav>
-        {%- endif -%}
+        {%- comment -%} Infinite scroll: sentinel carries the next-page URL; JS below appends new product cards as it enters view {%- endcomment -%}
+        <div class="mc-load-sentinel" data-mc-infinite data-next-url="{{ paginate.next.url }}" data-section-id="{{ section.id }}"></div>
+        <div class="mc-load-spinner" data-mc-infinite-spinner hidden></div>
       {%- else -%}
         <div class="mc-empty">
           <p class="eyebrow">Nothing here yet</p>
@@ -521,13 +500,10 @@
   #shopify-section-{{ section.id }} .mc-promo__media { margin: 0 60px 40px; border-radius: var(--radius); overflow: hidden; }
   #shopify-section-{{ section.id }} .mc-promo__media img, #shopify-section-{{ section.id }} .mc-promo__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-  #shopify-section-{{ section.id }} .mc-pager { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 60px; }
-  #shopify-section-{{ section.id }} .mc-pager__num { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 34px; font-size: 14px; letter-spacing: .06em; color: var(--muted); }
-  #shopify-section-{{ section.id }} .mc-pager__num:hover { color: var(--brown); }
-  #shopify-section-{{ section.id }} .mc-pager__num.is-current { color: var(--brown); font-weight: 500; border-bottom: 1.5px solid var(--brown); }
-  #shopify-section-{{ section.id }} .mc-pager__gap { color: var(--muted); }
-  #shopify-section-{{ section.id }} .mc-pager__arrow { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; color: var(--brown); }
-  #shopify-section-{{ section.id }} .mc-pager__arrow.is-disabled { color: var(--line); pointer-events: none; }
+  #shopify-section-{{ section.id }} .mc-load-sentinel { height: 1px; }
+  #shopify-section-{{ section.id }} .mc-load-spinner { display: flex; justify-content: center; padding: 40px 0; }
+  #shopify-section-{{ section.id }} .mc-load-spinner::after { content: ""; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--brown); animation: mc-spin .7s linear infinite; }
+  @keyframes mc-spin { to { transform: rotate(360deg); } }
 
   #shopify-section-{{ section.id }} .mc-empty { text-align: center; padding: 70px 0; }
   #shopify-section-{{ section.id }} .mc-empty .btn { margin-top: 26px; }
@@ -551,6 +527,8 @@
     #shopify-section-{{ section.id }} .mc-grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<script src="{{ 'collection-infinite-scroll.js' | asset_url }}" defer></script>
 
 <script>
   (function () {
