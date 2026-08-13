@@ -111,7 +111,14 @@
    between each other. Sized by content (no fixed height) so the panel
    never carries empty space when a category has few/no sub-items. */
 
-.mega-menu__content { position: relative; flex: 1; }
+/* Fixed min-height (not per-view content sizing) is deliberate here, unlike
+   the comment below might suggest for individual views: when a category with
+   few items (e.g. one subcollection) is hovered, the panel used to shrink to
+   match it. The mouse is then already travelling toward where a taller
+   view's content used to be, overshoots the new shorter bottom edge, and
+   exits the panel entirely -- closing the whole menu before the item can be
+   reached. Sized to the tallest view (the 3-col featured-products grid). */
+.mega-menu__content { position: relative; flex: 1; min-height: 270px; }
 
 .mega-menu__empty { display: flex; align-items: flex-start; }
 
