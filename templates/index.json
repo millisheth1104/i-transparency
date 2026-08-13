@@ -44,7 +44,7 @@
         ".feature-split__inner {width: calc(100% - 0px); max-width: 1062px; margin: 0 auto;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/woven_not_knitted.png",
+        "image": "shopify://shop_images/sarom_bedcover_exact_dimensions.png",
         "image_right": false,
         "eyebrow": "Breathable build · Zero bleed",
         "heading": "<em>Woven,</em> not knitted.",
