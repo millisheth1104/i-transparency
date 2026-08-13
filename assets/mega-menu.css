@@ -37,6 +37,21 @@
   visibility: visible;
 }
 
+/* The 18px margin-top above leaves a dead strip between the trigger and the
+   panel that belongs to neither element's hit-testable box — the mouse
+   crossing it on the way down registers as leaving .mega-menu entirely and
+   slams the panel shut before it can be reached. This pseudo-element (a
+   descendant of the panel, so it only exists in the hoverable tree once the
+   panel itself is open) bridges that gap so hover never actually breaks. */
+.mega-menu__panel::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 0;
+  right: 0;
+  height: 18px;
+}
+
 .mega-menu__inner {
   display: flex;
   gap: 24px;
@@ -231,6 +246,7 @@
     transition: none;
   }
   .mega-menu.is-open .mega-menu__panel { display: block; }
+  .mega-menu__panel::before { content: none; }
   .mega-menu__trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; }
   .mega-menu__trigger::after {
     content: '+';
