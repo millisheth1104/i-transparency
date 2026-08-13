@@ -1,5 +1,9 @@
 (function () {
   var mobileQuery = window.matchMedia('(max-width: 990px)');
+  var CLOSE_DELAY = 250; // ms grace period before actually closing
+  var OPEN_DELAY = 120;  // ms of sustained hover before a sibling steals focus
+
+  var allWraps = [];
 
   document.querySelectorAll('[data-mega-menu]').forEach(function (wrap) {
     var trigger = wrap.querySelector('[data-mega-trigger]');
@@ -8,9 +12,18 @@
     var views = wrap.querySelectorAll('[data-mega-view]');
     if (!trigger || !panel) return;
 
-    function open() {
-      document.querySelectorAll('[data-mega-menu].is-open').forEach(function (other) {
-        if (other !== wrap) other.classList.remove('is-open');
+    var closeTimer = null;
+    var openTimer = null;
+
+    function clearTimers() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+    }
+
+    function openNow() {
+      clearTimers();
+      allWraps.forEach(function (other) {
+        if (other !== wrap) other.forceClose();
       });
       wrap.classList.add('is-open');
       trigger.setAttribute('aria-expanded', 'true');
@@ -49,23 +62,46 @@
       });
     });
 
+    // Exposed so a sibling wrap can shut this one instantly once IT commits
+    // to opening (after its own OPEN_DELAY), rather than on mere mouseenter.
+    wrap.forceClose = function () {
+      clearTimers();
+      close();
+      reset();
+    };
+
     if (mobileQuery.matches) {
       // Mobile: click-to-open accordion, no hover state-switching (first
       // category's panel is shown as the initial/default content only).
       trigger.addEventListener('click', function (e) {
         e.preventDefault();
         var willOpen = !wrap.classList.contains('is-open');
-        if (willOpen) { reset(); open(); } else { close(); }
+        if (willOpen) { reset(); openNow(); } else { close(); }
       });
     } else {
       /* Desktop: hover-only, scoped to this wrap's own bounding box (the
          trigger word — the panel itself is a descendant, so moving into
          it doesn't fire mouseleave). Clicking the word still navigates
          normally to its own collection page, since nothing here calls
-         preventDefault on desktop. */
-      wrap.addEventListener('mouseenter', open);
-      wrap.addEventListener('mouseleave', function () { close(); reset(); });
-      wrap.addEventListener('focusin', open);
+         preventDefault on desktop.
+
+         Both open and close are debounced so that a mouse path which
+         briefly grazes a sibling trigger on the way into THIS wrap's own
+         panel (e.g. reaching a subcategory means crossing the header row
+         where the next nav item's trigger sits) doesn't (a) instantly
+         close this one on the graze-out, or (b) instantly open the
+         sibling and steal it. Only a hover that's still there after the
+         delay commits. */
+      wrap.addEventListener('mouseenter', function () {
+        clearTimers();
+        if (wrap.classList.contains('is-open')) { openNow(); return; }
+        openTimer = setTimeout(openNow, OPEN_DELAY);
+      });
+      wrap.addEventListener('mouseleave', function () {
+        clearTimers();
+        closeTimer = setTimeout(function () { close(); reset(); }, CLOSE_DELAY);
+      });
+      wrap.addEventListener('focusin', openNow);
       wrap.addEventListener('focusout', function (e) {
         if (!wrap.contains(e.relatedTarget)) { close(); reset(); }
       });
@@ -73,5 +109,7 @@
         if (e.key === 'Escape') { close(); reset(); trigger.focus(); }
       });
     }
+
+    allWraps.push(wrap);
   });
 })();
