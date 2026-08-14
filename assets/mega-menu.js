@@ -121,18 +121,24 @@
   });
 
   /* On collection pages the filter bar (.mc-bar) sits directly beneath the
-     header, inside the "Shop" panel's own footprint -- so a panel opened
-     (deliberately or via a lingering hover) visually covers the filter
-     controls and blocks clicks to them. The OPEN_DELAY above only slows
-     down *accidental* opens; it doesn't stop an *already open* panel from
-     sitting on top of the filter row. As soon as the cursor actually
-     reaches the filter bar, force-close every mega menu immediately,
-     bypassing CLOSE_DELAY entirely, so the filters are always clickable
-     the instant the user's pointer gets there. */
+     header, inside the "Shop" panel's own opaque footprint -- so an open
+     panel doesn't just sit near the filters, it is the topmost element at
+     those screen coordinates. That means the filter bar's own mouseenter
+     never fires while the panel is open (the browser delivers the event to
+     whatever the panel is showing at that point -- e.g. an <img> -- not to
+     the covered element underneath), so listening on the filter bar itself
+     can never detect the cursor arriving. Instead, track real cursor
+     coordinates at the document level and compare against the filter bar's
+     rect directly; that works regardless of which element is visually on
+     top. */
   var filterBar = document.querySelector('.mc-bar');
   if (filterBar && allWraps.length) {
-    filterBar.addEventListener('mouseenter', function () {
-      allWraps.forEach(function (wrap) { wrap.forceClose(); });
+    document.addEventListener('mousemove', function (e) {
+      if (!allWraps.some(function (w) { return w.classList.contains('is-open'); })) return;
+      var r = filterBar.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+        allWraps.forEach(function (wrap) { wrap.forceClose(); });
+      }
     });
   }
 })();
