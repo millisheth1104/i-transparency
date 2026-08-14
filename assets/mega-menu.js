@@ -1,7 +1,14 @@
 (function () {
   var mobileQuery = window.matchMedia('(max-width: 990px)');
   var CLOSE_DELAY = 250; // ms grace period before actually closing
-  var OPEN_DELAY = 120;  // ms of sustained hover before a sibling steals focus
+  /* The panel renders directly beneath the header with an opaque
+     background, and on collection pages the filter bar sits right there
+     too -- a cursor merely passing near/over the trigger word on its way
+     down to a filter control was lingering just long enough to open the
+     panel and block the filter bar underneath it. 400ms requires an
+     actual pause (real browsing intent) rather than a quick pass-through,
+     while still feeling immediate for someone deliberately hovering Shop. */
+  var OPEN_DELAY = 400;  // ms of sustained hover before the menu commits to opening
 
   var allWraps = [];
 
