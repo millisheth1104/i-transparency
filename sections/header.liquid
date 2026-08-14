@@ -12,20 +12,19 @@
       {%- assign nav_menu = linklists[section.settings.menu] -%}
       {%- for link in nav_menu.links -%}
         <div>
+          {%- comment -%} "Collections" used to be wired to a catch-all
+            smart collection purely so the mega-menu dropdown had a
+            metafield source to hang off of. Per merchant request, that
+            dropdown is removed — "Collections" is now always a plain link
+            to Shopify's actual "browse all collections" page, regardless
+            of whether its linked resource still carries sub_collections.
+            "Shop" (and any other mega-menu-eligible nav item) is
+            unaffected. {%- endcomment -%}
           {%- assign sub_collections = link.object.metafields.custom.sub_collections.value -%}
-          {%- if sub_collections != blank and sub_collections.size > 0 -%}
-            {%- comment -%} "Collections" is wired to a catch-all smart
-              collection (every product) purely so the mega-menu dropdown
-              has a metafield source to hang off of. Clicking the word
-              itself should land on Shopify's actual "browse all
-              collections" page, not a flat 97-product dump — override
-              just that destination while the dropdown keeps working off
-              link.object as before. {%- endcomment -%}
-            {%- assign nav_url = link.url -%}
-            {%- if link.object.handle == 'collections-menu-root' -%}
-              {%- assign nav_url = routes.collections_url -%}
-            {%- endif -%}
-            {%- render 'mega-menu', collection: link.object, label: link.title, url: nav_url -%}
+          {%- if link.object.handle == 'collections-menu-root' -%}
+            <a href="{{ routes.collections_url }}" class="site-nav__link">{{ link.title }}</a>
+          {%- elsif sub_collections != blank and sub_collections.size > 0 -%}
+            {%- render 'mega-menu', collection: link.object, label: link.title, url: link.url -%}
           {%- else -%}
             <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
           {%- endif -%}
