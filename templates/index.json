@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "image": "shopify://shop_images/hero_page_png.png",
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_14_2026_10_51_19_AM.png",
         "eyebrow": "Bespoke Bedding · 100% Cotton · Exquisite Craftsmanship",
         "heading": "The art of <em>sleep.</em>",
         "text": "<p>Designed to transform your bedroom into a quiet sanctuary of restful serenity.</p>",
@@ -44,7 +44,7 @@
         ".feature-split__inner {width: calc(100% - 0px); max-width: 1062px; margin: 0 auto;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/woven_not_knitted.png",
+        "image": "shopify://shop_images/sarom_bedcover_exact_dimensions.png",
         "image_right": false,
         "eyebrow": "Breathable build · Zero bleed",
         "heading": "<em>Woven,</em> not knitted.",
