@@ -29,12 +29,22 @@
   z-index: 60;
   opacity: 0;
   visibility: hidden;
+  /* Belt-and-suspenders against a real CSS gotcha: .mega-menu__view.is-active
+     below sets visibility:visible on itself, and CSS visibility lets a
+     descendant override an ancestor's visibility:hidden -- so the active
+     sub-item links stayed hit-testable (hoverable/clickable) even while this
+     panel was fully closed, sitting invisibly on top of whatever page
+     content happened to be underneath (e.g. the collection filter bar).
+     pointer-events can't be overridden the same way, so it's the actual
+     backstop here regardless of what visibility does further down the tree. */
+  pointer-events: none;
   transition: opacity .2s ease, visibility .2s ease;
 }
 
 .mega-menu.is-open .mega-menu__panel {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* The 18px margin-top above leaves a dead strip between the trigger and the
