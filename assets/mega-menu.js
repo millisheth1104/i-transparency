@@ -119,4 +119,20 @@
 
     allWraps.push(wrap);
   });
+
+  /* On collection pages the filter bar (.mc-bar) sits directly beneath the
+     header, inside the "Shop" panel's own footprint -- so a panel opened
+     (deliberately or via a lingering hover) visually covers the filter
+     controls and blocks clicks to them. The OPEN_DELAY above only slows
+     down *accidental* opens; it doesn't stop an *already open* panel from
+     sitting on top of the filter row. As soon as the cursor actually
+     reaches the filter bar, force-close every mega menu immediately,
+     bypassing CLOSE_DELAY entirely, so the filters are always clickable
+     the instant the user's pointer gets there. */
+  var filterBar = document.querySelector('.mc-bar');
+  if (filterBar && allWraps.length) {
+    filterBar.addEventListener('mouseenter', function () {
+      allWraps.forEach(function (wrap) { wrap.forceClose(); });
+    });
+  }
 })();
