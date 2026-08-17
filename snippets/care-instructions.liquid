@@ -1,0 +1,110 @@
+{%- comment -%}
+  Data-driven "Material care" content, keyed by which collection a product
+  belongs to. Renders nothing (returns blank) if the product doesn't match
+  any known care group -- the caller (main-product.liquid) falls back to the
+  section block's own static content in that case, so unlisted products are
+  completely unaffected.
+
+  Param: product
+
+  To add/adjust a group: edit the `case group` block below. Each line is
+  {icon, label} (icon blank = text-only bullet, no symbol -- used where no
+  ISO care symbol applies, e.g. "Wash with like colors").
+{%- endcomment -%}
+
+{%- liquid
+  assign group = blank
+  for c in product.collections
+    case c.handle
+      when 'tera-weave'
+        assign group = 'terra_weave'
+      when 'woven-harmony'
+        assign group = 'woven_harmony'
+      when 'ethereal-bd'
+        assign group = 'ethereal'
+      when 'perca-db', 'linera-db', 'timeless-grace-db', 'thread-harmony-db', 'subtle-stitches-db', 'embellish-db'
+        assign group = 'ss3'
+      when 'essence', 'reflect', 'plush', 'signature'
+        assign group = 'ss4'
+      when 'bare-earth'
+        assign group = 'bare_earth'
+      when 'knitscape-th', 'knitscape-cc'
+        assign group = 'knitscape_soft'
+      when 'knitscape-bc'
+        assign group = 'knitscape_bedcover'
+    endcase
+    if group != blank
+      break
+    endif
+  endfor
+-%}
+
+{%- if group != blank -%}
+  <ul class="care-list">
+    {%- case group -%}
+
+      {%- when 'terra_weave' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash' %}</span><span class="care-item__label">Machine wash in cold water</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'line-dry' %}</span><span class="care-item__label">Line dry</span></li>
+      <li class="care-item care-item--text-only"><span class="care-item__label">Remove promptly</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 1 %}</span><span class="care-item__label">Warm iron as needed</span></li>
+
+      {%- when 'woven_harmony' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash' %}</span><span class="care-item__label">Machine wash in cold water</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'line-dry' %}</span><span class="care-item__label">Line dry</span></li>
+      <li class="care-item care-item--text-only"><span class="care-item__label">Remove promptly</span></li>
+
+      {%- when 'ethereal' or 'ss3' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash', temp: 40 %}</span><span class="care-item__label">Warm wash</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'gentle' %}</span><span class="care-item__label">Gentle cycle</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'tumble-dry-low' %}</span><span class="care-item__label">Tumble dry low</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 2 %}</span><span class="care-item__label">Medium iron</span></li>
+
+      {%- when 'ss4' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash', temp: 40 %}</span><span class="care-item__label">Machine wash at 40&#176;C, gentle cycle</span></li>
+      <li class="care-item care-item--text-only"><span class="care-item__label">Wash with like colors</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'line-dry' %}</span><span class="care-item__label">Line dry</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 2 %}</span><span class="care-item__label">Steam iron, medium setting</span></li>
+
+      {%- when 'bare_earth' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash' %}</span><span class="care-item__label">Machine wash separately in cold water</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'gentle' %}</span><span class="care-item__label">Delicate cycle</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'tumble-dry-low' %}</span><span class="care-item__label">Tumble dry, low temp</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-iron' %}</span><span class="care-item__label">Do not iron</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-dry-clean' %}</span><span class="care-item__label">Do not dry clean</span></li>
+
+      {%- when 'knitscape_soft' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash', temp: 30 %}</span><span class="care-item__label">Machine wash at 30&#176;C</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'tumble-dry-low' %}</span><span class="care-item__label">Tumble dry low</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 2 %}</span><span class="care-item__label">Medium iron</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+
+      {%- when 'knitscape_bedcover' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash', temp: 30 %}</span><span class="care-item__label">Machine wash at 30&#176;C</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'line-dry' %}</span><span class="care-item__label">Line dry</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-iron' %}</span><span class="care-item__label">Do not iron</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+
+    {%- endcase -%}
+  </ul>
+{%- endif -%}
+
+<style>
+  .care-list { display: flex; flex-wrap: wrap; gap: 22px 28px; list-style: none; margin: 4px 0 0; padding: 0; }
+  .care-item { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 108px; }
+  .care-item__icon { color: var(--brown, #4a4139); display: inline-flex; }
+  .care-item__label { font-size: 12px; line-height: 1.4; color: var(--brown-2, #5b554f); letter-spacing: .01em; }
+  .care-item--text-only { justify-content: center; padding-top: 2px; }
+  .care-item--text-only .care-item__label { font-style: italic; color: var(--taupe, #8c8275); }
+
+  @media (max-width: 600px) {
+    .care-list { gap: 18px 20px; }
+    .care-item { width: 84px; }
+    .care-item__icon svg { width: 22px; height: 22px; }
+  }
+</style>

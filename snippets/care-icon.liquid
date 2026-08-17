@@ -1,0 +1,70 @@
+{%- comment -%}
+  Renders a single GINETEX-style laundry-care symbol as an inline SVG.
+  Params:
+    type: wash | gentle | no-bleach | tumble-dry-low | line-dry | iron | no-iron | no-dry-clean
+    temp: (wash only) text to place inside the wash tub, e.g. "40" or "30"
+    dots: (iron only) 1-3, number of heat dots on the iron sole plate
+  All icons share a 24x24 viewBox, stroke-based, currentColor, no fill except iron dots,
+  so they inherit color/size from the surrounding .care-item__icon the same way snippets/icon.liquid does.
+{%- endcomment -%}
+{%- case type -%}
+
+  {%- when 'wash' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <path d="M4 5h16" stroke-linecap="round"/>
+      <path d="M5 5l1.4 13.2A2 2 0 0 0 8.4 20h7.2a2 2 0 0 0 2-1.8L19 5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 9c.8.9 1.6.9 2.4 0s1.6-.9 2.4 0 1.6.9 2.4 0" stroke-linecap="round"/>
+      {%- if temp != blank -%}
+        <text x="12" y="16.5" font-size="6.4" font-family="sans-serif" text-anchor="middle" stroke="none" fill="currentColor">{{ temp }}&#176;</text>
+      {%- endif -%}
+    </svg>
+
+  {%- when 'gentle' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <path d="M4 5h16" stroke-linecap="round"/>
+      <path d="M5 5l1.4 12A2 2 0 0 0 8.4 19h7.2a2 2 0 0 0 2-1.8L19 5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 9c.8.9 1.6.9 2.4 0s1.6-.9 2.4 0 1.6.9 2.4 0" stroke-linecap="round"/>
+      <path d="M6.5 21h11" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'no-bleach' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <path d="M12 4 21 19H3Z" stroke-linejoin="round"/>
+      <path d="M9 10.5 15 16M15 10.5 9 16" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'tumble-dry-low' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/>
+      <circle cx="12" cy="12" r="5.4"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+
+  {%- when 'line-dry' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/>
+      <path d="M7 8.5c1.6 2 3.4 2 5 0s3.4-2 5 0" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'iron' -%}
+    {%- assign dot_count = dots | default: 2 -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <path d="M3.5 17.5h13.8c2 0 3.2-2.6 1.6-4L14 9.3A5 5 0 0 0 10.6 8H6a2.5 2.5 0 0 0-2.5 2.5v7Z" stroke-linejoin="round"/>
+      {%- if dot_count >= 1 -%}<circle cx="8" cy="13" r=".9" fill="currentColor" stroke="none"/>{%- endif -%}
+      {%- if dot_count >= 2 -%}<circle cx="11" cy="13" r=".9" fill="currentColor" stroke="none"/>{%- endif -%}
+      {%- if dot_count >= 3 -%}<circle cx="14" cy="13" r=".9" fill="currentColor" stroke="none"/>{%- endif -%}
+    </svg>
+
+  {%- when 'no-iron' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <path d="M3.5 17.5h13.8c2 0 3.2-2.6 1.6-4L14 9.3A5 5 0 0 0 10.6 8H6a2.5 2.5 0 0 0-2.5 2.5v7Z" stroke-linejoin="round"/>
+      <path d="M3 20 20 4" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'no-dry-clean' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" width="26" height="26">
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M8 8l8 8M16 8l-8 8" stroke-linecap="round"/>
+    </svg>
+
+{%- endcase -%}

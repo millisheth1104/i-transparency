@@ -166,6 +166,13 @@
                     <div class="mp__acc-body">
                       {%- if block.settings.use_product_description and product.description != blank -%}
                         {{ product.description }}
+                      {%- elsif block.settings.heading == 'Material care' -%}
+                        {%- capture mapped_care -%}{%- render 'care-instructions', product: product -%}{%- endcapture -%}
+                        {%- if mapped_care != blank -%}
+                          {{ mapped_care }}
+                        {%- else -%}
+                          {{ block.settings.content }}
+                        {%- endif -%}
                       {%- else -%}
                         {{ block.settings.content }}
                       {%- endif -%}
