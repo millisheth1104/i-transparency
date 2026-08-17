@@ -63,7 +63,7 @@
             "settings": {
               "title": "Company",
               "menu": "",
-              "items": "About Us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq\nContact Us|/pages/contact"
+              "items": "About Us|/pages/about-us\nJournal|/blogs/journal\nFAQ's|/pages/faq\nContact Us|/pages/contact\nTerms & Conditions|/policies/terms-of-service\nPrivacy Policy|/policies/privacy-policy\nShipping Policy|/policies/shipping-policy\nReturns & Replacement Policy|/policies/refund-policy"
             }
           }
         },
