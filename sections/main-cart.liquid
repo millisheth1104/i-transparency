@@ -60,9 +60,10 @@
             </div>
           {%- endif -%}
           {%- if section.settings.tax_label != blank -%}
+            {%- assign gst_amount = cart.items_subtotal_price | times: 0.18 | round -%}
             <div class="cart-summary__row">
               <span>{{ section.settings.tax_label }}</span>
-              <span>{{ section.settings.tax_value }}</span>
+              <span>{{ gst_amount | money }}</span>
             </div>
           {%- endif -%}
           {%- if section.settings.address != blank -%}
@@ -161,8 +162,7 @@
     { "type": "text", "id": "summary_title", "label": "Summary title", "default": "Order Summary" },
     { "type": "text", "id": "delivery_label", "label": "Delivery label", "default": "Delivery" },
     { "type": "text", "id": "delivery_value", "label": "Delivery value", "default": "₹150" },
-    { "type": "text", "id": "tax_label", "label": "Tax label", "default": "GST (18%)" },
-    { "type": "text", "id": "tax_value", "label": "Tax value", "default": "₹89" },
+    { "type": "text", "id": "tax_label", "label": "Tax label", "default": "GST (18%)", "info": "Amount shown next to this label is calculated automatically as 18% of the cart subtotal — it is not editable here." },
     { "type": "textarea", "id": "address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
     { "type": "url", "id": "address_link", "label": "Change address link" },
     { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Proceed to checkout" }
