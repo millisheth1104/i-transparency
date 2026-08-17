@@ -209,9 +209,10 @@
             endif
           -%}
           {%- if slide_count > 1 -%}
+            {%- assign slide_keys = "image,image_2,image_3,image_4,image_5" | split: "," -%}
             <div class="mc-promo__media mc-promo__carousel" style="aspect-ratio: {{ promo.settings.image_ratio_width }} / {{ promo.settings.image_ratio_height }}" data-mc-promo-carousel tabindex="0" role="group" aria-roledescription="carousel" aria-label="{{ promo.settings.heading | escape }} banner">
               <div class="mc-promo__track" data-mc-promo-track>
-                {%- for key in "image,image_2,image_3,image_4,image_5" | split: "," -%}
+                {%- for key in slide_keys -%}
                   {%- assign slide_img = promo.settings[key] -%}
                   {%- if slide_img != blank -%}
                     <div class="mc-promo__slide" data-mc-promo-slide>
