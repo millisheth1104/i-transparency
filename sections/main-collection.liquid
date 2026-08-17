@@ -690,22 +690,36 @@
           void track.offsetHeight; // force reflow so the next transition re-applies
           track.style.transition = '';
         }
+        var settleTimer = null;
+        function settle() {
+          if (settleTimer) { clearTimeout(settleTimer); settleTimer = null; }
+          busy = false;
+          if (index === n + 1) { jumpInstant(1); }
+          else if (index === 0) { jumpInstant(n); }
+          updateDots();
+        }
         function goTo(i) {
           if (busy) return;
           busy = true;
           index = i;
           render();
           updateDots();
+          /* Safety net: transitionend never fires for a transition that's
+             suspended by the browser (e.g. the tab goes hidden mid-slide,
+             or the user alt-tabs away during autoplay) -- without this,
+             `busy` would stay true forever and the carousel would never
+             respond to another click again. 700ms covers the 600ms CSS
+             transition with headroom. transitionend still wins the race
+             when it does fire (clearTimeout no-ops if settle() already ran). */
+          if (settleTimer) clearTimeout(settleTimer);
+          settleTimer = setTimeout(settle, 700);
         }
         function next() { goTo(index + 1); }
         function prev() { goTo(index - 1); }
 
         track.addEventListener('transitionend', function (e) {
           if (e.target !== track || (e.propertyName && e.propertyName !== 'transform')) return;
-          busy = false;
-          if (index === n + 1) { jumpInstant(1); }
-          else if (index === 0) { jumpInstant(n); }
-          updateDots();
+          settle();
         });
 
         function resetAutoplay() {
