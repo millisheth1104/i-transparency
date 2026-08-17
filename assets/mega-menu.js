@@ -121,22 +121,32 @@
   });
 
   /* On collection pages the filter bar (.mc-bar) sits directly beneath the
-     header, inside the "Shop" panel's own opaque footprint -- so an open
-     panel doesn't just sit near the filters, it is the topmost element at
-     those screen coordinates. That means the filter bar's own mouseenter
-     never fires while the panel is open (the browser delivers the event to
-     whatever the panel is showing at that point -- e.g. an <img> -- not to
-     the covered element underneath), so listening on the filter bar itself
-     can never detect the cursor arriving. Instead, track real cursor
-     coordinates at the document level and compare against the filter bar's
-     rect directly; that works regardless of which element is visually on
-     top. */
+     header, inside the mega-menu panel's own page-coordinate footprint --
+     an open panel with several category rows (e.g. 6 rows) extends down far
+     enough to visually cover the filter bar underneath it. That means the
+     filter bar's own mouseenter never fires while the panel is open (the
+     browser delivers the event to whatever the panel is showing at that
+     point -- e.g. a category link -- not to the covered element
+     underneath), so listening on the filter bar itself can never detect the
+     cursor arriving there once the menu is genuinely closed. The fix must
+     still tell "cursor is over the filter bar" apart from "cursor is over
+     one of the open panel's own lower rows, which merely happens to sit at
+     the same page coordinates" -- a plain rect-vs-cursor-coordinate compare
+     can't do that (it doesn't know which element is actually on top), which
+     previously force-closed the menu the instant a category row below
+     roughly y=208px (wherever the filter bar starts) was hovered, making it
+     look like categories below that point couldn't be reached at all. Using
+     the mousemove event's own `target` -- the real topmost hit-tested
+     element, exactly what the browser used to dispatch this event -- gives
+     the right answer for free: it's only actually inside .mc-bar when the
+     filter bar is genuinely on top (panel closed or cursor beside it), and
+     is inside the panel itself while hovering any of its rows regardless of
+     row position. */
   var filterBar = document.querySelector('.mc-bar');
   if (filterBar && allWraps.length) {
     document.addEventListener('mousemove', function (e) {
       if (!allWraps.some(function (w) { return w.classList.contains('is-open'); })) return;
-      var r = filterBar.getBoundingClientRect();
-      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+      if (filterBar.contains(e.target)) {
         allWraps.forEach(function (wrap) { wrap.forceClose(); });
       }
     });
