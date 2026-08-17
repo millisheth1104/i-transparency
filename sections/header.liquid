@@ -75,6 +75,14 @@
     .site-nav.is-open { display: flex; }
     .site-nav__link { padding: 14px 0; border-bottom: 1px solid rgba(216,204,182,.4); }
     .site-header__burger { display: flex; }
+
+    /* Icons were only ~20x27px of real tappable area (raw SVG, no padding) --
+       well under the ~44px minimum comfortable touch target. Padding + an
+       equal negative margin keeps the visible icon spacing/position exactly
+       as before while enlarging the actual tap area around each one. */
+    .site-header__actions { gap: 6px; }
+    .site-header__actions a, .site-header__burger { padding: 11px; margin: -11px; }
+    .site-header__cart .cart-count { top: 1px; right: 3px; }
   }
 </style>
 
