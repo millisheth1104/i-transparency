@@ -96,16 +96,36 @@
                       {%- case v -%}
                         {%- when 'ivory' -%}{%- assign hex = '#f3ecdd' -%}
                         {%- when 'natural' -%}{%- assign hex = '#e7dcc6' -%}
-                        {%- when 'oatmeal' -%}{%- assign hex = '#e0d3ba' -%}
-                        {%- when 'beige','lt. beige mel','lt beige mel' -%}{%- assign hex = '#d8c8a9' -%}
+                        {%- when 'oatmeal','oatmel','oatmeal popcorn','popcorn' -%}{%- assign hex = '#e0d3ba' -%}
+                        {%- when 'beige','beige mel','beige mel popcorn','lt. beige mel','lt beige mel' -%}{%- assign hex = '#d8c8a9' -%}
                         {%- when 'tea' -%}{%- assign hex = '#c9b48f' -%}
                         {%- when 'green mel','green' -%}{%- assign hex = '#6f7a4c' -%}
+                        {%- when 'green lint' -%}{%- assign hex = '#8a9468' -%}
                         {%- when 'olive' -%}{%- assign hex = '#3c3e31' -%}
+                        {%- when 'sage' -%}{%- assign hex = '#a8b090' -%}
                         {%- when 'midlife brown','mahogany','brown' -%}{%- assign hex = '#7a5c46' -%}
+                        {%- when 'mocha' -%}{%- assign hex = '#6b4a35' -%}
                         {%- when 'pumice stone','lt. grey mel','lt grey mel','grey','gray' -%}{%- assign hex = '#b9b2a6' -%}
-                        {%- when 'lt. blue daisy','lt blue daisy','blue' -%}{%- assign hex = '#a9c2d6' -%}
+                        {%- when 'stone grey' -%}{%- assign hex = '#a8a29a' -%}
+                        {%- when 'feather grey' -%}{%- assign hex = '#cfcac2' -%}
+                        {%- when 'light grey','silver lining' -%}{%- assign hex = '#d6d3cd' -%}
+                        {%- when 'moonrock' -%}{%- assign hex = '#9c9488' -%}
+                        {%- when 'moonstruck' -%}{%- assign hex = '#c4c8c9' -%}
+                        {%- when 'lt. blue daisy','lt blue daisy','blue daisy','blue' -%}{%- assign hex = '#a9c2d6' -%}
                         {%- when 'sand' -%}{%- assign hex = '#ddd0b9' -%}
                         {%- when 'taupe' -%}{%- assign hex = '#8c8275' -%}
+                        {%- when 'desert taupe','dessert taupe' -%}{%- assign hex = '#9c8a6e' -%}
+                        {%- when 'plaza taupe' -%}{%- assign hex = '#a89478' -%}
+                        {%- when 'bright white' -%}{%- assign hex = '#fdfcfa' -%}
+                        {%- when 'off white' -%}{%- assign hex = '#f7f2ea' -%}
+                        {%- when 'cream','creme' -%}{%- assign hex = '#f2e8d5' -%}
+                        {%- when 'linen' -%}{%- assign hex = '#eae0cd' -%}
+                        {%- when 'birch' -%}{%- assign hex = '#ded0b8' -%}
+                        {%- when 'blush','nude/blush','nude' -%}{%- assign hex = '#e3c9bb' -%}
+                        {%- when 'dove','turtle dove','turtledove','turtole dove' -%}{%- assign hex = '#c7c2b8' -%}
+                        {%- when 'drizzle' -%}{%- assign hex = '#b8bcc0' -%}
+                        {%- when 'peyote' -%}{%- assign hex = '#cbb999' -%}
+                        {%- when 'tofu' -%}{%- assign hex = '#ece4d3' -%}
                         {%- else -%}{%- assign hex = '#ddd0b9' -%}
                       {%- endcase -%}
                       <label class="mp__swatch {% if option.selected_value == value %}is-active{% endif %}" title="{{ value | escape }}">
