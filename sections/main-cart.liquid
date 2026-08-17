@@ -48,6 +48,14 @@
         </div>
 
         <aside class="cart-summary">
+          {%- liquid
+            assign gst_amount = cart.items_subtotal_price | times: 0.18 | round
+            assign delivery_cents = section.settings.delivery_amount | times: 100
+            assign grand_total = cart.items_subtotal_price | plus: gst_amount
+            if section.settings.delivery_label != blank
+              assign grand_total = grand_total | plus: delivery_cents
+            endif
+          -%}
           <h2 class="cart-summary__title">{{ section.settings.summary_title }}</h2>
           <div class="cart-summary__row">
             <span>Subtotal ({{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }})</span>
@@ -56,11 +64,10 @@
           {%- if section.settings.delivery_label != blank -%}
             <div class="cart-summary__row">
               <span>{{ section.settings.delivery_label }}</span>
-              <span>{{ section.settings.delivery_value }}</span>
+              <span>{{ delivery_cents | money }}</span>
             </div>
           {%- endif -%}
           {%- if section.settings.tax_label != blank -%}
-            {%- assign gst_amount = cart.items_subtotal_price | times: 0.18 | round -%}
             <div class="cart-summary__row">
               <span>{{ section.settings.tax_label }}</span>
               <span>{{ gst_amount | money }}</span>
@@ -80,7 +87,7 @@
               <strong>Total</strong>
               <span class="cart-summary__note">(Inclusive of taxes)</span>
             </div>
-            <strong>{{ cart.total_price | money }}</strong>
+            <strong>{{ grand_total | money }}</strong>
           </div>
           <button type="submit" name="checkout" class="btn btn--block cart-summary__checkout">{{ section.settings.checkout_label }}</button>
         </aside>
@@ -161,7 +168,7 @@
     { "type": "header", "content": "Order summary" },
     { "type": "text", "id": "summary_title", "label": "Summary title", "default": "Order Summary" },
     { "type": "text", "id": "delivery_label", "label": "Delivery label", "default": "Delivery" },
-    { "type": "text", "id": "delivery_value", "label": "Delivery value", "default": "₹150" },
+    { "type": "number", "id": "delivery_amount", "label": "Delivery amount (₹)", "default": 150, "info": "Added into the Total below, along with GST." },
     { "type": "text", "id": "tax_label", "label": "Tax label", "default": "GST (18%)", "info": "Amount shown next to this label is calculated automatically as 18% of the cart subtotal — it is not editable here." },
     { "type": "textarea", "id": "address", "label": "Address", "default": "Thakor Industrial Estate, Premier Road, Khalai Village, Vidyavihar West, Vidyavihar, Mumbai, Maharashtra 400086" },
     { "type": "url", "id": "address_link", "label": "Change address link" },
