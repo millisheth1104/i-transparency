@@ -67,6 +67,17 @@
         if (mobileQuery.matches) return;
         activate(el.getAttribute('data-panel'));
       });
+      /* Mobile has no hover, so without this a tap on a category (e.g.
+         "Bedspreads") just followed the link's href straight to that
+         collection page -- the accordion never showed its sub-collections,
+         only ever displaying the first category's (the initially-active
+         one) content. Tapping now switches the panel instead, matching
+         what hover already does on desktop. */
+      el.addEventListener('click', function (e) {
+        if (!mobileQuery.matches) return;
+        e.preventDefault();
+        activate(el.getAttribute('data-panel'));
+      });
     });
 
     // Exposed so a sibling wrap can shut this one instantly once IT commits

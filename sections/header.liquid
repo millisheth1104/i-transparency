@@ -73,7 +73,12 @@
   @media (max-width: 990px) {
     .site-nav { position: fixed; inset: 72px 0 auto 0; flex-direction: column; gap: 0; background: var(--cream); transform: none; padding: 10px 24px 24px; border-bottom: 1px solid var(--line); display: none; }
     .site-nav.is-open { display: flex; }
-    .site-nav__link { padding: 14px 0; border-bottom: 1px solid rgba(216,204,182,.4); }
+    /* display:block so the border-bottom divider spans the full drawer
+       width -- without it, a plain <a> only takes its text's own width, so
+       the divider was a short underline hugging just the word instead of a
+       proper full-width row separator (inconsistent with the Shop row,
+       which gets full width from .mega-menu__trigger's own flex rule). */
+    .site-nav__link { display: block; width: 100%; padding: 14px 0; border-bottom: 1px solid rgba(216,204,182,.4); }
     .site-header__burger { display: flex; }
 
     /* Icons were only ~20x27px of real tappable area (raw SVG, no padding) --
