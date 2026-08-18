@@ -117,7 +117,11 @@ h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; color: var(--
 .product-card__media-frame { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease, transform .45s ease; }
 .product-card__media-frame.is-active { opacity: 1; }
 .product-card__media-frame:not(.is-active) { pointer-events: none; }
-.product-card__wish { position: absolute; top: 14px; right: 14px; width: auto; height: auto; border-radius: 0; background: none; border: none; padding: 0; color: var(--brown); display: flex; align-items: center; justify-content: center; }
+/* Tap target was just the raw 18x18 SVG (no padding at all) -- padding
+   here plus an equal reduction in the top/right offset keeps the icon
+   drawn at the exact same spot while growing the actual tappable box
+   around it, same trick used on the cart/carousel controls. */
+.product-card__wish { position: absolute; top: 4px; right: 4px; width: auto; height: auto; padding: 10px; border-radius: 0; background: none; border: none; color: var(--brown); display: flex; align-items: center; justify-content: center; }
 .product-card__wish svg { width: 18px; height: 18px; }
 .product-card__body { display: flex; flex-direction: column; flex: 1; padding: 16px 0 0; }
 .product-card__title { margin: 0 0 6px; font-family: var(--font-ui); font-weight: 500; font-size: 21px; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); line-height: 1.3; }
