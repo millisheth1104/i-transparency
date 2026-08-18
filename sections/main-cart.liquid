@@ -141,6 +141,11 @@
   @media (max-width: 600px) {
     .cart-item { grid-template-columns: 110px 1fr; gap: 18px; }
     .cart-summary { padding: 28px; }
+    /* Negative margin offsets the added padding so the icon/text stays in
+       the same visual spot -- only the tappable box grows, matching a
+       real thumb's contact area instead of just the glyph's pixels. */
+    .qty__btn { padding: 10px; margin: -10px; }
+    .cart-item__remove { display: inline-flex; padding: 10px; margin: -10px; }
   }
 </style>
 
