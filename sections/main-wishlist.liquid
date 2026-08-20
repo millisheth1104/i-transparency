@@ -69,7 +69,12 @@
   .wishlist-item .product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
   .wishlist-item .product-card:hover .product-card__media img { transform: scale(1.03); }
   .wishlist-item .product-card__body { padding: 16px 0 0; display: flex; flex-direction: column; flex: 1; }
-  .wishlist-item .product-card__title { font-size: 21px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; }
+  /* Reserve height for the tallest possible title (3 lines) so a short
+     title ("Bedspread") and a long one ("Duvet Cover Set") don't leave
+     the meta/price/Sold Out rows below starting at different heights
+     across the row -- same fix already applied to the Shop grid's cards
+     in sections/main-collection.liquid. */
+  .wishlist-item .product-card__title { font-size: 21px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; min-height: calc(21px * 1.3 * 3); }
   .wishlist-item .product-card__meta { font-size: 12px; letter-spacing: .3px; color: #8c8c8c; line-height: 1.5; margin: 0; }
   .wishlist-item .product-card__meta:first-of-type { color: #5f5246; }
   .wishlist-item .product-card__price { display: block; font-size: 19px; font-weight: 500; margin: 10px 0 16px; margin-top: auto; }
