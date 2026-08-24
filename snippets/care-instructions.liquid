@@ -45,40 +45,29 @@
   endfor
 -%}
 
-{%- if group == 'oscar_linen_statement' -%}
-  {%- capture oscar_icons -%}
-    wash:40:WASH AT 40 DEGREE
-    hang-dry:HANG DRY
-    iron:2:IRON ON MEDIUM HEAT
-    no-bleach:DO NOT BLEACH
-  {%- endcapture -%}
-  {% render 'care-label', layout: 'rows', title: 'WASHING INSTRUCTIONS', icons: oscar_icons, category: 'Oscar DB & Oscar Snug, Linen & Thread and Statement Tape' %}
-
-{%- elsif group == 'bamboo_comforter' -%}
-  {%- capture bamboo_lines -%}
-    Machine Wash Cold on
-    Gentle Cycle.
-    Do Not Bleach.
-    Tumble Dry Low.
-    Remove Promptly.
-  {%- endcapture -%}
-  {% render 'care-label', layout: 'centered', lines: bamboo_lines, center_icons: 'wash-gentle,no-bleach,tumble-dry-low', category: 'bamboo comforter' %}
-
-{%- elsif group == 'natura' -%}
-  {%- capture natura_lines -%}
-    Machine Wash Cold on
-    Gentle Cycle.
-    Do Not Bleach.
-    Tumble Dry Low.
-    Remove Promptly.
-    Iron on Medium Heat
-    When Needed.
-  {%- endcapture -%}
-  {% render 'care-label', layout: 'centered', lines: natura_lines, center_icons: 'wash-gentle,no-bleach,tumble-dry-low,iron:2', category: 'Natura' %}
-
-{%- elsif group != blank -%}
+{%- if group != blank -%}
   <ul class="care-list">
     {%- case group -%}
+
+      {%- when 'oscar_linen_statement' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash', temp: 40 %}</span><span class="care-item__label">Wash at 40&#176;C</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'hang-dry' %}</span><span class="care-item__label">Hang dry</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 2 %}</span><span class="care-item__label">Iron on medium heat</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+
+      {%- when 'bamboo_comforter' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash-gentle' %}</span><span class="care-item__label">Machine wash cold, gentle cycle</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'tumble-dry-low' %}</span><span class="care-item__label">Tumble dry low</span></li>
+      <li class="care-item care-item--text-only"><span class="care-item__label">Remove promptly</span></li>
+
+      {%- when 'natura' -%}
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash-gentle' %}</span><span class="care-item__label">Machine wash cold, gentle cycle</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'no-bleach' %}</span><span class="care-item__label">Do not bleach</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'tumble-dry-low' %}</span><span class="care-item__label">Tumble dry low</span></li>
+      <li class="care-item care-item--text-only"><span class="care-item__label">Remove promptly</span></li>
+      <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'iron', dots: 2 %}</span><span class="care-item__label">Iron on medium heat, when needed</span></li>
+
 
       {%- when 'terra_weave' -%}
       <li class="care-item"><span class="care-item__icon">{% render 'care-icon', type: 'wash' %}</span><span class="care-item__label">Machine wash in cold water</span></li>
