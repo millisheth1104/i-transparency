@@ -32,6 +32,12 @@
         assign group = 'knitscape_soft'
       when 'knitscape-bc'
         assign group = 'knitscape_bedcover'
+      when 'oscar-db', 'linen-thread', 'statement-tape-dc'
+        assign group = 'oscar_linen_statement'
+      when 'bamboo', 'bamboo-cf'
+        assign group = 'bamboo_comforter'
+      when 'natura'
+        assign group = 'natura'
     endcase
     if group != blank
       break
@@ -39,7 +45,38 @@
   endfor
 -%}
 
-{%- if group != blank -%}
+{%- if group == 'oscar_linen_statement' -%}
+  {%- capture oscar_icons -%}
+    wash:40:WASH AT 40 DEGREE
+    hang-dry:HANG DRY
+    iron:2:IRON ON MEDIUM HEAT
+    no-bleach:DO NOT BLEACH
+  {%- endcapture -%}
+  {% render 'care-label', layout: 'rows', title: 'WASHING INSTRUCTIONS', icons: oscar_icons, category: 'Oscar DB & Oscar Snug, Linen & Thread and Statement Tape' %}
+
+{%- elsif group == 'bamboo_comforter' -%}
+  {%- capture bamboo_lines -%}
+    Machine Wash Cold on
+    Gentle Cycle.
+    Do Not Bleach.
+    Tumble Dry Low.
+    Remove Promptly.
+  {%- endcapture -%}
+  {% render 'care-label', layout: 'centered', lines: bamboo_lines, center_icons: 'wash-gentle,no-bleach,tumble-dry-low', category: 'bamboo comforter' %}
+
+{%- elsif group == 'natura' -%}
+  {%- capture natura_lines -%}
+    Machine Wash Cold on
+    Gentle Cycle.
+    Do Not Bleach.
+    Tumble Dry Low.
+    Remove Promptly.
+    Iron on Medium Heat
+    When Needed.
+  {%- endcapture -%}
+  {% render 'care-label', layout: 'centered', lines: natura_lines, center_icons: 'wash-gentle,no-bleach,tumble-dry-low,iron:2', category: 'Natura' %}
+
+{%- elsif group != blank -%}
   <ul class="care-list">
     {%- case group -%}
 

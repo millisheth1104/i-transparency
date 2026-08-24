@@ -1,0 +1,126 @@
+{%- comment -%}
+  Printed-care-label style washing-instructions card. Two category-specific
+  layout variants, sharing one white content area + dark footer strip shell:
+
+    layout: 'rows'     — left-aligned heading + icon/text rows (e.g. Oscar)
+    layout: 'centered' — centered stacked text lines + a bottom icon row
+                          (e.g. Bamboo Comforter, Natura)
+
+  Params:
+    layout    'rows' | 'centered'
+    category  footer text (product family name)
+    title     heading text, rows layout only (e.g. "WASHING INSTRUCTIONS")
+    icons     rows layout only — one "icon-token:LABEL TEXT" pair per line,
+              e.g. "wash:40:WASH AT 40 DEGREE\nhang-dry:HANG DRY"
+    lines     centered layout only — one instruction line per line
+    center_icons  centered layout only — comma-separated icon tokens,
+                  e.g. "wash-gentle,no-bleach,tumble-dry-low,iron:2"
+
+  Icon token grammar: "type" or "type:param" — param is the wash
+  temperature for `wash`/`wash-gentle`, or the heat-dot count for `iron`.
+  Rendering itself is delegated to snippets/care-icon.liquid (shared with
+  the PDP's plain-list Material care accordion) so both places stay
+  visually consistent and any icon fix only has to happen once.
+{%- endcomment -%}
+
+<div class="care-label care-label--{{ layout }}">
+  <div class="care-label__body">
+    {%- if layout == 'rows' -%}
+      {%- if title != blank -%}<h3 class="care-label__title">{{ title }}</h3>{%- endif -%}
+      <ul class="care-label__rows">
+        {%- assign rows = icons | newline_to_br | split: '<br />' -%}
+        {%- for row in rows -%}
+          {%- assign row = row | strip -%}
+          {%- if row != blank -%}
+            {%- assign parts = row | split: ':' -%}
+            {%- assign icon_type = parts[0] -%}
+            {%- if parts.size == 3 -%}
+              {%- assign icon_param = parts[1] -%}
+              {%- assign row_text = parts[2] -%}
+            {%- else -%}
+              {%- assign icon_param = blank -%}
+              {%- assign row_text = parts[1] -%}
+            {%- endif -%}
+            <li class="care-label__row">
+              <span class="care-label__row-icon">
+                {%- if icon_type == 'wash' or icon_type == 'wash-gentle' -%}
+                  {% render 'care-icon', type: icon_type, temp: icon_param %}
+                {%- elsif icon_type == 'iron' -%}
+                  {% render 'care-icon', type: icon_type, dots: icon_param %}
+                {%- else -%}
+                  {% render 'care-icon', type: icon_type %}
+                {%- endif -%}
+              </span>
+              <span class="care-label__row-text">{{ row_text }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <div class="care-label__lines">
+        {%- assign text_lines = lines | newline_to_br | split: '<br />' -%}
+        {%- for line in text_lines -%}
+          {%- assign line = line | strip -%}
+          {%- if line != blank -%}<p class="care-label__line">{{ line }}</p>{%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="care-label__icons">
+        {%- assign icon_tokens = center_icons | split: ',' -%}
+        {%- for token in icon_tokens -%}
+          {%- assign token = token | strip -%}
+          {%- assign tparts = token | split: ':' -%}
+          {%- assign ttype = tparts[0] -%}
+          {%- assign tparam = tparts[1] -%}
+          <span class="care-label__icon">
+            {%- if ttype == 'wash' or ttype == 'wash-gentle' -%}
+              {% render 'care-icon', type: ttype, temp: tparam %}
+            {%- elsif ttype == 'iron' -%}
+              {% render 'care-icon', type: ttype, dots: tparam %}
+            {%- else -%}
+              {% render 'care-icon', type: ttype %}
+            {%- endif -%}
+          </span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="care-label__footer">{{ category }}</div>
+</div>
+
+<style>
+  /* Minimal, monochrome, printed-care-label look on purpose -- no rounded
+     corners, shadows, gradients or color, per the exact reference design. */
+  .care-label { background: #fff; border: 1px solid #e7e3dc; max-width: 420px; }
+  .care-label__body { padding: 36px 32px 30px; }
+  .care-label__footer { background: #1a1a1a; color: #b9b9b9; text-align: center; font-family: var(--font-ui); font-size: 12px; letter-spacing: .04em; padding: 12px 16px; }
+
+  /* Rows layout (e.g. Oscar / Linen & Thread / Statement Tape) */
+  .care-label__title { font-family: var(--font-ui); font-weight: 700; font-size: 24px; letter-spacing: .02em; text-transform: uppercase; color: #3a3a3a; margin: 0 0 34px; }
+  .care-label__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 30px; }
+  .care-label__row { display: flex; align-items: center; gap: 18px; }
+  .care-label__row-icon { flex: none; display: inline-flex; color: #4a4a4a; }
+  .care-label__row-icon svg { width: 34px; height: 34px; }
+  .care-label__row-text { font-family: var(--font-ui); font-weight: 600; font-size: 20px; letter-spacing: .01em; text-transform: uppercase; color: #3a3a3a; line-height: 1.2; }
+
+  /* Centered layout (e.g. Bamboo Comforter / Natura) */
+  .care-label--centered .care-label__body { text-align: center; padding-top: 40px; }
+  .care-label__lines { margin: 0 0 40px; }
+  .care-label__line { font-family: var(--font-ui); font-weight: 400; font-size: 22px; line-height: 1.7; color: #232323; margin: 0; }
+  .care-label__icons { display: flex; align-items: center; justify-content: center; gap: 28px; }
+  .care-label__icon { display: inline-flex; color: #2b2b2b; }
+  .care-label__icon svg { width: 30px; height: 30px; }
+
+  @media (max-width: 600px) {
+    .care-label { max-width: 100%; }
+    .care-label__body { padding: 26px 22px 22px; }
+    .care-label--centered .care-label__body { padding-top: 28px; }
+    .care-label__title { font-size: 19px; margin-bottom: 24px; }
+    .care-label__rows { gap: 20px; }
+    .care-label__row-icon svg { width: 26px; height: 26px; }
+    .care-label__row-text { font-size: 15px; }
+    .care-label__line { font-size: 17px; line-height: 1.55; }
+    .care-label__lines { margin-bottom: 26px; }
+    .care-label__icons { gap: 18px; }
+    .care-label__icon svg { width: 24px; height: 24px; }
+  }
+</style>
