@@ -233,9 +233,10 @@
         "c1": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/TERRAWEAVE_BC_W190104_D_a03cc610-2b56-4f57-90a7-ffff7870773e.jpg",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_26_2026_12_53_17_PM.png",
             "title": "Bed covers",
             "link": "shopify://collections/bedcover",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -247,6 +248,7 @@
             "image": "shopify://shop_images/comforters_category.jpg",
             "title": "Comforters",
             "link": "shopify://collections/comforters",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -258,6 +260,7 @@
             "image": "shopify://shop_images/throws_category.png",
             "title": "Throws",
             "link": "shopify://collections/throws",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -269,6 +272,7 @@
             "image": "shopify://shop_images/KNITSCAPE-CC-K3800101-A-2.jpg",
             "title": "Cushion Covers",
             "link": "shopify://collections/pillows",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -280,6 +284,7 @@
             "image": "shopify://shop_images/ORNATE_DB_resized.jpg",
             "title": "Bedsheet",
             "link": "shopify://collections/frontpage",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
@@ -291,6 +296,7 @@
             "image": "shopify://shop_images/SIGNATURE_DC_D300102_A.jpg",
             "title": "Duvet Cover",
             "link": "shopify://collections/comforters",
+            "image_fit": "cover",
             "image_radius": 40,
             "image_border_width": 0,
             "image_border_color": "#5a5148"
