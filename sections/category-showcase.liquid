@@ -10,7 +10,7 @@
           <div class="ccs-card__clip" style="border-radius:{{ block.settings.image_radius }}px;border:{{ block.settings.image_border_width }}px solid {{ block.settings.image_border_color }}">
             <div class="ccs-card__media">
               {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" width="1200" height="900" loading="lazy" style="object-fit:{{ block.settings.image_fit | default: 'contain' }}">
+                <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.title | escape }}" width="1200" height="900" loading="lazy" style="object-fit:{{ block.settings.image_fit | default: 'cover' }}">
               {%- else -%}
                 {{ 'collection-1' | placeholder_svg_tag }}
               {%- endif -%}
@@ -207,7 +207,7 @@
         { "type": "text", "id": "title", "label": "Title", "default": "Category" },
         { "type": "url", "id": "link", "label": "Link" },
         { "type": "header", "content": "Image style" },
-        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [ { "value": "cover", "label": "Fill (crop to fit)" }, { "value": "contain", "label": "Contain (show full image, no crop)" } ], "default": "contain" },
+        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [ { "value": "cover", "label": "Fill (crop to fit)" }, { "value": "contain", "label": "Contain (show full image, no crop)" } ], "default": "cover" },
         { "type": "range", "id": "image_radius", "label": "Image border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 14 },
         { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
         { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#5a5148" }
