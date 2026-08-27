@@ -422,3 +422,32 @@ Repeatedly returned "This connector requires authentication" and later **disappe
 ### Pending / blocked at session end
 - **Printed-category featured image**: client sent a "Tree Line King Bed Sheet Set" card screenshot — one specific shared styled bed photo should become the **first image on every Printed product whose media contains that exact photo** (scope confirmed via AskUserQuestion: that one shared file, not per-product bed shots, not Tree Line alone). Needs `productReorderMedia` → blocked purely on the connector being unavailable. Note the photo exists only in Shopify (not in the local `4.1 Printed-*` folder, which holds only Signature images), so identifying it requires querying each Printed product's media.
 - An abandoned `image_fit` (cover/contain) select on `sections/category-showcase.liquid` is **stashed** (`git stash` entry: "abandoned image_fit setting on category-showcase (superseded by Shopify admin rewrite)") — the client never confirmed wanting it and Shopify's admin has since rewritten that file. Drop the stash unless it comes up again.
+
+## 2026-08-27 session — Shopify MCP wiring (build log)
+
+**Task**: connect Shopify through MCP.
+
+**Starting state**: no Shopify MCP configured anywhere. `~/.claude.json` had only `greencap-wp`; no project `.mcp.json` existed. The `graphql_query`/`graphql_mutation`/`search_docs_chunks` tools used in every prior session came from the **claude.ai Shopify connector** (OAuth), not a local server — that connector is not attached to this session, which is why admin tools are absent. `mcp__mcp-registry__search_mcp_registry(["shopify","ecommerce",...])` returns **zero results** — there is no Shopify entry in the connector registry reachable from here.
+
+**What was added** — project-scoped `.mcp.json` at repo root, both servers probed live before committing to the config:
+
+1. `shopify-dev` — `cmd /c npx -y @shopify/dev-mcp@latest` (v1.14.5), `env.LIQUID=true`, `POLARIS_UNIFIED=false`. No auth. Verified via a hand-rolled stdio JSON-RPC probe (`initialize` → `notifications/initialized` → `tools/list` piped into the binary); exposes: `learn_shopify_api`, `search_docs_chunks`, `validate_component_codeblocks`, `validate_graphql_codeblocks`, **`validate_theme`**. That last one is the valuable one for this repo — Theme Check over Liquid without a local Shopify CLI login.
+2. `shopify-storefront` — `type: http`, `https://0ww0zm-c1.myshopify.com/api/mcp`. No auth, public per-store endpoint. `POST tools/list` → 200; exposes `search_catalog`, `get_product_details`, `get_cart`, `update_cart`, `search_shop_policies_and_faqs`. Read-only catalog view of the live store, useful for confirming what a customer actually sees.
+
+**Deliberately NOT covered**: admin writes (`productUpdate`, `metafieldsSet`, `productCreateMedia`, `shopPolicyUpdate`, staged uploads). Neither of the two servers above can write. That path needs either the claude.ai Shopify connector re-authorized, or a custom app Admin API access token — both require an interactive OAuth/admin step this session cannot perform.
+
+**Gotcha for future sessions**: `.mcp.json` is **not** in `.gitignore` (only `.claude/` is), so it will land in `origin/main` on the next push and therefore in the GitHub-synced theme. Shopify's theme sync ignores unrecognized root files so it's harmless, but be aware it is repo-visible. It was left uncommitted this session.
+
+**Windows note**: `command: "cmd"`, `args: ["/c","npx",...]` — a bare `npx` command string is unreliable as an MCP stdio launcher on Windows.
+
+### 2026-08-26, same session — Printed-category first-image audit (derived without the Admin API)
+Client wanted "this kind of image" (a **styled dressed-bed shot on white** — angled bed, pillows, folded-back duvet, like Tree Line King's card) as the first image across the Printed collection. **The Shopify MCP connector was unavailable for this entire investigation**, so everything below was derived from the *public storefront* instead: `fetch('/collections/digital-prints/products.json?limit=250')` returns all 45 products with full `images[]` (src, width, height) — no admin auth needed. Then `curl` each candidate image to a temp dir and view it with the **Read tool** (Read renders images; the Browser pane's `computer{screenshot}` was unavailable as usual). This combination is a complete substitute for visual catalog auditing when the connector is down — remember it.
+- **Per-family first-image suffix mapping (the key finding — suffix meaning is NOT consistent across families, do not generalize):**
+  - **Essence (26 products)**: first = `-A-2` = *flat top-down* bed shot ❌. The styled dressed-bed shot is **`-A-4`** ✓ (verified on Forest Path, Sandstone, Heritage Trail).
+  - **Reflect (4)**: first = `-A-2` = flat top-down ❌. Styled shot is **`-A-4`** ✓ (verified on Diamond Tile).
+  - **Plush (6)**: first = `-A-3` = dressed bed but **in-room** (headboard, wall panelling) — already a styled bed, and its `-A-4` is a **pillow-pair detail**, so no on-white equivalent exists.
+  - **Ornate (8)**: first = `-A-5` = dressed bed in-room — same situation; its `-A-4` is also a pillow-pair detail.
+  - **Tree Line King (Essence, 1)**: first = `-A-1`, which is **byte-identical (same MD5) to its own `-A-4`** — a duplicate upload. This is the one product that was already correct, and is the reference the client screenshotted. (It was the documented "no real bed photo" exception from the 2026-08-11 session; photos have since been uploaded, which is why it now differs from its family.)
+- **Actionable change: 30 products (26 Essence + 4 Reflect) → promote `-A-4` to position 0.** Plush/Ornate deliberately untouched (photography gap, not a reordering problem). Reflect Chain Link has two colorways (A + B, 10 images) — only `A-4` goes first, leave `B-4`.
+- **Client chose to do the reorder manually**; supplied the 30 direct admin URLs (`https://admin.shopify.com/store/0ww0zm-c1/products/<id>`). Product ids are in the storefront `products.json` payload, so admin links can be built without the Admin API.
+- **Process lesson**: an AskUserQuestion option can rest on a false premise. The client first confirmed "that one shared photo file", but the data showed **no image is shared across Printed products** — each has its own files. Reporting the contradiction with the actual numbers (rather than silently picking a different interpretation and bulk-editing 45 products) is what got to the real intent, which turned out to be *style* of shot, not a specific file.
