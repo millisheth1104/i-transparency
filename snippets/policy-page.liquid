@@ -267,35 +267,67 @@
       if (!el.textContent.trim() && !el.querySelector('img')) el.remove();
     });
 
-    /* Merchant text numbers its own sections ("1. General", "2. Pricing").
-       Promote those lines to real <h2>s so the page has a document outline
-       and something to anchor the table of contents to. */
-    var HEADING = /^\s*(\d{1,2})\.\s+(\S.*)$/;
+    /* Promote the merchant's own section labels to real <h2>s so each page
+       gets a document outline and something to anchor the contents list to.
+       Two conventions are in use across the four policies and both must
+       work: Terms/Privacy number their sections ("1. General", "2. Pricing"),
+       while Shipping/Returns use unnumbered Title Case ("Order Tracking",
+       "Return Shipping"). */
+    var NUMBERED = /^\s*(\d{1,2})\.\s+(\S.*)$/;
+    var CONTACT_LINE = /^\s*(e-?mail|phone|tel|telephone|mobile|contact number)\s*:/i;
+    var CONTACT_HEAD = /customer care\s*$/i;
     var headings = [];
+    var autoNum = 0;
+
+    function isHeading(text) {
+      if (text.length > 64) return false;
+      if (/[.;,:]$/.test(text)) return false;        // a sentence, not a label
+      if (/^\s*[-–•]/.test(text)) return false;      // bullet line
+      if (CONTACT_LINE.test(text) || CONTACT_HEAD.test(text)) return false;
+
+      var words = text.replace(/^\d{1,2}\.\s*/, '').split(/\s+/).filter(Boolean);
+      if (!words.length || words.length > 9) return false;
+
+      /* Title Case is required for numbered candidates too, not just
+         unnumbered ones -- it's the only thing that separates a real
+         "3. Pricing" heading from a numbered *list item* like
+         "1. The product was received in a damaged condition; or", which is
+         short enough and unpunctuated enough to slip past every other test.
+         Short words ("of", "&", "Us") carry no signal either way, so only
+         words over 3 characters are counted. */
+      var sig = words.filter(function (w) { return w.length > 3; });
+      if (!sig.length) return false;
+      var caps = sig.filter(function (w) { return /^[A-Z]/.test(w); }).length;
+      return caps / sig.length >= 0.6;
+    }
 
     Array.prototype.slice.call(rte.children).forEach(function (el) {
-      var text = el.textContent.trim();
-      var m = text.match(HEADING);
-      /* A numbered *sentence* is prose, not a heading -- real headings here
-         are short label-like phrases, so require both brevity and no
-         sentence-ending punctuation before promoting. */
-      if (!m || text.length > 70 || /[.;:]$/.test(text)) return;
+      var text = el.textContent.trim().replace(/\s+/g, ' ');
+      if (!isHeading(text)) return;
+
+      var m = text.match(NUMBERED);
+      var label = m ? m[2] : text;
+      autoNum += 1;
+      /* Number the badges sequentially rather than reusing the merchant's own
+         digits -- the unnumbered policies have none, and it keeps the badge
+         consistent with the reader's position on every page. */
+      var display = autoNum < 10 ? '0' + autoNum : String(autoNum);
 
       var h2 = document.createElement('h2');
       h2.className = 'policy__h2';
-      h2.id = 'policy-section-' + m[1];
+      h2.id = 'policy-section-' + autoNum;
 
       var num = document.createElement('span');
       num.className = 'policy__h2-num';
-      num.textContent = m[1].length < 2 ? '0' + m[1] : m[1];
+      num.textContent = display;
 
-      var label = document.createElement('span');
-      label.textContent = m[2];
+      var labelEl = document.createElement('span');
+      labelEl.textContent = label;
 
       h2.appendChild(num);
-      h2.appendChild(label);
+      h2.appendChild(labelEl);
       el.replaceWith(h2);
-      headings.push({ id: h2.id, num: num.textContent, label: m[2], el: h2 });
+      headings.push({ id: h2.id, num: display, label: label, el: h2 });
     });
 
     /* Consecutive "- item;" lines are a bullet list in the source text but
@@ -353,9 +385,6 @@
        preceding "Sarom Customer Care" line) into a callout card. Deliberately
        matched on that label shape rather than "contains an email", so prose
        that merely mentions the address mid-paragraph stays as prose. */
-    var CONTACT_LINE = /^\s*(e-?mail|phone|tel|telephone|mobile|contact number)\s*:/i;
-    var CONTACT_HEAD = /customer care\s*$/i;
-
     Array.prototype.slice.call(rte.children).forEach(function (el) {
       if (el.tagName !== 'DIV' || el.classList.contains('policy__callout')) return;
       var text = el.textContent.trim();
