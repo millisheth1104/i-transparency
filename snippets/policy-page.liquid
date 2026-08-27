@@ -97,6 +97,13 @@
     color: var(--brown);
     margin: 0;
   }
+  .policy__meta {
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    color: var(--taupe);
+    margin: 18px 0 0;
+  }
 
   /* ---- Two-column layout (sticky TOC + prose) ------------------------ */
   .template-policy .shopify-policy__body {
@@ -276,14 +283,30 @@
     var NUMBERED = /^\s*(\d{1,2})\.\s+(\S.*)$/;
     var CONTACT_LINE = /^\s*(e-?mail|phone|tel|telephone|mobile|contact number)\s*:/i;
     var CONTACT_HEAD = /customer care\s*$/i;
+    var LAST_UPDATED = /^\s*(?:\d{1,2}\.\s*)?last\s+updated\s*[:\-–]/i;
     var headings = [];
     var autoNum = 0;
+
+    /* "Last Updated: August 2026" is a date stamp, not a section -- lift it
+       up beside the page title as a meta line so it reads as provenance
+       (which is what people scan a legal page's header for) instead of
+       becoming the first entry in the contents list. */
+    Array.prototype.slice.call(rte.children).forEach(function (el) {
+      if (!LAST_UPDATED.test(el.textContent.trim())) return;
+      var meta = document.createElement('p');
+      meta.className = 'policy__meta';
+      meta.textContent = el.textContent.trim().replace(/^\s*\d{1,2}\.\s*/, '');
+      var titleBox = document.querySelector('.shopify-policy__title');
+      if (titleBox) titleBox.appendChild(meta);
+      el.remove();
+    });
 
     function isHeading(text) {
       if (text.length > 64) return false;
       if (/[.;,:]$/.test(text)) return false;        // a sentence, not a label
       if (/^\s*[-–•]/.test(text)) return false;      // bullet line
       if (CONTACT_LINE.test(text) || CONTACT_HEAD.test(text)) return false;
+      if (LAST_UPDATED.test(text)) return false;
 
       var words = text.replace(/^\d{1,2}\.\s*/, '').split(/\s+/).filter(Boolean);
       if (!words.length || words.length > 9) return false;
