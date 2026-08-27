@@ -39,18 +39,24 @@
 
     <div class="policy__related">
       <p class="policy__related-label">Other policies</p>
+      {%- comment -%} These are top-level `shop` properties (shop.terms_of_service),
+        NOT members of the shop.policies array -- shop.policies.terms_of_service
+        silently resolves to nil and renders an empty list. Labels are written
+        out here rather than using each policy's own .title so they match the
+        wording already used in the footer ("Returns & Replacement Policy"
+        rather than Shopify's default "Refund policy"). {%- endcomment -%}
       <ul class="policy__related-list">
-        {%- if shop.policies.terms_of_service != blank -%}
-          <li><a href="{{ shop.policies.terms_of_service.url }}">Terms &amp; Conditions</a></li>
+        {%- if shop.terms_of_service != blank -%}
+          <li><a href="{{ shop.terms_of_service.url }}">Terms &amp; Conditions</a></li>
         {%- endif -%}
-        {%- if shop.policies.privacy_policy != blank -%}
-          <li><a href="{{ shop.policies.privacy_policy.url }}">Privacy Policy</a></li>
+        {%- if shop.privacy_policy != blank -%}
+          <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
         {%- endif -%}
-        {%- if shop.policies.shipping_policy != blank -%}
-          <li><a href="{{ shop.policies.shipping_policy.url }}">Shipping Policy</a></li>
+        {%- if shop.shipping_policy != blank -%}
+          <li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>
         {%- endif -%}
-        {%- if shop.policies.refund_policy != blank -%}
-          <li><a href="{{ shop.policies.refund_policy.url }}">Returns &amp; Replacement Policy</a></li>
+        {%- if shop.refund_policy != blank -%}
+          <li><a href="{{ shop.refund_policy.url }}">Returns &amp; Replacement Policy</a></li>
         {%- endif -%}
       </ul>
     </div>
@@ -311,13 +317,54 @@
       run.slice(1).forEach(function (n) { n.remove(); });
     }
 
-    /* Group the trailing contact lines (email / phone) into a callout so the
-       page ends on something that reads as a card, not another paragraph. */
+    /* The merchant's text has the email and phone number as plain text, not
+       links -- make them tappable wherever they appear (including mid
+       sentence), since a phone number you can't tap on a phone is the whole
+       point of the page for anyone actually trying to reach support. */
+    var EMAIL = /([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi;
+    var PHONE = /(\+\d{1,3}[-\s]?\d[\d\s-]{6,}\d)/g;
+
+    function linkify(root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+      var nodes = [];
+      var n;
+      while ((n = walker.nextNode())) {
+        /* Skip text already inside a link, or we'd nest <a> inside <a>. */
+        if (n.parentElement.closest('a')) continue;
+        if (EMAIL.test(n.nodeValue) || PHONE.test(n.nodeValue)) nodes.push(n);
+        EMAIL.lastIndex = 0;
+        PHONE.lastIndex = 0;
+      }
+      nodes.forEach(function (node) {
+        var html = node.nodeValue
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(EMAIL, '<a href="mailto:$1">$1</a>')
+          .replace(PHONE, function (match) {
+            return '<a href="tel:' + match.replace(/[^\d+]/g, '') + '">' + match + '</a>';
+          });
+        var span = document.createElement('span');
+        span.innerHTML = html;
+        node.parentNode.replaceChild(span, node);
+      });
+    }
+    linkify(rte);
+
+    /* Group the label-style contact lines ("Email: ...", "Phone: ...", and a
+       preceding "Sarom Customer Care" line) into a callout card. Deliberately
+       matched on that label shape rather than "contains an email", so prose
+       that merely mentions the address mid-paragraph stays as prose. */
+    var CONTACT_LINE = /^\s*(e-?mail|phone|tel|telephone|mobile|contact number)\s*:/i;
+    var CONTACT_HEAD = /customer care\s*$/i;
+
     Array.prototype.slice.call(rte.children).forEach(function (el) {
-      if (el.tagName !== 'DIV') return;
-      if (!el.querySelector('a[href^="mailto:"], a[href^="tel:"]')) return;
-      if (el.previousElementSibling && el.previousElementSibling.classList.contains('policy__callout')) {
-        el.previousElementSibling.appendChild(el);
+      if (el.tagName !== 'DIV' || el.classList.contains('policy__callout')) return;
+      var text = el.textContent.trim();
+      if (text.length > 80) return;
+      if (!CONTACT_LINE.test(text) && !CONTACT_HEAD.test(text)) return;
+
+      var prev = el.previousElementSibling;
+      if (prev && prev.classList.contains('policy__callout')) {
+        prev.appendChild(el);
         return;
       }
       var box = document.createElement('div');
