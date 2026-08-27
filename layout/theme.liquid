@@ -41,6 +41,12 @@
     {%- if request.page_type == 'index' -%}
       {% render 'whatsapp-float' %}
     {%- endif -%}
+    {%- comment -%} Shopify renders /policies/* itself (no theme template
+      exists for it), so the styling/structure for those pages has to be
+      injected from the layout instead of a section. {%- endcomment -%}
+    {%- if request.page_type == 'policy' -%}
+      {% render 'policy-page' %}
+    {%- endif -%}
     {% render 'popup',
       image: settings.popup_image,
       eyebrow: settings.popup_eyebrow,

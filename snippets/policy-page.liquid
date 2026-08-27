@@ -1,0 +1,371 @@
+{%- comment -%}
+  Styling + structure for Shopify's four native policy pages
+  (/policies/terms-of-service, privacy-policy, refund-policy, shipping-policy).
+
+  These pages are rendered by Shopify itself, not by a theme template -- there
+  is no templates/policy.liquid to edit. All we get is a fixed markup shell:
+
+    main.content-for-layout
+      .shopify-policy__container
+        .shopify-policy__title > h1
+        .shopify-policy__body > .rte  <- merchant text, pasted as plain
+                                         <div><span>..</span></div> lines with
+                                         NO real heading tags at all
+
+  So: CSS below restyles the shell, and the script upgrades the flat text into
+  real semantic headings (detected from the merchant's own "1. General",
+  "2. Pricing" numbering), groups the "- " lines into real lists, and builds a
+  sticky table of contents from those headings. The related-policy links and
+  the help card come from the <template> below so their URLs are real Liquid
+  routes rather than JS-built strings.
+{%- endcomment -%}
+
+<template id="policy-extras">
+  <aside class="policy__aside">
+    <p class="policy__aside-label">On this page</p>
+    <nav class="policy__toc" aria-label="Sections"></nav>
+  </aside>
+
+  <div class="policy__foot">
+    <div class="policy__help">
+      <p class="policy__help-eyebrow">Need a hand?</p>
+      <h2 class="policy__help-title">We're here to <em>help</em></h2>
+      <p class="policy__help-text">Questions about an order, a delivery or a return — our customer care team will walk you through it.</p>
+      <div class="policy__help-actions">
+        <a class="btn" href="{{ routes.root_url }}pages/contact">Contact us</a>
+        <a class="btn btn--outline" href="{{ routes.root_url }}pages/faq">Read the FAQs</a>
+      </div>
+    </div>
+
+    <div class="policy__related">
+      <p class="policy__related-label">Other policies</p>
+      <ul class="policy__related-list">
+        {%- if shop.policies.terms_of_service != blank -%}
+          <li><a href="{{ shop.policies.terms_of_service.url }}">Terms &amp; Conditions</a></li>
+        {%- endif -%}
+        {%- if shop.policies.privacy_policy != blank -%}
+          <li><a href="{{ shop.policies.privacy_policy.url }}">Privacy Policy</a></li>
+        {%- endif -%}
+        {%- if shop.policies.shipping_policy != blank -%}
+          <li><a href="{{ shop.policies.shipping_policy.url }}">Shipping Policy</a></li>
+        {%- endif -%}
+        {%- if shop.policies.refund_policy != blank -%}
+          <li><a href="{{ shop.policies.refund_policy.url }}">Returns &amp; Replacement Policy</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style>
+  /* ---- Page shell ---------------------------------------------------- */
+  .template-policy .shopify-policy__container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter) 90px;
+    box-sizing: border-box;
+  }
+
+  /* Hero band: the plain <h1> Shopify gives us, dressed to match the rest
+     of the site's section headings (eyebrow + serif + hairline rule). */
+  .template-policy .shopify-policy__title {
+    padding: 54px 0 34px;
+    margin-bottom: 44px;
+    border-bottom: 1px solid var(--line);
+  }
+  .template-policy .shopify-policy__title::before {
+    content: 'Legal';
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 16px;
+  }
+  .template-policy .shopify-policy__title h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.08;
+    color: var(--brown);
+    margin: 0;
+  }
+
+  /* ---- Two-column layout (sticky TOC + prose) ------------------------ */
+  .template-policy .shopify-policy__body {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .template-policy .shopify-policy__body > .rte { min-width: 0; }
+
+  .policy__aside { position: sticky; top: 118px; }
+  .policy__aside-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin: 0 0 16px;
+  }
+  .policy__toc { display: flex; flex-direction: column; gap: 2px; }
+  .policy__toc a {
+    display: flex;
+    gap: 10px;
+    padding: 7px 12px 7px 10px;
+    border-left: 2px solid var(--line);
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .policy__toc a:hover { color: var(--brown); background: var(--cream-2); }
+  .policy__toc a.is-active { color: var(--brown); border-left-color: var(--brown); font-weight: 500; }
+  .policy__toc-num { flex: none; color: var(--taupe); font-variant-numeric: tabular-nums; }
+
+  /* ---- Prose --------------------------------------------------------- */
+  .template-policy .shopify-policy__body .rte {
+    color: var(--brown-2);
+    font-size: 15px;
+    line-height: 1.78;
+    max-width: 74ch;
+  }
+  .template-policy .shopify-policy__body .rte > div { margin: 0 0 14px; }
+  .template-policy .shopify-policy__body .rte a { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Numbered section headings, upgraded from plain divs by the script. */
+  .policy__h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(21px, 2.4vw, 26px);
+    line-height: 1.25;
+    color: var(--brown);
+    margin: 46px 0 18px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 118px;
+  }
+  .policy__h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+  .policy__h2-num {
+    flex: none;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: var(--taupe);
+    transform: translateY(-2px);
+  }
+
+  /* "- foo;" lines, grouped into a real list by the script. */
+  .policy__list { margin: 0 0 16px; padding-left: 20px; }
+  .policy__list li { margin: 0 0 7px; }
+
+  /* Contact blocks (email/phone lines) get a soft callout treatment. */
+  .policy__callout {
+    background: var(--cream-2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 22px 0;
+  }
+  .policy__callout > div { margin: 0 0 6px; }
+  .policy__callout > div:last-child { margin-bottom: 0; }
+
+  /* ---- Footer: help card + related policies -------------------------- */
+  .policy__foot {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    margin-top: 70px;
+    padding-top: 50px;
+    border-top: 1px solid var(--line);
+  }
+  .policy__help { background: var(--cream-2); border-radius: var(--radius-lg); padding: 40px 44px; }
+  .policy__help-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin: 0 0 12px;
+  }
+  .policy__help-title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(24px, 3vw, 32px); color: var(--brown); margin: 0; }
+  .policy__help-title em { font-style: italic; }
+  .policy__help-text { color: var(--muted); font-size: 14.5px; line-height: 1.7; margin: 14px 0 26px; max-width: 46ch; }
+  .policy__help-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .policy__related { padding-top: 6px; }
+  .policy__related-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin: 0 0 18px;
+  }
+  .policy__related-list { list-style: none; margin: 0; padding: 0; }
+  .policy__related-list li { border-bottom: 1px solid var(--line); }
+  .policy__related-list a {
+    display: block;
+    padding: 14px 0;
+    font-size: 14.5px;
+    color: var(--brown-2);
+    transition: color .2s ease, padding-left .2s ease;
+  }
+  .policy__related-list a:hover { color: var(--brown); padding-left: 6px; }
+  .policy__related-list li.is-current a { color: var(--taupe); pointer-events: none; }
+  .policy__related-list li.is-current a::after { content: ' — you are here'; font-size: 12px; letter-spacing: .04em; }
+
+  /* ---- Responsive ---------------------------------------------------- */
+  @media (max-width: 1000px) {
+    .template-policy .shopify-policy__body { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    /* The TOC stops being a useful sidebar once it can't sit alongside the
+       prose -- collapse it into a compact block above the text instead of
+       leaving a sticky element floating in the flow. */
+    .policy__aside { position: static; margin-bottom: 36px; padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+    .policy__toc { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .policy__toc a { border-left: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 12.5px; }
+    .policy__toc a.is-active { border-color: var(--brown); background: var(--cream-2); }
+    .policy__toc-num { display: none; }
+    .policy__foot { grid-template-columns: minmax(0, 1fr); margin-top: 54px; padding-top: 40px; }
+  }
+  @media (max-width: 600px) {
+    .template-policy .shopify-policy__container { padding-bottom: 64px; }
+    .template-policy .shopify-policy__title { padding: 34px 0 24px; margin-bottom: 32px; }
+    .policy__help { padding: 28px 24px; }
+    .policy__help-actions .btn { flex: 1 1 100%; }
+  }
+</style>
+
+<script>
+  (function () {
+    var container = document.querySelector('.shopify-policy__container');
+    var rte = document.querySelector('.shopify-policy__body .rte');
+    var extras = document.getElementById('policy-extras');
+    if (!container || !rte || !extras) return;
+
+    var frag = extras.content.cloneNode(true);
+    var aside = frag.querySelector('.policy__aside');
+    var toc = frag.querySelector('.policy__toc');
+    var foot = frag.querySelector('.policy__foot');
+    var body = document.querySelector('.shopify-policy__body');
+
+    /* Shopify's pasted markup uses <div><span></span><br></div> purely as
+       blank spacer lines. They add nothing once real margins are in play and
+       they'd otherwise break up the heading/list detection below. */
+    Array.prototype.slice.call(rte.children).forEach(function (el) {
+      if (!el.textContent.trim() && !el.querySelector('img')) el.remove();
+    });
+
+    /* Merchant text numbers its own sections ("1. General", "2. Pricing").
+       Promote those lines to real <h2>s so the page has a document outline
+       and something to anchor the table of contents to. */
+    var HEADING = /^\s*(\d{1,2})\.\s+(\S.*)$/;
+    var headings = [];
+
+    Array.prototype.slice.call(rte.children).forEach(function (el) {
+      var text = el.textContent.trim();
+      var m = text.match(HEADING);
+      /* A numbered *sentence* is prose, not a heading -- real headings here
+         are short label-like phrases, so require both brevity and no
+         sentence-ending punctuation before promoting. */
+      if (!m || text.length > 70 || /[.;:]$/.test(text)) return;
+
+      var h2 = document.createElement('h2');
+      h2.className = 'policy__h2';
+      h2.id = 'policy-section-' + m[1];
+
+      var num = document.createElement('span');
+      num.className = 'policy__h2-num';
+      num.textContent = m[1].length < 2 ? '0' + m[1] : m[1];
+
+      var label = document.createElement('span');
+      label.textContent = m[2];
+
+      h2.appendChild(num);
+      h2.appendChild(label);
+      el.replaceWith(h2);
+      headings.push({ id: h2.id, num: num.textContent, label: m[2], el: h2 });
+    });
+
+    /* Consecutive "- item;" lines are a bullet list in the source text but
+       arrive as separate divs -- collect each run into one real <ul>. */
+    var i = 0;
+    var kids = Array.prototype.slice.call(rte.children);
+    while (i < kids.length) {
+      if (!/^\s*[-–•]\s+/.test(kids[i].textContent)) { i++; continue; }
+      var run = [];
+      while (i < kids.length && /^\s*[-–•]\s+/.test(kids[i].textContent)) { run.push(kids[i]); i++; }
+      var ul = document.createElement('ul');
+      ul.className = 'policy__list';
+      run.forEach(function (node) {
+        var li = document.createElement('li');
+        li.textContent = node.textContent.replace(/^\s*[-–•]\s+/, '');
+        ul.appendChild(li);
+      });
+      run[0].replaceWith(ul);
+      run.slice(1).forEach(function (n) { n.remove(); });
+    }
+
+    /* Group the trailing contact lines (email / phone) into a callout so the
+       page ends on something that reads as a card, not another paragraph. */
+    Array.prototype.slice.call(rte.children).forEach(function (el) {
+      if (el.tagName !== 'DIV') return;
+      if (!el.querySelector('a[href^="mailto:"], a[href^="tel:"]')) return;
+      if (el.previousElementSibling && el.previousElementSibling.classList.contains('policy__callout')) {
+        el.previousElementSibling.appendChild(el);
+        return;
+      }
+      var box = document.createElement('div');
+      box.className = 'policy__callout';
+      el.replaceWith(box);
+      box.appendChild(el);
+    });
+
+    /* Build the table of contents. With fewer than 3 sections a TOC is just
+       noise, so drop the sidebar entirely and let the prose run full width. */
+    if (headings.length >= 3) {
+      headings.forEach(function (h) {
+        var a = document.createElement('a');
+        a.href = '#' + h.id;
+        var n = document.createElement('span');
+        n.className = 'policy__toc-num';
+        n.textContent = h.num;
+        var t = document.createElement('span');
+        t.textContent = h.label;
+        a.appendChild(n);
+        a.appendChild(t);
+        toc.appendChild(a);
+      });
+      body.insertBefore(aside, body.firstChild);
+
+      var links = Array.prototype.slice.call(toc.querySelectorAll('a'));
+      /* rootMargin pulls the "active" line down from the very top of the
+         viewport so the highlighted item matches the heading the reader is
+         actually looking at, not one scrolling out of view above it. */
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (l) {
+            l.classList.toggle('is-active', l.getAttribute('href') === '#' + entry.target.id);
+          });
+        });
+      }, { rootMargin: '-120px 0px -70% 0px' });
+      headings.forEach(function (h) { spy.observe(h.el); });
+    } else {
+      body.style.gridTemplateColumns = 'minmax(0, 1fr)';
+    }
+
+    /* Mark the policy you're already reading in the related list. */
+    var here = window.location.pathname.replace(/\/$/, '');
+    Array.prototype.slice.call(foot.querySelectorAll('.policy__related-list a')).forEach(function (a) {
+      if (a.getAttribute('href').replace(/\/$/, '') === here) a.parentElement.classList.add('is-current');
+    });
+
+    body.appendChild(foot);
+  })();
+</script>

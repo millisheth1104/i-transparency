@@ -4,10 +4,13 @@
     <div class="faq__head">
       <p class="eyebrow">Support</p>
       <h1 class="section-heading">Frequently Asked <em>Questions</em></h1>
+      <p class="faq__sub">Everything about orders, delivery, returns and caring for your bedding — in one place.</p>
+      <div class="faq__search">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4" stroke-linecap="round"/></svg>
+        <input type="search" placeholder="Search the FAQs" aria-label="Search the FAQs" data-faq-search autocomplete="off">
+      </div>
+      <p class="faq__empty" data-faq-empty hidden>No questions match that search. Try a different word, or <a href="{{ routes.root_url }}pages/contact">ask us directly</a>.</p>
     </div>
-
-    {%- comment -%} groups: [heading, [[question, answer_html], ...]] {%- endcomment -%}
-    {%- assign groups = "Orders|Shipping & Delivery|Returns & Replacements|Products|Payments & Privacy|Customer Care" | split: "|" -%}
 
     <div class="faq__groups">
 
@@ -120,13 +123,96 @@
       </div>
 
     </div>
+
+    <div class="faq__cta">
+      <div>
+        <p class="faq__cta-eyebrow">Still have a question?</p>
+        <h2 class="faq__cta-title">Talk to our <em>customer care</em></h2>
+        <p class="faq__cta-text">Our team replies to every enquiry — share your order number and we'll take it from there.</p>
+      </div>
+      <div class="faq__cta-actions">
+        <a class="btn" href="mailto:customercare@sarom.info">Email us</a>
+        <a class="btn btn--outline" href="{{ routes.root_url }}pages/contact">Contact page</a>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    var input = document.querySelector('[data-faq-search]');
+    if (!input) return;
+    var groups = Array.prototype.slice.call(document.querySelectorAll('.faq__group'));
+    var empty = document.querySelector('[data-faq-empty]');
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      var anyVisible = false;
+
+      groups.forEach(function (group) {
+        var items = Array.prototype.slice.call(group.querySelectorAll('.faq__item'));
+        var groupHasMatch = false;
+
+        items.forEach(function (item) {
+          var match = !q || item.textContent.toLowerCase().indexOf(q) !== -1;
+          item.hidden = !match;
+          /* Open matches while searching so the answer is visible without a
+             second click, and collapse again once the query is cleared. */
+          if (q && match) item.setAttribute('open', '');
+          else if (!q) item.removeAttribute('open');
+          if (match) groupHasMatch = true;
+        });
+
+        group.hidden = !groupHasMatch;
+        if (groupHasMatch) anyVisible = true;
+      });
+
+      if (empty) empty.hidden = anyVisible;
+    });
+  })();
+</script>
 
 <style>
   .faq { padding: 70px 0 100px; }
   .faq__head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
   .faq__head .eyebrow { margin-bottom: 10px; }
+  .faq__sub { color: var(--muted); font-size: 15.5px; line-height: 1.7; margin: 16px 0 0; }
+
+  .faq__search { position: relative; margin: 30px auto 0; max-width: 420px; }
+  .faq__search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--taupe); pointer-events: none; }
+  .faq__search input {
+    width: 100%;
+    padding: 13px 18px 13px 44px;
+    font-size: 14.5px;
+    color: var(--brown);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .faq__search input::placeholder { color: var(--taupe); }
+  .faq__search input:focus { outline: none; border-color: var(--taupe); }
+  .faq__search input::-webkit-search-cancel-button { cursor: pointer; }
+  .faq__empty { color: var(--muted); font-size: 14.5px; margin: 22px 0 0; }
+  .faq__empty a { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+  .faq__group[hidden], .faq__item[hidden] { display: none; }
+
+  .faq__cta {
+    max-width: 780px;
+    margin: 64px auto 0;
+    background: var(--cream-2);
+    border-radius: var(--radius-lg);
+    padding: 40px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .faq__cta-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--taupe); margin: 0 0 12px; }
+  .faq__cta-title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(23px, 2.8vw, 30px); color: var(--brown); margin: 0; }
+  .faq__cta-title em { font-style: italic; }
+  .faq__cta-text { color: var(--muted); font-size: 14.5px; line-height: 1.7; margin: 12px 0 0; max-width: 44ch; }
+  .faq__cta-actions { display: flex; flex-wrap: wrap; gap: 12px; flex: none; }
   .faq__groups { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
   .faq__group-title { font-family: var(--font-ui); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--taupe); margin: 0 0 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
   .faq__item { border-bottom: 1px solid var(--line); }
@@ -143,6 +229,9 @@
   @media (max-width: 600px) {
     .faq { padding: 48px 0 64px; }
     .faq__q { font-size: 15.5px; }
+    .faq__cta { padding: 28px 24px; margin-top: 48px; }
+    .faq__cta-actions { width: 100%; }
+    .faq__cta-actions .btn { flex: 1 1 100%; }
   }
 </style>
 
