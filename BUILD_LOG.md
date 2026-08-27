@@ -134,3 +134,11 @@
 - Final live state: Terms 16 / Privacy 15 / Shipping 10 / Returns 10 headings with matching TOC counts, no console errors, no horizontal overflow, mobile collapses the TOC into a pill row.
 - **FAQ**: added intro subtext, a live search that filters questions and auto-opens matches (with an empty state), and a closing customer-care CTA. Verified: 21 items → "return" → 6 shown and opened → cleared → 21 collapsed → no-match → empty state.
 - Commits: `7b8f275`, `78a409d`, `9e5c5bd`, `57eedd9`.
+
+## 2026-08-26 — Printed collection: styled bed shot promoted to first image (30 products)
+
+- Client wanted the styled dressed-bed-on-white shot (angled bed, folded-back duvet) as the first image across the Printed collection, instead of the flat top-down shot that was leading.
+- **Audited entirely without the Admin API** (connector was down): read all 45 products from the public storefront (`/collections/digital-prints/products.json`), then `curl` + view candidate images to identify each family's convention. Suffix meaning turned out to differ per family — Essence/Reflect's styled shot is `-A-4`, while Plush's and Ornate's `-A-4` is a pillow-detail shot.
+- Scope landed on **30 products** (26 Essence + 4 Reflect) leading with `-A-2` (flat top-down). Plush (6) and Ornate (8) excluded — they already lead with a dressed bed and have no on-white equivalent. Tree Line King was already correct (its `-A-1` is byte-identical to its `-A-4`).
+- Client applied the reorder manually via the admin (30 direct product links supplied).
+- **Verified 30/30 now lead with `-A-4`, 0 missed**; Plush still `-A-3` ×6 and Ornate still `-A-5` ×8 (untouched as intended); Reflect Chain Link's second colorway (`B-1`…`B-5`) intact at positions 5–9. Two new first images spot-checked visually and match the reference framing.
