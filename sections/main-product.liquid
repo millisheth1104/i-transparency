@@ -87,45 +87,87 @@
               {%- endif -%}
 
               <div class="mp__opt" data-option-index="{{ forloop.index }}">
-                <span class="mp__opt-name">{% if is_color %}Colors{% else %}{{ option.name }}{% endif %}</span>
+                {%- comment -%}
+                  The selected value is named right here on the option row, not
+                  only in .mp__variant-label further up the page -- with this
+                  palette (a dozen near-identical warm neutrals) a row of dots
+                  alone gives the customer no way to tell which one is selected
+                  or what any of them are called. data-opt-value is updated live
+                  by the swatch click handler below.
+                {%- endcomment -%}
+                <span class="mp__opt-name">
+                  {% if is_color %}Colors{% else %}{{ option.name }}{% endif %}
+                  <span class="mp__opt-value" data-opt-value data-option-position="{{ option.position }}">{{ option.selected_value }}</span>
+                </span>
 
                 {%- if is_color -%}
                   <div class="mp__swatches">
                     {%- for value in option.values -%}
                       {%- assign v = value | downcase | strip -%}
+                      {%- comment -%}
+                        Swatch hexes are SAMPLED FROM THE REAL PRODUCT PHOTOS, not
+                        guessed from the colour name -- every value below was taken
+                        by median-sampling the fabric area of that colour's own
+                        variant photo (the 400TC/Oscar plain-dyed line where
+                        available, since it's undyed-pattern flat colour; Natura or
+                        Percale for the few names Oscar doesn't carry). All source
+                        photos come from the same studio setup, so the values are
+                        mutually consistent.
+
+                        IMPORTANT: several of this brand's colour names do not
+                        describe their actual hue -- "Feather Grey" and "Silver
+                        Lining" are both warm beiges in reality, not greys, and
+                        "Green Lint" is a pale sage. The sampled values are
+                        deliberately true to the photo rather than to the name, so
+                        the dot matches what the customer sees on the product.
+                        Don't "correct" these toward the name.
+
+                        Note the two spelling pairs the catalog actually uses --
+                        Turtledove/Turtole Dove and Dessert Taupe/Desert Taupe --
+                        both spellings must stay mapped or they fall through to the
+                        default and render as flat sand-beige.
+                      {%- endcomment -%}
                       {%- case v -%}
+                        {%- comment -%} Sampled: Oscar 400TC plain-dyed line {%- endcomment -%}
+                        {%- when 'bright white' -%}{%- assign hex = '#e4e3e5' -%}
+                        {%- when 'tofu' -%}{%- assign hex = '#eae4d9' -%}
+                        {%- when 'turtledove','turtole dove','turtle dove' -%}{%- assign hex = '#e2dccb' -%}
+                        {%- when 'peyote' -%}{%- assign hex = '#c8c0ae' -%}
+                        {%- when 'plaza taupe' -%}{%- assign hex = '#bcb298' -%}
+                        {%- when 'dessert taupe' -%}{%- assign hex = '#968b79' -%}
+                        {%- when 'desert taupe' -%}{%- assign hex = '#71695b' -%}
+                        {%- when 'drizzle' -%}{%- assign hex = '#aaa7a3' -%}
+                        {%- when 'dove' -%}{%- assign hex = '#b0a89d' -%}
+                        {%- when 'moonstruck' -%}{%- assign hex = '#bfbaae' -%}
+                        {%- when 'pumice stone','lt. grey mel','lt grey mel','grey','gray' -%}{%- assign hex = '#b1a99d' -%}
+                        {%- when 'off white' -%}{%- assign hex = '#e6e2d6' -%}
+                        {%- when 'silver lining' -%}{%- assign hex = '#cabdab' -%}
+                        {%- when 'light grey' -%}{%- assign hex = '#bfbcb9' -%}
+                        {%- when 'stone grey' -%}{%- assign hex = '#9e9689' -%}
+                        {%- when 'green lint' -%}{%- assign hex = '#c2c1ac' -%}
+                        {%- when 'feather grey' -%}{%- assign hex = '#ad9b82' -%}
+                        {%- when 'beige','beige mel','beige mel popcorn','lt. beige mel','lt beige mel' -%}{%- assign hex = '#b3a286' -%}
+                        {%- when 'nude','nude/blush' -%}{%- assign hex = '#cab3a4' -%}
+                        {%- comment -%} Sampled: Natura line {%- endcomment -%}
+                        {%- when 'cream','creme' -%}{%- assign hex = '#c8c0a6' -%}
+                        {%- when 'taupe' -%}{%- assign hex = '#b2ab90' -%}
+                        {%- when 'blush' -%}{%- assign hex = '#cab3a4' -%}
+                        {%- comment -%} Not present in the sampled lines -- kept from the
+                          earlier hand-built map, still approximations. {%- endcomment -%}
                         {%- when 'ivory' -%}{%- assign hex = '#f3ecdd' -%}
                         {%- when 'natural' -%}{%- assign hex = '#e7dcc6' -%}
                         {%- when 'oatmeal','oatmel','oatmeal popcorn','popcorn' -%}{%- assign hex = '#e0d3ba' -%}
-                        {%- when 'beige','beige mel','beige mel popcorn','lt. beige mel','lt beige mel' -%}{%- assign hex = '#d8c8a9' -%}
                         {%- when 'tea' -%}{%- assign hex = '#c9b48f' -%}
                         {%- when 'green mel','green' -%}{%- assign hex = '#6f7a4c' -%}
-                        {%- when 'green lint' -%}{%- assign hex = '#8a9468' -%}
                         {%- when 'olive' -%}{%- assign hex = '#3c3e31' -%}
                         {%- when 'sage' -%}{%- assign hex = '#a8b090' -%}
                         {%- when 'midlife brown','mahogany','brown' -%}{%- assign hex = '#7a5c46' -%}
                         {%- when 'mocha' -%}{%- assign hex = '#6b4a35' -%}
-                        {%- when 'pumice stone','lt. grey mel','lt grey mel','grey','gray' -%}{%- assign hex = '#b9b2a6' -%}
-                        {%- when 'stone grey' -%}{%- assign hex = '#a8a29a' -%}
-                        {%- when 'feather grey' -%}{%- assign hex = '#cfcac2' -%}
-                        {%- when 'light grey','silver lining' -%}{%- assign hex = '#d6d3cd' -%}
                         {%- when 'moonrock' -%}{%- assign hex = '#9c9488' -%}
-                        {%- when 'moonstruck' -%}{%- assign hex = '#c4c8c9' -%}
                         {%- when 'lt. blue daisy','lt blue daisy','blue daisy','blue' -%}{%- assign hex = '#a9c2d6' -%}
                         {%- when 'sand' -%}{%- assign hex = '#ddd0b9' -%}
-                        {%- when 'taupe' -%}{%- assign hex = '#8c8275' -%}
-                        {%- when 'desert taupe','dessert taupe' -%}{%- assign hex = '#9c8a6e' -%}
-                        {%- when 'plaza taupe' -%}{%- assign hex = '#a89478' -%}
-                        {%- when 'bright white' -%}{%- assign hex = '#fdfcfa' -%}
-                        {%- when 'off white' -%}{%- assign hex = '#f7f2ea' -%}
-                        {%- when 'cream','creme' -%}{%- assign hex = '#f2e8d5' -%}
                         {%- when 'linen' -%}{%- assign hex = '#eae0cd' -%}
                         {%- when 'birch' -%}{%- assign hex = '#ded0b8' -%}
-                        {%- when 'blush','nude/blush','nude' -%}{%- assign hex = '#e3c9bb' -%}
-                        {%- when 'dove','turtle dove','turtledove','turtole dove' -%}{%- assign hex = '#c7c2b8' -%}
-                        {%- when 'drizzle' -%}{%- assign hex = '#b8bcc0' -%}
-                        {%- when 'peyote' -%}{%- assign hex = '#cbb999' -%}
-                        {%- when 'tofu' -%}{%- assign hex = '#ece4d3' -%}
                         {%- else -%}{%- assign hex = '#ddd0b9' -%}
                       {%- endcase -%}
                       <label class="mp__swatch {% if option.selected_value == value %}is-active{% endif %}" title="{{ value | escape }}">
@@ -252,6 +294,10 @@
 
   .mp__opt { margin: 0 0 28px; }
   .mp__opt-name { display: block; font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  /* The selected value carries the emphasis, not the "Colors" label -- it's the
+     part that changes and the part the customer is looking for. */
+  .mp__opt-value { color: var(--brown); font-weight: 500; }
+  .mp__opt-value::before { content: '\00a0\2014\00a0'; color: var(--line); font-weight: 400; }
   .mp__swatches { display: flex; gap: 16px; flex-wrap: wrap; }
   .mp__swatch { position: relative; cursor: pointer; display: inline-flex; }
   .mp__swatch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
@@ -332,6 +378,14 @@
     root.querySelectorAll('.mp__swatch, .mp__pill').forEach(function(el){
       var input = el.querySelector('input');
       el.classList.toggle('is-active', input && input.checked);
+    });
+    /* Keep the name shown on each option row in step with its own selection.
+       Driven per option position rather than from the variant title, so a
+       product with several options names the right value on each row. */
+    root.querySelectorAll('[data-opt-value]').forEach(function(out){
+      var pos = out.getAttribute('data-option-position');
+      var checked = root.querySelector('input[data-option-position="' + pos + '"]:checked');
+      if (checked) out.textContent = checked.value;
     });
   }
 
