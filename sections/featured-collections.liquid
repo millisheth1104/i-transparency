@@ -77,7 +77,11 @@
   .fc__item.is-active { opacity: 1; }
   .fc__num { font-size: 12px; letter-spacing: .1em; color: var(--taupe); }
   .fc__name { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
-  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px; } .fc { grid-template-columns: 1fr; } /* The dots go horizontal here, so the column rule's width:100% would
+  /* !important because base.css's `.section { padding: 44px 0 !important }`
+     (which exists to beat the per-section inline padding style) was also
+     beating this rule, so the band lost its 16px side padding entirely and
+     the stage image ran edge to edge. */
+  @media (max-width: 860px){ .featured-band { width: 100%; max-width: 100%; margin: 0; border-radius: 0; padding: 24px 16px !important; } .fc { grid-template-columns: 1fr; } /* The dots go horizontal here, so the column rule's width:100% would
      stretch each one across a quarter of the screen. Same gap-absorbing
      idea rotated: 8px of padding all round gives a 25px pitch, exactly
      what the 9px dot + 16px gap produced before, with the negative margin
@@ -86,6 +90,17 @@
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
+    .fc__track { height: auto !important; }
+    .fc__pin { position: static !important; min-height: 0; }
+  }
+
+  /* Same collapse on phones, where the scrub is switched off in the JS
+     below. Left pinned it was almost all dead space: the track reserves
+     150vh (1218px at 375x812) for content that is only ~430px tall, and
+     the pin's min-height:100vh then centres that content inside 812px, so
+     roughly 190px of blank sat above and below the image with ~790px of
+     empty scroll after it. Collapsed, the section is just its own height. */
+  @media (max-width: 860px) {
     .fc__track { height: auto !important; }
     .fc__pin { position: static !important; min-height: 0; }
   }
@@ -188,10 +203,30 @@
     var pin = track ? track.querySelector('[data-fc-pin]') : null;
     var slideCount = root.querySelectorAll('[data-fc-slide]').length;
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Scroll-scrub is desktop-only. On a phone it worked against the user
+       twice over: the pin is toggled to position:fixed from a scroll
+       handler, and on mobile the URL bar collapsing changes innerHeight
+       mid-scroll (plus touch momentum delivers scroll events in bursts),
+       so the pin visibly jitters instead of holding still; and go() re-
+       derives the active slide from scroll offset on every frame, which
+       immediately overrode whatever slide the user had just tapped. The
+       CSS above collapses the track and unpins below 860px, so the scrub
+       bails out here to match. Checked per call rather than once at init
+       so rotating the phone across the breakpoint needs no re-init. */
+    var scrubMQ = window.matchMedia('(min-width: 861px)');
     if (track && pin && slideCount > 1 && !reduceMotion) {
       var ticking = false;
       function updateFromScroll(){
         ticking = false;
+        if (!scrubMQ.matches) {
+          /* Clear anything a previous desktop-width pass left behind --
+             CSS forces position:static here, but the inline left/width set
+             below would still apply. */
+          pin.classList.remove('is-fixed', 'is-bottom');
+          pin.style.left = '';
+          pin.style.width = '';
+          return;
+        }
         var rect = track.getBoundingClientRect();
         var vh = window.innerHeight;
 
@@ -221,6 +256,7 @@
         if (!ticking) { ticking = true; requestAnimationFrame(updateFromScroll); }
       }, { passive: true });
       window.addEventListener('resize', updateFromScroll);
+      if (scrubMQ.addEventListener) scrubMQ.addEventListener('change', updateFromScroll);
       updateFromScroll();
     }
 
