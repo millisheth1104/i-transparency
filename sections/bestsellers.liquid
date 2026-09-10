@@ -321,6 +321,20 @@ padding:12px 0 0;
 
 }
 
+/* Without the stretch, each card is its own height and the only thing that
+   varied was how many lines the title took: at 21px with 3px tracking a
+   275px column fits ~15 characters, so "Terra Weave Broken Herringbone
+   Bedspread" ran to four lines (109px) while "Bamboo Comforter" took one.
+   18px/2px fits ~20 per line, which puts every name in the catalog on one
+   or two lines and pulls the tallest card back in line with the shortest. */
+.bestsellers .product-card__title{
+
+font-size:18px;
+
+letter-spacing:2px;
+
+}
+
 .bestsellers .product-card__price{
 
 margin:6px 0 12px;
