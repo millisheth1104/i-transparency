@@ -4,7 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="{{ settings.color_background }}">
-    <link rel="canonical" href="{{ canonical_url }}">
+    {%- comment -%} The four policies now also exist as editable pages, so the same
+      text is reachable at /policies/* (still there for checkout, which links it
+      automatically) and at /pages/*. Point the canonical at the page so search
+      engines consolidate on the one customers are actually sent to, instead of
+      splitting authority between two identical URLs. {%- endcomment -%}
+    {%- liquid
+      assign canonical_target = canonical_url
+      if request.page_type == 'policy'
+        assign policy_handle = ''
+        if canonical_url contains 'terms-of-service'
+          assign policy_handle = 'terms-conditions'
+        elsif canonical_url contains 'privacy-policy'
+          assign policy_handle = 'privacy-policy'
+        elsif canonical_url contains 'shipping-policy'
+          assign policy_handle = 'shipping-policy'
+        elsif canonical_url contains 'refund-policy'
+          assign policy_handle = 'returns-replacement-policy'
+        endif
+        if policy_handle != '' and pages[policy_handle] != blank
+          assign canonical_target = shop.url | append: pages[policy_handle].url
+        endif
+      endif
+    -%}
+    <link rel="canonical" href="{{ canonical_target }}">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}

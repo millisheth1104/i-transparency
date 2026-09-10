@@ -45,7 +45,7 @@
         Looked up by handle and skipped when absent, so this degrades quietly
         rather than rendering a dead link if a page is renamed or unpublished.
         Labels are written out rather than taken from page.title so they keep the
-        footer's wording ("Returns & Replacement Policy", not Shopify's default
+        footer's wording ("Returns & Replacement", not Shopify's default
         "Refund policy"). {%- endcomment -%}
       {%- assign pol_terms = pages['terms-conditions'] -%}
       {%- assign pol_privacy = pages['privacy-policy'] -%}
@@ -62,7 +62,7 @@
           <li><a href="{{ pol_shipping.url }}">Shipping Policy</a></li>
         {%- endif -%}
         {%- if pol_returns != blank -%}
-          <li><a href="{{ pol_returns.url }}">Returns &amp; Replacement Policy</a></li>
+          <li><a href="{{ pol_returns.url }}">Returns &amp; Replacement</a></li>
         {%- endif -%}
       </ul>
     </div>
