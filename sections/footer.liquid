@@ -23,23 +23,37 @@
 
       <div class="footer-cols">
         {%- for block in section.blocks -%}
+          {%- comment -%}
+            <details open> so the links are expanded for everyone by default.
+            The phone accordion is progressive enhancement: footer.js closes
+            these below the breakpoint, so with JS off nothing is hidden and
+            the footer behaves exactly as it did before. On desktop the
+            summary is made unclickable in CSS so it cannot be collapsed.
+          {%- endcomment -%}
           <div class="footer-col" {{ block.shopify_attributes }}>
-            <p class="footer-col__title">{{ block.settings.title }}</p>
-            {%- assign links = block.settings.menu -%}
-            {%- if links != blank and linklists[links] -%}
-              {%- for link in linklists[links].links -%}
-                <a href="{{ link.url }}" class="footer-col__link">{{ link.title }}</a>
-              {%- endfor -%}
-            {%- else -%}
-              {%- assign items = block.settings.items | split: "
+            <details class="footer-col__acc" open>
+              <summary class="footer-col__title">
+                {{ block.settings.title }}
+                <svg class="footer-col__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="footer-col__links">
+                {%- assign links = block.settings.menu -%}
+                {%- if links != blank and linklists[links] -%}
+                  {%- for link in linklists[links].links -%}
+                    <a href="{{ link.url }}" class="footer-col__link">{{ link.title }}</a>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign items = block.settings.items | split: "
 " -%}
-              {%- for item in items -%}
-                {%- assign parts = item | strip | split: '|' -%}
-                {%- if parts[0] != blank -%}
-                  <a href="{{ parts[1] | default: '#' | strip }}" class="footer-col__link">{{ parts[0] | strip }}</a>
+                  {%- for item in items -%}
+                    {%- assign parts = item | strip | split: '|' -%}
+                    {%- if parts[0] != blank -%}
+                      <a href="{{ parts[1] | default: '#' | strip }}" class="footer-col__link">{{ parts[0] | strip }}</a>
+                    {%- endif -%}
+                  {%- endfor -%}
                 {%- endif -%}
-              {%- endfor -%}
-            {%- endif -%}
+              </div>
+            </details>
           </div>
         {%- endfor -%}
       </div>
@@ -70,7 +84,16 @@
   .footer-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
   .footer-text { font-size: 14px; color: var(--brown-2); margin: 0; max-width: 260px; line-height: 1.6; }
   .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .footer-col__title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); margin: 0 0 12px; }
+  /* <summary> defaults to display:list-item, which draws the disclosure
+     triangle; flex removes it without needing the vendor-prefixed marker
+     rules. The chevron only ever shows at phone widths. */
+  .footer-col__title { display: flex; align-items: center; justify-content: space-between; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); margin: 0 0 12px; list-style: none; }
+  .footer-col__title::-webkit-details-marker { display: none; }
+  .footer-col__chev { width: 16px; height: 16px; flex: none; display: none; transition: transform .25s; }
+  /* Not collapsible above the breakpoint: the columns are meant to be open
+     side by side there, and <details open> would otherwise let a click on
+     the heading shut one. */
+  .footer-col__acc > .footer-col__title { pointer-events: none; cursor: default; }
   /* The 12px that used to sit between links as dead margin is now 6px of
      padding on each link instead, so the tap box is the full 34px pitch
      rather than just the 22px line box -- these sit in a dense stack on
@@ -98,7 +121,65 @@
     .footer-cols { grid-template-columns: repeat(2, 1fr); }
     .footer-social { margin-top: 10px; }
   }
+
+  /* Phone: the footer was 1494px -- close to two full screens -- and 590px of
+     that was the four link columns sitting open in a 2x2 grid. They become
+     one full-width accordion each (~44px collapsed), which is both the
+     shorter and the more familiar mobile footer. Every link keeps its 34px
+     tap pitch once a section is open.
+
+     The rest is spacing: the footer's own 70/40 padding, the 40px gaps in
+     .footer-top, the 22px above each address label, and the 50+30 and 40 of
+     margin before the SEO text and the copyright line. Nothing is removed --
+     the links are a tap away and every word of copy is still there. */
+  @media (max-width: 700px) {
+    .site-footer { padding: 40px 0 28px; }
+    .footer-top { gap: 28px; }
+    .footer-label { margin-top: 14px; }
+    .footer-cols { grid-template-columns: 1fr; gap: 0; }
+    .footer-col { border-top: 1px solid var(--line); }
+    .footer-col:last-child { border-bottom: 1px solid var(--line); }
+    .footer-col__title { margin: 0; padding: 14px 0; cursor: pointer; }
+    /* Overrides the desktop lock above so the heading is tappable again. */
+    .footer-col__acc > .footer-col__title { pointer-events: auto; }
+    .footer-col__chev { display: block; }
+    .footer-col__acc[open] > .footer-col__title .footer-col__chev { transform: rotate(180deg); }
+    .footer-col__links { padding-bottom: 8px; }
+    .footer-seo { margin-top: 24px; padding-top: 20px; }
+    .footer-copy { margin-top: 24px; }
+  }
 </style>
+
+<script>
+  /* The columns ship as <details open>, so with JS off nothing in the footer
+     is hidden. This closes them only at phone widths, where the CSS above
+     turns each one into a full-width tappable bar. Re-evaluated on resize,
+     but a section the visitor opened themselves is left alone so it does not
+     snap shut under them on an address-bar resize or an orientation change. */
+  (function () {
+    var mq = window.matchMedia('(max-width: 700px)');
+    var accs = document.querySelectorAll('.site-footer .footer-col__acc');
+    if (!accs.length) return;
+
+    /* Keyed off a click on the heading rather than the `toggle` event: the
+       spec queues `toggle` as a task, so it arrives after this function has
+       returned and every programmatic open below would look like a visitor
+       action. A click on the summary only ever comes from the visitor. */
+    accs.forEach(function (acc) {
+      var sum = acc.querySelector('summary');
+      if (sum) sum.addEventListener('click', function () { acc.dataset.userSet = '1'; });
+    });
+
+    function sync() {
+      accs.forEach(function (acc) {
+        if (acc.dataset.userSet) return;
+        acc.open = !mq.matches;
+      });
+    }
+    sync();
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+  })();
+</script>
 
 {% schema %}
 {
