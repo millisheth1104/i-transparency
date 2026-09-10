@@ -612,6 +612,20 @@
     #shopify-section-{{ section.id }} .mc-promo__arrow { width: 44px; height: 44px; }
     #shopify-section-{{ section.id }} .mc-promo__arrow--prev { left: 10px; }
     #shopify-section-{{ section.id }} .mc-promo__arrow--next { right: 10px; }
+
+    /* The 60px side inset and the 56/36/40 vertical padding are sized for
+       the 1450px desktop band. On a 375px phone they were eating 120px of
+       the band's 327px width, leaving the photo at 207x74 -- a sliver in a
+       355px-tall card that was otherwise empty space.
+
+       The aspect ratio has to be overridden too, not just the padding: the
+       merchant setting is 1120x400, a desktop banner shape that collapses
+       to a ~100px letterbox at phone width however much room it is given.
+       It needs !important because that ratio is applied as an inline style
+       on the element, which nothing else can outrank. */
+    #shopify-section-{{ section.id }} .mc-promo { margin: 32px 0; }
+    #shopify-section-{{ section.id }} .mc-promo__text { padding: 26px 20px 14px; }
+    #shopify-section-{{ section.id }} .mc-promo__media { margin: 0 20px 22px; aspect-ratio: 16 / 9 !important; }
   }
   /* Touch devices have no hover state to reveal the arrows with -- show them
      at a slightly reduced opacity by default there instead of hiding them
