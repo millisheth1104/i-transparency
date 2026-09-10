@@ -1,0 +1,27 @@
+{%- comment -%}
+  Template for the policy pages that used to live at /policies/*.
+
+  Those are rendered by Shopify itself and can only be edited as one plain
+  rich-text box in Settings > Policies -- no sections, no page editor. Moving
+  the content into real pages makes them editable like any other page.
+
+  The markup here deliberately reproduces Shopify's own policy DOM
+  (.shopify-policy__container > .shopify-policy__title/h1 and
+  .shopify-policy__body > .rte) so that snippets/policy-page.liquid -- the
+  restyler that builds the hero, contents list, callouts and footer -- works
+  on it unchanged. Same structure and same text through the same code means
+  the design is identical to before, with nothing duplicated.
+
+  layout/theme.liquid adds the `template-policy` body class for this suffix,
+  which is what that snippet's CSS is scoped to, and renders the snippet.
+{%- endcomment -%}
+<div class="shopify-policy__container">
+  <div class="shopify-policy__title">
+    <h1>{{ page.title }}</h1>
+  </div>
+  <div class="shopify-policy__body">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+  </div>
+</div>

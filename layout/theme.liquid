@@ -29,7 +29,8 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
   </head>
 
-  <body class="template-{{ request.page_type | handle }}">
+  {%- comment -%} Pages using the `policy` template get the template-policy class too, so the policy restyler's CSS (scoped to .template-policy) applies to them without being duplicated. {%- endcomment -%}
+  <body class="template-{{ request.page_type | handle }}{% if page.template_suffix == 'policy' %} template-policy{% endif %}">
     {% section 'header' %}
 
     <main id="MainContent" class="content-for-layout" role="main">
@@ -44,7 +45,7 @@
     {%- comment -%} Shopify renders /policies/* itself (no theme template
       exists for it), so the styling/structure for those pages has to be
       injected from the layout instead of a section. {%- endcomment -%}
-    {%- if request.page_type == 'policy' -%}
+    {%- if request.page_type == 'policy' or page.template_suffix == 'policy' -%}
       {% render 'policy-page' %}
     {%- endif -%}
     {% render 'popup',

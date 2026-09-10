@@ -39,24 +39,30 @@
 
     <div class="policy__related">
       <p class="policy__related-label">Other policies</p>
-      {%- comment -%} These are top-level `shop` properties (shop.terms_of_service),
-        NOT members of the shop.policies array -- shop.policies.terms_of_service
-        silently resolves to nil and renders an empty list. Labels are written
-        out here rather than using each policy's own .title so they match the
-        wording already used in the footer ("Returns & Replacement Policy"
-        rather than Shopify's default "Refund policy"). {%- endcomment -%}
+      {%- comment -%} These point at the editable pages, not at /policies/*, so the
+        cross-links match wherever the visitor actually is -- the "you are here"
+        marker in the JS below compares each href against location.pathname.
+        Looked up by handle and skipped when absent, so this degrades quietly
+        rather than rendering a dead link if a page is renamed or unpublished.
+        Labels are written out rather than taken from page.title so they keep the
+        footer's wording ("Returns & Replacement Policy", not Shopify's default
+        "Refund policy"). {%- endcomment -%}
+      {%- assign pol_terms = pages['terms-conditions'] -%}
+      {%- assign pol_privacy = pages['privacy-policy'] -%}
+      {%- assign pol_shipping = pages['shipping-policy'] -%}
+      {%- assign pol_returns = pages['returns-replacement-policy'] -%}
       <ul class="policy__related-list">
-        {%- if shop.terms_of_service != blank -%}
-          <li><a href="{{ shop.terms_of_service.url }}">Terms &amp; Conditions</a></li>
+        {%- if pol_terms != blank -%}
+          <li><a href="{{ pol_terms.url }}">Terms &amp; Conditions</a></li>
         {%- endif -%}
-        {%- if shop.privacy_policy != blank -%}
-          <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
+        {%- if pol_privacy != blank -%}
+          <li><a href="{{ pol_privacy.url }}">Privacy Policy</a></li>
         {%- endif -%}
-        {%- if shop.shipping_policy != blank -%}
-          <li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>
+        {%- if pol_shipping != blank -%}
+          <li><a href="{{ pol_shipping.url }}">Shipping Policy</a></li>
         {%- endif -%}
-        {%- if shop.refund_policy != blank -%}
-          <li><a href="{{ shop.refund_policy.url }}">Returns &amp; Replacement Policy</a></li>
+        {%- if pol_returns != blank -%}
+          <li><a href="{{ pol_returns.url }}">Returns &amp; Replacement Policy</a></li>
         {%- endif -%}
       </ul>
     </div>
