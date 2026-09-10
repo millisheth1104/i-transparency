@@ -35,6 +35,15 @@
 </section>
 
 <style>
+  /* Lifts the whole section above the ones after it so an open hotspot card
+     can hang over them. Needed because .sleepscape__stage also carries
+     .sr-image, whose reveal transform makes it a stacking context -- that
+     traps the card's z-index:3 inside the stage, and the stage itself then
+     competes with the *next* section's .sr-text heading (also transformed,
+     so also painted in the z-index:0 layer) where DOM order wins and the
+     heading showed through the card. Raising the card's own z-index cannot
+     fix this from inside a stacking context; the context has to be raised. */
+  .sleepscape { position: relative; z-index: 2; }
   .sleepscape__inner { width: calc(100% - (var(--gutter) * 2)); max-width: var(--container); margin: 0 auto; }
   /* No overflow:hidden here. It was only ever needed to clip the room photo
      to the rounded corners, but it also clipped the hotspot cards, which are
