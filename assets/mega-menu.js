@@ -67,14 +67,21 @@
         if (mobileQuery.matches) return;
         activate(el.getAttribute('data-panel'));
       });
-      /* Mobile has no hover, so without this a tap on a category (e.g.
-         "Bedspreads") just followed the link's href straight to that
-         collection page -- the accordion never showed its sub-collections,
-         only ever displaying the first category's (the initially-active
-         one) content. Tapping now switches the panel instead, matching
-         what hover already does on desktop. */
+      /* Mobile has no hover, so a tap has to do the job hover does on
+         desktop: reveal that category's sub-collections. But this used to
+         preventDefault on every tap, which meant a category row could
+         never reach its own collection page on a phone at all -- the panel
+         switched and that was the only thing a tap could ever do.
+
+         So it depends on whether the category is already the open one. Tap
+         a different category and it just switches the panel (its
+         sub-collections are what you asked to see). Tap the category
+         that's already showing -- its sub-collections are on screen
+         already, so there is nothing left to reveal -- and the tap falls
+         through to the link, same as clicking the word on desktop. */
       el.addEventListener('click', function (e) {
         if (!mobileQuery.matches) return;
+        if (el.classList.contains('is-active')) return;
         e.preventDefault();
         activate(el.getAttribute('data-panel'));
       });
