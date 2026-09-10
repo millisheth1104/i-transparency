@@ -50,7 +50,8 @@
           "signature",
           "statement-tape-dc",
           "knitscape-cc",
-          "knitscape-th"
+          "knitscape-th",
+          "ethereal-bd"
         ],
         "columns": "4",
         "show_count": true,
