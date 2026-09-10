@@ -36,19 +36,40 @@
 
 <style>
   .sleepscape__inner { width: calc(100% - (var(--gutter) * 2)); max-width: var(--container); margin: 0 auto; }
-  .sleepscape__stage { position: relative; margin-top: 36px; border-radius: var(--radius); overflow: hidden; width: 100%; height: 620px; }
+  /* No overflow:hidden here. It was only ever needed to clip the room photo
+     to the rounded corners, but it also clipped the hotspot cards, which are
+     absolutely positioned inside this box -- and on a phone the stage is just
+     176px tall while a card is 255-297px, so roughly 200px of every card
+     (its price and Add to cart button included) was cut off. The radius is
+     inherited by the image instead, so the corners still clip and the cards
+     are free to hang outside the photo like the popovers they are. */
+  .sleepscape__stage { position: relative; margin-top: 36px; border-radius: var(--radius); width: 100%; height: 620px; }
+  /* This block sits above the .hotspot__card rules on purpose now: it used to
+     also carry `.hotspot__card { width: 130px }` and a smaller card-media,
+     but those were dead code -- same specificity as the base rules below and
+     declared earlier, so the base 169px always won and the card has only ever
+     rendered at its desktop size on phones. Removed rather than moved, since
+     169px reads better on a 375px screen than 130px would and shrinking the
+     card does nothing for the cropping this section actually had. Anything
+     added here that also exists below needs to go after those rules. */
   @media (max-width: 700px){
     .sleepscape__stage { height: auto; aspect-ratio: 1155 / 620; }
-    .hotspot__card { width: 130px; }
-    .hotspot__card-media { width: 114px; height: 84px; }
   }
-  .sleepscape__stage > img, .sleepscape__stage > svg { width: 100%; height: 100%; object-fit: cover; }
+  .sleepscape__stage > img, .sleepscape__stage > svg { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
   .hotspot { position: absolute; transform: translate(-50%, -50%); }
   .hotspot__dot { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; color: var(--brown); font-size: 20px; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
   .hotspot__card { position: absolute; top: 44px; left: 50%; transform: translateX(-50%) translateY(8px); width: 169.07px; background: var(--white); border: 1px solid var(--taupe-dark); border-radius: 0; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 20px 45px rgba(45,38,32,.18); z-index: 3; }
   .hotspot.is-open .hotspot__card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
   @media (hover: hover) {
     .hotspot:hover .hotspot__card, .hotspot:focus-within .hotspot__card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  }
+  /* Flipped to sit above its dot when there isn't room below (set from JS).
+     Declared after the base rules so it wins on equal specificity, and the
+     entrance offset flips sign so the card still slides in away from the dot. */
+  .hotspot__card--above { top: auto; bottom: 44px; transform: translateX(-50%) translateY(-8px); }
+  .hotspot.is-open .hotspot__card--above { transform: translateX(-50%) translateY(0); }
+  @media (hover: hover) {
+    .hotspot:hover .hotspot__card--above, .hotspot:focus-within .hotspot__card--above { transform: translateX(-50%) translateY(0); }
   }
   .hotspot__dot { position: relative; z-index: 2; transition: background .2s, color .2s; }
   .hotspot.is-open .hotspot__dot { background: var(--brown); color: #fff; }
@@ -63,6 +84,30 @@
 </style>
 
 <script>
+  /* The card is anchored centred under its dot, so a hotspot near the right
+     edge of the photo pushed it past the edge of the page (21px over, on the
+     75% one at 375px wide) and a hotspot low in the photo pushed it below the
+     fold. Nudge it back horizontally, and flip it above the dot when there is
+     no room underneath. A closed card still has a layout box -- it is only
+     transparent, not display:none -- so this can measure without opening it. */
+  function placeCard(hotspot) {
+    var card = hotspot.querySelector('.hotspot__card');
+    if (!card) return;
+    card.style.marginLeft = '';
+    card.classList.remove('hotspot__card--above');
+    var pad = 10;
+    var r = card.getBoundingClientRect();
+    var shift = 0;
+    if (r.right > window.innerWidth - pad) shift = (window.innerWidth - pad) - r.right;
+    else if (r.left < pad) shift = pad - r.left;
+    if (shift) card.style.marginLeft = Math.round(shift) + 'px';
+    /* Only flip if there is actually more room above than below, or the card
+       just moves from off the bottom to off the top. */
+    if (r.bottom > window.innerHeight && r.height + 44 < hotspot.getBoundingClientRect().top) {
+      card.classList.add('hotspot__card--above');
+    }
+  }
+
   document.querySelectorAll('.sleepscape [data-hotspot]').forEach(function (hotspot) {
     var toggle = hotspot.querySelector('[data-hotspot-toggle]');
     if (!toggle) return;
@@ -70,7 +115,21 @@
       e.stopPropagation();
       var wasOpen = hotspot.classList.contains('is-open');
       document.querySelectorAll('.sleepscape .hotspot.is-open').forEach(function (h) { h.classList.remove('is-open'); });
-      if (!wasOpen) hotspot.classList.add('is-open');
+      if (!wasOpen) {
+        placeCard(hotspot);
+        hotspot.classList.add('is-open');
+      }
+    });
+    /* Hover and keyboard focus reveal the card via CSS alone, so they need
+       the same placement pass. */
+    hotspot.addEventListener('pointerenter', function () { placeCard(hotspot); });
+    hotspot.addEventListener('focusin', function () { placeCard(hotspot); });
+  });
+
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.sleepscape .hotspot__card').forEach(function (card) {
+      card.style.marginLeft = '';
+      card.classList.remove('hotspot__card--above');
     });
   });
   document.addEventListener('click', function () {
