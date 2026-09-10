@@ -54,7 +54,7 @@
         <h2 class="faq__group-title">Returns &amp; Replacements</h2>
         <details class="faq__item">
           <summary class="faq__q">What products can I return?<span class="faq__ico">+</span></summary>
-          <div class="faq__a"><p>Sarom accepts returns only if: 1. You received the product in a damaged condition; or 2. You received a product different from what you ordered. Returns for other reasons are not accepted.</p></div>
+          <div class="faq__a"><p>Sarom accepts returns within 7 days of delivery only in the following cases:</p><ol><li>The product is received in a damaged condition.</li><li>You receive a product different from the one you ordered.</li></ol><p>In either case, we will arrange a replacement of the product. Returns for any other reasons are not accepted.</p></div>
         </details>
         <details class="faq__item">
           <summary class="faq__q">Can I return a product if I change my mind?<span class="faq__ico">+</span></summary>
@@ -223,7 +223,10 @@
   .faq__a { padding: 0 0 22px; color: var(--brown-2); font-size: 14.5px; line-height: 1.7; max-width: 66ch; }
   .faq__a p { margin: 0 0 12px; }
   .faq__a p:last-child { margin-bottom: 0; }
-  .faq__a ul { margin: 0 0 12px; padding-left: 20px; }
+  /* ol as well as ul -- the returns answer lists its two eligibility cases as a
+     numbered list, which would otherwise lose its indent and markers. */
+  .faq__a ul, .faq__a ol { margin: 0 0 12px; padding-left: 20px; }
+  .faq__a li { margin: 0 0 6px; }
   .faq__a a { color: var(--brown); text-decoration: underline; }
 
   @media (max-width: 600px) {
