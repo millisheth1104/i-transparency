@@ -1,6 +1,26 @@
 {%- comment -%} params: product, show_add (default true) {%- endcomment -%}
 {%- assign p = product -%}
-{%- assign size_value = p.metafields.custom.size -%}
+{%- comment -%}
+  custom.size is set to the bare number 1 on every product in the catalog
+  (checked all 95 via the storefront), so this line rendered a meaningless
+  "1" under the product type on every card, everywhere the snippet is used.
+
+  Rather than deleting the line, anything that is only a number is rejected:
+  a size needs a word or a unit to mean anything on a card. That drops the
+  junk value, lets the real variant Size option below be used instead, and
+  still shows a genuine text value ("King", "90 x 100 in") if the metafield
+  is ever filled in properly.
+
+  `plus: 0` is the Liquid idiom for "is this numeric" -- a non-numeric string
+  yields 0 -- so only values that survive as a number, or are literally "0",
+  are discarded. `append: ''` first, because the metafield comes back as an
+  integer and the string filters need a string.
+{%- endcomment -%}
+{%- assign size_value = p.metafields.custom.size | append: '' | strip -%}
+{%- assign size_as_number = size_value | plus: 0 -%}
+{%- if size_as_number != 0 or size_value == '0' -%}
+  {%- assign size_value = '' -%}
+{%- endif -%}
 {%- if size_value == blank -%}
   {%- for option in p.options_with_values -%}
     {%- if option.name == 'Size' -%}
