@@ -31,7 +31,13 @@
   .feature-split__intro strong { font-weight: 500; color: var(--brown); }
   .feature-split__text { color: var(--brown-2); font-size: 16px; line-height: 1.8; max-width: 46ch; }
   .feature-split__btn { margin-top: 30px; }
-  @media (max-width: 860px){ .feature-split__inner { grid-template-columns: 1fr; gap: 34px; height: auto; } .feature-split__media { aspect-ratio: 480/540; height: auto; } .feature-split--reverse .feature-split__media { order: 0; } }
+  /* This element is a .container, whose 24px mobile gutter the rule above
+     zeroes out -- harmless on desktop where the 962px track is narrower
+     than the viewport and centred, but once it stacks and goes full-width
+     the image and every line of copy sat flush against both screen edges.
+     Restoring the gutter here rather than dropping the `padding: 0` keeps
+     the desktop track exactly 962px wide. */
+  @media (max-width: 860px){ .feature-split__inner { grid-template-columns: 1fr; gap: 34px; height: auto; padding: 0 var(--gutter); } .feature-split__media { aspect-ratio: 480/540; height: auto; } .feature-split--reverse .feature-split__media { order: 0; } }
   /* On a phone this section stacked into roughly two full screens: the
      portrait 480/540 image alone was ~420px tall at 375px wide, then a
      56px-scale heading, a 20px serif intro and a 16px/1.8 body under it.
