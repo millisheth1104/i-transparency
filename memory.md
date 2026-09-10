@@ -608,3 +608,26 @@ Client chose **3 products with a Beige/Stone swatch**, not the 6 rows the spread
 Final Stone came from three per-design patches under even light: #afa59b, #afa69d, #bfb2a6 → mean #b4aa9f, tightly clustered and visually verified.
 
 **Still blocked**: product creation needs the Admin connector. Progression seen this session — right tools/wrong store (VAMAS) → requires-authentication → server removed from the session entirely, all while claude.ai showed "Connected to Shopify." Session restart is the only fix; see the `shopify-mcp-setup` memory.
+
+### 2026-09-11 (later still) — Ethereal images uploaded: 24 media across 3 products
+
+Connector came back after a session restart; **verified `0ww0zm-c1.myshopify.com` before touching anything** (the wrong-store check that caught VAMAS earlier).
+
+**The three products already existed as DRAFT** — created outside this session with exactly the agreed structure (Color option Beige/Stone, ₹5,999, productType `Bedsheet Set`, vendor `Beds & More`, tags `[Bedsheet Set, ETHEREAL BD, Jacquards]`, in the Jacquards collection, descriptions set) but **zero media**. Checked before creating anything — creating them again would have produced six duplicates.
+- **The SKUs made the mapping free**: `ETHEREAL-DB-J320101-A` etc. encode design code + colour letter, so variant↔folder needed no inference at all (contrast with [[terra-weave-knitscape-images]], where it had to be done visually).
+- Product GIDs: Cascade `7910737707215`, Ripple `7910737739983`, Quartz `7910737772751`.
+- Jacquards collection GID: `gid://shopify/Collection/311863017679`.
+- **Admin `productsCount` said 3 while the storefront `products.json` said 0** — because they were DRAFT. Do not treat a storefront count as proof a product does not exist.
+
+**Upload mechanics — confirmed again, plus two new findings:**
+- `stagedUploadsCreate` → `curl -X PUT --data-binary @file "$url"` → `productCreateMedia` → `productVariantAppendMedia`. All 24 PUTs returned 200; all 24 media reached `READY`.
+- **`productVariantAppendMedia` accepts exactly ONE mediaId per variant** — passing 4 fails with *"Only one mediaId is allowed per media input."* A variant has a single featured image; the rest of the shots live in the product gallery. Bind only the lead shot per colourway.
+- **Request only `{ url }` from `stagedUploadsCreate`, not `resourceUrl`/`parameters`** — `resourceUrl` is just the url minus its query string, so asking for both roughly doubles an already huge response (each signed URL is ~700 chars).
+- **Transcribing signed URLs out of the tool response is safe even though it looks fragile**: the *file bytes* are read from disk by curl and never pass through the transcription, so a mistyped URL fails the signature with 403 rather than silently corrupting an image. Verify by checking every PUT returned 200.
+- Nesting two heredocs in one Bash call (`cat <<'EOF'` then `python <<'PY'`) broke with *unexpected EOF*; use a single Python heredoc that does both the file-writing and the curl loop.
+
+**Shot order chosen** (applies the client's Printed-collection preference for a styled dressed bed leading): `- 3` dressed bed → `- 4` full room → `- 2` pillow detail → main fabric close-up. Filenames normalised to `ethereal-<design>-<colour>-<n>.png` and alt text set to "Ethereal <Design> Bedsheet Set in <Colour>" on all 24.
+
+**Fixed the `Ethereal RIpple` typo** in the product title (`productUpdate`); the handle was already correct as `ethereal-ripple-bedsheet-set`.
+
+**Still DRAFT, deliberately.** Publishing is an outward-facing change — left for the client to confirm. Quartz's Stone variant featured image is one of the converted TIFFs at 1086×1448; everything else is 543×724.

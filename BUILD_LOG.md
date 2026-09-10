@@ -181,3 +181,12 @@
 - **Left `beige` at #b09f83 on purpose**: 25 products share that colour name and the map is keyed on name alone, so matching Ethereal's paler cream would misrepresent all of them. Flagged to the client — the real fix would be a product-aware swatch map.
 - Converted the three `.tif` files to PNG earlier (lossless, verified pixel-identical); all 24 images are upload-ready.
 - Product creation still blocked on the Shopify Admin connector (wrong store, then unauthenticated, then removed from the session). Needs a session restart.
+
+## 2026-09-11 (later still) — Ethereal jacquard images uploaded
+
+- Connector restored after a session restart; store identity verified as `0ww0zm-c1` before any write.
+- Found the three products **already existing as drafts** with the agreed structure but no images — checked first, so no duplicates were created. Their SKUs (`ETHEREAL-DB-J320101-A`) encode design code and colour letter, making the variant↔image mapping exact.
+- **Uploaded all 24 images** (staged upload → PUT → `productCreateMedia` → `productVariantAppendMedia`): 8 per product, ordered dressed bed → full room → pillow detail → fabric close-up, with alt text per colourway. All 24 PUTs returned 200 and all 24 media reached `READY`. Each Beige/Stone variant is bound to its own lead shot.
+- Two mechanics worth remembering: `productVariantAppendMedia` takes exactly **one** mediaId per variant (a variant has a single featured image), and requesting only `{ url }` from `stagedUploadsCreate` halves an otherwise enormous response since `resourceUrl` is the url minus its query.
+- Fixed the `Ethereal RIpple` title typo inherited from the spreadsheet.
+- Products remain **DRAFT** pending the client's go-ahead to publish.
