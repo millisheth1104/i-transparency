@@ -173,3 +173,11 @@
 - **Collection promo band photo tripled in area on phones.** `.mc-promo__text` (`56px 60px 36px`) and `.mc-promo__media` (`0 60px 40px`) had no mobile override, eating 120px of the band's 327px width and leaving the photo at 207×74 in a 355px-tall card. Padding cut, and the aspect ratio overridden to 16/9 — the merchant setting is 1120×400, a desktop banner shape that stays a ~100px letterbox at phone width however much room it gets; it needs `!important` because that ratio is an inline style. Photo 207×74 → 287×162 (3× area), band 355 → 347px. Desktop (1065×380) and tablet (585×209) unchanged.
 - **Learned the hard way**: Shopify minifies theme JS assets and strips comments, so an asset deploy cannot be verified by grepping the served file for a comment — that produced a string of false negatives and one needless "force a sync" commit, since reverted. Inline section `<style>`/`<script>` is served verbatim; standalone assets are not.
 - Commits: `98c44e5`, `0f3ad36`, `55c183e` (reverted).
+
+## 2026-09-11 (later) — Ethereal jacquard: spec locked, Stone swatch shipped
+
+- Client chose **3 products with a Beige/Stone swatch** over the 6 the spreadsheet lists: Ethereal Cascade / Ripple / Quartz Bedsheet Set, ₹5,999, King, Jacquard, Beige = design letter A, Stone = letter B.
+- **Added `stone = #b4aa9f` to the PDP swatch map** (`4d5a66c`). Plain "stone" was absent — only `pumice stone` and `stone grey` — so colourway B would have rendered as the sand-beige default. Sampled from the three Ethereal B photos (#afa59b, #afa69d, #bfb2a6) using flat, evenly lit areas of the sheet; two shots had to be rejected first (the `- 2` rattan-headboard detail samples wood at #c99864; J320102's `- 4` is shadowed at #817362).
+- **Left `beige` at #b09f83 on purpose**: 25 products share that colour name and the map is keyed on name alone, so matching Ethereal's paler cream would misrepresent all of them. Flagged to the client — the real fix would be a product-aware swatch map.
+- Converted the three `.tif` files to PNG earlier (lossless, verified pixel-identical); all 24 images are upload-ready.
+- Product creation still blocked on the Shopify Admin connector (wrong store, then unauthenticated, then removed from the session). Needs a session restart.

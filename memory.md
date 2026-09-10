@@ -592,3 +592,19 @@ Client's real complaint was two things at once (confirmed via `AskUserQuestion`,
 
 **Tooling note**: the Browser pane's screenshot kept serving stale/blank frames again (it repeatedly re-rendered the top of the page while `getBoundingClientRect` correctly reported the promo band at `top: 70`). Forced scrolls and waits did not clear it. **Measurements stayed correct throughout — report verification by measurement and say so, rather than trusting or waiting on the capture.**
 - Commits: `98c44e5`, `0f3ad36`, `55c183e`.
+
+### 2026-09-11 (later) — Ethereal jacquard prep: 3 products decided, Stone swatch sampled and shipped
+
+Client chose **3 products with a Beige/Stone swatch**, not the 6 rows the spreadsheet lists. Titles drop the colour: Ethereal **Cascade** / **Ripple** / **Quartz** Bedsheet Set, each with Beige (letter A) and Stone (letter B). ₹5,999, King, Jacquard. Full spec in the `ethereal-jacquard-spec` memory.
+
+**Shipped despite Shopify being unreachable — `stone` was missing from the PDP swatch map.** Only `pumice stone` (#ada698) and `stone grey` (#9a9383) existed, so Ethereal's colourway B would have fallen through to the sand-beige default: exactly the bug the earlier catalog-wide sampling pass was meant to eliminate. Added `stone = #b4aa9f` (commit `4d5a66c`). **Checking the map for new colour names is a prerequisite of adding any product with variants, not a follow-up.**
+
+**`beige` deliberately left at #b09f83 — a conflict worth understanding.** Ethereal's beige is a much paler cream (~#d4ccbb), but **25 products already use the name "Beige"** (Terra Weave ×5, Oscar, Oscar Snug, Natura, Percale, Linera, Woven Harmony ×2, Knitscape ×3, Knitted cushion/throws, Bamboo Comforter). The map is keyed on **colour name alone**, so a single hex serves every line using that name — retuning it would misrepresent 25 products to improve 3. The correct long-term fix is a **product/collection-aware swatch map**, not a compromise hex. Raised with the client rather than silently picking a side.
+
+**Sampling hazards in this photo set — three separate false readings, each caught only by viewing the crop:**
+1. The `- 2` shot is a **rattan-headboard detail**; a centre crop samples the wood, giving #c99864 (orange) for a pale greige fabric.
+2. J320102's `- 4` shot is heavily **shadowed**, reading #817362 — far too dark.
+3. Auto-selecting the flattest (lowest-stdev) patch still picked the shadowed region for that image, because a uniformly shadowed area is genuinely flat. **Low variance means "uniform", not "correctly exposed" — pair it with a minimum-luminance floor and still look at the result.**
+Final Stone came from three per-design patches under even light: #afa59b, #afa69d, #bfb2a6 → mean #b4aa9f, tightly clustered and visually verified.
+
+**Still blocked**: product creation needs the Admin connector. Progression seen this session — right tools/wrong store (VAMAS) → requires-authentication → server removed from the session entirely, all while claude.ai showed "Connected to Shopify." Session restart is the only fix; see the `shopify-mcp-setup` memory.
