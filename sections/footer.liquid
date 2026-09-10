@@ -70,11 +70,24 @@
   .footer-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
   .footer-text { font-size: 14px; color: var(--brown-2); margin: 0; max-width: 260px; line-height: 1.6; }
   .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .footer-col__title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); margin: 0 0 18px; }
-  .footer-col__link { display: block; font-size: 14px; color: var(--muted); margin-bottom: 12px; transition: color .2s; }
+  .footer-col__title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); margin: 0 0 12px; }
+  /* The 12px that used to sit between links as dead margin is now 6px of
+     padding on each link instead, so the tap box is the full 34px pitch
+     rather than just the 22px line box -- these sit in a dense stack on
+     phones and the gaps between them were as tall as the targets. The
+     title's margin drops by the same 6px so the first link's text stays
+     exactly where it was and the pitch is unchanged; the column ends 6px
+     shorter where the last link's margin used to be, which the footer's
+     own padding absorbs. */
+  .footer-col__link { display: block; font-size: 14px; color: var(--muted); padding: 6px 0; margin-bottom: 0; transition: color .2s; }
   .footer-col__link:hover { color: var(--brown); }
-  .footer-social { display: flex; gap: 16px; color: var(--brown); height: fit-content; }
-  .footer-social a { transition: color .2s; }
+  /* Same gap-into-padding trade as the link stack: the 16px gaps become
+     8px of padding per icon, so each icon is a 34x42 target instead of an
+     18x26 one while the 34px pitch and the row's visual position stay put
+     (the negative margin cancels the padding the row would otherwise add
+     around the outside). */
+  .footer-social { display: flex; gap: 0; margin: -8px; color: var(--brown); height: fit-content; }
+  .footer-social a { padding: 8px; display: inline-flex; transition: color .2s; }
   .footer-social a:hover { color: var(--taupe); }
   .footer-seo { border-top: 1px solid var(--line); margin-top: 50px; padding-top: 30px; }
   .footer-seo p { font-size: 13px; color: var(--muted); line-height: 1.8; margin: 0; }

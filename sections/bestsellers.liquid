@@ -195,13 +195,17 @@
 
 /* HEART */
 
+/* padding + a matching 10px reduction in the offset: the icon still sits
+   14px in from the corner, but the tappable box is 38px instead of 18px.
+   base.css does this globally; this scoped rule used to reset padding to 0
+   and silently undo it here. */
 .bestsellers .product-card__wish{
     position:absolute;
-    top:14px;
-    right:14px;
+    top:4px;
+    right:4px;
     background:none;
     border:none;
-    padding:0;
+    padding:10px;
     color:#5f5246;
 }
 

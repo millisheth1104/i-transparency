@@ -46,9 +46,16 @@
   .fc__pin.is-fixed { position: fixed; top: 0; left: 0; }
   .fc__pin.is-bottom { position: absolute; top: auto; bottom: 0; }
   .fc { display: grid; grid-template-columns: 40px 1fr 300px; gap: 36px; align-items: center; width: 100%; }
-  .fc__dots { display: flex; flex-direction: column; gap: 16px; }
-  .fc__dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; padding: 0; }
-  .fc__dot.is-active { background: var(--brown); border-color: var(--brown); }
+  /* Dots are visually 9px but were only 9x9 to tap. The 16px gap is now
+     absorbed into 8px of vertical padding on each button instead, so the
+     dot pitch (25px) and every visual detail stay exactly as before while
+     the tap target becomes the full 40px track width x 25px tall. The
+     visible circle moved to ::before so the button itself can be a
+     transparent hit area. */
+  .fc__dots { display: flex; flex-direction: column; gap: 0; }
+  .fc__dot { width: 100%; padding: 8px 0; border: none; background: none; display: flex; align-items: center; justify-content: center; }
+  .fc__dot::before { content: ''; width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; }
+  .fc__dot.is-active::before { background: var(--brown); border-color: var(--brown); }
   .fc__stage { position: relative; border-radius: var(--radius); overflow: hidden; width: 100%; aspect-ratio: 812 / 516; }
   .fc__slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; pointer-events: none; }
   .fc__slide.is-active { opacity: 1; pointer-events: auto; }

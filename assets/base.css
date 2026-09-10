@@ -168,6 +168,20 @@ label { display: block; font-family: var(--font-ui); font-size: 12px; letter-spa
      !important to actually take effect on mobile instead of every
      section stacking ~90px+90px of dead space top and bottom. */
   .section, .section--tight { padding: 60px 0 !important; }
+
+  /* iOS Safari force-zooms the whole page whenever a focused form control
+     has a font-size below 16px, and the user then has to pinch back out.
+     Every input on this site was 15px (and some scoped ones 14-14.5px:
+     the collection filter selects, the FAQ search box), so tapping any
+     field — contact form, search, FAQ, cart qty, popup — janked the
+     viewport. 16px is the exact threshold that suppresses it.
+
+     !important because the offenders are section-scoped rules with higher
+     specificity than this one (e.g. #shopify-section-x .mc-select select),
+     and this is a functional fix that must not be silently re-broken by a
+     future scoped font-size. Only applies at mobile widths, so desktop
+     typography is untouched. */
+  input, select, textarea { font-size: 16px !important; }
 }
 @media (max-width: 700px) {
   .section, .section--tight { padding: 44px 0 !important; }
