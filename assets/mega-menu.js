@@ -1,3 +1,4 @@
+/* mega-menu category tap behaviour: see the click handler below. */
 (function () {
   var mobileQuery = window.matchMedia('(max-width: 990px)');
   var CLOSE_DELAY = 250; // ms grace period before actually closing
