@@ -8,8 +8,16 @@
   {%- for sub in sub_collections -%}
     <a href="{{ sub.url }}" class="mega-menu__sub-item" data-mega-sub-trigger data-panel="sub-{{ forloop.index0 }}">
       <span class="mega-menu__sub-thumb">
+        {%- comment -%} A collection with no image of its own used to drop straight to
+          the placeholder sketch, which is how the Jacquards circle sat empty until
+          its image was set. Falling back to the first product's photo means a newly
+          created collection looks right immediately, and the placeholder is only
+          reached when the collection has no products either. Same fallback order
+          the left-hand category thumbs in mega-menu.liquid already use. {%- endcomment -%}
         {%- if sub.image -%}
           <img src="{{ sub.image | image_url: width: 120 }}" alt="{{ sub.title | escape }}" width="60" height="60" loading="lazy">
+        {%- elsif sub.products.first.featured_image != blank -%}
+          <img src="{{ sub.products.first.featured_image | image_url: width: 120 }}" alt="{{ sub.title | escape }}" width="60" height="60" loading="lazy">
         {%- else -%}
           {{ 'collection-1' | placeholder_svg_tag }}
         {%- endif -%}
