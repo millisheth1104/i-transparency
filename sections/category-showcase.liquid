@@ -80,6 +80,30 @@
     .ccs-stage { aspect-ratio: 1.4 / 1; }
     .ccs-card__title { font-size: 24px; }
   }
+
+  /* Phone: 168px of the section's 523px height was padding -- 44px top and
+     bottom from base.css's `.section` rule plus 40px above and below the
+     stage -- while the photo itself was only 252x234. Padding down to 24px
+     and 16px/4px, and the photo up about a third.
+
+     The photo grows on both axes deliberately: height alone (via
+     aspect-ratio) would have turned a 1.08:1 card into a portrait one and
+     object-fit: cover would then crop the sides off these landscape room
+     shots. Taking the card to 86% of the stage alongside a 1.18 stage keeps
+     the card at ~1.01:1, so the crop is essentially unchanged while the
+     visible area is ~32% larger. Left/right padding is untouched -- it comes
+     from .container's gutter, and the active card still starts at 24px.
+
+     !important on the padding because base.css sets `.section { padding:
+     44px 0 !important }` (itself there to beat the per-section inline
+     padding style); this rule is equal specificity but declared later, in a
+     body <style>, so it wins. The stage's margin-top needs it too, since
+     that one is set inline from the header_spacing setting. */
+  @media (max-width: 700px) {
+    .category-showcase { padding: 24px 0 !important; }
+    .ccs-stage { margin: 16px 0 4px !important; aspect-ratio: 1.18 / 1; }
+    .ccs-card { width: 86%; }
+  }
 </style>
 
 <script>
