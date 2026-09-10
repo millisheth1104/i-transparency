@@ -200,3 +200,11 @@
 - Footer repointed. The `settings_data.json` rebase conflict was resolved by keeping Shopify's line (it held a merchant label rename, `Returns & Replacement`) and swapping only the URLs.
 - Caveat given to the client: this is a Liquid template, so content is fully editable like About Us, but drag-and-drop sections would need a JSON template.
 - Commits: `46d357f`, `0b8bdcc`.
+
+## 2026-09-11 — Returns wording corrections
+
+- **FAQ**: the "What products can I return?" answer now states the 7-day-from-delivery window and that a replacement is arranged; the two eligibility cases are a numbered list (`ol` + `li` styling added to `.faq__a`, which only covered `ul`).
+- **Terms section 7**: added the 7-day window and the "Sarom will arrange a replacement of the product" sentence. Kept the existing `1.` / `2.` numbering — the restyler's `NUMBERED` regex requires the dot, and the numbering wasn't part of the requested change.
+- **`/policies/refund-policy` now reads "Return Policy"** (heading and browser tab). A Shopify policy's title is derived from its type and can't be set via the API or the admin, so the restyler relabels the rendered heading — scoped on the pathname so the editable pages keep their own titles.
+- **Not done, blocked**: `shopPolicyUpdate` needs `write_legal_policies`, which this connector lacks. The Terms edit is live on the page but **not** in Settings → Policies, so checkout still shows the old wording. Client to paste it in the admin, or provision a custom app token so the two stay in sync.
+- Commits: `db0e96c`, `5caeb86`.
