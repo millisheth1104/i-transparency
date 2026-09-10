@@ -42,6 +42,7 @@
           "thread-harmony-db",
           "linen-thread",
           "natura",
+          "ethereal-bd",
           "tera-weave",
           "woven-harmony",
           "bare-earth",
@@ -50,8 +51,7 @@
           "signature",
           "statement-tape-dc",
           "knitscape-cc",
-          "knitscape-th",
-          "ethereal-bd"
+          "knitscape-th"
         ],
         "columns": "4",
         "show_count": true,
