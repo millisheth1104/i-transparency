@@ -267,6 +267,20 @@
     var extras = document.getElementById('policy-extras');
     if (!container || !rte || !extras) return;
 
+    /* Shopify fixes a policy's title to its type, so this page renders
+       "Refund policy" and there is no way to change it at source -- there is no
+       title field in the admin, and ShopPolicyInput accepts only `type` and
+       `body`. The merchant wants it read as "Return Policy", so the heading is
+       relabelled here instead. Deliberately scoped to this one Shopify-rendered
+       path: the editable pages that now carry this same styling keep their own
+       titles ("Returns & Replacement Policy"), which is why this tests the
+       pathname rather than the heading text. */
+    if (/^\/policies\/refund-policy\/?$/.test(window.location.pathname)) {
+      var refundH1 = container.querySelector('.shopify-policy__title h1');
+      if (refundH1) refundH1.textContent = 'Return Policy';
+      document.title = document.title.replace(/Refund policy/i, 'Return Policy');
+    }
+
     var frag = extras.content.cloneNode(true);
     var aside = frag.querySelector('.policy__aside');
     var toc = frag.querySelector('.policy__toc');
