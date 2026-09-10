@@ -152,3 +152,4 @@
 - Left inline prose links (breadcrumb, footer phone number) at their natural size — enlarging inline text links breaks line rhythm and they aren't icon buttons.
 - Verified live at 375px after each push: hearts 38×38 with the glyph still 18px, dots 25×25 at a 25px pitch, footer links 152×34 at an unchanged 34px pitch, social 34×34, every `input`/`select`/`textarea` computing to 16px, `scrollWidth` 375 (no overflow) on home, PDP and FAQ.
 - Commits: `eea0a33`, `823db13`, `b752cd5`.
+- **Follow-up**: the stacked feature split had no side gutter — its inner element is a `.container` but its own rule sets `padding: 0`, which is invisible on desktop (962px track, centred) and flush to both edges once stacked. Restored the gutter inside the 860px block so the desktop track stays 962px. Swept the whole theme for the same pattern; it was the only occurrence. Commit `fdea816`.
