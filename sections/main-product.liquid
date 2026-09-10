@@ -163,6 +163,13 @@
                         {%- when 'silver lining' -%}{%- assign hex = '#c5b8a5' -%}
                         {%- when 'light grey' -%}{%- assign hex = '#bbbab6' -%}
                         {%- when 'stone grey' -%}{%- assign hex = '#9a9383' -%}
+                        {%- comment -%} Ethereal (jacquard) colourway B. Plain 'stone' was
+                          absent from this map -- only 'pumice stone' and 'stone grey' existed --
+                          so it would have fallen through to the sand-beige default. Sampled from
+                          the three Ethereal B photos (#afa59b/#afa69d/#bfb2a6, mean below), each
+                          taken from a flat, evenly lit area of the sheet; J320102's '- 4' shot is
+                          shadowed and reads far too dark, so its '- 2' was used instead. {%- endcomment -%}
+                        {%- when 'stone' -%}{%- assign hex = '#b4aa9f' -%}
                         {%- when 'green lint' -%}{%- assign hex = '#bebea8' -%}
                         {%- when 'feather grey' -%}{%- assign hex = '#a8987e' -%}
                         {%- when 'beige','lt. beige mel','lt beige mel' -%}{%- assign hex = '#b09f83' -%}
