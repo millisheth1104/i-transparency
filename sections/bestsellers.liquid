@@ -292,9 +292,38 @@ display:none;
 
 @media(max-width:768px){
 
+/* 640px was too tall to see a whole card at once on a phone. Nothing here
+   changes the photo's 3/4 crop -- that has to stay identical to the Shop
+   grid and the PDP row, or the same product appears differently cropped
+   depending on where you meet it. The height comes out of waste instead:
+
+   1. align-items:start. The stretch above equalises every card to the
+      tallest in the row, which is what the 3-across desktop layout needs,
+      but here only one card is ever on screen -- so all it did was resolve
+      the price's margin-top:auto to 54.6px of blank space inside the card.
+   2. 92% -> 84% card width. Same aspect ratio, so the same crop, just
+      smaller: the photo goes 401px -> 366px. It also leaves ~28px of the
+      next card showing, which is a useful hint that the row swipes.
+   3. Slightly tighter body padding and price margins.
+
+   Together: 640px -> ~540px, which fits a phone viewport with the header. */
 .bs-row{
 
-grid-auto-columns:92%;
+grid-auto-columns:84%;
+
+align-items:start;
+
+}
+
+.bestsellers .product-card__body{
+
+padding:12px 0 0;
+
+}
+
+.bestsellers .product-card__price{
+
+margin:6px 0 12px;
 
 }
 
