@@ -190,3 +190,13 @@
 - Two mechanics worth remembering: `productVariantAppendMedia` takes exactly **one** mediaId per variant (a variant has a single featured image), and requesting only `{ url }` from `stagedUploadsCreate` halves an otherwise enormous response since `resourceUrl` is the url minus its query.
 - Fixed the `Ethereal RIpple` title typo inherited from the spreadsheet.
 - Products remain **DRAFT** pending the client's go-ahead to publish.
+
+## 2026-09-11 — Policy pages made editable
+
+- Identified that only 4 of the 7 footer "Company" links were the problem: Journal is a blog, FAQ and Contact are already-editable pages, while Terms / Privacy / Shipping / Returns were Shopify **policies**, editable only as one plain text box in Settings → Policies.
+- Created four real pages (`terms-conditions`, `privacy-policy`, `shipping-policy`, `returns-replacement-policy`) with the policy text copied **verbatim**, on a new `templates/page.policy.liquid`.
+- **The design is unchanged by construction, not by luck**: the template reproduces Shopify's own policy DOM so `snippets/policy-page.liquid` restyles it with zero changes, and `theme.liquid` just adds the `template-policy` body class for the suffix. Verified against the baselines from the 2026-08-26 session — 16/15/10/10 headings with matching TOC counts, the "Last Updated" line still lifted into the hero, and an identical `232px 888.8px` body grid on old and new.
+- `/policies/*` left live because Shopify links it from checkout; the canonical on those pages now points at the editable page so the duplicate text doesn't split search authority. Old links keep working.
+- Footer repointed. The `settings_data.json` rebase conflict was resolved by keeping Shopify's line (it held a merchant label rename, `Returns & Replacement`) and swapping only the URLs.
+- Caveat given to the client: this is a Liquid template, so content is fully editable like About Us, but drag-and-drop sections would need a JSON template.
+- Commits: `46d357f`, `0b8bdcc`.

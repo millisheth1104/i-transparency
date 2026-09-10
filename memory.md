@@ -631,3 +631,28 @@ Connector came back after a session restart; **verified `0ww0zm-c1.myshopify.com
 **Fixed the `Ethereal RIpple` typo** in the product title (`productUpdate`); the handle was already correct as `ethereal-ripple-bedsheet-set`.
 
 **Still DRAFT, deliberately.** Publishing is an outward-facing change — left for the client to confirm. Quartz's Stone variant featured image is one of the converted TIFFs at 1086×1448; everything else is 543×724.
+
+### 2026-09-11 — Policy pages converted to editable Shopify Pages
+
+Client: *"i want these pages editable so that i can change its content and add content n everything just like how it is another pages"* (pointing at the footer's Company column).
+
+**First step was working out what each link actually was** — only 4 of the 7 were a problem:
+- `Journal` → `/blogs/journal` (a **blog**, edited in Content → Blog posts)
+- `FAQ's` → `/pages/faq`, `Contact Us` → `/pages/contact` (real pages, JSON templates, already customizer-editable)
+- **Terms / Privacy / Shipping / Returns → `/policies/*`** — Shopify *policies*, editable only as one plain rich-text box in Settings → Policies. No template, no sections, no page editor. **This is why they felt different, and it is the constraint behind `snippets/policy-page.liquid` existing at all.**
+
+**Client asked "no ui will be changed?" before agreeing — and the answer was yes, guaranteed, by reusing rather than reimplementing.** `templates/page.policy.liquid` deliberately emits Shopify's own policy DOM (`.shopify-policy__container` > `.shopify-policy__title`/h1 + `.shopify-policy__body` > `.rte`), because the restyler's JS uses plain document-level selectors for exactly those classes. Same markup + same verbatim text + same code = identical output, nothing duplicated.
+- The restyler's CSS is scoped to `.template-policy`, and a page's body class is `template-page`, so `layout/theme.liquid` now appends `template-policy` when `page.template_suffix == 'policy'` and renders the snippet for that suffix too. **Two one-line changes were the whole integration** — the alternative (porting 470 lines) would have guaranteed drift.
+- **Content copied verbatim, deliberately not "improved".** The heuristic parser expects Shopify's flat `<div><span>…</span></div>` shape with no heading tags; tidying it into semantic HTML would have changed the rendering. Verbatim is what makes the output identical.
+
+**Verified against the baselines recorded in the 2026-08-26 session** (Terms 16 / Privacy 15 / Shipping 10 / Returns 10 headings): new pages give **16/16, 15/15, 10/10, 10/10** headings-to-TOC, `.policy__meta` still lifts "Last Updated: August 2026" out of Privacy, and `.shopify-policy__body` computes to the identical `232px 888.8px` grid on both old and new. Related list is 4 links on each with the current one self-marked (`is-current: 1`) — which the old `/policies/*` pages could never do, since their hrefs never matched `location.pathname`.
+
+**`/policies/*` intentionally left live** — Shopify links them from checkout automatically, so removing them would strip those links from checkout. That leaves identical text on two URLs, so the canonical on a policy page now resolves its editable page by handle and points there, consolidating search authority instead of splitting it. Old links, bookmarks and search results therefore keep working, unchanged.
+
+**Ordering trap worth remembering:** the theme change went live *before* the pages existed, and because the related-policy links resolve `pages[handle]`, the "Other policies" list on the live `/policies/*` pages rendered with only 1 entry in the gap. Create the content first, or accept a brief degraded state — and never point Liquid at handles that do not exist yet on a live theme.
+
+**`config/settings_data.json` conflicted on rebase** — Shopify's bidirectional sync had pushed its own copy, and crucially **their version had a label the merchant had renamed** (`Returns & Replacement`, without "Policy"). Resolved by taking Shopify's line and substituting only the four URLs, then aligning the snippet's related-list label to match. **Always diff a settings_data conflict rather than taking either side wholesale — it carries live merchant edits made in the admin.**
+
+**Honest limitation flagged to the client:** `page.policy.liquid` is a Liquid template, so they get full rich-text content editing in the page editor (headings, lists, links, images, raw HTML) — the same as About Us and Corporate, which are also Liquid templates. Drag-and-drop *sections* would need a JSON template instead; offered as a follow-up rather than assumed.
+
+Pages created: `terms-conditions`, `privacy-policy`, `shipping-policy`, `returns-replacement-policy` (all published, suffix `policy`). Commits `46d357f`, `0b8bdcc`.
