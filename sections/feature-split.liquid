@@ -43,6 +43,13 @@
     .feature-split__media { aspect-ratio: 4/3; }
     .feature-split__intro { font-size: 17px; margin: 14px 0; line-height: 1.5; }
     .feature-split__text { font-size: 15px; line-height: 1.7; }
+    /* Both of these are richtext, so their <p> brings its own 1em margin on
+       top of the wrapper's -- that stacked into a ~55px hole between "Ours
+       is woven." and the paragraph under it, which read as a missing block.
+       Only the outer edges are collapsed, so a two-paragraph body still
+       separates normally. */
+    .feature-split__intro > :first-child, .feature-split__text > :first-child { margin-top: 0; }
+    .feature-split__intro > :last-child, .feature-split__text > :last-child { margin-bottom: 0; }
     .feature-split__btn { margin-top: 22px; }
   }
 </style>
