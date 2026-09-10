@@ -32,6 +32,19 @@
   .feature-split__text { color: var(--brown-2); font-size: 16px; line-height: 1.8; max-width: 46ch; }
   .feature-split__btn { margin-top: 30px; }
   @media (max-width: 860px){ .feature-split__inner { grid-template-columns: 1fr; gap: 34px; height: auto; } .feature-split__media { aspect-ratio: 480/540; height: auto; } .feature-split--reverse .feature-split__media { order: 0; } }
+  /* On a phone this section stacked into roughly two full screens: the
+     portrait 480/540 image alone was ~420px tall at 375px wide, then a
+     56px-scale heading, a 20px serif intro and a 16px/1.8 body under it.
+     Landscape crop plus tighter type gets the whole thing into one view
+     without dropping any copy -- the image is still the full width, just
+     not portrait, which is also the shape it reads best at on mobile. */
+  @media (max-width: 600px){
+    .feature-split__inner { gap: 22px; }
+    .feature-split__media { aspect-ratio: 4/3; }
+    .feature-split__intro { font-size: 17px; margin: 14px 0; line-height: 1.5; }
+    .feature-split__text { font-size: 15px; line-height: 1.7; }
+    .feature-split__btn { margin-top: 22px; }
+  }
 </style>
 
 {% schema %}
