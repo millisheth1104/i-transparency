@@ -91,7 +91,12 @@
      to be ("BARE EARTH" alone, then "EMBELLISH" + "KNITSCAPE", then
      "SIGNATURE" alone). A 2-column grid gives even rows whatever the
      collection is called. */
-  .fc__list-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; transform: none !important; } .fc__slide-num { top: 16px; left: 20px; font-size: 11px; } .fc__slide-title { top: 28px; left: 20px; font-size: 20px; } }
+  .fc__list-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; transform: none !important; } .fc__slide-num { top: 16px; left: 20px; font-size: 11px; } .fc__slide-title { top: 28px; left: 20px; font-size: 20px; }
+  /* Each grid column is ~161px here, and 22px + .16em letter-spacing put a
+     two-word name like "BARE EARTH" at ~191px, so it wrapped and left its
+     row taller than the one below. 18px fits the catalog's names on one
+     line; a longer one still wraps, but both columns stay aligned. */
+  .fc__name { font-size: 18px; } }
 
   /* Scroll-scrub relies on a tall track + a JS-managed pin; skip it for reduced motion so the section behaves like a normal in-flow block. */
   @media (prefers-reduced-motion: reduce) {
