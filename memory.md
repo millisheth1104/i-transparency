@@ -668,3 +668,21 @@ Pages created: `terms-conditions`, `privacy-policy`, `shipping-policy`, `returns
 **Blocked, and it caused the two copies to diverge: `shopPolicyUpdate` failed with `Access denied ... Required access: write_legal_policies`.** This is the exact scope gap recorded in [[shopify-mcp-setup]] from the August policies session — now demonstrated to have a concrete cost, not just a theoretical one. The Terms change is live on the page customers read, but `/policies/terms-of-service`, which **checkout links automatically**, still carries the pre-change wording. Told the client to either paste section 7 into Settings → Policies themselves or set up a custom app token with that scope so both can be kept in sync from here.
 
 **Standing consequence of the page conversion, now real:** any future policy wording change has to be applied twice — once to the page, once to Settings → Policies — and the second half is currently impossible with this connector. That makes the custom-app token materially more valuable than it was when it was only about drop-outs.
+
+### 2026-09-11 — Ethereal missing from the collections page + empty Jacquards circle
+
+Client: *"in collections page i cant see ethereals collection and also in shops mega menu add image in that jacquards circle."*
+
+**The Ethereal collection already existed** as `ethereal-bd` (id `311871307983`) — 3 products, published to Online Store, reachable at `/collections/ethereal-bd` the whole time. **Nearly created a duplicate before checking; searching `query: "ethereal"` first is what caught it.**
+
+**Why it was invisible — not publishing, not images: `/collections` does not list every collection.** `sections/main-list-collections.liquid` does `assign list = section.settings.collection_list` and only falls back to all collections when that setting is empty — and it holds a **curated list of 22 handles** in `templates/list-collections.json` which never included `ethereal-bd`. Added after `reflect`, following the Printed → Jacquard → Solids order of the client's master sheet; it now renders 5th of 23, between Reflect and Linera. **Any new line collection has to be added to that list by hand or it silently will not appear.**
+
+**The empty Jacquards circle** was simply `collection.image = null`; `snippets/mega-menu-subcollections.liquid` checked only `sub.image` and dropped straight to `placeholder_svg_tag`. Set the image, and **added a `sub.products.first.featured_image` fallback** — the same order the left-hand category thumbs in `mega-menu.liquid` already used, so this cannot recur for a future collection. All five Bedsheets circles verified carrying real photos.
+
+**Title convention worth knowing:** every line collection has a clean title with the code only in the handle — Essence, Ornate, Linera (`linera-db`), Perca (`perca-db`), Oscar (`oscar-db`), Timeless Grace, Embellish, Thread Harmony, Bamboo (`bamboo-cf`), Statement Tape (`statement-tape-dc`), Knitted (`knitscape-cc`). **"ETHEREAL BD" was the sole outlier** (all caps + code in the title) and would have read that way on its card, so it was renamed to **"Ethereal"**; the handle stays `ethereal-bd`.
+
+Images set from the uploaded product photos via `collectionUpdate` with the CDN url as `image.src` — no re-upload needed: Jacquards ← `ethereal-cascade-beige-1.png`, Ethereal ← `ethereal-quartz-beige-1.png` (both the `-1` dressed-bed shot, matching the sibling circles which all use their line's `-1`).
+
+**Pre-existing gap noticed and flagged, not silently changed:** `linera-db` ("Linera") also has `image: null`. Its card only displays because the collections-page template falls back to the first product's photo.
+
+Products are now ACTIVE (published between sessions), so the earlier draft state is resolved. Commit `10dcf97`.

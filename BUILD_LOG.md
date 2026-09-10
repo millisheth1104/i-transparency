@@ -208,3 +208,12 @@
 - **`/policies/refund-policy` now reads "Return Policy"** (heading and browser tab). A Shopify policy's title is derived from its type and can't be set via the API or the admin, so the restyler relabels the rendered heading — scoped on the pathname so the editable pages keep their own titles.
 - **Not done, blocked**: `shopPolicyUpdate` needs `write_legal_policies`, which this connector lacks. The Terms edit is live on the page but **not** in Settings → Policies, so checkout still shows the old wording. Client to paste it in the admin, or provision a custom app token so the two stay in sync.
 - Commits: `db0e96c`, `5caeb86`.
+
+## 2026-09-11 — Ethereal on the collections page, Jacquards circle image
+
+- **Ethereal was already a live collection** (`ethereal-bd`, 3 products, published) — checked before creating anything, which avoided a duplicate. It was missing from `/collections` because that page uses a **curated `collection_list`** of 22 handles in `templates/list-collections.json`, not all collections. Added after `reflect`; now renders 5th of 23 between Reflect and Linera.
+- Renamed the collection **"ETHEREAL BD" → "Ethereal"** to match every other line collection (clean title, code only in the handle) — it was the sole outlier and read that way on its card.
+- **Jacquards mega-menu circle** was blank because the collection had no image and the circles only checked `collection.image`. Set the image, and added a `products.first.featured_image` fallback so a future collection can't show the placeholder sketch again. All five Bedsheets circles verified carrying real photos.
+- Collection images set from the already-uploaded Ethereal photos via `collectionUpdate` (`image.src` = CDN url), so nothing was re-uploaded.
+- Flagged: `linera-db` ("Linera") also has no collection image; its card only shows because of the product-photo fallback.
+- Commit `10dcf97`.
