@@ -35,6 +35,17 @@
   to max_swatches dots, each linking to the matching variant, with a "+N"
   overflow badge for the rest rather than cramming every colour onto a card.
 {%- endcomment -%}
+{%- comment -%}
+  filtered_image/filtered_url default to "no override" here, unconditionally,
+  so every product gets a valid link -- the colour-option branch below may
+  replace filtered_url with a variant-specific link, but products with no
+  Color option (single-swatch or photo-sampled fallback cards) must still
+  fall through with a working href instead of an unassigned/empty one,
+  which previously rendered as `<a href="">` and made the card link back to
+  the current page instead of the product (looked like the page reloading).
+{%- endcomment -%}
+{%- assign filtered_image = blank -%}
+{%- assign filtered_url = p.url -%}
 {%- assign color_option = blank -%}
 {%- for option in p.options_with_values -%}
   {%- assign opt_name_dc = option.name | downcase -%}
@@ -54,8 +65,6 @@
     Falls back to the normal image cycle when no match (product doesn't
     come in the filtered colour, or no filter is active).
   {%- endcomment -%}
-  {%- assign filtered_image = blank -%}
-  {%- assign filtered_url = p.url -%}
   {%- if active_color != blank -%}
     {%- assign ac = active_color | downcase | strip -%}
     {%- for variant in p.variants -%}
