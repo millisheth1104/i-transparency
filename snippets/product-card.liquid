@@ -29,6 +29,23 @@
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
+{%- comment -%}
+  Colour swatches: find the product's colour-like option (same detection
+  main-product.liquid uses -- name contains color/colour/shade) and render up
+  to max_swatches dots, each linking to the matching variant, with a "+N"
+  overflow badge for the rest rather than cramming every colour onto a card.
+{%- endcomment -%}
+{%- assign color_option = blank -%}
+{%- for option in p.options_with_values -%}
+  {%- assign opt_name_dc = option.name | downcase -%}
+  {%- if opt_name_dc contains 'color' or opt_name_dc contains 'colour' or opt_name_dc contains 'shade' -%}
+    {%- assign color_option = option -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if color_option != blank and color_option.values.size > 1 -%}
+  {%- assign color_index = color_option.position | minus: 1 -%}
+  {%- assign max_swatches = 6 -%}
+{%- endif -%}
 <div class="product-card">
   <a href="{{ p.url }}" class="product-card__media"{% if p.images.size > 1 %} data-pc-cycle{% endif %}>
     {%- if p.featured_image -%}
@@ -45,6 +62,27 @@
     <a href="{{ p.url }}">
       <h3 class="product-card__title">{{ p.title }}</h3>
     </a>
+    {%- if color_option != blank and color_option.values.size > 1 -%}
+      <div class="product-card__swatches">
+        {%- for value in color_option.values limit: max_swatches -%}
+          {%- capture hex -%}{%- render 'swatch-hex', value: value -%}{%- endcapture -%}
+          {%- assign matched_variant = blank -%}
+          {%- for variant in p.variants -%}
+            {%- if variant.options[color_index] == value -%}
+              {%- assign matched_variant = variant -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if matched_variant != blank -%}
+            <a href="{{ p.url }}?variant={{ matched_variant.id }}" class="product-card__swatch" title="{{ value | escape }}" style="background:{{ hex | strip }};" aria-label="{{ value | escape }}"></a>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- assign swatch_remaining = color_option.values.size | minus: max_swatches -%}
+        {%- if swatch_remaining > 0 -%}
+          <span class="product-card__swatch-more">+{{ swatch_remaining }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
     {%- if p.metafields.custom.shade != blank and p.metafields.custom.shade != 0 and p.metafields.custom.shade != '0' -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
     {%- if p.type != blank and p.type != 0 and p.type != '0' -%}<p class="product-card__meta">{{ p.type }}</p>{%- endif -%}
     {%- if size_value != blank and size_value != 0 and size_value != '0' -%}<p class="product-card__meta">{{ size_value }}</p>{%- endif -%}
