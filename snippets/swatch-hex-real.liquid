@@ -1,0 +1,61 @@
+{%- comment -%}
+  params: value (any string -- a colour name, or a single word from a title)
+  Same lookup as swatch-hex.liquid, but outputs an EMPTY string on no match
+  instead of the sand-beige default. Used to test "is this actually a known
+  colour word" (e.g. when scanning a product title word-by-word) without a
+  false positive on unrelated words.
+{%- endcomment -%}
+{%- assign v = value | downcase | strip -%}
+{%- assign hex = '' -%}
+{%- case v -%}
+  {%- when 'bright white' -%}{%- assign hex = '#e3e1e3' -%}
+  {%- when 'tofu' -%}{%- assign hex = '#e8e2d6' -%}
+  {%- when 'turtledove' -%}{%- assign hex = '#dfd9c7' -%}
+  {%- when 'peyote' -%}{%- assign hex = '#c5beab' -%}
+  {%- when 'plaza taupe' -%}{%- assign hex = '#b9ae93' -%}
+  {%- when 'dessert taupe' -%}{%- assign hex = '#928773' -%}
+  {%- when 'drizzle' -%}{%- assign hex = '#a7a5a2' -%}
+  {%- when 'dove' -%}{%- assign hex = '#aca497' -%}
+  {%- when 'moonstruck' -%}{%- assign hex = '#bab7a8' -%}
+  {%- when 'pumice stone','lt. grey mel','lt grey mel' -%}{%- assign hex = '#ada698' -%}
+  {%- when 'off white' -%}{%- assign hex = '#e6e0d3' -%}
+  {%- when 'silver lining' -%}{%- assign hex = '#c5b8a5' -%}
+  {%- when 'light grey' -%}{%- assign hex = '#bbbab6' -%}
+  {%- when 'stone grey' -%}{%- assign hex = '#9a9383' -%}
+  {%- when 'stone' -%}{%- assign hex = '#b4aa9f' -%}
+  {%- when 'green lint' -%}{%- assign hex = '#bebea8' -%}
+  {%- when 'feather grey' -%}{%- assign hex = '#a8987e' -%}
+  {%- when 'beige','lt. beige mel','lt beige mel' -%}{%- assign hex = '#b09f83' -%}
+  {%- when 'nude' -%}{%- assign hex = '#c5ae9f' -%}
+  {%- when 'turtole dove' -%}{%- assign hex = '#eae5cf' -%}
+  {%- when 'turtle dove' -%}{%- assign hex = '#b0a39d' -%}
+  {%- when 'desert taupe' -%}{%- assign hex = '#6f675a' -%}
+  {%- when 'cream' -%}{%- assign hex = '#c5bba0' -%}
+  {%- when 'creme' -%}{%- assign hex = '#cac3ad' -%}
+  {%- when 'taupe' -%}{%- assign hex = '#aea78c' -%}
+  {%- when 'blush' -%}{%- assign hex = '#c5ae9f' -%}
+  {%- when 'nude/blush' -%}{%- assign hex = '#c2b7b0' -%}
+  {%- when 'natural' -%}{%- assign hex = '#d3c7b2' -%}
+  {%- when 'birch' -%}{%- assign hex = '#beab9a' -%}
+  {%- when 'moonrock' -%}{%- assign hex = '#9d9383' -%}
+  {%- when 'ivory' -%}{%- assign hex = '#bbb2aa' -%}
+  {%- when 'linen' -%}{%- assign hex = '#b0a494' -%}
+  {%- when 'mocha' -%}{%- assign hex = '#958a84' -%}
+  {%- when 'sage' -%}{%- assign hex = '#b6bfb4' -%}
+  {%- when 'oatmeal' -%}{%- assign hex = '#ac978c' -%}
+  {%- when 'oatmel' -%}{%- assign hex = '#9f8d83' -%}
+  {%- when 'oatmeal popcorn' -%}{%- assign hex = '#9e8b81' -%}
+  {%- when 'popcorn' -%}{%- assign hex = '#eedbc9' -%}
+  {%- when 'beige mel' -%}{%- assign hex = '#ccbaaf' -%}
+  {%- when 'beige mel popcorn' -%}{%- assign hex = '#c3b1a6' -%}
+  {%- when 'green mel' -%}{%- assign hex = '#303227' -%}
+  {%- when 'tea' -%}{%- assign hex = '#768087' -%}
+  {%- when 'lt. blue daisy','lt blue daisy','blue daisy' -%}{%- assign hex = '#5e656f' -%}
+  {%- when 'grey','gray' -%}{%- assign hex = '#aea9a5' -%}
+  {%- when 'green' -%}{%- assign hex = '#a0a49e' -%}
+  {%- when 'midlife brown','mahogany','brown' -%}{%- assign hex = '#7a5c46' -%}
+  {%- when 'olive' -%}{%- assign hex = '#3c3e31' -%}
+  {%- when 'blue' -%}{%- assign hex = '#a9c2d6' -%}
+  {%- when 'sand' -%}{%- assign hex = '#ddd0b9' -%}
+  {%- when 'white' -%}{%- assign hex = '#e8e6e0' -%}
+{%- endcase -%}{{ hex }}

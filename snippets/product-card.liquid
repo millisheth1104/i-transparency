@@ -57,6 +57,26 @@
   {%- if fallback_shade_number != 0 or fallback_shade == '0' -%}
     {%- assign fallback_shade = '' -%}
   {%- endif -%}
+  {%- comment -%}
+    No shade metafield either (true for most single-variant products in this
+    catalog) -- fall back to scanning the product title word by word for a
+    known colour name (e.g. "Beige Monogram Duvet Cover Gift Set" -> Beige,
+    "...Gauze Stone Bedspread" -> Stone). swatch-hex-real only matches real
+    colour words, so unrelated words (King, Set, Gauze...) are skipped rather
+    than mismatched.
+  {%- endcomment -%}
+  {%- if fallback_shade == blank -%}
+    {%- assign title_words = p.title | downcase | split: ' ' -%}
+    {%- for w in title_words -%}
+      {%- if fallback_shade == blank -%}
+        {%- capture word_hex -%}{%- render 'swatch-hex-real', value: w -%}{%- endcapture -%}
+        {%- assign word_hex = word_hex | strip -%}
+        {%- if word_hex != blank -%}
+          {%- assign fallback_shade = w -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
 {%- endif -%}
 <div class="product-card">
   <a href="{{ p.url }}" class="product-card__media"{% if p.images.size > 1 %} data-pc-cycle{% endif %}>
