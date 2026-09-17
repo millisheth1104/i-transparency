@@ -1,0 +1,20 @@
+{%- comment -%}
+  params: url, variant_id
+  Outputs `url` with a `variant=variant_id` query param, REPLACING any
+  existing variant= param instead of appending a second one. Needed because
+  Shopify already appends "&variant=X" to product.url by itself inside a
+  filtered collection (matching whatever colour is currently filtered) --
+  a caller that wants a DIFFERENT variant (e.g. a swatch dot for another
+  colour) can't just blindly append its own "&variant=Y" on top of that
+  without producing a broken doubled/conflicting query string.
+{%- endcomment -%}
+{%- assign base = url | split: 'variant=' | first -%}
+{%- if base == url -%}
+  {%- assign sep = '?' -%}
+  {%- if url contains '?' -%}
+    {%- assign sep = '&' -%}
+  {%- endif -%}
+  {{- url -}}{{- sep -}}variant={{ variant_id }}
+{%- else -%}
+  {{- base -}}variant={{ variant_id }}
+{%- endif -%}
