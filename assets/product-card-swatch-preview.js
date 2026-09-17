@@ -3,13 +3,16 @@
    stays a real <a href> (works with JS off, or opens in a new tab on a
    middle-click / ctrl+click) -- only a plain left-click is intercepted.
 
-   Conflict with product-card-cycle.js (the hover-to-cycle-through-photos
-   effect): that script re-reads the card's frames on every mouseenter, and
-   only cycles when there are 2+ of them. Once a swatch is picked, this
-   script collapses the card down to a single frame showing the picked
-   colour and removes data-pc-cycle from the media element, so a later
-   hover has nothing to cycle through and can't stomp the picked colour
-   back to the default photo. */
+   product-card-cycle.js's hover-to-cycle-through-photos effect keeps
+   working after a swatch is picked -- data-pc-cycle is left alone on
+   purpose. What changes is which photo frame 0 holds: it's overwritten
+   with the picked colour's photo, so hovering still cycles through the
+   card's other (colour-agnostic detail/lifestyle) shots as before, and
+   mouseleave's reset-to-frame-0 lands back on the picked colour instead of
+   the original default one. The only thing guarded against is a cycle
+   interval already mid-flight at the moment of the click stomping the pick
+   a fraction of a second later -- that gets stopped so the swap sticks
+   until the next hover starts a fresh cycle. */
 (function () {
   document.addEventListener('click', function (e) {
     var swatch = e.target.closest && e.target.closest('[data-swatch]');
@@ -32,13 +35,14 @@
     var frames = media.querySelectorAll('.product-card__media-frame');
     if (!frames.length) return;
 
-    // Stop any cycle already mid-flight and make sure a later hover can't
-    // start a new one over this picked colour.
+    // Stop a cycle that's already mid-flight so it doesn't immediately
+    // advance past the frame we're about to set -- data-pc-cycle stays on
+    // the element, so hovering again afterward starts a fresh cycle same
+    // as always.
     if (media.dataset.pcTimer) {
       clearInterval(media.dataset.pcTimer);
       delete media.dataset.pcTimer;
     }
-    media.removeAttribute('data-pc-cycle');
 
     frames.forEach(function (frame, i) {
       if (i === 0) {
