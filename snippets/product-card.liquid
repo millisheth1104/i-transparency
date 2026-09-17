@@ -144,7 +144,18 @@
           {%- endfor -%}
           {%- if matched_variant != blank -%}
             {%- capture swatch_url -%}{%- render 'url-with-variant', url: p.url, variant_id: matched_variant.id -%}{%- endcapture -%}
-            <a href="{{ swatch_url | strip }}" class="product-card__swatch" title="{{ value | escape }}" style="background:{{ hex | strip }};" aria-label="{{ value | escape }}"></a>
+            {%- comment -%}
+              data-preview-image lets swatch-preview.js swap the card's own
+              media in place on click instead of navigating -- href is kept
+              as a real link (still works with JS off, or a middle-click /
+              ctrl-click to open the variant in a new tab).
+            {%- endcomment -%}
+            {%- if matched_variant.featured_image -%}
+              {%- assign swatch_preview_image = matched_variant.featured_image | image_url: width: 600 -%}
+            {%- else -%}
+              {%- assign swatch_preview_image = '' -%}
+            {%- endif -%}
+            <a href="{{ swatch_url | strip }}" class="product-card__swatch" title="{{ value | escape }}" style="background:{{ hex | strip }};" aria-label="{{ value | escape }}" data-swatch{% if swatch_preview_image != '' %} data-preview-image="{{ swatch_preview_image }}"{% endif %}></a>
           {%- endif -%}
         {%- endfor -%}
         {%- assign swatch_remaining = color_option.values.size | minus: max_swatches -%}
