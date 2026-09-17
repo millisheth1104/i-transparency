@@ -61,7 +61,12 @@
     {%- for variant in p.variants -%}
       {%- assign v_color = variant.options[color_index] | downcase | strip -%}
       {%- if v_color == ac -%}
-        {%- assign filtered_url = p.url | append: '?variant=' | append: variant.id -%}
+        {%- comment -%} p.url can already carry query params (e.g. Shopify's own _pos/_fid tracking inside a filtered/sorted collection) -- use & instead of ? when that's the case, or the variant param gets appended as a second bogus "?variant=..." rather than joined into the existing query string. {%- endcomment -%}
+        {%- assign url_sep = '?' -%}
+        {%- if p.url contains '?' -%}
+          {%- assign url_sep = '&' -%}
+        {%- endif -%}
+        {%- assign filtered_url = p.url | append: url_sep | append: 'variant=' | append: variant.id -%}
         {%- if variant.featured_image -%}
           {%- assign filtered_image = variant.featured_image -%}
         {%- endif -%}
@@ -133,7 +138,11 @@
             {%- endif -%}
           {%- endfor -%}
           {%- if matched_variant != blank -%}
-            <a href="{{ p.url }}?variant={{ matched_variant.id }}" class="product-card__swatch" title="{{ value | escape }}" style="background:{{ hex | strip }};" aria-label="{{ value | escape }}"></a>
+            {%- assign swatch_url_sep = '?' -%}
+            {%- if p.url contains '?' -%}
+              {%- assign swatch_url_sep = '&' -%}
+            {%- endif -%}
+            <a href="{{ p.url }}{{ swatch_url_sep }}variant={{ matched_variant.id }}" class="product-card__swatch" title="{{ value | escape }}" style="background:{{ hex | strip }};" aria-label="{{ value | escape }}"></a>
           {%- endif -%}
         {%- endfor -%}
         {%- assign swatch_remaining = color_option.values.size | minus: max_swatches -%}

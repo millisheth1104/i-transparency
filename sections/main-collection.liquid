@@ -653,7 +653,20 @@
   }
 
   #shopify-section-{{ section.id }} .mc-load-sentinel { height: 1px; }
+  {%- comment -%}
+    The [hidden] attribute set on this element (both in the server-rendered
+    markup and by collection-infinite-scroll.js between page fetches) needs
+    to actually hide it -- but an ID+class selector outranks the browser's
+    default `[hidden] { display: none }` rule, which only has attribute+class-
+    level specificity. Without this override the spinner rendered visible on
+    every page load regardless of the hidden attribute, only ever disappearing
+    once JS scrolled the sentinel into view and removed it from the DOM --
+    a visible spinner flash even on collections with no further pages to load.
+    An ID+class+attribute selector here outranks the plain display:flex rule,
+    so [hidden] wins again as intended.
+  {%- endcomment -%}
   #shopify-section-{{ section.id }} .mc-load-spinner { display: flex; justify-content: center; padding: 40px 0; }
+  #shopify-section-{{ section.id }} .mc-load-spinner[hidden] { display: none; }
   #shopify-section-{{ section.id }} .mc-load-spinner::after { content: ""; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--brown); animation: mc-spin .7s linear infinite; }
   @keyframes mc-spin { to { transform: rotate(360deg); } }
 
