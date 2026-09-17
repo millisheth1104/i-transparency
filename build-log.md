@@ -16,3 +16,20 @@
 **Scope note**: prior sessions (see project `memory.md`) already fixed most of the 15-point checklist (main-product grid, popup, contact map, featured-collections title, sleepscape hover/tap, mc-grid). This session's live sweep across 6 page types × 3 breakpoints found no further genuine issues beyond the hero bug — this is a spot-check, not an exhaustive line-by-line pass of every remaining checklist item (product-card/typography/buttons/footer/CLS across every template).
 
 **Git**: commit `1bf5464` (hero fix) + merge `a2da5f8` (routine `shopify[bot]` settings sync). Pushed clean to `origin/main`.
+
+## 2026-09-17 — Product Dimensions + Thread Count added to product descriptions (live Admin API, no code changes)
+
+**Task**: client-supplied spreadsheet (294 spec rows, 6 tabs) mapped to live products; append `Product Dimensions` and `Thread Count` paragraphs to each matching product's `descriptionHtml` via `productUpdate` GraphQL mutation, without disturbing existing description text.
+
+**Result**:
+- Store: `0ww0zm-c1.myshopify.com` — verified via `{ shop { name myshopifyDomain } }` before any write.
+- 106 total products fetched (paginated `products(first:50)`).
+- **96 updated successfully**, 0 `userErrors` across all 96 `productUpdate` calls.
+- **8 skipped** as leftover test/duplicate products (6× `Woven Harmony *-copy*` handles, 1× `blanket` handle w/ title "WOVEN HARMONY", 1× bare DRAFT "Woven Harmony" with empty description) — none written to.
+- **2 matched but had no dimensions/thread_count in the source sheet** (Ornate Greek Key Border, Ornate Royal Chain Border) — left as-is.
+- **10 products got Product Dimensions only, no Thread Count** — the sheet's thread_count cell for these was non-numeric junk (`"Higher TC"` ×6, `"3800grms"` ×4 rows collapsing to these products) rather than a number; omitted per the "plain number" formatting rule instead of writing bad data live. Flagged for client to supply real thread-count values.
+- Matching done via a Python fuzzy-match script (normalize + Jaccard + SequenceMatcher, threshold 0.55) comparing product title to spreadsheet design_name, since Shopify consolidates color variants into one product while the sheet has one row per color.
+
+**No git commits** — this task was 100% Shopify Admin content (GraphQL), not theme/code, so nothing to push.
+
+Full narrative + data-quality findings logged in `memory.md` under "2026-09-17 — Product Dimensions + Thread Count appended to all product descriptions".

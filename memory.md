@@ -686,3 +686,19 @@ Images set from the uploaded product photos via `collectionUpdate` with the CDN 
 **Pre-existing gap noticed and flagged, not silently changed:** `linera-db` ("Linera") also has `image: null`. Its card only displays because the collections-page template falls back to the first product's photo.
 
 Products are now ACTIVE (published between sessions), so the earlier draft state is resolved. Commit `10dcf97`.
+
+### 2026-09-17 — Product Dimensions + Thread Count appended to all product descriptions
+
+Client provided a spreadsheet (Design Name, Product Dimensions, Thread Count, + other spec columns, 294 rows across 6 tabs: Bedsheet/BedSpread/Comforter Set/Duvet Covers/Cushion Covers/THROWS) and asked to add dimensions and thread count into every product's description. Done entirely via Admin GraphQL (`productUpdate`), no theme/code changes.
+
+**Store had 106 total products.** Matched Shopify `title` against spreadsheet `design_name` via a Python normalize+Jaccard+SequenceMatcher fuzzy-match script (threshold 0.55) rather than doing it by hand — titles differ from sheet rows mainly by an appended color name (Shopify consolidates color variants into one product; the sheet has one row per color) plus minor wording ("Bed Sheet" vs "Bedsheet", trailing "Set"). Since dimensions/thread_count are identical across all color variants of the same design, matching against any one color-row for a multi-color product is safe.
+
+**8 products skipped as leftover test/duplicate data, none touched:** 6× "Woven Harmony" with `-copy` handles, 1× "WOVEN HARMONY" at handle `blanket` (title/handle mismatch), and 1× bare "Woven Harmony" (DRAFT, empty description, handle `woven-harmony`) — matched the spec only at a low 0.566 score and shares every other trait (DRAFT status, empty descriptionHtml, generic un-suffixed title) with the confirmed dupes, so treated as part of the same test family rather than a real product.
+
+**2 products genuinely have no dimensions/thread_count in the sheet** ("Ornate Greek Key Border" / "Ornate Royal Chain Border" — design numbers `D300101`/`D300105`, both null in every column in the source spreadsheet) — left untouched, flagged for the client to fill in manually if the data exists elsewhere.
+
+**Data-quality issue found in the sheet, handled conservatively:** the `thread_count` column sometimes holds non-numeric placeholder text instead of a number — `"Higher TC"` (6 Ethereal Cascade/Ripple/Quartz rows) and `"3800grms"` (20 Knitscape/Bamboo/Knitted throw & cushion rows, a GSM fabric-weight figure, not a thread count). Per the "render as a plain number" instruction, these were **not** written into the live description as garbled text — Product Dimensions was still added where present, but the Thread Count line was omitted for these 10 products pending the client supplying a real number. `"NA"` values were treated as blank (silently omitted), which is different from these — `NA` is an honest "not applicable," the other two are malformed data.
+
+**Result: 96 of 106 products updated, 0 mutation errors.** Format used: `<p><strong>Product Dimensions:</strong> {value}</p>` / `<p><strong>Thread Count:</strong> {value}</p>` appended after existing description content (never replaced), thread count cleaned of Excel's trailing `.0`. Two ambiguous "Thread Harmony Bedsheet Set (E300101)"/`(E300103)` products (design code matches 2 color rows each, e.g. Peyote vs Bright White) were resolved by design-code lookup rather than title fuzzy-match — safe because both candidate rows agree on dimensions/thread_count regardless of color.
+
+**Lesson for future spec-import tasks on this catalog**: always sanity-check the spreadsheet's numeric-looking columns for stray text before formatting them into HTML — a spot-check of "just a few" cheap-looking values (`Higher TC`) caught what turned out to be a 26-row-wide pattern once checked programmatically.
