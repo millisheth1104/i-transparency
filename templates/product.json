@@ -34,7 +34,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Terms & conditions",
-            "content": "<p>Free shipping and Cash on Delivery across India. Easy returns within 7 days of delivery.</p>",
+            "content": "<p>Free shipping across India.</p>",
             "use_product_description": false,
             "open": false
           }
