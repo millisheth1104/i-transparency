@@ -35,6 +35,11 @@
           var doc = new DOMParser().parseFromString(html, 'text/html');
           var newCards = doc.querySelectorAll('.mc-grid .product-card');
           newCards.forEach(function (card) { targetGrid.appendChild(card); });
+          // Cards just came from server HTML with no swatch-fallback pass yet --
+          // run it on the newly-appended ones only (window.pcSwatchFallback.run
+          // re-checks .product-card__swatches per card, so this is also safe if
+          // this script ever loads before the fallback script does).
+          if (window.pcSwatchFallback) window.pcSwatchFallback.run(targetGrid);
 
           var newSentinel = doc.querySelector('[data-mc-infinite]');
           var newNextUrl = newSentinel ? newSentinel.dataset.nextUrl : '';

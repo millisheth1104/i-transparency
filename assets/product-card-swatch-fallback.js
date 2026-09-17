@@ -61,12 +61,17 @@
     probe.src = img.currentSrc || img.src;
   }
 
-  function run() {
-    document.querySelectorAll('.product-card').forEach(sampleCard);
+  function run(root) {
+    (root || document).querySelectorAll('.product-card').forEach(sampleCard);
   }
 
+  // Exposed so pages that load more cards after the initial render --
+  // collection-infinite-scroll.js, quick-add refreshes, etc. -- can sample
+  // just the newly-added cards instead of waiting for a full page load.
+  window.pcSwatchFallback = { run: run };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('DOMContentLoaded', function () { run(); });
   } else {
     run();
   }
