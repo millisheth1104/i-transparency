@@ -1,4 +1,4 @@
-{%- comment -%} params: product, show_add (default true) {%- endcomment -%}
+{%- comment -%} params: product, show_add (default true), active_color (optional -- see below) {%- endcomment -%}
 {%- assign p = product -%}
 {%- comment -%}
   custom.size is set to the bare number 1 on every product in the catalog
@@ -45,6 +45,30 @@
 {%- if color_option != blank and color_option.values.size > 1 -%}
   {%- assign color_index = color_option.position | minus: 1 -%}
   {%- assign max_swatches = 6 -%}
+  {%- comment -%}
+    When the collection's colour filter has a value selected, `active_color`
+    is passed in from the section (see main-collection.liquid). If this
+    product actually carries that colour, show that variant's own photo on
+    the card instead of the default first image -- e.g. filtering "Green"
+    shows the green photo, not whichever colour happens to be variant #1.
+    Falls back to the normal image cycle when no match (product doesn't
+    come in the filtered colour, or no filter is active).
+  {%- endcomment -%}
+  {%- assign filtered_image = blank -%}
+  {%- assign filtered_url = p.url -%}
+  {%- if active_color != blank -%}
+    {%- assign ac = active_color | downcase | strip -%}
+    {%- for variant in p.variants -%}
+      {%- assign v_color = variant.options[color_index] | downcase | strip -%}
+      {%- if v_color == ac -%}
+        {%- assign filtered_url = p.url | append: '?variant=' | append: variant.id -%}
+        {%- if variant.featured_image -%}
+          {%- assign filtered_image = variant.featured_image -%}
+        {%- endif -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
 {%- else -%}
   {%- comment -%}
     Single-colour products (no Color option, or only one value) still have a
@@ -79,8 +103,11 @@
   {%- endif -%}
 {%- endif -%}
 <div class="product-card">
-  <a href="{{ p.url }}" class="product-card__media"{% if p.images.size > 1 %} data-pc-cycle{% endif %}>
-    {%- if p.featured_image -%}
+  <a href="{{ filtered_url }}" class="product-card__media"{% if filtered_image == blank and p.images.size > 1 %} data-pc-cycle{% endif %}>
+    {%- if filtered_image != blank -%}
+      {%- comment -%} Colour filter matched -- show only that variant's photo, no cycling through unrelated colours. {%- endcomment -%}
+      <img class="product-card__media-frame is-active" src="{{ filtered_image | image_url: width: 600 }}" alt="{{ p.title | escape }} - {{ active_color | escape }}" width="600" height="800" loading="lazy">
+    {%- elsif p.featured_image -%}
       {%- assign cycle_images = p.images | slice: 0, 5 -%}
       {%- for cycle_image in cycle_images -%}
         <img class="product-card__media-frame{% if forloop.first %} is-active{% endif %}" src="{{ cycle_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="600" height="800" loading="lazy">
@@ -91,7 +118,7 @@
     <button class="product-card__wish" aria-label="Add to wishlist" type="button" data-wishlist="{{ p.id }}">{% render 'icon', icon: 'heart' %}</button>
   </a>
   <div class="product-card__body">
-    <a href="{{ p.url }}">
+    <a href="{{ filtered_url }}">
       <h3 class="product-card__title">{{ p.title }}</h3>
     </a>
     {%- if color_option != blank and color_option.values.size > 1 -%}

@@ -8,6 +8,24 @@
   for filter in collection.filters
     assign active_count = active_count | plus: filter.active_values.size
   endfor
+
+  comment
+    Colour filter -> product-card image swap: when the shopper has a Color
+    filter value selected, pass its label down to product-card so each card
+    shows that variant's own photo instead of whichever colour happens to be
+    listed first. Matched on the filter's label containing color/colour
+    (same detection product-card.liquid uses for the option itself), not on
+    param_name, since Shopify's generated param_name varies by option id.
+  endcomment
+  assign active_color = blank
+  for filter in collection.filters
+    assign filter_label_dc = filter.label | downcase
+    if filter_label_dc contains 'color' or filter_label_dc contains 'colour'
+      if filter.active_values.size > 0
+        assign active_color = filter.active_values.first.label
+      endif
+    endif
+  endfor
 -%}
 
 <section class="section--tight mc" data-section-id="{{ section.id }}">
@@ -155,7 +173,7 @@
           <div class="mc-feature">
             <div class="mc-feature__grid">
               {%- for product in collection.products limit: 4 -%}
-                {% render 'product-card', product: product %}
+                {% render 'product-card', product: product, active_color: active_color %}
               {%- endfor -%}
             </div>
             <div class="mc-feature__media">
@@ -178,7 +196,7 @@
         -%}
         <div class="grid grid--4 mc-grid">
           {%- for product in collection.products offset: grid_offset -%}
-            {% render 'product-card', product: product %}
+            {% render 'product-card', product: product, active_color: active_color %}
             {%- if paginate.current_page == 1 -%}
               {%- for promo in promo_blocks -%}
                 {%- if promo.settings.position == forloop.parentloop.index -%}
