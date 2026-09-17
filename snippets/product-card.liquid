@@ -45,6 +45,18 @@
 {%- if color_option != blank and color_option.values.size > 1 -%}
   {%- assign color_index = color_option.position | minus: 1 -%}
   {%- assign max_swatches = 6 -%}
+{%- else -%}
+  {%- comment -%}
+    Single-colour products (no Color option, or only one value) still have a
+    colour -- the custom.shade metafield already shown as text below. Show
+    that same colour as one swatch dot instead of leaving the row blank, so
+    cards look consistent across the grid.
+  {%- endcomment -%}
+  {%- assign fallback_shade = p.metafields.custom.shade | append: '' | strip -%}
+  {%- assign fallback_shade_number = fallback_shade | plus: 0 -%}
+  {%- if fallback_shade_number != 0 or fallback_shade == '0' -%}
+    {%- assign fallback_shade = '' -%}
+  {%- endif -%}
 {%- endif -%}
 <div class="product-card">
   <a href="{{ p.url }}" class="product-card__media"{% if p.images.size > 1 %} data-pc-cycle{% endif %}>
@@ -81,6 +93,11 @@
         {%- if swatch_remaining > 0 -%}
           <span class="product-card__swatch-more">+{{ swatch_remaining }}</span>
         {%- endif -%}
+      </div>
+    {%- elsif fallback_shade != blank -%}
+      {%- capture fallback_hex -%}{%- render 'swatch-hex', value: fallback_shade -%}{%- endcapture -%}
+      <div class="product-card__swatches">
+        <span class="product-card__swatch" title="{{ fallback_shade | escape }}" style="background:{{ fallback_hex | strip }};" aria-label="{{ fallback_shade | escape }}"></span>
       </div>
     {%- endif -%}
     {%- if p.metafields.custom.shade != blank and p.metafields.custom.shade != 0 and p.metafields.custom.shade != '0' -%}<p class="product-card__meta">{{ p.metafields.custom.shade }}</p>{%- endif -%}
