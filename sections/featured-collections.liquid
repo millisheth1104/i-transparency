@@ -10,18 +10,37 @@
           {%- endfor -%}
         </div>
 
-        <div class="fc__stage" style="border-radius:{{ section.settings.stage_image_radius }}px">
+        <div class="fc__stage-col">
+          <div class="fc__stage" style="border-radius:{{ section.settings.stage_image_radius }}px">
+            {%- for block in section.blocks -%}
+              <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
+                {%- else -%}
+                  {{ 'lifestyle-2' | placeholder_svg_tag }}
+                {%- endif -%}
+                <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
+                <span class="fc__slide-title">{{ block.settings.title }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+
+          {%- comment -%} Content box under the image, one per slide -- text swaps with the active slide via go() below, same pattern as the title/dots/list. {%- endcomment -%}
+          {%- assign has_description = false -%}
           {%- for block in section.blocks -%}
-            <a href="{{ block.settings.link }}" class="fc__slide {% if forloop.first %}is-active{% endif %}" data-fc-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-              {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 1600 }}" alt="{{ block.settings.title | escape }}" width="1600" height="1000" loading="lazy">
-              {%- else -%}
-                {{ 'lifestyle-2' | placeholder_svg_tag }}
-              {%- endif -%}
-              <span class="fc__slide-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}/</span>
-              <span class="fc__slide-title">{{ block.settings.title }}</span>
-            </a>
+            {%- if block.settings.description != blank -%}
+              {%- assign has_description = true -%}
+            {%- endif -%}
           {%- endfor -%}
+          {%- if has_description -%}
+            <div class="fc__desc">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="fc__desc-text {% if forloop.first %}is-active{% endif %}" data-fc-desc="{{ forloop.index0 }}">{{ block.settings.description }}</p>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
 
         <div class="fc__list" data-fc-list>
@@ -56,6 +75,7 @@
   .fc__dot { width: 100%; padding: 8px 0; border: none; background: none; display: flex; align-items: center; justify-content: center; }
   .fc__dot::before { content: ''; width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--taupe); background: transparent; }
   .fc__dot.is-active::before { background: var(--brown); border-color: var(--brown); }
+  .fc__stage-col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
   .fc__stage { position: relative; border-radius: var(--radius); overflow: hidden; width: 100%; aspect-ratio: 812 / 516; }
   .fc__slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; pointer-events: none; }
   .fc__slide.is-active { opacity: 1; pointer-events: auto; }
@@ -67,6 +87,13 @@
   .fc__slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(20,16,12,.5) 0%, rgba(20,16,12,.22) 22%, rgba(20,16,12,0) 45%); pointer-events: none; z-index: 1; }
   .fc__slide-num { position: absolute; top: 28px; left: 34px; color: rgba(244,238,228,.85); font-size: 13px; letter-spacing: .1em; z-index: 2; }
   .fc__slide-title { position: absolute; top: 50px; left: 34px; color: var(--cream); font-size: 34px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; z-index: 2; text-shadow: 0 1px 8px rgba(0,0,0,.25); }
+
+  /* Content box under the stage image -- one <p> per slide, only the
+     active one shown. min-height keeps the box from visibly collapsing
+     between the catalog's shorter and longer descriptions. */
+  .fc__desc { background: var(--cream); border-radius: var(--radius); padding: 22px 26px; min-height: 84px; display: flex; align-items: center; }
+  .fc__desc-text { display: none; margin: 0; font-family: var(--font-sans); font-size: 15px; line-height: 1.55; color: var(--brown-2); }
+  .fc__desc-text.is-active { display: block; }
   /* Windowed to show only 4 items at a time: fixed height (set in JS from
      real item measurements) clips overflow, and the inner wrapper slides
      vertically so older items scroll out the top as newer ones enter the
@@ -190,6 +217,7 @@
       root.querySelectorAll('[data-fc-slide]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcSlide==i); });
       root.querySelectorAll('[data-fc-item]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcItem==i); });
       root.querySelectorAll('[data-fc-dot]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcDot==i); });
+      root.querySelectorAll('[data-fc-desc]').forEach(function(s){ s.classList.toggle('is-active', s.dataset.fcDesc==i); });
       updateWindow(i);
     }
     root.querySelectorAll('[data-fc-item],[data-fc-dot]').forEach(function(el){
@@ -311,7 +339,8 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "title", "label": "Title", "default": "Collection" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "textarea", "id": "description", "label": "Description (shown in a box below the image)" }
       ]
     }
   ],

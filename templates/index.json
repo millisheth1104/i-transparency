@@ -75,7 +75,8 @@
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
             "title": "BARE EARTH",
-            "link": ""
+            "link": "",
+            "description": "Four-layer gauze bedspread with a soft, naturally textured finish."
           }
         },
         "b2": {
@@ -83,7 +84,8 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9572.png",
             "title": "EMBELLISH",
-            "link": ""
+            "link": "",
+            "description": "Elegant embroidered bedsheet adorned with refined motifs."
           }
         },
         "b3": {
@@ -91,7 +93,8 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9573_JPG.jpg",
             "title": "KNITSCAPE",
-            "link": ""
+            "link": "",
+            "description": "Cloud-soft knitted bedspread crafted for effortless comfort."
           }
         },
         "b4": {
@@ -99,7 +102,8 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9574_JPG.jpg",
             "title": "SIGNATURE",
-            "link": ""
+            "link": "",
+            "description": "Digitally printed nine-piece duvet cover set with a distinctive, refined look."
           }
         },
         "b5": {
