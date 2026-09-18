@@ -74,9 +74,19 @@
        (12px / 16px), so !important is needed here too. The eyebrow's
        .28em letter-spacing (base.css) is what actually ate the width; it's
        tightened here rather than only shrinking the font, since a smaller
-       font at the same spacing still wrapped to 3 lines. */
-    .hero__eyebrow { font-size: 9px !important; letter-spacing: .08em; white-space: nowrap; }
-    .hero__text { font-size: 14px !important; margin-top: 40px !important; }
+       font at the same spacing still wrapped to 3 lines. Wants exactly 2
+       lines breaking after "100% Cotton ·" -- the eyebrow text itself has
+       a non-breaking space between "Exquisite" and "Craftsmanship" (see
+       templates/index.json) so those two words can't split across lines
+       the way they did at the tighter, single-line-forcing size tried
+       before this. */
+    .hero__eyebrow { font-size: 10px !important; letter-spacing: .14em; }
+    /* Subtext pushed further down (bigger gap under the heading), then
+       pulled close to the buttons underneath it (smaller gap above them)
+       -- sits right next to the "Shop by category" CTA rather than
+       centred in the empty space between heading and buttons. */
+    .hero__text { font-size: 14px !important; margin-top: 84px !important; }
+    .hero__actions { margin-top: 14px !important; }
   }
   .hero__eyebrow { color: var(--taupe-dark); }
   .hero__title { font-size: clamp(44px, 7vw, 92px); color: var(--brown-2); line-height: 1; max-width: 12ch; }
