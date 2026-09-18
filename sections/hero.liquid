@@ -63,6 +63,12 @@
     .hero__media { aspect-ratio: unset; max-height: none; min-height: 420px; }
     .hero__media img, .hero__media .hero__placeholder { position: absolute; inset: 0; }
     .hero__content { position: relative; padding: 44px 28px 72px; justify-content: flex-start; }
+    /* Heading's font-size comes from an inline style (section setting,
+       clamped 44-92px) which beats this stylesheet's specificity, so a
+       plain override here would be ignored -- !important is required to
+       actually shrink it on phones, where 44px (the clamp's own floor)
+       reads oversized against the rest of the card. */
+    .hero__title { font-size: clamp(28px, 9vw, 38px) !important; }
   }
   .hero__eyebrow { color: var(--taupe-dark); }
   .hero__title { font-size: clamp(44px, 7vw, 92px); color: var(--brown-2); line-height: 1; max-width: 12ch; }
