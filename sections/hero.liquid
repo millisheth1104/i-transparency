@@ -69,6 +69,14 @@
        actually shrink it on phones, where 44px (the clamp's own floor)
        reads oversized against the rest of the card. */
     .hero__title { font-size: clamp(28px, 9vw, 38px) !important; }
+    /* Eyebrow and subtext were each wrapping to 3 lines on a phone --
+       both also carry inline font-size styles from their section settings
+       (12px / 16px), so !important is needed here too. The eyebrow's
+       .28em letter-spacing (base.css) is what actually ate the width; it's
+       tightened here rather than only shrinking the font, since a smaller
+       font at the same spacing still wrapped to 3 lines. */
+    .hero__eyebrow { font-size: 10px !important; letter-spacing: .16em; }
+    .hero__text { font-size: 14px !important; }
   }
   .hero__eyebrow { color: var(--taupe-dark); }
   .hero__title { font-size: clamp(44px, 7vw, 92px); color: var(--brown-2); line-height: 1; max-width: 12ch; }
