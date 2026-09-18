@@ -88,11 +88,12 @@
   .fc__slide-num { position: absolute; top: 28px; left: 34px; color: rgba(244,238,228,.85); font-size: 13px; letter-spacing: .1em; z-index: 2; }
   .fc__slide-title { position: absolute; top: 50px; left: 34px; color: var(--cream); font-size: 34px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; z-index: 2; text-shadow: 0 1px 8px rgba(0,0,0,.25); }
 
-  /* Content box under the stage image -- one <p> per slide, only the
-     active one shown. min-height keeps the box from visibly collapsing
-     between the catalog's shorter and longer descriptions. */
-  .fc__desc { background: var(--cream); border-radius: var(--radius); padding: 22px 26px; min-height: 84px; display: flex; align-items: center; }
-  .fc__desc-text { display: none; margin: 0; font-family: var(--font-sans); font-size: 15px; line-height: 1.55; color: var(--brown-2); }
+  /* Description under the stage image -- one <p> per slide, only the
+     active one shown. min-height keeps the row from visibly collapsing
+     between the catalog's shorter and longer descriptions. No background
+     box -- sits directly on the section's own cream surface. */
+  .fc__desc { min-height: 64px; display: flex; align-items: center; }
+  .fc__desc-text { display: none; margin: 0; font-family: var(--font-sans); font-size: 18px; font-weight: 600; line-height: 1.5; color: var(--brown-2); }
   .fc__desc-text.is-active { display: block; }
   /* Windowed to show only 4 items at a time: fixed height (set in JS from
      real item measurements) clips overflow, and the inner wrapper slides
