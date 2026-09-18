@@ -46,8 +46,8 @@
       "settings": {
         "image": "shopify://shop_images/sarom_bedcover_exact_dimensions.png",
         "image_right": false,
-        "eyebrow": "Breathable build · Zero bleed",
-        "heading": "<em>Woven,</em> not knitted.",
+        "eyebrow": "THOUGHTFULLY MADE · BEAUTIFULLY LIVED IN",
+        "heading": "Your kind of comfort.",
         "eyebrow_size": 12,
         "heading_size": 56,
         "header_spacing": 18,
@@ -62,7 +62,7 @@
         "image_border_color": "#5a5148",
         "image_margin": 0,
         "intro": "<p>Ordinary premium bedding is knitted: crisp, flat, formal. <br/><strong>Ours is woven.</strong></p>",
-        "text": "<p>Woven gives cotton a different life — a soft, slightly elastic, three-dimensional hand that breathes in summer and holds warmth in winter. It drapes instead of lying stiff, and softens further with every wash rather than wearing thin. It is, simply, the most touchable bed you will own.</p>",
+        "text": "<p>A softer landing at the end of every day. Discover thoughtfully designed bedding that brings comfort, understated elegance and a little more joy to the everyday.</p>",
         "button_label": "",
         "button_link": ""
       }
