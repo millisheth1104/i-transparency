@@ -33,3 +33,15 @@
 **No git commits** — this task was 100% Shopify Admin content (GraphQL), not theme/code, so nothing to push.
 
 Full narrative + data-quality findings logged in `memory.md` under "2026-09-17 — Product Dimensions + Thread Count appended to all product descriptions".
+
+## 2026-09-11 to 2026-09-18 — Razorpay integration, product-card colour swatches, misc content/CSS fixes
+
+**Razorpay Payments**: activated "01 Cards, UPI, NB, Wallets by Razorpay" as a payment provider (found under Settings → Payments → Additional payment providers → Add provider, NOT the card-only "Choose a provider" list), linked the merchant's Razorpay account via its own OAuth-style confirmation popup, verified with a real test-mode Razorpay checkout (test card, payment captured, confirmed via Razorpay CLI). Fixed Domestic "Standard" shipping rate: renamed from Hindi "मानक" → "Standard" and set to free (₹0) via `deliveryProfileUpdate`. Removed COD/returns wording from product page Terms & Conditions. Updated WhatsApp number to `918657944323`.
+
+**Product-card colour swatches** (new feature): every product card across the site now shows up to 6 colour swatch dots with three fallback tiers (shade metafield → colour word in title → client-side photo colour-sampling), a "+N" overflow badge, colour-filtered collection pages show the matching variant's photo per card, and clicking a swatch now swaps that card's own image in place (no navigation) while keeping the existing hover-cycle effect working afterward. New files: `snippets/swatch-hex.liquid`, `swatch-hex-real.liquid`, `url-with-variant.liquid`, `assets/product-card-swatch-fallback.js`, `product-card-swatch-preview.js`.
+
+**Bugs found and fixed along the way**: (1) single-colour/photo-sampled products had an unassigned `filtered_url` → `<a href="">` → clicking looked like the page reloading; (2) infinite-scroll spinner flashed on every collection load regardless of whether more pages existed, due to a CSS specificity bug where `#shopify-section-{id} .mc-load-spinner{display:flex}` outranked the browser's default `[hidden]{display:none}`; (3) colour-filtered card/swatch links produced a broken doubled `variant=` query param since Shopify already auto-appends its own to `product.url` inside a filtered collection.
+
+**GST/tax investigation (informational, no changes)**: client wants GST rate to depend on product price (≤₹2499 → 5%, >₹2499 → 18%) with tax-inclusive pricing shown separately at checkout. Confirmed `shop.taxesIncluded` is already `true` (checkout already shows included-tax breakdown for free). Confirmed via full Admin API `Mutation` schema dump that Shopify has **no API for tax rate configuration at all** (Admin-UI-only) and, more fundamentally, **no price-conditional tax rate concept** — proposed a two-collection (5%/18%) + manual override + auto-sync script approach instead, pending client go-ahead.
+
+Full narrative in `memory.md` under "2026-09-11 to 2026-09-18 — Razorpay payment gateway, product-card colour swatches, misc fixes".
