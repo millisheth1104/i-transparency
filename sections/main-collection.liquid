@@ -44,17 +44,57 @@
               <span class="mc-select">
                 <select name="{{ filter.param_name }}" aria-label="{{ filter.label | escape }}" onchange="this.form.submit()">
                   <option value="">{{ filter.label }}</option>
-                  {%- for value in filter.values -%}
-                    {%- assign display_label = value.label -%}
-                    {%- if filter.label == 'Size' -%}
-                      {%- if value.label == 'Single' -%}
-                        {%- assign display_label = 'King' -%}
-                      {%- elsif value.label == 'Double' -%}
-                        {%- assign display_label = 'Super King' -%}
+                  {%- if filter.param_name == 'filter.p.tag' -%}
+                    {%- comment -%}
+                      This filter is Shopify's native product-tag filter (labelled
+                      "Category" in the admin) -- it auto-lists EVERY tag present on
+                      the collection's products, which mixes real categories
+                      ("Bedsheet Set") in with unrelated design/line tags ("Ethereal
+                      Bd", "Linera", "Digital Prints"...). Only the 6 categories that
+                      match the Shop mega-menu are wanted here, so values are mapped
+                      to a clean label and anything that doesn't match one of the 6
+                      is dropped entirely rather than shown. seen_categories dedupes
+                      case-variant tag data ("Bedsheet Set" vs "Bedsheet set" both
+                      exist) down to one visible option per category.
+                    {%- endcomment -%}
+                    {%- assign seen_categories = '' -%}
+                    {%- for value in filter.values -%}
+                      {%- assign v_dc = value.label | downcase -%}
+                      {%- assign display_label = '' -%}
+                      {%- if v_dc contains 'bedsheet' -%}
+                        {%- assign display_label = 'Bedsheets' -%}
+                      {%- elsif v_dc contains 'bedspread' -%}
+                        {%- assign display_label = 'Bedspreads' -%}
+                      {%- elsif v_dc contains 'comforter' -%}
+                        {%- assign display_label = 'Comforters' -%}
+                      {%- elsif v_dc contains 'throw' -%}
+                        {%- assign display_label = 'Throws' -%}
+                      {%- elsif v_dc contains 'cushion' -%}
+                        {%- assign display_label = 'Cushion Covers' -%}
+                      {%- elsif v_dc contains 'duvet' -%}
+                        {%- assign display_label = 'Duvet Covers' -%}
                       {%- endif -%}
-                    {%- endif -%}
-                    <option value="{{ value.value }}" {% if value.active %}selected{% endif %}>{{ display_label }}</option>
-                  {%- endfor -%}
+                      {%- if display_label != '' -%}
+                        {%- assign marker = display_label | append: '|' -%}
+                        {%- unless seen_categories contains marker -%}
+                          <option value="{{ value.value }}" {% if value.active %}selected{% endif %}>{{ display_label }}</option>
+                          {%- assign seen_categories = seen_categories | append: marker -%}
+                        {%- endunless -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for value in filter.values -%}
+                      {%- assign display_label = value.label -%}
+                      {%- if filter.label == 'Size' -%}
+                        {%- if value.label == 'Single' -%}
+                          {%- assign display_label = 'King' -%}
+                        {%- elsif value.label == 'Double' -%}
+                          {%- assign display_label = 'Super King' -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                      <option value="{{ value.value }}" {% if value.active %}selected{% endif %}>{{ display_label }}</option>
+                    {%- endfor -%}
+                  {%- endif -%}
                 </select>
               </span>
             {%- endif -%}
@@ -97,6 +137,22 @@
                 {%- assign chip_label = 'King' -%}
               {%- elsif value.label == 'Double' -%}
                 {%- assign chip_label = 'Super King' -%}
+              {%- endif -%}
+            {%- elsif filter.param_name == 'filter.p.tag' -%}
+              {%- comment -%} Same clean-category relabel as the dropdown above, so an applied chip never shows the raw tag text. {%- endcomment -%}
+              {%- assign chip_dc = value.label | downcase -%}
+              {%- if chip_dc contains 'bedsheet' -%}
+                {%- assign chip_label = 'Bedsheets' -%}
+              {%- elsif chip_dc contains 'bedspread' -%}
+                {%- assign chip_label = 'Bedspreads' -%}
+              {%- elsif chip_dc contains 'comforter' -%}
+                {%- assign chip_label = 'Comforters' -%}
+              {%- elsif chip_dc contains 'throw' -%}
+                {%- assign chip_label = 'Throws' -%}
+              {%- elsif chip_dc contains 'cushion' -%}
+                {%- assign chip_label = 'Cushion Covers' -%}
+              {%- elsif chip_dc contains 'duvet' -%}
+                {%- assign chip_label = 'Duvet Covers' -%}
               {%- endif -%}
             {%- endif -%}
             <a class="mc-chip" href="{{ value.remove_url }}">{{ chip_label }} <span aria-hidden="true">&times;</span></a>
