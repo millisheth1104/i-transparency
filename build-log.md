@@ -45,3 +45,13 @@ Full narrative + data-quality findings logged in `memory.md` under "2026-09-17 �
 **GST/tax investigation (informational, no changes)**: client wants GST rate to depend on product price (≤₹2499 → 5%, >₹2499 → 18%) with tax-inclusive pricing shown separately at checkout. Confirmed `shop.taxesIncluded` is already `true` (checkout already shows included-tax breakdown for free). Confirmed via full Admin API `Mutation` schema dump that Shopify has **no API for tax rate configuration at all** (Admin-UI-only) and, more fundamentally, **no price-conditional tax rate concept** — proposed a two-collection (5%/18%) + manual override + auto-sync script approach instead, pending client go-ahead.
 
 Full narrative in `memory.md` under "2026-09-11 to 2026-09-18 — Razorpay payment gateway, product-card colour swatches, misc fixes".
+
+## 2026-09-21 — Bliss collection (4 products, 24 colourways, 73 images) + Category filter fix
+
+**Bliss collection**: created 4 new ACTIVE products (Bliss Ogee/Parquet/Houndstooth/Reed Bedsheet Set, ₹5999, 6 colours each — Chalk/Sand/Stone/Clay/Smoke/Grey), 73 images uploaded and attached via the staged-upload flow, done by a background Agent (same delegation pattern used for the earlier dimensions/thread-count backfill). New "Bliss" manual collection created; products auto-joined the "Jacquards" smart collection via tags. Added Chalk/Clay/Smoke colour hex mappings to the theme's 3 swatch files (Sand/Stone/Grey reused existing entries). Design/colour names were decided by looking at the actual product photos (spreadsheet had no useful names) — one clarifying question asked, then executed without further back-and-forth.
+
+**Category filter simplification** (`sections/main-collection.liquid`): the native tag-based "Category" filter now only shows 6 clean values (Bedsheets/Bedspreads/Comforters/Throws/Cushion Covers/Duvet Covers) instead of every raw product tag. Found and documented a genuine Shopify platform limitation while verifying this: the tag filter only surfaces tag values a merchant has pinned in Settings → Search & discovery (admin-UI only, no API) — confirmed products carry the right tags but most don't appear as filter options because they were never pinned there. Theme fix is complete; getting all 6 to actually show requires the client to pin the missing tag values themselves.
+
+**Git**: a transient 403 push-permission error appeared mid-session (coincided with a session identity/context refresh) and resolved itself on the next push attempt with no action taken — flagged in memory.md in case it recurs.
+
+Full narrative in `memory.md` under the three "2026-09-21" entries.
