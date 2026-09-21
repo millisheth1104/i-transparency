@@ -214,6 +214,14 @@
                         {%- when 'a' -%}{%- assign hex = '#b8a482' -%}
                         {%- when 'b' -%}{%- assign hex = '#af9c8b' -%}
 
+                        {%- comment -%} Bliss (PC dyed jacquard, 4 designs sharing one
+                          6-colour palette) -- sampled as the average across all 4
+                          designs' own colour photos, same principle as Oscar being
+                          the reference source for its shared colour names. {%- endcomment -%}
+                        {%- when 'chalk' -%}{%- assign hex = '#e1e2e5' -%}
+                        {%- when 'clay' -%}{%- assign hex = '#8e836f' -%}
+                        {%- when 'smoke' -%}{%- assign hex = '#837a6e' -%}
+
                         {%- comment -%} No correctly-linked variant photo exists for
                           these, so they remain approximations -- see the note above. {%- endcomment -%}
                         {%- when 'grey','gray' -%}{%- assign hex = '#aea9a5' -%}
