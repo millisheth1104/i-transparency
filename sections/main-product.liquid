@@ -80,7 +80,15 @@
 
         <p class="mp__price" data-price>{{ product.price | default: 0 | money }}</p>
 
-        {%- if product.selected_or_first_available_variant.title != 'Default Title' -%}
+        {%- comment -%}
+          Some single-variant products in this catalog have their lone
+          variant literally titled "Default" rather than Shopify's usual
+          "Default Title" -- checking only the standard spelling let
+          "Default" through and showed a meaningless label on the product
+          page (e.g. Woven Harmony Crossleave Bedspread).
+        {%- endcomment -%}
+        {%- assign variant_title_dc = product.selected_or_first_available_variant.title | downcase -%}
+        {%- if variant_title_dc != 'default title' and variant_title_dc != 'default' -%}
           <p class="mp__variant-label" data-variant-label>{{ product.selected_or_first_available_variant.title }}</p>
         {%- endif -%}
 
