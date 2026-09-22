@@ -15,12 +15,22 @@
     <div class="mp__grid">
 
       {%- comment -%} ---------- GALLERY ---------- {%- endcomment -%}
+      {%- comment -%}
+        The selected/first-available variant's own image, when it has one --
+        not just the product's generic featured_image. Without this, a card
+        link that arrives here with a specific colour already chosen (the
+        colour-filter card links from main-collection.liquid, or a swatch's
+        own ?variant= link) opened the product page still showing whichever
+        colour happens to be first, ignoring the one the shopper actually
+        clicked through on.
+      {%- endcomment -%}
+      {%- assign main_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
       <div class="mp__gallery">
         <div class="mp__main" data-main>
-          {%- if product.featured_image -%}
+          {%- if main_image -%}
             <img data-main-img
-                 src="{{ product.featured_image | image_url: width: 1200 }}"
-                 alt="{{ product.featured_image.alt | escape | default: product.title }}"
+                 src="{{ main_image | image_url: width: 1200 }}"
+                 alt="{{ main_image.alt | escape | default: product.title }}"
                  width="615" height="531">
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'mp__ph' }}
@@ -40,7 +50,8 @@
             </button>
             <div class="mp__thumbs" data-thumbs>
               {%- for media in product.media -%}
-                <button class="mp__thumb {% if forloop.first %}is-active{% endif %}" type="button"
+                {%- comment -%} Active thumb matches the variant image actually shown above, not just whichever photo happens to be first. {%- endcomment -%}
+                <button class="mp__thumb {% if media.id == main_image.id or forloop.first and main_image == blank %}is-active{% endif %}" type="button"
                         data-thumb
                         data-full="{{ media | image_url: width: 1200 }}"
                         aria-label="View image {{ forloop.index }}">
