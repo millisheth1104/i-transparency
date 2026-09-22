@@ -155,7 +155,8 @@
                 {%- assign chip_label = 'Duvet Covers' -%}
               {%- endif -%}
             {%- endif -%}
-            <a class="mc-chip" href="{{ value.remove_url }}">{{ chip_label }} <span aria-hidden="true">&times;</span></a>
+            {%- comment -%} Shopify's filter_value object exposes this as url_to_remove, not remove_url -- the wrong property name silently rendered every chip's href as empty (clicking it just reloaded the current page with all filters intact), which is why only "Clear all" (built from collection.url) ever appeared to work. {%- endcomment -%}
+            <a class="mc-chip" href="{{ value.url_to_remove }}">{{ chip_label }} <span aria-hidden="true">&times;</span></a>
           {%- endfor -%}
         {%- endfor -%}
         <a class="mc-applied__clear" href="{{ collection.url }}">Clear all</a>
