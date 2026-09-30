@@ -78,7 +78,7 @@
           </div>
         </div>
 
-        <p class="mp__price" data-price>{{ product.price | default: 0 | money }}</p>
+        <p class="mp__price"><span data-price>{{ product.price | default: 0 | money }}</span> <span class="mp__price-note">MRP (Inc. All Taxes)</span></p>
 
         {%- comment -%}
           Some single-variant products in this catalog have their lone
@@ -359,6 +359,7 @@
   .mp__qty-input { width: 42px; text-align: center; border: none; background: transparent; padding: 6px 0; font-size: 16px; }
   .mp__qty-input:focus { border: none; }
   .mp__price { font-family: var(--font-serif); font-size: 26px; color: var(--brown); margin: 14px 0 6px; letter-spacing: .02em; }
+  .mp__price-note { font-family: var(--font-ui); font-size: 13px; font-weight: 400; letter-spacing: .04em; color: var(--muted); }
   .mp__variant-label { font-family: var(--font-serif); font-size: 20px; color: var(--brown); margin: 0 0 28px; }
 
   .mp__opt { margin: 0 0 28px; }
