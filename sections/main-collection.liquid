@@ -239,13 +239,19 @@
           everything -- since there isn't enough content for the fuller
           sequence to make sense.
         {%- endcomment -%}
+        {%- comment -%}
+          paginate.items is the TRUE total across every page -- unlike
+          collection.products.size, which inside a {% paginate %} block is
+          just the current page's count (capped at per_page, 12 here), so
+          it could never actually reach the 16-product threshold below.
+        {%- endcomment -%}
         {%- liquid
           assign show_feature = false
-          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
+          if paginate.current_page == 1 and section.settings.show_feature_media and paginate.items >= 4
             assign show_feature = true
           endif
           assign full_sequence = false
-          if show_feature and collection.products.size >= 16
+          if show_feature and paginate.items >= 16
             assign full_sequence = true
           endif
         -%}
