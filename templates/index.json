@@ -75,7 +75,7 @@
           "settings": {
             "image": "shopify://shop_images/bare_earth.png",
             "title": "BARE EARTH",
-            "link": "",
+            "link": "shopify://collections/bare-earth",
             "description": "Four-layer gauze bedspread with a soft, naturally textured finish."
           }
         },
@@ -84,7 +84,7 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9572.png",
             "title": "EMBELLISH",
-            "link": "",
+            "link": "shopify://collections/embellish-db",
             "description": "Elegant embroidered bedsheet adorned with refined motifs."
           }
         },
@@ -93,7 +93,7 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9573_JPG.jpg",
             "title": "KNITSCAPE",
-            "link": "",
+            "link": "shopify://collections/knitscape-bc",
             "description": "Cloud-soft knitted bedspread crafted for effortless comfort."
           }
         },
@@ -102,7 +102,7 @@
           "settings": {
             "image": "shopify://shop_images/IMG_9574_JPG.jpg",
             "title": "SIGNATURE",
-            "link": "",
+            "link": "shopify://collections/signature",
             "description": "Digitally printed nine-piece duvet cover set with a distinctive, refined look."
           }
         },
@@ -111,7 +111,8 @@
           "disabled": true,
           "settings": {
             "title": "Ornate",
-            "link": "/collections/ornate"
+            "link": "/collections/ornate",
+            "description": ""
           }
         },
         "b6": {
@@ -119,7 +120,8 @@
           "disabled": true,
           "settings": {
             "title": "Reflect",
-            "link": "/collections/reflect"
+            "link": "/collections/reflect",
+            "description": ""
           }
         },
         "b7": {
@@ -127,7 +129,8 @@
           "disabled": true,
           "settings": {
             "title": "Ethereal",
-            "link": "/collections/ethereal-bd"
+            "link": "/collections/ethereal-bd",
+            "description": ""
           }
         },
         "b8": {
@@ -135,7 +138,8 @@
           "disabled": true,
           "settings": {
             "title": "Timeless Grace",
-            "link": "/collections/timeless-grace-db"
+            "link": "/collections/timeless-grace-db",
+            "description": ""
           }
         },
         "b9": {
@@ -143,7 +147,8 @@
           "disabled": true,
           "settings": {
             "title": "Embellish",
-            "link": "/collections/embellish-db"
+            "link": "/collections/embellish-db",
+            "description": ""
           }
         },
         "b10": {
@@ -151,7 +156,8 @@
           "disabled": true,
           "settings": {
             "title": "Essence",
-            "link": "/collections/essence"
+            "link": "/collections/essence",
+            "description": ""
           }
         }
       },
