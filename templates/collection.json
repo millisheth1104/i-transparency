@@ -102,6 +102,7 @@
           "type": "promo_band",
           "settings": {
             "position": 16,
+            "image_position": "top",
             "heading": "Printed",
             "text": "Join the Beds & More community for styling notes, new shades and a welcome treat on your first order.",
             "image": "shopify://shop_images/ESSENCE-DB-D300194-A-2.jpg",
