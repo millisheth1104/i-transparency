@@ -1,5 +1,23 @@
 {%- comment -%} Product details — Beds & More by Sarom {%- endcomment -%}
 {%- assign color_names = section.settings.color_option_name | downcase -%}
+{%- comment -%}
+  Whether this product has a real colour choice (more than one shade to
+  pick between) -- used below to decide whether the gallery thumbnails
+  should filter down to the selected colour's own photos. Single-variant
+  products, or ones whose only options are things like Size, keep showing
+  every thumbnail; there's no "wrong colour" to filter out.
+{%- endcomment -%}
+{%- assign has_color_option = false -%}
+{%- unless product.has_only_default_variant -%}
+  {%- for option in product.options_with_values -%}
+    {%- assign opt_name_check = option.name | downcase -%}
+    {%- if opt_name_check contains color_names or opt_name_check contains 'color' or opt_name_check contains 'colour' or opt_name_check contains 'shade' -%}
+      {%- if option.values.size > 1 -%}
+        {%- assign has_color_option = true -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
 
 <section class="mp" data-section-id="{{ section.id }}">
   <div class="container">
@@ -332,7 +350,7 @@
         {%- else -%}
           {%- assign v_image = 'null' -%}
         {%- endif -%}
-        {"id": {{ v.id }}, "options": {{ v.options | json }}, "price": {{ v.price | money | json }}, "available": {{ v.available }}, "title": {{ v.title | json }}, "image": {{ v_image }}}{% unless forloop.last %},{% endunless %}
+        {"id": {{ v.id }}, "options": {{ v.options | json }}, "price": {{ v.price | money | json }}, "available": {{ v.available }}, "title": {{ v.title | json }}, "image": {{ v_image }}, "sku": {{ v.sku | json }}}{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
   </script>
@@ -361,6 +379,7 @@
   .mp__thumb { flex: 0 0 84px; height: 92px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--cream-2); padding: 0; transition: border-color .2s; }
   .mp__thumb img { width: 100%; height: 100%; object-fit: cover; }
   .mp__thumb.is-active { border-color: var(--taupe); box-shadow: 0 0 0 1px var(--taupe); }
+  .mp__thumb.is-hidden { display: none; }
   .mp__thumb-nav { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--brown); display: inline-flex; align-items: center; justify-content: center; }
   .mp__thumb-nav:hover { background: var(--brown); color: #fff; border-color: var(--brown); }
 
@@ -472,6 +491,47 @@
     });
   }
 
+  /* Filter the thumbnail strip down to only the selected variant's own
+     photos, matched by SKU against each thumbnail's filename -- e.g. SKU
+     "KNITSCAPE-TH-K3800101-A" matches a filename containing
+     "knitscapethk3800101a" once both are stripped to bare alphanumerics
+     (so "-"/"_"/spaces and case don't matter). Extra shots (closeups,
+     lifestyle AI images) that were uploaded with the same SKU in their
+     filename get grouped in automatically; images that don't match ANY
+     variant's SKU, or a variant with a blank SKU, fall back to showing
+     every thumbnail rather than hiding the whole strip. */
+  function normalize(str){ return (str || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+  var allThumbs = root.querySelectorAll('[data-thumb]');
+
+  var hasColorOption = {{ has_color_option | json }};
+
+  function filterThumbs(v){
+    if (!allThumbs.length || !hasColorOption) return;
+    var skuNorm = v && normalize(v.sku);
+    var matched = [];
+    if (skuNorm){
+      allThumbs.forEach(function(t){
+        var filename = (t.dataset.full || '').split('/').pop().split('?')[0];
+        if (normalize(filename).indexOf(skuNorm) !== -1) matched.push(t);
+      });
+    }
+    var showAll = matched.length === 0;
+    allThumbs.forEach(function(t){
+      t.classList.toggle('is-hidden', !showAll && matched.indexOf(t) === -1);
+    });
+    /* The thumb marked active may now be hidden (it belonged to the
+       previous colour) -- re-point .is-active at the visible thumb whose
+       image matches the new main photo, falling back to the first visible
+       one so the strip always shows a highlighted thumb after switching. */
+    var visible = showAll ? Array.prototype.slice.call(allThumbs) : matched;
+    var newActive = null;
+    visible.forEach(function(t){ if (v && v.image && t.dataset.full === v.image) newActive = t; });
+    if (!newActive) newActive = visible[0];
+    allThumbs.forEach(function(t){ t.classList.remove('is-active'); });
+    if (newActive) newActive.classList.add('is-active');
+  }
+
   function update(){
     var v = findVariant();
     syncActive();
@@ -483,6 +543,7 @@
     if (priceEl) priceEl.innerHTML = v.price;
     if (labelEl) labelEl.textContent = v.title;
     if (mainImg && v.image) mainImg.src = v.image;
+    filterThumbs(v);
     if (buyBtn){
       buyBtn.disabled = !v.available;
       buyBtn.textContent = v.available ? '{{ section.settings.buy_button_label | default: "Buy now" | escape }}' : 'Sold out';
@@ -490,6 +551,7 @@
   }
 
   optionInputs.forEach(function(inp){ inp.addEventListener('change', update); });
+  update();
 
   /* Quantity */
   var qtyInput = root.querySelector('.mp__qty-input');
@@ -516,14 +578,18 @@
   root.querySelector('[data-thumb-prev]') && root.querySelector('[data-thumb-prev]').addEventListener('click', function(){ strip.scrollBy({left:-200,behavior:'smooth'}); });
   root.querySelector('[data-thumb-next]') && root.querySelector('[data-thumb-next]').addEventListener('click', function(){ strip.scrollBy({left:200,behavior:'smooth'}); });
 
-  /* Main image prev/next arrows -- step through the same thumbnail list,
-     wrapping at each end, reusing the thumb click handler above so the
-     active thumb and scroll position stay in sync either way. */
-  var thumbList = root.querySelectorAll('[data-thumb]');
+  /* Main image prev/next arrows -- step through the currently VISIBLE
+     thumbnails (i.e. the selected colour's own photos, per filterThumbs
+     above), wrapping at each end, reusing the thumb click handler above so
+     the active thumb and scroll position stay in sync either way. Computed
+     fresh on every click rather than captured once, since which thumbs are
+     visible changes with the selected colour. */
   function stepMainImage(dir){
+    var thumbList = Array.prototype.filter.call(root.querySelectorAll('[data-thumb]'), function(t){ return !t.classList.contains('is-hidden'); });
     if (!thumbList.length) return;
     var current = root.querySelector('[data-thumb].is-active');
-    var idx = current ? Array.prototype.indexOf.call(thumbList, current) : 0;
+    var idx = current ? thumbList.indexOf(current) : 0;
+    if (idx === -1) idx = 0;
     idx = (idx + dir + thumbList.length) % thumbList.length;
     thumbList[idx].click();
     thumbList[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
