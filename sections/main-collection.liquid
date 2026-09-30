@@ -274,7 +274,7 @@
         {%- capture feature_image_only_html -%}
           <div class="mc-feature-banner">
             {%- if section.settings.feature_media_image != blank -%}
-              <img src="{{ section.settings.feature_media_image | image_url: width: 900 }}" alt="" width="900" height="1200" loading="lazy">
+              <img src="{{ section.settings.feature_media_image | image_url: width: 1600 }}" alt="" width="1600" height="686" loading="lazy">
             {%- else -%}
               {{ 'lifestyle-1' | placeholder_svg_tag }}
             {%- endif -%}
@@ -656,10 +656,10 @@
   #shopify-section-{{ section.id }} .mc-feature__grid { display: grid; grid-template-columns: 260px 260px; grid-auto-rows: auto; row-gap: 30px; column-gap: 30px; flex-shrink: 0; }
   #shopify-section-{{ section.id }} .mc-feature__media { flex: 1 1 auto; min-width: 0; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
-  #shopify-section-{{ section.id }} .mc-feature-banner { margin: 40px auto; width: 460px; max-width: 100%; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3 / 4; background: var(--cream-2); }
+  #shopify-section-{{ section.id }} .mc-feature-banner { margin: 40px 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 21 / 9; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature-banner img, #shopify-section-{{ section.id }} .mc-feature-banner svg { display: block; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 767px) {
-    #shopify-section-{{ section.id }} .mc-feature-banner { margin: 28px auto; }
+    #shopify-section-{{ section.id }} .mc-feature-banner { aspect-ratio: 4 / 3; margin: 28px 0; }
   }
 
   /* flex-start (not space-between): with fixed-width 260px cards,
