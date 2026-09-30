@@ -225,26 +225,8 @@
     {%- paginate collection.products by section.settings.per_page -%}
       {%- if collection.products.size > 0 -%}
 
-        {%- comment -%}
-          Feature media: first 4 products in a 2x2 grid beside one tall image
-          (page 1 only). Placed after the grid's first 2 full rows (8
-          products) rather than before everything, so it lands on "row 3"
-          instead of pushing straight to the top -- only when there are
-          enough products for that to make sense (8 ahead of it + its own
-          4 = 12); smaller collections keep the old above-the-grid spot
-          rather than showing it after just a partial row.
-        {%- endcomment -%}
-        {%- liquid
-          assign show_feature = false
-          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
-            assign show_feature = true
-          endif
-          assign feature_at_top = false
-          if show_feature and collection.products.size < 12
-            assign feature_at_top = true
-          endif
-        -%}
-        {%- capture feature_block_html -%}
+        {%- comment -%} Feature media: first 4 products in a 2x2 grid beside one tall image (page 1 only) {%- endcomment -%}
+        {%- if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4 -%}
           <div class="mc-feature">
             <div class="mc-feature__grid">
               {%- for product in collection.products limit: 4 -%}
@@ -259,15 +241,11 @@
               {%- endif -%}
             </div>
           </div>
-        {%- endcapture -%}
-
-        {%- if feature_at_top -%}
-          {{ feature_block_html }}
         {%- endif -%}
 
         {%- liquid
           assign grid_products = collection.products
-          if show_feature
+          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
             assign grid_offset = 4
           else
             assign grid_offset = 0
@@ -360,11 +338,6 @@
         <div class="grid grid--4 mc-grid">
                 {%- endif -%}
               {%- endfor -%}
-            {%- endif -%}
-            {%- if show_feature and feature_at_top == false and forloop.index == 8 -%}
-        </div>
-        {{ feature_block_html }}
-        <div class="grid grid--4 mc-grid">
             {%- endif -%}
           {%- endfor -%}
         </div>
