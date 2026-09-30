@@ -238,10 +238,16 @@
           reporting real results. paginate.items is the TRUE total across
           every page, unlike collection.products.size, which inside
           {% paginate %} is just the current page's count.
+
+          Also suppressed entirely once any filter is applied (active_count
+          from the top of the file) -- the tall lifestyle image belongs on
+          the unfiltered browse view only; a shopper who has already
+          narrowed to e.g. "Knitted Bedspreads" wants products, not a decor
+          shot reserving 4 of them from the grid.
         {%- endcomment -%}
         {%- liquid
           assign show_feature = false
-          if paginate.current_page == 1 and section.settings.show_feature_media and paginate.items >= 4
+          if paginate.current_page == 1 and section.settings.show_feature_media and paginate.items >= 4 and active_count == 0
             assign show_feature = true
           endif
           assign feature_at_top = false
