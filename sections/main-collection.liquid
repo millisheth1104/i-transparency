@@ -228,12 +228,25 @@
         {%- comment -%}
           Feature media: first 4 products in a 2x2 grid beside one tall
           image (page 1 only) -- placed after the first 2 normal rows (8
-          products) instead of right at the top.
+          products) instead of right at the top, EXCEPT when there aren't
+          enough products left after reserving those 4 to ever reach that
+          8th iteration (needs at least 12 total: 4 reserved + 8 to fill
+          the two rows ahead of it) -- e.g. a filtered view with only 4-11
+          matches. Without this fallback the reserved 4 products never
+          print at all in that case: the trigger inside the loop below is
+          never reached, so the whole grid renders empty despite Shopify
+          reporting real results. paginate.items is the TRUE total across
+          every page, unlike collection.products.size, which inside
+          {% paginate %} is just the current page's count.
         {%- endcomment -%}
         {%- liquid
           assign show_feature = false
-          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
+          if paginate.current_page == 1 and section.settings.show_feature_media and paginate.items >= 4
             assign show_feature = true
+          endif
+          assign feature_at_top = false
+          if show_feature and paginate.items < 12
+            assign feature_at_top = true
           endif
         -%}
         {%- capture feature_block_html -%}
@@ -252,6 +265,10 @@
             </div>
           </div>
         {%- endcapture -%}
+
+        {%- if feature_at_top -%}
+          {{ feature_block_html }}
+        {%- endif -%}
 
         {%- liquid
           assign grid_products = collection.products
@@ -349,7 +366,7 @@
                 {%- endif -%}
               {%- endfor -%}
             {%- endif -%}
-            {%- if show_feature and forloop.index == 8 -%}
+            {%- if show_feature and feature_at_top == false and forloop.index == 8 -%}
         </div>
         {{ feature_block_html }}
         <div class="grid grid--4 mc-grid">
