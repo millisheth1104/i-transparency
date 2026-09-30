@@ -41,6 +41,15 @@
               {% render 'icon', icon: 'heart' %}
             </button>
           {%- endif -%}
+
+          {%- if product.media.size > 1 -%}
+            <button class="mp__main-nav mp__main-nav--prev" type="button" aria-label="Previous image" data-main-prev>
+              {% render 'icon', icon: 'arrow-left' %}
+            </button>
+            <button class="mp__main-nav mp__main-nav--next" type="button" aria-label="Next image" data-main-next>
+              {% render 'icon', icon: 'arrow-right' %}
+            </button>
+          {%- endif -%}
         </div>
 
         {%- if product.media.size > 1 -%}
@@ -342,6 +351,10 @@
   .mp__wish { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.85); border: none; color: var(--brown); display: flex; align-items: center; justify-content: center; transition: background .25s; }
   .mp__wish:hover { background: #fff; }
   .mp__wish.is-active { background: var(--brown); color: #fff; }
+  .mp__main-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; border: none; background: rgba(255,255,255,.85); color: var(--brown); display: flex; align-items: center; justify-content: center; transition: background .25s; }
+  .mp__main-nav:hover { background: #fff; }
+  .mp__main-nav--prev { left: 16px; }
+  .mp__main-nav--next { right: 16px; }
   .mp__thumbs-wrap { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
   .mp__thumbs { display: flex; gap: 14px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; flex: 1; }
   .mp__thumbs::-webkit-scrollbar { display: none; }
@@ -502,6 +515,21 @@
   var strip = root.querySelector('[data-thumbs]');
   root.querySelector('[data-thumb-prev]') && root.querySelector('[data-thumb-prev]').addEventListener('click', function(){ strip.scrollBy({left:-200,behavior:'smooth'}); });
   root.querySelector('[data-thumb-next]') && root.querySelector('[data-thumb-next]').addEventListener('click', function(){ strip.scrollBy({left:200,behavior:'smooth'}); });
+
+  /* Main image prev/next arrows -- step through the same thumbnail list,
+     wrapping at each end, reusing the thumb click handler above so the
+     active thumb and scroll position stay in sync either way. */
+  var thumbList = root.querySelectorAll('[data-thumb]');
+  function stepMainImage(dir){
+    if (!thumbList.length) return;
+    var current = root.querySelector('[data-thumb].is-active');
+    var idx = current ? Array.prototype.indexOf.call(thumbList, current) : 0;
+    idx = (idx + dir + thumbList.length) % thumbList.length;
+    thumbList[idx].click();
+    thumbList[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+  root.querySelector('[data-main-prev]') && root.querySelector('[data-main-prev]').addEventListener('click', function(){ stepMainImage(-1); });
+  root.querySelector('[data-main-next]') && root.querySelector('[data-main-next]').addEventListener('click', function(){ stepMainImage(1); });
 
   /* Wishlist toggle (visual) */
   var wish = root.querySelector('.mp__wish');
