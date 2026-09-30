@@ -32,7 +32,7 @@
   <div class="container">
 
     {%- comment -%} Breadcrumb {%- endcomment -%}
-    <p class="mc-crumb">{{ section.settings.breadcrumb_root }} <span>/</span> {{ collection.title }}</p>
+    <p class="mc-crumb"><a href="{{ routes.all_products_collection_url }}">{{ section.settings.breadcrumb_root }}</a> <span>/</span> {{ collection.title }}</p>
 
     {%- comment -%} Filter + sort bar {%- endcomment -%}
     <form method="get" class="mc-bar" data-facet-form>
@@ -399,6 +399,8 @@
 <style>
   #shopify-section-{{ section.id }} .mc-crumb { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--brown); margin: 0 0 34px; }
   #shopify-section-{{ section.id }} .mc-crumb span { color: var(--taupe); margin: 0 6px; }
+  #shopify-section-{{ section.id }} .mc-crumb a { color: inherit; }
+  #shopify-section-{{ section.id }} .mc-crumb a:hover { color: var(--taupe); }
 
   #shopify-section-{{ section.id }} .mc-bar { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
   #shopify-section-{{ section.id }} .mc-bar__filters { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
