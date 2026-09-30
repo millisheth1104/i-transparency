@@ -225,8 +225,18 @@
     {%- paginate collection.products by section.settings.per_page -%}
       {%- if collection.products.size > 0 -%}
 
-        {%- comment -%} Feature media: first 4 products in a 2x2 grid beside one tall image (page 1 only) {%- endcomment -%}
-        {%- if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4 -%}
+        {%- comment -%}
+          Feature media: first 4 products in a 2x2 grid beside one tall
+          image (page 1 only) -- placed after the first 2 normal rows (8
+          products) instead of right at the top.
+        {%- endcomment -%}
+        {%- liquid
+          assign show_feature = false
+          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
+            assign show_feature = true
+          endif
+        -%}
+        {%- capture feature_block_html -%}
           <div class="mc-feature">
             <div class="mc-feature__grid">
               {%- for product in collection.products limit: 4 -%}
@@ -241,11 +251,11 @@
               {%- endif -%}
             </div>
           </div>
-        {%- endif -%}
+        {%- endcapture -%}
 
         {%- liquid
           assign grid_products = collection.products
-          if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
+          if show_feature
             assign grid_offset = 4
           else
             assign grid_offset = 0
@@ -338,6 +348,11 @@
         <div class="grid grid--4 mc-grid">
                 {%- endif -%}
               {%- endfor -%}
+            {%- endif -%}
+            {%- if show_feature and forloop.index == 8 -%}
+        </div>
+        {{ feature_block_html }}
+        <div class="grid grid--4 mc-grid">
             {%- endif -%}
           {%- endfor -%}
         </div>
