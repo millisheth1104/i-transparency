@@ -226,25 +226,30 @@
       {%- if collection.products.size > 0 -%}
 
         {%- comment -%}
-          Feature media: first 4 products in a 2x2 grid beside one tall image
-          (page 1 only). Placed after the grid's first 2 full rows (8
-          products) rather than before everything, so it lands on "row 3"
-          instead of pushing straight to the top -- only when there are
-          enough products for that to make sense (8 ahead of it + its own
-          4 = 12); smaller collections keep the old above-the-grid spot
-          rather than showing it after just a partial row.
+          Feature media (page 1 only): the first 4 products, reserved out of
+          the normal sequence via grid_offset, are used lower down as their
+          own row -- not paired side-by-side with the tall image anymore.
+          Full desired order: 2 normal rows (8 products) -> full-width
+          banner image alone -> 1 more normal row (4 products) -> the 4
+          reserved products as their own row, styled like any other product
+          card -> the rest of the grid continues. That needs 16 products
+          (4 reserved + 12 to fill the rows ahead of the trigger points), so
+          it only runs at that size; smaller collections fall back to the
+          original layout -- image and its 4 products together, above
+          everything -- since there isn't enough content for the fuller
+          sequence to make sense.
         {%- endcomment -%}
         {%- liquid
           assign show_feature = false
           if paginate.current_page == 1 and section.settings.show_feature_media and collection.products.size >= 4
             assign show_feature = true
           endif
-          assign feature_at_top = false
-          if show_feature and collection.products.size < 12
-            assign feature_at_top = true
+          assign full_sequence = false
+          if show_feature and collection.products.size >= 16
+            assign full_sequence = true
           endif
         -%}
-        {%- capture feature_block_html -%}
+        {%- capture feature_combo_html -%}
           <div class="mc-feature">
             <div class="mc-feature__grid">
               {%- for product in collection.products limit: 4 -%}
@@ -260,9 +265,23 @@
             </div>
           </div>
         {%- endcapture -%}
+        {%- capture feature_image_only_html -%}
+          <div class="mc-feature-banner">
+            {%- if section.settings.feature_media_image != blank -%}
+              <img src="{{ section.settings.feature_media_image | image_url: width: 1600 }}" alt="" width="1600" height="686" loading="lazy">
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+        {%- endcapture -%}
+        {%- capture feature_products_only_html -%}
+          {%- for product in collection.products limit: 4 -%}
+            {% render 'product-card', product: product, active_color: active_color %}
+          {%- endfor -%}
+        {%- endcapture -%}
 
-        {%- if feature_at_top -%}
-          {{ feature_block_html }}
+        {%- if show_feature and full_sequence == false -%}
+          {{ feature_combo_html }}
         {%- endif -%}
 
         {%- liquid
@@ -361,9 +380,16 @@
                 {%- endif -%}
               {%- endfor -%}
             {%- endif -%}
-            {%- if show_feature and feature_at_top == false and forloop.index == 8 -%}
+            {%- if full_sequence and forloop.index == 8 -%}
         </div>
-        {{ feature_block_html }}
+        {{ feature_image_only_html }}
+        <div class="grid grid--4 mc-grid">
+            {%- endif -%}
+            {%- if full_sequence and forloop.index == 12 -%}
+        </div>
+        <div class="grid grid--4 mc-grid">
+          {{ feature_products_only_html }}
+        </div>
         <div class="grid grid--4 mc-grid">
             {%- endif -%}
           {%- endfor -%}
@@ -624,6 +650,11 @@
   #shopify-section-{{ section.id }} .mc-feature__grid { display: grid; grid-template-columns: 260px 260px; grid-auto-rows: auto; row-gap: 30px; column-gap: 30px; flex-shrink: 0; }
   #shopify-section-{{ section.id }} .mc-feature__media { flex: 1 1 auto; min-width: 0; border-radius: var(--radius); overflow: hidden; background: var(--cream-2); }
   #shopify-section-{{ section.id }} .mc-feature__media img, #shopify-section-{{ section.id }} .mc-feature__media svg { width: 100%; height: 100%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .mc-feature-banner { margin: 40px 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 21 / 9; background: var(--cream-2); }
+  #shopify-section-{{ section.id }} .mc-feature-banner img, #shopify-section-{{ section.id }} .mc-feature-banner svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .mc-feature-banner { aspect-ratio: 4 / 3; margin: 28px 0; }
+  }
 
   /* flex-start (not space-between): with fixed-width 260px cards,
      space-between stretches the gap to fill the row when there are fewer
