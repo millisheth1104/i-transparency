@@ -665,6 +665,11 @@
      card's info block starting at the same position regardless of title
      length, without touching the title text itself. */
   #shopify-section-{{ section.id }} .product-card__title { min-height: calc(21px * 1.3 * 3); }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .product-card__title { font-size: 14px; letter-spacing: .06em; min-height: calc(14px * 1.3 * 3); }
+    #shopify-section-{{ section.id }} .product-card__price { font-size: 15px; }
+    #shopify-section-{{ section.id }} .product-card__price-note { font-size: 10px; }
+  }
 
   #shopify-section-{{ section.id }} .mc-promo { background: var(--cream-2); border-radius: var(--radius-lg); overflow: hidden; margin: 50px 0; }
   #shopify-section-{{ section.id }} .mc-promo__text { padding: 56px 60px 36px; }
