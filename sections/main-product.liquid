@@ -319,6 +319,27 @@
                 {%- endif -%}
               {%- endfor -%}
             </div>
+            <script>
+              /* Strip thread-count mentions (e.g. "Thread Count: 300", "| 300TC |") from product copy. */
+              (function () {
+                var root = document.querySelectorAll('.mp__acc-body');
+                root.forEach(function (body) {
+                  body.querySelectorAll('p, li, div, tr, dt, dd, span, strong, b').forEach(function (el) {
+                    if (el.isConnected && /^\s*thread\s*count\b/i.test(el.textContent) && el.textContent.length < 60) el.remove();
+                  });
+                  var w = document.createTreeWalker(body, NodeFilter.SHOW_TEXT), n, nodes = [];
+                  while ((n = w.nextNode())) nodes.push(n);
+                  nodes.forEach(function (t) {
+                    var s = t.nodeValue, o = s;
+                    s = s.replace(/\s*\|\s*(?:\d{3}\s?TC|high thread count)\s*(?=\|)/gi, ' ')
+                         .replace(/,?\s*(?:\d{3}\s?TC|high thread count)\b/gi, '')
+                         .replace(/\s*\|\s*(?:\d{3}\s?TC|high thread count)\s*$/gi, '')
+                         .replace(/(?:^|\s)thread\s*count\s*:?\s*\d*\s*/gi, ' ');
+                    if (s !== o) t.nodeValue = s;
+                  });
+                });
+              })();
+            </script>
           {%- endif -%}
 
           {%- comment -%} ---------- BUY BUTTON ---------- {%- endcomment -%}

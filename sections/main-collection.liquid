@@ -42,8 +42,10 @@
           {%- for filter in collection.filters -%}
             {%- if filter.type == 'list' or filter.type == 'boolean' -%}
               <span class="mc-select">
-                <select name="{{ filter.param_name }}" aria-label="{{ filter.label | escape }}" onchange="this.form.submit()">
-                  <option value="">{{ filter.label }}</option>
+                {%- assign filter_display = filter.label -%}
+                {%- if filter.label == 'Material' -%}{%- assign filter_display = 'Type' -%}{%- endif -%}
+                <select name="{{ filter.param_name }}" aria-label="{{ filter_display | escape }}" onchange="this.form.submit()">
+                  <option value="">{{ filter_display }}</option>
                   {%- if filter.param_name == 'filter.p.tag' -%}
                     {%- comment -%}
                       This filter is Shopify's native product-tag filter (labelled
