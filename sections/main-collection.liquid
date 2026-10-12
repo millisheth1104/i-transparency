@@ -87,6 +87,9 @@
                   {%- else -%}
                     {%- for value in filter.values -%}
                       {%- assign display_label = value.label -%}
+                      {%- if filter.label == 'Material' and value.label == 'Jacquard' -%}
+                        {%- assign display_label = 'Jacquard Bedsheets' -%}
+                      {%- endif -%}
                       {%- if filter.label == 'Size' -%}
                         {%- if value.label == 'Single' -%}
                           {%- assign display_label = 'King' -%}
@@ -134,6 +137,9 @@
         {%- for filter in collection.filters -%}
           {%- for value in filter.active_values -%}
             {%- assign chip_label = value.label -%}
+            {%- if filter.label == 'Material' and value.label == 'Jacquard' -%}
+              {%- assign chip_label = 'Jacquard Bedsheets' -%}
+            {%- endif -%}
             {%- if filter.label == 'Size' -%}
               {%- if value.label == 'Single' -%}
                 {%- assign chip_label = 'King' -%}
