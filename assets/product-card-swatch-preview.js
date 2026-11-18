@@ -29,6 +29,17 @@
 
     var card = swatch.closest('.product-card');
     if (!card) return;
+
+    // Point the card's Add to cart at the colour that was picked, not the
+    // product's first variant, and mirror that colour's stock state.
+    var idInput = card.querySelector('.product-card__form input[name="id"]');
+    var addBtn = card.querySelector('.product-card__add');
+    if (idInput && swatch.dataset.variantId) idInput.value = swatch.dataset.variantId;
+    if (addBtn) {
+      var inStock = swatch.dataset.available !== 'false';
+      addBtn.disabled = !inStock;
+      addBtn.textContent = inStock ? 'Add to cart' : 'Sold out';
+    }
     var media = card.querySelector('.product-card__media');
     if (!media) return;
 
