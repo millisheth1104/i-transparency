@@ -75,15 +75,6 @@
               <span>{{ gst_amount | money }}</span>
             </div>
           {%- endif -%}
-          {%- if section.settings.address != blank -%}
-            <div class="cart-summary__addr">
-              <div class="cart-summary__addr-head">
-                <span>Address</span>
-                <a href="{{ section.settings.address_link }}">Change</a>
-              </div>
-              <p>{{ section.settings.address }}</p>
-            </div>
-          {%- endif -%}
           <div class="cart-summary__total">
             <div>
               <strong>Total</strong>
