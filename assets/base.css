@@ -221,3 +221,6 @@ label { display: block; font-family: var(--font-ui); font-size: 12px; letter-spa
 @media (prefers-reduced-motion: reduce) {
   .sr-text, .sr-image, .sr-stagger > * { transition: none !important; opacity: 1 !important; transform: none !important; }
 }
+
+/* Cart summary address block is not wanted; main-cart.liquid edit was not picked up by the theme sync */
+.cart-summary__addr { display: none !important; }
