@@ -344,6 +344,7 @@
 
           {%- comment -%} ---------- BUY BUTTON ---------- {%- endcomment -%}
           {%- if product.available -%}
+            <button type="button" class="btn btn--block mp__atc" data-atc>Add to cart</button>
             <button type="submit" class="btn btn--outline btn--block mp__buy" data-add>
               {{ section.settings.buy_button_label | default: 'Buy now' }}
             </button>
@@ -442,6 +443,8 @@
   .mp__acc-body p { margin: 0 0 10px; }
 
   .mp__buy { margin-top: 6px; padding: 18px 30px; }
+  .mp__atc { margin-top: 6px; padding: 18px 30px; }
+  .mp__atc[disabled] { opacity: .5; cursor: not-allowed; }
   .mp__trust { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0 0; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 
   @media (max-width: 990px) {
@@ -477,6 +480,7 @@
   var labelEl = root.querySelector('[data-variant-label]');
   var mainImg = root.querySelector('[data-main-img]');
   var buyBtn  = root.querySelector('[data-add]');
+  var atcBtn  = root.querySelector('[data-atc]');
   var optionInputs = root.querySelectorAll('[data-option-input]');
 
   function selectedOptions(){
@@ -558,6 +562,7 @@
     syncActive();
     if (!v){
       if (buyBtn){ buyBtn.disabled = true; buyBtn.textContent = 'Unavailable'; }
+      if (atcBtn) atcBtn.disabled = true;
       return;
     }
     if (idInput) idInput.value = v.id;
@@ -569,6 +574,32 @@
       buyBtn.disabled = !v.available;
       buyBtn.textContent = v.available ? '{{ section.settings.buy_button_label | default: "Buy now" | escape }}' : 'Sold out';
     }
+    if (atcBtn) atcBtn.disabled = !v.available;
+  }
+
+  if (atcBtn){
+    atcBtn.addEventListener('click', function(){
+      var form = atcBtn.closest('form');
+      if (!form || atcBtn.disabled) return;
+      atcBtn.disabled = true;
+      atcBtn.textContent = 'Adding...';
+      fetch('/cart/add.js', { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function(r){ if (!r.ok) throw new Error('add failed'); return r.json(); })
+        .then(function(){ return fetch('/cart.js').then(function(r){ return r.json(); }); })
+        .then(function(cart){
+          var cartLink = document.querySelector('.site-header__cart');
+          if (cartLink){
+            var badge = cartLink.querySelector('.cart-count');
+            if (!badge){ badge = document.createElement('span'); badge.className = 'cart-count'; cartLink.appendChild(badge); }
+            badge.textContent = cart.item_count;
+          }
+          atcBtn.textContent = 'Added to cart';
+        })
+        .catch(function(){ atcBtn.textContent = 'Could not add - try again'; })
+        .then(function(){
+          setTimeout(function(){ atcBtn.textContent = 'Add to cart'; atcBtn.disabled = false; }, 1800);
+        });
+    });
   }
 
   optionInputs.forEach(function(inp){ inp.addEventListener('change', update); });
