@@ -27,7 +27,7 @@
     </div>
     <div class="bm-popup__body">
       {%- if pop_eyebrow != blank -%}<p class="eyebrow bm-popup__eyebrow">{{ pop_eyebrow }}</p>{%- endif -%}
-      <h2 class="bm-popup__heading">{{ pop_heading }}</h2>
+      {%- if pop_heading != blank -%}<h2 class="bm-popup__heading">{{ pop_heading }}</h2>{%- endif -%}
       <p class="bm-popup__text">{{ pop_body }}</p>
       {%- form 'customer', class: 'bm-popup__form' -%}
         <input type="hidden" name="contact[tags]" value="newsletter, popup">
