@@ -14,7 +14,7 @@
 
 <div class="bm-popup" data-popup hidden aria-hidden="true">
   <div class="bm-popup__overlay" data-popup-close></div>
-  <div class="bm-popup__dialog" role="dialog" aria-modal="true" aria-label="{{ pop_heading | escape }}">
+  <div class="bm-popup__dialog" role="dialog" aria-modal="true" aria-label="{{ pop_heading | default: pop_body | escape }}">
     <button type="button" class="bm-popup__close" data-popup-close aria-label="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
