@@ -26,7 +26,7 @@
       {%- endif -%}
     </div>
     <div class="bm-popup__body">
-      <p class="eyebrow bm-popup__eyebrow">{{ pop_eyebrow }}</p>
+      {%- if pop_eyebrow != blank -%}<p class="eyebrow bm-popup__eyebrow">{{ pop_eyebrow }}</p>{%- endif -%}
       <h2 class="bm-popup__heading">{{ pop_heading }}</h2>
       <p class="bm-popup__text">{{ pop_body }}</p>
       {%- form 'customer', class: 'bm-popup__form' -%}
